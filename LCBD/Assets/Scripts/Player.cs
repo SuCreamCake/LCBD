@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public float jumpPower;
     SpriteRenderer spriteRenderer;
+    bool isLadder;
 
     private void Awake()
     {
@@ -39,5 +40,30 @@ public class Player : MonoBehaviour
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
         else if (rigid.velocity.x < (-1) * maxSpeed)
             rigid.velocity = new Vector2((-1) * maxSpeed, rigid.velocity.y);
+
+        if (isLadder)
+        {
+            float ver = Input.GetAxis("Vertical");
+            rigid.velocity = new Vector2(rigid.velocity.x, ver * maxSpeed);
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = true;
+            rigid.gravityScale = 0;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = false;
+            rigid.gravityScale = 2;
+        }
     }
 }
