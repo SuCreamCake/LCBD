@@ -5,15 +5,39 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rigid;
-    public float maxSpeed;
+    //이동속도
+    public float maxSpeed = 3;  
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
+    //체력
+    public int health = 1000000;
+    //공격력
+    public int attackPower = 5;
+    //지구력
+    public int endurance = 50;
+    //방어력
+    public int defense = 15;
+    //강인도
+    public int tenacity = 200;
+    //공격속도
+    public int attackSpeed= 2;
+    //사거리
+    public int crossroads = 3;
+    //행운
+    public int luck = 50;
+
+    //음파 오브젝트
+    public GameObject soundWave;
+
+
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        infancy();
+
     }
 
     private void Update()
@@ -27,6 +51,21 @@ public class Player : MonoBehaviour
         //Direction Sprite
         if (Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+
+        //attack
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+            Input.mousePosition.y, -Camera.main.transform.position.z));
+        if (Input.GetMouseButtonDown(0))
+        {
+            soundWave.transform.position = new Vector2(point.x, point.y);
+            if( crossroads < Mathf.Sqrt(Mathf.Pow(point.x, 2) + Mathf.Pow(point.y, 2)))
+            {
+                float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x, 2) + Mathf.Pow(point.y, 2));
+                soundWave.transform.position = new Vector2(point.x * maxCrossroads, point.y * maxCrossroads);
+            }
+                
+            Instantiate(soundWave);
+        }
     }
 
     private void FixedUpdate()
@@ -65,5 +104,29 @@ public class Player : MonoBehaviour
             isLadder = false;
             rigid.gravityScale = 2;
         }
+    }
+
+    private void infancy()
+    {
+        //이동속도
+        maxSpeed = 3;
+        //점프력
+        jumpPower = 8;
+        //체력
+        health = 1000000;
+        //공격력
+        attackPower = 5;
+        //지구력
+        endurance = 50;
+        //방어력
+        defense = 15;
+        //강인도
+        tenacity = 200;
+        //공격속도
+        attackSpeed = 2;
+        //사거리
+        crossroads = 3;
+        //행운
+        luck = 50 + 20;
     }
 }
