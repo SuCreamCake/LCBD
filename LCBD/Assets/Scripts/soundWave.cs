@@ -11,7 +11,6 @@ public class soundWave : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        Debug.Log(time);
         if (time > 1)
             Destroy(this.gameObject);
     }

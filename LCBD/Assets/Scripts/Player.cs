@@ -4,40 +4,42 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Camera camera;
     Rigidbody2D rigid;
     //이동속도
-    public float maxSpeed = 3;  
+    public float maxSpeed;  
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
     //체력
-    public int health = 1000000;
+    public int health;
     //공격력
-    public int attackPower = 5;
+    public int attackPower;
     //지구력
-    public int endurance = 50;
+    public int endurance;
     //방어력
-    public int defense = 15;
+    public int defense;
     //강인도
-    public int tenacity = 200;
+    public int tenacity;
     //공격속도
-    public int attackSpeed= 2;
+    public int attackSpeed;
     //사거리
-    public int crossroads = 3;
+    public int crossroads;
     //행운
-    public int luck = 50;
+    public int luck;
 
     //음파 오브젝트
     public GameObject soundWave;
 
+    
 
 
     private void Awake()
     {
+        //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         infancy();
-
     }
 
     private void Update()
@@ -52,21 +54,27 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
 
+
         //attack
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-            Input.mousePosition.y, -Camera.main.transform.position.z));
+        Vector3 point = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+        Input.mousePosition.y, -camera.transform.position.z));
         if (Input.GetMouseButtonDown(0))
-        {
+        { 
+      
             soundWave.transform.position = new Vector2(point.x, point.y);
-            if( crossroads < Mathf.Sqrt(Mathf.Pow(point.x, 2) + Mathf.Pow(point.y, 2)))
+            if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
             {
-                float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x, 2) + Mathf.Pow(point.y, 2));
-                soundWave.transform.position = new Vector2(point.x * maxCrossroads, point.y * maxCrossroads);
-            }
                 
+                float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2));
+
+                soundWave.transform.position = new Vector2(this.transform.position.x+(point.x - this.transform.position.x) * maxCrossroads  
+                    , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads );
+            }
+            
             Instantiate(soundWave);
         }
     }
+
 
     private void FixedUpdate()
     {
