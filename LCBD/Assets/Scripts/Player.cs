@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     //강인도
     public int tenacity;
     //공격속도
-    public int attackSpeed;
+    public float attackSpeed;
     //사거리
     public int crossroads;
     //행운
@@ -42,8 +42,28 @@ public class Player : MonoBehaviour
         //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if(stage == 1)
-            infancy();
+        switch (stage)
+        {
+            case 1:
+                infancy();
+                break;
+            case 2:
+                childhood();
+                break;
+            case 3:
+                adolescence();
+                break;
+            case 4:
+                adulthood();
+                break;
+            case 5:
+                oldAge();
+                break;
+            default:
+                break;
+        }
+
+
     }
 
     private void Update()
@@ -55,6 +75,8 @@ public class Player : MonoBehaviour
         {
             case 1:
                 attack();
+                break;
+            case 4:
                 break;
             default:
                 break;
@@ -154,9 +176,9 @@ public class Player : MonoBehaviour
     private void infancy()
     {
         //이동속도
-        maxSpeed = 3;
+        maxSpeed = 5 -2;
         //점프력
-        jumpPower = 8;
+        jumpPower = 10 -2;
         //체력
         health = 1000000;
         //공격력
@@ -168,7 +190,7 @@ public class Player : MonoBehaviour
         //강인도
         tenacity = 200;
         //공격속도
-        attackSpeed = 2;
+        attackSpeed = 3;
         //사거리
         crossroads = 3;
         //행운
@@ -178,6 +200,40 @@ public class Player : MonoBehaviour
 
     private void childhood()
     {
+        //이동속도
+        maxSpeed += 2;
+        //점프력
+        jumpPower += 2;
+        //행운
+        luck -= 20;
+        //공격력
+        attackPower += 15;
+        //사거리
+        crossroads += 2;
+    }
 
+    private void adolescence()
+    {
+        //공격력
+        attackPower -= 15;
+        //사거리
+        crossroads -= 2;
+        //이동속도
+        maxSpeed += 0.5f;
+        //점프력
+        jumpPower += 1;
+    }
+    private void adulthood()
+    {
+        //공격속도
+        attackSpeed += 1.7f;
+    }
+
+    private void oldAge()
+    {
+        //이동속도
+        maxSpeed -= 3;
+        //점프력
+        jumpPower -= 3;
     }
 }
