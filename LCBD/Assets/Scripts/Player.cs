@@ -27,12 +27,14 @@ public class Player : MonoBehaviour
     public int crossroads;
     //행운
     public int luck;
-
     //음파 오브젝트
-    private float time = 0;
     public GameObject soundWave;
+    private float time = 0;
     //스테이지
     public int stage;
+    public GridLayout ladder;
+
+    
 
     
 
@@ -42,6 +44,8 @@ public class Player : MonoBehaviour
         //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+
         switch (stage)
         {
             case 1:
@@ -63,7 +67,6 @@ public class Player : MonoBehaviour
                 break;
         }
 
-
     }
 
     private void Update()
@@ -71,6 +74,17 @@ public class Player : MonoBehaviour
         jump();
         stopSpeed();
         directionSprite();
+
+
+        if (isLadder && Input.GetButtonDown("Jump"))
+        {
+            transform.Translate(0, 3, 0);
+
+        }
+
+
+
+
         switch (stage)
         {
             case 1:
@@ -81,15 +95,16 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
+
+
+
     }
 
 
     private void FixedUpdate()
     {
-        work();
-
+        walk();
         upDown();
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -98,6 +113,7 @@ public class Player : MonoBehaviour
         {
             isLadder = true;
             rigid.gravityScale = 0;
+            rigid.drag = 3;
         }
     }
 
@@ -120,7 +136,7 @@ public class Player : MonoBehaviour
     {
         //stop speed
         if (Input.GetButtonUp("Horizontal"))
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
     private void directionSprite()
     {
@@ -132,7 +148,6 @@ public class Player : MonoBehaviour
     {
         //attack
         time += Time.deltaTime;
-        Debug.Log(time);
         Vector3 point = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
         Input.mousePosition.y, -camera.transform.position.z));
         if (time >= attackSpeed && Input.GetMouseButtonDown(0))
@@ -151,7 +166,7 @@ public class Player : MonoBehaviour
             Instantiate(soundWave);
         }
     }
-    private void work()
+    private void walk()
     {
         //Move Speed
         float h = Input.GetAxisRaw("Horizontal");
@@ -169,7 +184,7 @@ public class Player : MonoBehaviour
         if (isLadder)
         {
             float ver = Input.GetAxis("Vertical");
-            rigid.velocity = new Vector2(rigid.velocity.x, ver * maxSpeed);
+            rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
         }
     }
 
