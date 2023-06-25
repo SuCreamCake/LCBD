@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -32,8 +33,9 @@ public class Player : MonoBehaviour
     private float time = 0;
     //스테이지
     public int stage;
-    public GridLayout ladder;
+    public string sceneName;
 
+    
     
 
     
@@ -76,10 +78,10 @@ public class Player : MonoBehaviour
         directionSprite();
 
 
+        
         if (isLadder && Input.GetButtonDown("Jump"))
         {
-            transform.Translate(0, 3, 0);
-
+            transform.Translate(0, 3, 0);  
         }
 
 
@@ -114,6 +116,11 @@ public class Player : MonoBehaviour
             isLadder = true;
             rigid.gravityScale = 0;
             rigid.drag = 3;
+        }
+        if (collision.CompareTag("Potal")&& stage == 1)
+        {
+            stage = 2;
+            SceneManager.LoadScene(sceneName);
         }
     }
 

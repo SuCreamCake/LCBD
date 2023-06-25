@@ -7,6 +7,8 @@ TagManager:
   - Ladder
   - monster
   - gambler
+  - Grid
+  - Potal
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ladder : MonoBehaviour
 {
     public Collider2D platformCollider;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
