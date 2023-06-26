@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class Player : MonoBehaviour
 {
@@ -78,11 +79,8 @@ public class Player : MonoBehaviour
         directionSprite();
 
 
-        
-        if (isLadder && Input.GetButtonDown("Jump"))
-        {
-            transform.Translate(0, 3, 0);  
-        }
+
+        ladderJump();
 
 
 
@@ -101,6 +99,7 @@ public class Player : MonoBehaviour
 
 
     }
+
 
 
     private void FixedUpdate()
@@ -257,5 +256,23 @@ public class Player : MonoBehaviour
         maxSpeed -= 3;
         //มกวมทย
         jumpPower -= 3;
+    }
+
+    private void ladderJump()
+    {
+        if (isLadder && Input.GetButtonDown("Jump"))
+        {
+            InvokeRepeating("InvokeJump", 0.01f, 0.01f);
+        }
+    }
+    private void InvokeJump()
+    {
+        if (isLadder)
+            transform.Translate(0, 0.5f, 0);
+        else
+        {
+            CancelInvoke("InvokeJump");
+            transform.Translate(0, -1.5f, 0);
+        }
     }
 }
