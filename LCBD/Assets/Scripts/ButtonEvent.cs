@@ -11,5 +11,11 @@ public class ButtonEvent : MonoBehaviour
         Debug.Log("Click Start");
         SceneManager.LoadScene("Player");
     }
+
+    public void OnClickQuitBtn()
+    {
+        Application.Quit();
+        Debug.Log("Click Quit");
+    }
     
 }
