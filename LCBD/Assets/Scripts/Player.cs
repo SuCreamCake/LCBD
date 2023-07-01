@@ -8,38 +8,39 @@ public class Player : MonoBehaviour
 {
     public Camera camera;
     Rigidbody2D rigid;
-    //ÀÌµ¿¼Óµµ
-    public float maxSpeed;  
+    //ì´ë™ì†ë„
+    public float maxSpeed;
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
-    //Ã¼·Â
+    //ì²´ë ¥
     public int health;
-    //°ø°İ·Â
+    //ê³µê²©ë ¥
     public int attackPower;
-    //Áö±¸·Â
+    //ì§€êµ¬ë ¥
     public int endurance;
-    //¹æ¾î·Â
+    //ë°©ì–´ë ¥
     public int defense;
-    //°­ÀÎµµ
+    //ê°•ì¸ë„
     public int tenacity;
-    //°ø°İ¼Óµµ
+    //ê³µê²©ì†ë„
     public float attackSpeed;
-    //»ç°Å¸®
+    //ì‚¬ê±°ë¦¬
     public int crossroads;
-    //Çà¿î
+    //í–‰ìš´
     public int luck;
-    //À½ÆÄ ¿ÀºêÁ§Æ®
+    //ìŒíŒŒ ì˜¤ë¸Œì íŠ¸
     public GameObject soundWave;
     private float time = 0;
-    //½ºÅ×ÀÌÁö
+    //ìŠ¤í…Œì´ì§€
     public int stage;
     public string sceneName;
+    //ê³µê²©ì†ë„ë¥¼ ì²´í¬í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+    public float attackTime = 0;
 
-    
-    
 
-    
+
+
 
 
     private void Awake()
@@ -89,6 +90,8 @@ public class Player : MonoBehaviour
         {
             case 1:
                 attack();
+                //ë™ì£¼ ë§¨ì† í…ŒìŠ¤íŠ¸ ì¶”í›„ì— ì‚­ì œ í•˜ë©´ ë¨
+                punchAttack();
                 break;
             case 4:
                 break;
@@ -96,7 +99,7 @@ public class Player : MonoBehaviour
                 break;
         }
 
-
+        
 
     }
 
@@ -116,7 +119,7 @@ public class Player : MonoBehaviour
             rigid.gravityScale = 0;
             rigid.drag = 3;
         }
-        if (collision.CompareTag("Potal")&& stage == 1)
+        if (collision.CompareTag("Potal") && stage == 1)
         {
             stage = 2;
             SceneManager.LoadScene(sceneName);
@@ -150,6 +153,31 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
     }
+    
+    //ë§¨ì† ê³µê²©
+    public void punchAttack()
+    {
+        attackTime += Time.deltaTime;
+        if(attackTime > (attackSpeed / 2) && Input.GetMouseButtonDown(0))
+        {
+            attackTime = 0;
+            //ë§ˆìš°ìŠ¤ì˜ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = camera.ScreenToWorldPoint(mousePoint);
+            //í˜„ì¬ ìºë¦­í„°ì˜ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
+            Vector2 characterPoint = new Vector2(this.transform.position.x, this.transform.position.y);
+            //ì›í˜•ë ˆì´ìºìŠ¤íŒ…  ì‹œì‘ì 
+            float startX = (mousePoint.x + characterPoint.x) / 2;
+            float startY = (mousePoint.y + characterPoint.y) / 2;
+            //ì›í˜•ë ˆì´ìºìŠ¤íŒ…
+            Vector3 startAttackPoint = new Vector3(startX, startY, 0);
+            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint,1/3,Vector2.up,0);
+            Debug.DrawRay(mousePoint, transform.forward * 10, Color.red, 0.3f);
+        }
+    }
+
+
+    //ìœ ì•„ê¸° íŠ¹ìˆ˜ê³µê²©
     private void attack()
     {
         //attack
@@ -190,71 +218,71 @@ public class Player : MonoBehaviour
         if (isLadder)
         {
             float ver = Input.GetAxis("Vertical");
-            rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
+            rigid.velocity = new Vector2(rigid.velocity.x, ver * maxSpeed);
         }
     }
 
     private void infancy()
     {
-        //ÀÌµ¿¼Óµµ
-        maxSpeed = 5 -2;
-        //Á¡ÇÁ·Â
-        jumpPower = 10 -2;
-        //Ã¼·Â
+        //ì´ë™ì†ë„
+        maxSpeed = 5 - 2;
+        //ì í”„ë ¥
+        jumpPower = 10 - 2;
+        //ì²´ë ¥
         health = 1000000;
-        //°ø°İ·Â
+        //ê³µê²©ë ¥
         attackPower = 5;
-        //Áö±¸·Â
+        //ì§€êµ¬ë ¥
         endurance = 50;
-        //¹æ¾î·Â
+        //ë°©ì–´ë ¥
         defense = 15;
-        //°­ÀÎµµ
+        //ê°•ì¸ë„
         tenacity = 200;
-        //°ø°İ¼Óµµ
+        //ê³µê²©ì†ë„
         attackSpeed = 3;
-        //»ç°Å¸®
+        //ì‚¬ê±°ë¦¬
         crossroads = 3;
-        //Çà¿î
+        //í–‰ìš´
         luck = 50 + 20;
 
     }
 
     private void childhood()
     {
-        //ÀÌµ¿¼Óµµ
+        //ì´ë™ì†ë„
         maxSpeed += 2;
-        //Á¡ÇÁ·Â
+        //ì í”„ë ¥
         jumpPower += 2;
-        //Çà¿î
+        //í–‰ìš´
         luck -= 20;
-        //°ø°İ·Â
+        //ê³µê²©ë ¥
         attackPower += 15;
-        //»ç°Å¸®
+        //ì‚¬ê±°ë¦¬
         crossroads += 2;
     }
 
     private void adolescence()
     {
-        //°ø°İ·Â
+        //ê³µê²©ë ¥
         attackPower -= 15;
-        //»ç°Å¸®
+        //ì‚¬ê±°ë¦¬
         crossroads -= 2;
-        //ÀÌµ¿¼Óµµ
+        //ì´ë™ì†ë„
         maxSpeed += 0.5f;
-        //Á¡ÇÁ·Â
+        //ì í”„ë ¥
         jumpPower += 1;
     }
     private void adulthood()
     {
-        //°ø°İ¼Óµµ
+        //ê³µê²©ì†ë„
         attackSpeed += 1.7f;
     }
 
     private void oldAge()
     {
-        //ÀÌµ¿¼Óµµ
+        //ì´ë™ì†ë„
         maxSpeed -= 3;
-        //Á¡ÇÁ·Â
+        //ì í”„ë ¥
         jumpPower -= 3;
     }
 
