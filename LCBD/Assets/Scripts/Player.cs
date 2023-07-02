@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -165,14 +167,42 @@ public class Player : MonoBehaviour
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = camera.ScreenToWorldPoint(mousePoint);
             //현재 캐릭터의 위치 가져오기
-            Vector2 characterPoint = new Vector2(this.transform.position.x, this.transform.position.y);
-            //원형레이캐스팅  시작점
-            float startX = (mousePoint.x + characterPoint.x) / 2;
-            float startY = (mousePoint.y + characterPoint.y) / 2;
+            Vector2 characterPoint = new(transform.position.x, transform.position.y);
+            //startX, startY좌표 구하기 위한, 거리와 각도
+            float rangeRadius = crossroads / 6.0f;
+            float rangeRadian = Mathf.Atan2(mousePoint.y - characterPoint.y, mousePoint.x - characterPoint.x);
+            //원형레이캐스팅  시작점 (=중심점)
+            float startX = characterPoint.x + rangeRadius * Mathf.Cos(rangeRadian);
+            float startY = characterPoint.y + rangeRadius * Mathf.Sin(rangeRadian);
             //원형레이캐스팅
-            Vector3 startAttackPoint = new Vector3(startX, startY, 0);
-            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint,1/3,Vector2.up,0);
-            Debug.DrawRay(mousePoint, transform.forward * 10, Color.red, 0.3f);
+            Vector2 startAttackPoint = new(startX, startY);
+            //공격 가능한 레이어를 추가하고 해당 레이어만 감지하도록 레이어 추가하고 레이어 감지 인자 수정 필요 (여러 레이어도 감지 가능) (일단 플레이어 제외한 모든 레이어 감지)
+            int layerMask = 1 << LayerMask.NameToLayer("Player");
+            layerMask = ~layerMask;
+            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
+            if (raycastHit.collider != null)    //대상 감지되면
+            {
+                Debug.Log("맨손 공격에 감지된 대상 오브젝트: " + raycastHit.collider.gameObject);
+                //진짜 공격해서 감지한 대상 체력 깎아주기
+            }
+            //수치 디버깅
+            Debug.Log("mousePoint: " + mousePoint);
+            Debug.Log("characterPoint: " + characterPoint);
+            Debug.Log("rangeRadian: " + rangeRadian);
+            Debug.Log("startAttackPoint: " + startAttackPoint);
+
+            //레이캐스트 범위 그리기 디버그용 추후 삭제
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * crossroads, Color.white, 0.3f);      //캐릭터 중점 ~ 원래 사거리
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * crossroads / 3f, Color.green, 0.3f); //캐릭터 중점 ~ 맨손 사거리
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * rangeRadius, Color.black, 0.3f);     //캐릭터 중점 ~ 원 범위 중점까지 거리
+            Debug.DrawRay(startAttackPoint, Vector2.up * rangeRadius, Color.red, 0.3f);                     //대충 원 위쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.down * rangeRadius, Color.red, 0.3f);                   //대충 원 아래쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.right * rangeRadius, Color.red, 0.3f);                  //대충 원 오른쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.left * rangeRadius, Color.red, 0.3f);                   //대충 원 왼쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.one.normalized * rangeRadius, Color.red, 0.3f);         //대충 원 우상향 대각선 범위
+            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  //대충 원 우하향 대각선 범위
+            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  //대충 원 좌상향 대각선 범위
+            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //대충 원 좌하향 대각선 범위
         }
     }
 
