@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     public int luck;
     //음파 오브젝트
     public GameObject soundWave;
+    //총알 오브젝트
+    public GameObject Bullet;
     private float time = 0;
     //스테이지
     public int stage;
@@ -169,7 +171,7 @@ public class Player : MonoBehaviour
             //현재 캐릭터의 위치 가져오기
             Vector2 characterPoint = new(transform.position.x, transform.position.y);
             //startX, startY좌표 구하기 위한, 거리와 각도
-            float rangeRadius = crossroads / 6.0f;
+            float rangeRadius = crossroads / 6.0f; //원의 반지름 1/3 1/2 == 1/6
             float rangeRadian = Mathf.Atan2(mousePoint.y - characterPoint.y, mousePoint.x - characterPoint.x);
             //원형레이캐스팅  시작점 (=중심점)
             float startX = characterPoint.x + rangeRadius * Mathf.Cos(rangeRadian);
@@ -205,8 +207,24 @@ public class Player : MonoBehaviour
             Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //대충 원 좌하향 대각선 범위
         }
     }
+    //원거리공격 메서드
+    private void longDistanceAttack()
+    {
+        attackTime += Time.deltaTime;
+        if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
+        {
+            attackTime = 0;
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = camera.ScreenToWorldPoint(mousePoint);
+            //공격 방향 찾기
+            float attackStartX = mousePoint.x - transform.position.x;
+            float attackStartY = mousePoint.y - transform.position.y;
+            //공격방향
+            Vector2 attackForce = new Vector2(attackStartX, attackStartY);
 
-
+        }
+    }
     //유아기 특수공격
     private void attack()
     {
