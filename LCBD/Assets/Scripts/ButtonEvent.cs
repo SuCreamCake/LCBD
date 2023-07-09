@@ -17,5 +17,11 @@ public class ButtonEvent : MonoBehaviour
         Application.Quit();
         Debug.Log("Click Quit");
     }
+
+    public void OnclickSkipBtn()
+    {
+        Debug.Log("Skip!");
+        SceneManager.LoadScene("StartMenu");
+    }
     
 }
