@@ -7,6 +7,7 @@ using System.Threading;
 public class Player : MonoBehaviour
 {
     public Camera camera;
+    public TalkManage talkManger;
     Rigidbody2D rigid;
     //이동속도
     public float maxSpeed;  
@@ -74,28 +75,30 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        jump();
-        stopSpeed();
-        directionSprite();
+        if (talkManger.isTalk == false)
+        {//대화창이 열려있는동안에는 조작 안됨. TalkManage스크립트에서 확인가능
+            jump();
+            stopSpeed();
+            directionSprite();
 
 
 
-        ladderJump();
+            ladderJump();
 
 
 
 
-        switch (stage)
-        {
-            case 1:
-                attack();
-                break;
-            case 4:
-                break;
-            default:
-                break;
+            switch (stage)
+            {
+                case 1:
+                    attack();
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
         }
-
 
 
     }
@@ -136,7 +139,10 @@ public class Player : MonoBehaviour
     {
         //Jump
         if (Input.GetButtonDown("Jump"))
+        {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            //talkManger.Talk(scanObject);
+        }
     }
     private void stopSpeed()
     {
@@ -273,6 +279,14 @@ public class Player : MonoBehaviour
         {
             CancelInvoke("InvokeJump");
             transform.Translate(0, -1.5f, 0);
+        }
+    }
+    void OnColliderEnter2D(Collider2D coliObj)
+    {
+        if (coliObj.gameObject.CompareTag("TestTag"))
+        {
+            Debug.Log("깃발과 충돌함");
+            print("이거 왜 안돼?");
         }
     }
 }

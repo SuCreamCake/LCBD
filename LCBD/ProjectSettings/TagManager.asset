@@ -9,6 +9,7 @@ TagManager:
   - gambler
   - Grid
   - Potal
+  - TestTag
   layers:
   - Default
   - TransparentFX
