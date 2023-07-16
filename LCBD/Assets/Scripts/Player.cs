@@ -7,7 +7,7 @@ using System.Threading;
 public class Player : MonoBehaviour
 {
     public Camera camera;
-    public TalkManage talkManger;
+    //TalkManage talkManger;
     Rigidbody2D rigid;
     //이동속도
     public float maxSpeed;  
@@ -37,18 +37,18 @@ public class Player : MonoBehaviour
     public int stage;
     public string sceneName;
 
+    //애니메이션
+    Animator ani;
     
-    
-
-    
-
 
     private void Awake()
     {
+
         //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
+        ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        
 
         switch (stage)
         {
@@ -75,31 +75,23 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (talkManger.isTalk == false)
-        {//대화창이 열려있는동안에는 조작 안됨. TalkManage스크립트에서 확인가능
-            jump();
-            stopSpeed();
-            directionSprite();
+        AnimationMotion();
 
 
-
-            ladderJump();
-
-
-
-
-            switch (stage)
-            {
-                case 1:
-                    attack();
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
-            }
+        jump();
+        stopSpeed();
+        directionSprite();
+        ladderJump();
+        switch (stage)
+        {
+         case 1:
+            attack();
+            break;
+         case 4:
+           break;
+         default:
+             break;
         }
-
 
     }
 
@@ -133,15 +125,19 @@ public class Player : MonoBehaviour
             isLadder = false;
             rigid.gravityScale = 2;
         }
+        if (collision.CompareTag("TestTag"))
+        {
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
+        }
     }
 
     private void jump()
     {
         //Jump
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !ani.GetBool("isJumping"))
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            //talkManger.Talk(scanObject);
+            ani.SetBool("isJumping", true);
         }
     }
     private void stopSpeed()
@@ -153,7 +149,8 @@ public class Player : MonoBehaviour
     private void directionSprite()
     {
         //Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
+        //캐릭터의 sprite가 이동하는 방향을 바라보도록 설정
+        if (Input.GetButtonDown("Horizontal")) //왼쪽을 바라볼때
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
     }
     private void attack()
@@ -185,9 +182,9 @@ public class Player : MonoBehaviour
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
 
         //maxSpeed
-        if (rigid.velocity.x > maxSpeed)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < (-1) * maxSpeed)
+        if (rigid.velocity.x > maxSpeed) //rigidbody의 현재속도가 최고속도보다 높을경우
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y); //최고속도를 못넘기게 설정
+        else if (rigid.velocity.x < (-1) * maxSpeed) //-1을 곱하면(음수) 왼쪽일때
             rigid.velocity = new Vector2((-1) * maxSpeed, rigid.velocity.y);
     }
     private void upDown()
@@ -266,9 +263,10 @@ public class Player : MonoBehaviour
 
     private void ladderJump()
     {
-        if (isLadder && Input.GetButtonDown("Jump"))
+        if (isLadder && Input.GetButtonDown("Jump") /*&& !ani.GetBool("isJumping")*/) //이것도 점프라 올라가고 점프안되게 하려는중.
         {
             InvokeRepeating("InvokeJump", 0.01f, 0.01f);
+            //ani.SetBool("isJumping", true);
         }
     }
     private void InvokeJump()
@@ -281,12 +279,47 @@ public class Player : MonoBehaviour
             transform.Translate(0, -1.5f, 0);
         }
     }
-    void OnColliderEnter2D(Collider2D coliObj)
+
+    void openningMove()
     {
-        if (coliObj.gameObject.CompareTag("TestTag"))
+        float h = Input.GetAxisRaw("Horizontal");
+
+        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        if (rigid.velocity.x>maxSpeed)
         {
-            Debug.Log("깃발과 충돌함");
-            print("이거 왜 안돼?");
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+        }
+        else if (rigid.velocity.x > maxSpeed*(-1))
+        {
+            rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
+        }
+
+    }
+
+    private void AnimationMotion()
+    {
+        if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
+        {
+            ani.SetBool("isRunning", false);
+        }
+        else
+        {
+            ani.SetBool("isRunning", true);
+        }
+
+        if (rigid.velocity.y < 0)
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 0.5f)
+                {
+                    //Debug.Log("점프 끝");
+                    ani.SetBool("isJumping", false);
+                }
+            }
         }
     }
 }

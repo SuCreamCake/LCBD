@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 111516093}
   - component: {fileID: 111516092}
   - component: {fileID: 111516091}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Grid
   m_Icon: {fileID: 0}
@@ -464,6 +464,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d22bfc4edea1f84591af2d77f5407de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &587067015
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587067003}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: de5252bd2d76bff48a3a3199e35b21df, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &610459045
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1246816254}
   - component: {fileID: 1246816253}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grid2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1467,7 +1487,7 @@ GameObject:
   - component: {fileID: 1917292042}
   - component: {fileID: 1917292041}
   - component: {fileID: 1917292039}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Grid
   m_Icon: {fileID: 0}
@@ -1844,11 +1864,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: -1.73
       objectReference: {fileID: 0}
     - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_LocalPosition.z
