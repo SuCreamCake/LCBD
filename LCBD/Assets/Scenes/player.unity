@@ -1854,6 +1854,10 @@ PrefabInstance:
       propertyPath: sceneName
       value: stage2
       objectReference: {fileID: 0}
+    - target: {fileID: 7750974122060773474, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6447722072507503168, guid: 10f3cacccb0c4c547be76836eba20664, type: 3}
     - target: {fileID: 7750974122060773478, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1861,6 +1865,18 @@ PrefabInstance:
     - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7750974122060773533, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_LocalPosition.x

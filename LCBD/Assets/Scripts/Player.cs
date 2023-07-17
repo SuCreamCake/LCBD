@@ -48,28 +48,9 @@ public class Player : MonoBehaviour
         ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
 
-        switch (stage)
-        {
-            case 1:
-                infancy();
-                break;
-            case 2:
-                childhood();
-                break;
-            case 3:
-                adolescence();
-                break;
-            case 4:
-                adulthood();
-                break;
-            case 5:
-                oldAge();
-                break;
-            default:
-                break;
-        }
+        infancy();
+        
 
     }
 
@@ -81,14 +62,14 @@ public class Player : MonoBehaviour
         jump();
         stopSpeed();
         directionSprite();
-        ladderJump();
         switch (stage)
         {
          case 1:
             attack();
             break;
          case 4:
-           break;
+            ladderJump();
+            break;
          default:
              break;
         }
@@ -111,11 +92,36 @@ public class Player : MonoBehaviour
             rigid.gravityScale = 0;
             rigid.drag = 3;
         }
-        if (collision.CompareTag("Potal")&& stage == 1)
+        if (collision.CompareTag("Potal"))
         {
-            stage = 2;
-            SceneManager.LoadScene(sceneName);
+            switch (stage)
+            {
+                case 1:
+                    stage = 2;
+                    childhood();
+                    SceneManager.LoadScene(sceneName);
+                    sceneName = "stage3";
+                    break;
+                case 2:
+                    stage = 3;
+                    adolescence();
+                    SceneManager.LoadScene(sceneName);
+                    sceneName = "stage4";
+                    break;
+                case 3:
+                    stage = 4;
+                    adulthood();
+                    SceneManager.LoadScene(sceneName);
+                    sceneName = "stage5";
+                    break;
+                case 4:
+                    stage = 5;
+                    oldAge();
+                    SceneManager.LoadScene(sceneName);
+                    break;
+            }
         }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
