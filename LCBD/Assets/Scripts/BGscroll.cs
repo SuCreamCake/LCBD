@@ -15,7 +15,7 @@ public class BGscroll : MonoBehaviour
 
     void Awake()
     {
-        viewHeight = Camera.main.orthographicSize * 2; //카메라 높이 사이즈
+        viewHeight = Camera.main.orthographicSize*2; //카메라 높이 사이즈
     }
 
     void Update()
@@ -23,7 +23,7 @@ public class BGscroll : MonoBehaviour
         Vector3 curPos = transform.position; //현재 위치를 가져온다
         //떨어지는것처럼 보이기위해 배경을 위로 이동시킴
         Vector3 nextPos = Vector3.up * speed * Time.deltaTime;
-        //배경의 위치를 계속 이동시킴
+        //배경의 위치를 계속 위로 이동시킴
         transform.position = curPos + nextPos;
 
 
