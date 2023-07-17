@@ -11,13 +11,13 @@ public class TalkManage : MonoBehaviour
     public bool isTalk; //대화상태여부
     public Text CharText;//캐릭터이름 대화상자
     int clickCount = 0; //클릭한 카운트 갯수;
-    public Collider2D scanObject; //충돌한 오브젝트
+
     //Animator ani; //애니메이터 아직안됨
     private void Awake()
     {
         //ani = GetComponent<Animator>();
-        talkPanel.SetActive(false);
-        isTalk = false;
+        isTalk = true;
+        TalkUpdate();
     }
 
     private void Update()
@@ -31,13 +31,6 @@ public class TalkManage : MonoBehaviour
                 TalkUpdate(); //입력을 통해 계속 대화를 이어가야하기때문에 업데이트에도 넣어줌.
             }
         }
-    }
-
-    public void Talk(Collider2D collision)
-    {
-        scanObject = collision; //깃발과 충돌한 물체이름을 가져옴
-        isTalk = true; //대화가 활성화됨
-        TalkUpdate(); //충돌시 작동하기때문에 대화 바로 첫번째 실행
     }
 
     private void TalkUpdate()
