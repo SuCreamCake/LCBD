@@ -10,11 +10,12 @@ public class TalkManage : MonoBehaviour
     public Text TalkText; //텍스트에 쓸 내용변수
     public bool isTalk; //대화상태여부
     public Text CharText;//캐릭터이름 대화상자
-    int clickCount = 0; //클릭한 카운트 갯수;
+    public int clickCount = 0; //클릭한 카운트 갯수;
+    public GameObject blackPanel;
 
-    //Animator ani; //애니메이터 아직안됨
     private void Awake()
     {
+        blackPanel.SetActive(false);
         //ani = GetComponent<Animator>();
         isTalk = true;
         TalkUpdate();
@@ -46,13 +47,10 @@ public class TalkManage : MonoBehaviour
         {
             TalkText.text = "왜 그런 선택을 했지?\n" +
                 "(쉐도우 복싱을 하며..몸이 크게 흔들린다..)";
-
-                //ani.SetBool("isLook", true);
         }
         else if (clickCount == 2)
         {
             TalkText.text = "으아아아아악!!!!!!!!!\n" + "(나무 위에서 떨어진다.)";
-            //ani.SetBool("isLook", false);
         }
         else if (clickCount == 3)
         {
@@ -78,6 +76,7 @@ public class TalkManage : MonoBehaviour
         else if (clickCount == 7)
         {
             CharPanel.SetActive(false);
+            blackPanel.SetActive(true);
             TalkText.text = "쿵...!";
         }
         else //키 입력의 값이 벗어나면 비활성화 업데이트함수에서도 실행됨.
