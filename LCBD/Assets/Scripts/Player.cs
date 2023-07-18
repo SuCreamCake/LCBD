@@ -6,7 +6,6 @@ using System.Threading;
 
 public class Player : MonoBehaviour
 {
-    public Camera camera;
     //TalkManage talkManger;
     Rigidbody2D rigid;
     //이동속도
@@ -14,10 +13,14 @@ public class Player : MonoBehaviour
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
-    //체력
+    //최대체력
+    public int maxHealth;
+    //현재체력
     public int health;
     //공격력
     public int attackPower;
+    //최대지구력
+    public int maxEndurance;
     //지구력
     public int endurance;
     //방어력
@@ -27,7 +30,7 @@ public class Player : MonoBehaviour
     //공격속도
     public float attackSpeed;
     //사거리
-    public int crossroads;
+    public float crossroads;
     //행운
     public int luck;
     //음파 오브젝트
@@ -35,16 +38,13 @@ public class Player : MonoBehaviour
     private float time = 0;
     //스테이지
     public int stage;
-    public string sceneName;
 
     //애니메이션
     Animator ani;
     
 
     private void Awake()
-    {
-
-        //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
+    { 
         ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
         jump();
         stopSpeed();
-        directionSprite();
+
         switch (stage)
         {
          case 1:
@@ -73,6 +73,9 @@ public class Player : MonoBehaviour
          default:
              break;
         }
+
+        maxState();
+        minState();
 
     }
 
@@ -99,27 +102,60 @@ public class Player : MonoBehaviour
                 case 1:
                     stage = 2;
                     childhood();
-                    SceneManager.LoadScene(sceneName);
-                    sceneName = "stage3";
+                    SceneManager.LoadScene("stage2");
                     break;
                 case 2:
                     stage = 3;
                     adolescence();
-                    SceneManager.LoadScene(sceneName);
-                    sceneName = "stage4";
+                    SceneManager.LoadScene("stage3");
                     break;
                 case 3:
                     stage = 4;
                     adulthood();
-                    SceneManager.LoadScene(sceneName);
-                    sceneName = "stage5";
+                    SceneManager.LoadScene("stage4");
                     break;
                 case 4:
                     stage = 5;
                     oldAge();
-                    SceneManager.LoadScene(sceneName);
+                    SceneManager.LoadScene("stage5");
                     break;
             }
+        }
+        if(collision.CompareTag("OralStage"))
+        {
+            maxHealth += 5;
+            maxEndurance += 5;
+
+        }
+        if(collision.CompareTag("AnalStage"))
+        {
+            defense += 10;
+            tenacity += 10;
+
+        }
+        if (collision.CompareTag("PhallicStage"))
+        {
+            attackPower += 10;
+            tenacity += 5;
+
+        }
+        if (collision.CompareTag("GrowingUp"))
+        {
+            maxHealth += 5;
+            maxSpeed += 10;
+          
+        }
+        if(collision.CompareTag("IncubationPeriod"))
+        {
+            luck += 5;
+            defense += 5;
+           
+        }
+        if (collision.CompareTag("ReproductiveOrgans"))
+        {
+            attackSpeed += 0.2f;
+            crossroads += 0.25f;
+
         }
         
     }
@@ -152,19 +188,13 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-    private void directionSprite()
-    {
-        //Direction Sprite
-        //캐릭터의 sprite가 이동하는 방향을 바라보도록 설정
-        if (Input.GetButtonDown("Horizontal")) //왼쪽을 바라볼때
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-    }
+
     private void attack()
     {
         //attack
         time += Time.deltaTime;
-        Vector3 point = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-        Input.mousePosition.y, -camera.transform.position.z));
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+        Input.mousePosition.y, -Camera.main.transform.position.z));
         if (time >= attackSpeed && Input.GetMouseButtonDown(0))
         {
             time = 0;
@@ -183,15 +213,18 @@ public class Player : MonoBehaviour
     }
     private void walk()
     {
-        //Move Speed
-        float h = Input.GetAxisRaw("Horizontal");
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+        int key = 0;
+        if (Input.GetKey(KeyCode.A)) key = -1;
+        if (Input.GetKey(KeyCode.D)) key = 1;
 
-        //maxSpeed
-        if (rigid.velocity.x > maxSpeed) //rigidbody의 현재속도가 최고속도보다 높을경우
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y); //최고속도를 못넘기게 설정
-        else if (rigid.velocity.x < (-1) * maxSpeed) //-1을 곱하면(음수) 왼쪽일때
-            rigid.velocity = new Vector2((-1) * maxSpeed, rigid.velocity.y);
+        float speedx = Mathf.Abs(this.rigid.velocity.x);
+
+        if (speedx < maxSpeed)
+            this.rigid.AddForce(transform.right * key * 30);
+
+        //스프라이트 반전
+        if (key != 0 )
+            transform.localScale = new Vector3(key, 1, 1);
     }
     private void upDown()
     {
@@ -210,6 +243,7 @@ public class Player : MonoBehaviour
         //점프력
         jumpPower = 10 -2;
         //체력
+        maxHealth = 1000000;
         health = 1000000;
         //공격력
         attackPower = 5;
@@ -257,6 +291,7 @@ public class Player : MonoBehaviour
     {
         //공격속도
         attackSpeed += 1.7f;
+
     }
 
     private void oldAge()
@@ -286,6 +321,52 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void maxState()
+    {
+        if (maxHealth > 1000000)
+            maxHealth = 1000000;
+        if (attackPower > 1000000)
+            attackPower = 1000000;
+        if (defense > 100000)
+            defense = 100000;
+        if (maxSpeed > 100)
+            maxSpeed = 100;
+        if (tenacity > 200)
+            tenacity = 200;
+        if (attackSpeed > 5)
+            attackSpeed = 5;
+        if (crossroads > 30)
+            crossroads = 30;
+        if (luck > 100)
+            luck = 100;
+
+    }
+    private void minState()
+    {
+        if (attackPower < 0)
+            attackPower = 0;
+        if (endurance < 0)
+            endurance = 0;
+        if (defense <0)
+            defense = 0;
+        if (maxSpeed < 0)
+            maxSpeed = 0;
+        if (tenacity < 0)
+            tenacity = 0;
+        if (attackSpeed < 0)
+            attackSpeed = 0;
+        if (crossroads <0)
+            crossroads = 0;
+        if (luck < 0)
+            luck = 0;
+
+    }
+
+
+
+
+
+    //경훈
     void openningMove()
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -328,4 +409,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+
+
 }
