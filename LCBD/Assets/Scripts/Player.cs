@@ -33,25 +33,20 @@ public class Player : MonoBehaviour
     public int luck;
     //음파 오브젝트
     public GameObject soundWave;
+    //총알 오브젝트
+    public GameObject Bullet;
     private float time = 0;
     //스테이지
     public int stage;
     public string sceneName;
     //공격속도를 체크하기 위한 변수
     public float attackTime = 0;
-    //무기 객체를 담는 자료형
-    public GameObject[] weapons;
-    //맨손 공격, 근접공격, 원거리 공격 인덱스
-    bool sDown1;
-    bool sDown2;
-    bool sDown3;
-    GameObject equipWeapon;
-    //원거리 공격 오브젝트
-    public GameObject bulletObject;
-    //쉴드 오브젝트
-    public GameObject shieldObject;
-    //무기 인덱스
-    public int weaponeIndex = -1;
+
+
+
+
+
+
     private void Awake()
     {
         //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
@@ -89,21 +84,18 @@ public class Player : MonoBehaviour
         directionSprite();
 
 
+
         ladderJump();
+
+
 
 
         switch (stage)
         {
             case 1:
-                //동주가 쓴거 무기 배열화 및 사용 가능한지 확인함
-                //attack();
+                attack();
                 //동주 맨손 테스트 추후에 삭제 하면 됨
-                //punchAttack();
-                //longDistanceAttack();
-                //shield();
-                getInputBattleKeyKode();
-                swapWeapon();
-                battleLogic();
+                punchAttack();
                 break;
             case 4:
                 break;
@@ -111,7 +103,7 @@ public class Player : MonoBehaviour
                 break;
         }
 
-
+        
 
     }
 
@@ -165,12 +157,12 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
     }
-
+    
     //맨손 공격
     public void punchAttack()
     {
         attackTime += Time.deltaTime;
-        if (attackTime > (attackSpeed / 2) && Input.GetMouseButtonDown(0))
+        if(attackTime > (attackSpeed / 2) && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
             //마우스의 위치 가져오기
@@ -215,8 +207,8 @@ public class Player : MonoBehaviour
             Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //대충 원 좌하향 대각선 범위
         }
     }
-    //근접 공격
-    private void meleeAttack()
+    //원거리공격 메서드
+    private void longDistanceAttack()
     {
         attackTime += Time.deltaTime;
         if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
@@ -231,100 +223,8 @@ public class Player : MonoBehaviour
             //공격방향
             Vector2 attackForce = new Vector2(attackStartX, attackStartY);
 
-            GameObject targetObject = GameObject.Find("MeleeAttack");
-            BoxCollider2D boxCollider = targetObject.GetComponent<BoxCollider2D>();
-            float xRange = crossroads*0.3f;
-            float yRange = 2f;
-            Vector2 rangeSize = new Vector2(xRange, yRange);
-            boxCollider.size = rangeSize;
-            boxCollider.transform.forward = attackForce;
-            Debug.Log("공격실행");
         }
     }
-
-    //원거리공격 메서드
-    private void longDistanceAttack()
-    {
-        attackTime += Time.deltaTime;
-        if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
-        {
-            attackTime = 0;
-            //마우스의 위치 가져오기
-            Vector2 mousePoint = Input.mousePosition;
-            mousePoint = camera.ScreenToWorldPoint(mousePoint);
-
-            Vector3 playerPos = transform.position;
-
-            Vector2 direVec = mousePoint - (Vector2)playerPos;
-            direVec = direVec.normalized;
-            GameObject tempObeject = Instantiate(bulletObject);
-            tempObeject.transform.position = transform.position;
-            tempObeject.transform.right = direVec;
-
-
-        }
-    }
-
-    //방어 방법 메서드
-    private void shield()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //마우스의 위치 가져오기
-            Vector2 mousePoint = Input.mousePosition;
-            mousePoint = camera.ScreenToWorldPoint(mousePoint);
-            Vector3 playerPos = transform.position;
-            Vector2 direVec = mousePoint - (Vector2)playerPos;
-            direVec = direVec.normalized;
-            //우측일 경우
-            if (Vector3.Dot(transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
-            {
-                Debug.Log("우측 방패 생성");
-                GameObject shield = Instantiate(shieldObject);
-            }
-            //위쪽일 경우
-            else if (Vector3.Dot(transform.up, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
-            {
-                Debug.Log("위측방패 생성");
-            }
-            else if(Vector3.Dot(-transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
-            {
-                Debug.Log("좌측 방패 생성");
-            }
-            else
-            {
-                Debug.Log("하단 방패 생성");
-            }
-
-        }
-    }
-
-    //전투관련 키 입력
-    private void getInputBattleKeyKode()
-    {
-        sDown1 = Input.GetKeyDown(KeyCode.F1);
-        sDown2 = Input.GetKeyDown(KeyCode.F2);
-        sDown3 = Input.GetKeyDown(KeyCode.F3);
-    }
-    //공격 타입 인덱스
-    private void swapWeapon()
-    {
-        if (sDown1)
-        { 
-           weaponeIndex = 0;
-            Debug.Log("버튼 1활성화");
-        }
-        if (sDown2) weaponeIndex = 1;
-        if (sDown3) weaponeIndex = 2;
-        if (sDown1 || sDown2 || sDown3)
-        {
-            if(equipWeapon!=null)
-                equipWeapon.SetActive(false);
-            equipWeapon = weapons[weaponeIndex];
-            equipWeapon.SetActive(true);
-        }
-    }
-
     //유아기 특수공격
     private void attack()
     {
@@ -368,17 +268,6 @@ public class Player : MonoBehaviour
             float ver = Input.GetAxis("Vertical");
             rigid.velocity = new Vector2(rigid.velocity.x, ver * maxSpeed);
         }
-    }
-
-    private void battleLogic()
-    {
-        if (weaponeIndex == 0)
-            meleeAttack();
-        else if (weaponeIndex == 1)
-            longDistanceAttack();
-        else if (weaponeIndex == 2)
-            punchAttack();
-
     }
 
     private void infancy()
