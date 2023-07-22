@@ -9,6 +9,13 @@ TagManager:
   - gambler
   - Grid
   - Potal
+  - TestTag
+  - OralStage
+  - PhallicStage
+  - AnalStage
+  - GrowingUp
+  - IncubationPeriod
+  - ReproductiveOrgans
   layers:
   - Default
   - TransparentFX
@@ -18,11 +25,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - platform
   - 
   - Player
   - Obstacle
-  - 
+  - background
   - 
   - 
   - 

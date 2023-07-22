@@ -3,107 +3,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
-using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
-    public Camera camera;
+    //TalkManage talkManger;
     Rigidbody2D rigid;
-    //이동속도
-    public float maxSpeed;
+    //�̵��ӵ�
+    public float maxSpeed;  
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
-    //체력
+    //�ִ�ü��
+    public int maxHealth;
+    //����ü��
     public int health;
-    //공격력
+    //���ݷ�
     public int attackPower;
-    //지구력
+    //�ִ�������
+    public int maxEndurance;
+    //������
     public int endurance;
-    //방어력
+    //����
     public int defense;
-    //강인도
+    //���ε�
     public int tenacity;
-    //공격속도
+    //���ݼӵ�
     public float attackSpeed;
-    //사거리
-    public int crossroads;
-    //행운
+    //��Ÿ�
+    public float crossroads;
+    //���
     public int luck;
-    //음파 오브젝트
+    //���� ������Ʈ
     public GameObject soundWave;
-    //총알 오브젝트
-    public GameObject Bullet;
     private float time = 0;
-    //스테이지
+    //��������
     public int stage;
-    public string sceneName;
-    //공격속도를 체크하기 위한 변수
-    public float attackTime = 0;
 
-
-
-
-
+    //�ִϸ��̼�
+    Animator ani;
+    
 
     private void Awake()
-    {
-        //camera = GameObject.Find("Main Camera").GetComponent<Camera>();  
+    { 
+        ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-
-        switch (stage)
-        {
-            case 1:
-                infancy();
-                break;
-            case 2:
-                childhood();
-                break;
-            case 3:
-                adolescence();
-                break;
-            case 4:
-                adulthood();
-                break;
-            case 5:
-                oldAge();
-                break;
-            default:
-                break;
-        }
+        infancy();
+        
 
     }
 
     private void Update()
     {
+        AnimationMotion();
+
+
         jump();
         stopSpeed();
-        directionSprite();
-
-
-
-        ladderJump();
-
-
-
 
         switch (stage)
         {
-            case 1:
-                attack();
-                //동주 맨손 테스트 추후에 삭제 하면 됨
-                punchAttack();
-                break;
-            case 4:
-                break;
-            default:
-                break;
+         case 1:
+            attack();
+            break;
+         case 4:
+            ladderJump();
+            break;
+         default:
+             break;
         }
 
-        
+        maxState();
+        minState();
 
     }
 
@@ -123,11 +95,69 @@ public class Player : MonoBehaviour
             rigid.gravityScale = 0;
             rigid.drag = 3;
         }
-        if (collision.CompareTag("Potal") && stage == 1)
+        if (collision.CompareTag("Potal"))
         {
-            stage = 2;
-            SceneManager.LoadScene(sceneName);
+            switch (stage)
+            {
+                case 1:
+                    stage = 2;
+                    childhood();
+                    SceneManager.LoadScene("stage2");
+                    break;
+                case 2:
+                    stage = 3;
+                    adolescence();
+                    SceneManager.LoadScene("stage3");
+                    break;
+                case 3:
+                    stage = 4;
+                    adulthood();
+                    SceneManager.LoadScene("stage4");
+                    break;
+                case 4:
+                    stage = 5;
+                    oldAge();
+                    SceneManager.LoadScene("stage5");
+                    break;
+            }
         }
+        if(collision.CompareTag("OralStage"))
+        {
+            maxHealth += 5;
+            maxEndurance += 5;
+
+        }
+        if(collision.CompareTag("AnalStage"))
+        {
+            defense += 10;
+            tenacity += 10;
+
+        }
+        if (collision.CompareTag("PhallicStage"))
+        {
+            attackPower += 10;
+            tenacity += 5;
+
+        }
+        if (collision.CompareTag("GrowingUp"))
+        {
+            maxHealth += 5;
+            maxSpeed += 10;
+          
+        }
+        if(collision.CompareTag("IncubationPeriod"))
+        {
+            luck += 5;
+            defense += 5;
+           
+        }
+        if (collision.CompareTag("ReproductiveOrgans"))
+        {
+            attackSpeed += 0.2f;
+            crossroads += 0.25f;
+
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -137,13 +167,20 @@ public class Player : MonoBehaviour
             isLadder = false;
             rigid.gravityScale = 2;
         }
+        if (collision.CompareTag("TestTag"))
+        {
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
+        }
     }
 
     private void jump()
     {
         //Jump
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !ani.GetBool("isJumping"))
+        {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            ani.SetBool("isJumping", true);
+        }
     }
     private void stopSpeed()
     {
@@ -151,87 +188,13 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-    private void directionSprite()
-    {
-        //Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-    }
-    
-    //맨손 공격
-    public void punchAttack()
-    {
-        attackTime += Time.deltaTime;
-        if(attackTime > (attackSpeed / 2) && Input.GetMouseButtonDown(0))
-        {
-            attackTime = 0;
-            //마우스의 위치 가져오기
-            Vector2 mousePoint = Input.mousePosition;
-            mousePoint = camera.ScreenToWorldPoint(mousePoint);
-            //현재 캐릭터의 위치 가져오기
-            Vector2 characterPoint = new(transform.position.x, transform.position.y);
-            //startX, startY좌표 구하기 위한, 거리와 각도
-            float rangeRadius = crossroads / 6.0f; //원의 반지름 1/3 1/2 == 1/6
-            float rangeRadian = Mathf.Atan2(mousePoint.y - characterPoint.y, mousePoint.x - characterPoint.x);
-            //원형레이캐스팅  시작점 (=중심점)
-            float startX = characterPoint.x + rangeRadius * Mathf.Cos(rangeRadian);
-            float startY = characterPoint.y + rangeRadius * Mathf.Sin(rangeRadian);
-            //원형레이캐스팅
-            Vector2 startAttackPoint = new(startX, startY);
-            //공격 가능한 레이어를 추가하고 해당 레이어만 감지하도록 레이어 추가하고 레이어 감지 인자 수정 필요 (여러 레이어도 감지 가능) (일단 플레이어 제외한 모든 레이어 감지)
-            int layerMask = 1 << LayerMask.NameToLayer("Player");
-            layerMask = ~layerMask;
-            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
-            if (raycastHit.collider != null)    //대상 감지되면
-            {
-                Debug.Log("맨손 공격에 감지된 대상 오브젝트: " + raycastHit.collider.gameObject);
-                //진짜 공격해서 감지한 대상 체력 깎아주기
-            }
-            //수치 디버깅
-            Debug.Log("mousePoint: " + mousePoint);
-            Debug.Log("characterPoint: " + characterPoint);
-            Debug.Log("rangeRadian: " + rangeRadian);
-            Debug.Log("startAttackPoint: " + startAttackPoint);
 
-            //레이캐스트 범위 그리기 디버그용 추후 삭제
-            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * crossroads, Color.white, 0.3f);      //캐릭터 중점 ~ 원래 사거리
-            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * crossroads / 3f, Color.green, 0.3f); //캐릭터 중점 ~ 맨손 사거리
-            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * rangeRadius, Color.black, 0.3f);     //캐릭터 중점 ~ 원 범위 중점까지 거리
-            Debug.DrawRay(startAttackPoint, Vector2.up * rangeRadius, Color.red, 0.3f);                     //대충 원 위쪽 범위
-            Debug.DrawRay(startAttackPoint, Vector2.down * rangeRadius, Color.red, 0.3f);                   //대충 원 아래쪽 범위
-            Debug.DrawRay(startAttackPoint, Vector2.right * rangeRadius, Color.red, 0.3f);                  //대충 원 오른쪽 범위
-            Debug.DrawRay(startAttackPoint, Vector2.left * rangeRadius, Color.red, 0.3f);                   //대충 원 왼쪽 범위
-            Debug.DrawRay(startAttackPoint, Vector2.one.normalized * rangeRadius, Color.red, 0.3f);         //대충 원 우상향 대각선 범위
-            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  //대충 원 우하향 대각선 범위
-            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  //대충 원 좌상향 대각선 범위
-            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //대충 원 좌하향 대각선 범위
-        }
-    }
-    //원거리공격 메서드
-    private void longDistanceAttack()
-    {
-        attackTime += Time.deltaTime;
-        if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
-        {
-            attackTime = 0;
-            //마우스의 위치 가져오기
-            Vector2 mousePoint = Input.mousePosition;
-            mousePoint = camera.ScreenToWorldPoint(mousePoint);
-            //공격 방향 찾기
-            float attackStartX = mousePoint.x - transform.position.x;
-            float attackStartY = mousePoint.y - transform.position.y;
-            //공격방향
-            Vector2 attackForce = new Vector2(attackStartX, attackStartY);
-
-        }
-    }
-    //유아기 특수공격
     private void attack()
     {
         //attack
         time += Time.deltaTime;
-        Vector3 point = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-        Input.mousePosition.y, -camera.transform.position.z));
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+        Input.mousePosition.y, -Camera.main.transform.position.z));
         if (time >= attackSpeed && Input.GetMouseButtonDown(0))
         {
             time = 0;
@@ -250,15 +213,18 @@ public class Player : MonoBehaviour
     }
     private void walk()
     {
-        //Move Speed
-        float h = Input.GetAxisRaw("Horizontal");
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+        int key = 0;
+        if (Input.GetKey(KeyCode.A)) key = -1;
+        if (Input.GetKey(KeyCode.D)) key = 1;
 
-        //maxSpeed
-        if (rigid.velocity.x > maxSpeed)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < (-1) * maxSpeed)
-            rigid.velocity = new Vector2((-1) * maxSpeed, rigid.velocity.y);
+        float speedx = Mathf.Abs(this.rigid.velocity.x);
+
+        if (speedx < maxSpeed)
+            this.rigid.AddForce(transform.right * key * 30);
+
+        //��������Ʈ ����
+        if (key != 0 )
+            transform.localScale = new Vector3(key, 1, 1);
     }
     private void upDown()
     {
@@ -266,79 +232,82 @@ public class Player : MonoBehaviour
         if (isLadder)
         {
             float ver = Input.GetAxis("Vertical");
-            rigid.velocity = new Vector2(rigid.velocity.x, ver * maxSpeed);
+            rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
         }
     }
 
     private void infancy()
     {
-        //이동속도
-        maxSpeed = 5 - 2;
-        //점프력
-        jumpPower = 10 - 2;
-        //체력
+        //�̵��ӵ�
+        maxSpeed = 5 -2;
+        //������
+        jumpPower = 10 -2;
+        //ü��
+        maxHealth = 1000000;
         health = 1000000;
-        //공격력
+        //���ݷ�
         attackPower = 5;
-        //지구력
+        //������
         endurance = 50;
-        //방어력
+        //����
         defense = 15;
-        //강인도
+        //���ε�
         tenacity = 200;
-        //공격속도
+        //���ݼӵ�
         attackSpeed = 3;
-        //사거리
+        //��Ÿ�
         crossroads = 3;
-        //행운
+        //���
         luck = 50 + 20;
 
     }
 
     private void childhood()
     {
-        //이동속도
+        //�̵��ӵ�
         maxSpeed += 2;
-        //점프력
+        //������
         jumpPower += 2;
-        //행운
+        //���
         luck -= 20;
-        //공격력
+        //���ݷ�
         attackPower += 15;
-        //사거리
+        //��Ÿ�
         crossroads += 2;
     }
 
     private void adolescence()
     {
-        //공격력
+        //���ݷ�
         attackPower -= 15;
-        //사거리
+        //��Ÿ�
         crossroads -= 2;
-        //이동속도
+        //�̵��ӵ�
         maxSpeed += 0.5f;
-        //점프력
+        //������
         jumpPower += 1;
     }
     private void adulthood()
     {
-        //공격속도
+        //���ݼӵ�
         attackSpeed += 1.7f;
+
     }
 
     private void oldAge()
     {
-        //이동속도
+        //�̵��ӵ�
         maxSpeed -= 3;
-        //점프력
+        //������
         jumpPower -= 3;
     }
 
     private void ladderJump()
     {
-        if (isLadder && Input.GetButtonDown("Jump"))
+        if (isLadder && Input.GetButtonDown("Jump") /*&& !ani.GetBool("isJumping")*/) //�̰͵� ������ �ö󰡰� �����ȵǰ� �Ϸ�����.
         {
             InvokeRepeating("InvokeJump", 0.01f, 0.01f);
+            //ani.SetBool("isJumping", true);
         }
     }
     private void InvokeJump()
@@ -351,4 +320,96 @@ public class Player : MonoBehaviour
             transform.Translate(0, -1.5f, 0);
         }
     }
+
+    private void maxState()
+    {
+        if (maxHealth > 1000000)
+            maxHealth = 1000000;
+        if (attackPower > 1000000)
+            attackPower = 1000000;
+        if (defense > 100000)
+            defense = 100000;
+        if (maxSpeed > 100)
+            maxSpeed = 100;
+        if (tenacity > 200)
+            tenacity = 200;
+        if (attackSpeed > 5)
+            attackSpeed = 5;
+        if (crossroads > 30)
+            crossroads = 30;
+        if (luck > 100)
+            luck = 100;
+
+    }
+    private void minState()
+    {
+        if (attackPower < 0)
+            attackPower = 0;
+        if (endurance < 0)
+            endurance = 0;
+        if (defense <0)
+            defense = 0;
+        if (maxSpeed < 0)
+            maxSpeed = 0;
+        if (tenacity < 0)
+            tenacity = 0;
+        if (attackSpeed < 0)
+            attackSpeed = 0;
+        if (crossroads <0)
+            crossroads = 0;
+        if (luck < 0)
+            luck = 0;
+
+    }
+
+
+
+
+
+    //����
+    void openningMove()
+    {
+        float h = Input.GetAxisRaw("Horizontal");
+
+        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        if (rigid.velocity.x>maxSpeed)
+        {
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+        }
+        else if (rigid.velocity.x > maxSpeed*(-1))
+        {
+            rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
+        }
+
+    }
+
+    private void AnimationMotion()
+    {
+        if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
+        {
+            ani.SetBool("isRunning", false);
+        }
+        else
+        {
+            ani.SetBool("isRunning", true);
+        }
+
+        if (rigid.velocity.y < 0)
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 0.5f)
+                {
+                    //Debug.Log("���� ��");
+                    ani.SetBool("isJumping", false);
+                }
+            }
+        }
+    }
+
+
+
 }
