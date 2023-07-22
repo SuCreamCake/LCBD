@@ -2543,9 +2543,13 @@ PrefabInstance:
       value: stage2
       objectReference: {fileID: 0}
     - target: {fileID: 7750974122060773474, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750974122060773474, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -6447722072507503168, guid: 10f3cacccb0c4c547be76836eba20664, type: 3}
+      objectReference: {fileID: 21300000, guid: 50c4b72ffd01f794fbfb5e519150baa2, type: 3}
     - target: {fileID: 7750974122060773478, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_Name
       value: Player

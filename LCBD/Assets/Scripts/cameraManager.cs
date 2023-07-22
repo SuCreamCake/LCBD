@@ -9,7 +9,6 @@ public class cameraManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("asdddddda");
         player = GameObject.Find("Player");
         playerPosition = player.transform;
     }

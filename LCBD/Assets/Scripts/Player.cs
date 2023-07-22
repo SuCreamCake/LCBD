@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     //사거리
     public float crossroads;
     //행운
-    public int luck;
+    public float luck;
     //음파 오브젝트
     public GameObject soundWave;
     private float time = 0;
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        AnimationMotion();
+        //AnimationMotion();
 
 
         jump();
@@ -155,7 +155,6 @@ public class Player : MonoBehaviour
         {
             attackSpeed += 0.2f;
             crossroads += 0.25f;
-
         }
         
     }
@@ -176,11 +175,14 @@ public class Player : MonoBehaviour
     private void jump()
     {
         //Jump
-        if (Input.GetButtonDown("Jump") && !ani.GetBool("isJumping"))
+        if (Input.GetButtonDown("Jump") && rigid.velocity.y == 0)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            ani.SetBool("isJumping", true);
+            ani.SetTrigger("isJumping");
         }
+
+        
+
     }
     private void stopSpeed()
     {
@@ -223,8 +225,15 @@ public class Player : MonoBehaviour
             this.rigid.AddForce(transform.right * key * 30);
 
         //스프라이트 반전
-        if (key != 0 )
+        if (key != 0)
             transform.localScale = new Vector3(key, 1, 1);
+
+        if (key == 0)
+            ani.SetBool("isWalking", false);
+        else
+            ani.SetBool("isWalking", true);
+
+        
     }
     private void upDown()
     {
@@ -233,32 +242,36 @@ public class Player : MonoBehaviour
         {
             float ver = Input.GetAxis("Vertical");
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
+            if (Mathf.Abs(ver) != 0)
+                ani.SetBool("isLadder", true);
         }
+        else
+            ani.SetBool("isLadder", false);
     }
 
     private void infancy()
     {
         //이동속도
-        maxSpeed = 5 -2;
+        maxSpeed = 3;
         //점프력
-        jumpPower = 10 -2;
+        jumpPower = 8;
         //체력
-        maxHealth = 1000000;
-        health = 1000000;
+        maxHealth = 30;
+        health = 30;
         //공격력
-        attackPower = 5;
+        attackPower = 15;
         //지구력
-        endurance = 50;
+        endurance = 40;
         //방어력
-        defense = 15;
+        defense = 50;
         //강인도
-        tenacity = 200;
+        tenacity = 80;
         //공격속도
         attackSpeed = 3;
         //사거리
         crossroads = 3;
         //행운
-        luck = 50 + 20;
+        luck = 15 + 20;
 
     }
 
@@ -384,31 +397,31 @@ public class Player : MonoBehaviour
 
     }
 
-    private void AnimationMotion()
-    {
-        if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
-        {
-            ani.SetBool("isRunning", false);
-        }
-        else
-        {
-            ani.SetBool("isRunning", true);
-        }
+    //private void AnimationMotion()
+    //{
+    //    if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
+    //    {
+    //        ani.SetBool("isRunning", false);
+    //    }
+    //    else
+    //    {
+    //        ani.SetBool("isRunning", true);
+    //    }
 
-        if (rigid.velocity.y < 0)
-        {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
-            if (rayHit.collider != null)
-            {
-                if (rayHit.distance < 0.5f)
-                {
-                    //Debug.Log("점프 끝");
-                    ani.SetBool("isJumping", false);
-                }
-            }
-        }
-    }
+    //    if (rigid.velocity.y < 0)
+    //    {
+    //        Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+    //        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
+    //        if (rayHit.collider != null)
+    //        {
+    //            if (rayHit.distance < 0.5f)
+    //            {
+    //                //Debug.Log("점프 끝");
+    //                ani.SetBool("isJumping", false);
+    //            }
+    //        }
+    //    }
+    //}
 
 
 
