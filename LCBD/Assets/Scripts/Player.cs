@@ -41,7 +41,25 @@ public class Player : MonoBehaviour
 
     //애니메이션
     Animator ani;
-    
+    //동주 전투
+    //공격속도를 체크하기 위한 변수
+    public float attackTime = 0;
+    //원거리 공격 오브젝트
+    public GameObject bulletObject;
+    //무기 객체를 담는 자료형
+    public GameObject[] weapons;
+    //맨손 공격, 근접공격, 원거리 공격 인덱스
+    bool sDown1;
+    bool sDown2;
+    bool sDown3;
+    bool sDown4;
+    //무기 인덱스
+    public int weaponeIndex = -1;
+
+
+    GameObject equipWeapon;
+    //쉴드 오브젝트
+    public GameObject shieldObject;
 
     private void Awake()
     { 
@@ -61,7 +79,9 @@ public class Player : MonoBehaviour
 
         jump();
         stopSpeed();
-
+        getInputBattleKeyKode();
+        swapWeapon();
+        battleLogic();
         switch (stage)
         {
          case 1:
@@ -410,6 +430,180 @@ public class Player : MonoBehaviour
         }
     }
 
+    //동주
+    //맨손 공격
+    public void punchAttack()
+    {
+        attackTime += Time.deltaTime;
+        if (attackTime > (attackSpeed / 2) && Input.GetMouseButtonDown(0))
+        {
+            attackTime = 0;
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+            //현재 캐릭터의 위치 가져오기
+            Vector2 characterPoint = new(transform.position.x, transform.position.y);
+            //startX, startY좌표 구하기 위한, 거리와 각도
+            float rangeRadius = crossroads / 6.0f; //원의 반지름 1/3 1/2 == 1/6
+            float rangeRadian = Mathf.Atan2(mousePoint.y - characterPoint.y, mousePoint.x - characterPoint.x);
+            //원형레이캐스팅  시작점 (=중심점)
+            float startX = characterPoint.x + rangeRadius * Mathf.Cos(rangeRadian);
+            float startY = characterPoint.y + rangeRadius * Mathf.Sin(rangeRadian);
+            //원형레이캐스팅
+            Vector2 startAttackPoint = new(startX, startY);
+            //공격 가능한 레이어를 추가하고 해당 레이어만 감지하도록 레이어 추가하고 레이어 감지 인자 수정 필요 (여러 레이어도 감지 가능) (일단 플레이어 제외한 모든 레이어 감지)
+            int layerMask = 1 << LayerMask.NameToLayer("Player");
+            layerMask = ~layerMask;
+            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
+            if (raycastHit.collider != null)    //대상 감지되면
+            {
+                Debug.Log("맨손 공격에 감지된 대상 오브젝트: " + raycastHit.collider.gameObject);
+                //진짜 공격해서 감지한 대상 체력 깎아주기
+            }
+            //수치 디버깅
+            Debug.Log("mousePoint: " + mousePoint);
+            Debug.Log("characterPoint: " + characterPoint);
+            Debug.Log("rangeRadian: " + rangeRadian);
+            Debug.Log("startAttackPoint: " + startAttackPoint);
 
+            //레이캐스트 범위 그리기 디버그용 추후 삭제
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * crossroads, Color.white, 0.3f);      //캐릭터 중점 ~ 원래 사거리
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * crossroads / 3f, Color.green, 0.3f); //캐릭터 중점 ~ 맨손 사거리
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * rangeRadius, Color.black, 0.3f);     //캐릭터 중점 ~ 원 범위 중점까지 거리
+            Debug.DrawRay(startAttackPoint, Vector2.up * rangeRadius, Color.red, 0.3f);                     //대충 원 위쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.down * rangeRadius, Color.red, 0.3f);                   //대충 원 아래쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.right * rangeRadius, Color.red, 0.3f);                  //대충 원 오른쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.left * rangeRadius, Color.red, 0.3f);                   //대충 원 왼쪽 범위
+            Debug.DrawRay(startAttackPoint, Vector2.one.normalized * rangeRadius, Color.red, 0.3f);         //대충 원 우상향 대각선 범위
+            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  //대충 원 우하향 대각선 범위
+            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  //대충 원 좌상향 대각선 범위
+            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //대충 원 좌하향 대각선 범위
+        }
+    }
+    //근접 공격
+    private void meleeAttack()
+    {
+        attackTime += Time.deltaTime;
+        if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
+        {
+            attackTime = 0;
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+
+            //공격방향
+            Vector2 attackForce = mousePoint - (Vector2)transform.position;
+            attackForce = attackForce.normalized;
+            GameObject targetObject = GameObject.Find("MeleeAttack");
+            BoxCollider2D boxCollider = targetObject.GetComponent<BoxCollider2D>();
+            float xRange = crossroads * 0.3f;
+            float yRange = 2f;
+            Vector2 rangeSize = new Vector2(xRange, yRange);
+            boxCollider.size = rangeSize;
+            boxCollider.transform.right = attackForce;
+            Debug.Log("공격실행");
+        }
+    }
+
+    //원거리공격 메서드
+    private void longDistanceAttack()
+    {
+        attackTime += Time.deltaTime;
+        if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
+        {
+            attackTime = 0;
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+
+            Vector3 playerPos = transform.position;
+
+            Vector2 direVec = mousePoint - (Vector2)playerPos;
+            direVec = direVec.normalized;
+            GameObject tempObeject = Instantiate(bulletObject);
+            tempObeject.transform.position = transform.position;
+            tempObeject.transform.right = direVec;
+
+
+        }
+    }
+
+    //전투관련 키 입력
+    private void getInputBattleKeyKode()
+    {
+        sDown1 = Input.GetKeyDown(KeyCode.F1);
+        sDown2 = Input.GetKeyDown(KeyCode.F2);
+        sDown3 = Input.GetKeyDown(KeyCode.F3);
+        sDown4 = Input.GetKeyDown(KeyCode.F4);
+    }
+    //공격 타입 인덱스
+    private void swapWeapon()
+    {
+        if (sDown1)
+        {
+            weaponeIndex = 0;
+            Debug.Log("버튼 1활성화");
+        }
+        if (sDown2) weaponeIndex = 1;
+        if (sDown3) weaponeIndex = 2;
+        if (sDown4) weaponeIndex = 3;
+        if (sDown1 || sDown2 || sDown3 || sDown4)
+        {
+            if (equipWeapon != null)
+                equipWeapon.SetActive(false);
+            equipWeapon = weapons[weaponeIndex];
+            if(weaponeIndex != 3)
+                equipWeapon.SetActive(true);
+        }
+    }
+    private void battleLogic()
+    {
+        if (weaponeIndex == 0)
+            meleeAttack();
+        else if (weaponeIndex == 1)
+            longDistanceAttack();
+        else if (weaponeIndex == 2)
+            punchAttack();
+        else if(weaponeIndex == 3)
+            shield();
+
+    }
+
+    //방어 방법 메서드
+    private void shield()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            equipWeapon.SetActive(true);
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+            Vector3 playerPos = transform.position;
+            Vector2 direVec = mousePoint - (Vector2)playerPos;
+            direVec = direVec.normalized;
+            equipWeapon.transform.position = direVec+(Vector2)transform.position;
+            //우측일 경우
+            if (Vector3.Dot(transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
+            {
+                Debug.Log("우측 방패 생성");
+            }
+            //위쪽일 경우
+            else if (Vector3.Dot(transform.up, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
+            {
+                Debug.Log("위측방패 생성");
+                equipWeapon.transform.Rotate(0, 90f , 0);
+            }
+            else if (Vector3.Dot(-transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
+            {
+                Debug.Log("좌측 방패 생성");
+            }
+            else
+            {
+                Debug.Log("하단 방패 생성");
+                equipWeapon.transform.Rotate(90f, 0, 0);
+            }
+
+        }
+    }
 
 }
