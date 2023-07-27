@@ -58,7 +58,6 @@ public class Player : MonoBehaviour
     {
         //AnimationMotion();
 
-
         jump();
         stopSpeed();
 
@@ -171,6 +170,7 @@ public class Player : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
         }
     }
+
 
     private void jump()
     {
