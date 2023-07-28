@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class ButtonEvent : MonoBehaviour
 {
     public GameObject MainPanel; //메인메뉴창
@@ -13,7 +14,7 @@ public class ButtonEvent : MonoBehaviour
     public GameObject NewGamePanel; //새게임 창
     public GameObject ControlPanel; //컨트롤 창
     public GameObject MusicPanel; //배경음악 조절 창
-
+    public GameObject LanguagePanel; //언어선택 창
 
 
     private void Start()
@@ -25,6 +26,7 @@ public class ButtonEvent : MonoBehaviour
         NewGamePanel.SetActive(false);
         ControlPanel.SetActive(false);
         MusicPanel.SetActive(true);
+        LanguagePanel.SetActive(false);
     }
     private void Update()
     {
@@ -46,6 +48,7 @@ public class ButtonEvent : MonoBehaviour
                 MainPanel.SetActive(false);
                 FileLoadPanel.SetActive(false);
                 MusicPanel.SetActive(false);
+                LanguagePanel.SetActive(false);
                 //return;
             }
             else if (HelpPanel)
@@ -58,6 +61,7 @@ public class ButtonEvent : MonoBehaviour
                 ControlPanel.SetActive(false); 
                 SettingPanel.SetActive(false);
                 MusicPanel.SetActive(false);
+                LanguagePanel.SetActive(false);
                 //return;
             }
             else if (SettingPanel)
@@ -71,6 +75,7 @@ public class ButtonEvent : MonoBehaviour
                 NewGamePanel.SetActive(false);
                 ControlPanel.SetActive(false);
                 MusicPanel.SetActive(false);
+                LanguagePanel.SetActive(false);
                 //return;
             }
             else if (NewGamePanel)
@@ -83,6 +88,7 @@ public class ButtonEvent : MonoBehaviour
                 NewGamePanel.SetActive(false);
                 ControlPanel.SetActive(false);
                 MusicPanel.SetActive(false);
+                LanguagePanel.SetActive(false);
             }
 
             else if (FileLoadPanel)
@@ -95,10 +101,15 @@ public class ButtonEvent : MonoBehaviour
                 NewGamePanel.SetActive(false);
                 ControlPanel.SetActive(false);
                 MusicPanel.SetActive(false);
+                LanguagePanel.SetActive(false);
             }
             else if (MusicPanel)
             {
                 MusicPanel.SetActive(false); //설정 창이 꺼지고
+            }
+            else if (LanguagePanel)
+            {
+                LanguagePanel.SetActive(false);
             }
 
         }
@@ -176,6 +187,7 @@ public class ButtonEvent : MonoBehaviour
     public void LanguageBtn()
     {
         Debug.Log("Language!");
+        LanguagePanel.SetActive(true);
     }
 
     public void FileLoad1() //파일1 선택시
@@ -219,5 +231,16 @@ public class ButtonEvent : MonoBehaviour
         HelpPanel.SetActive(false);
         FileLoadPanel.SetActive(false);
         NewGamePanel.SetActive(false);
+    }
+
+
+    public void KoreanBtn()
+    {
+        
+    }
+
+    public void EnglishBtn()
+    {
+
     }
 }
