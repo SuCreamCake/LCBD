@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Languages_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: f9a0c0fda76d07847a7a8a21022b43e0, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 48078209024
+    m_Localized: GameStart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50817089536
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52989739008
+    m_Localized: Help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55284023296
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57637027840
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61898440704
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64154976256
+    m_Localized: Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65459404800
+    m_Localized: SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66101133312
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66663170048
+    m_Localized: FULLSCREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67233595392
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67787243520
+    m_Localized: Option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68408000512
+    m_Localized: File Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68999397376
+    m_Localized: Select File
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69557239808
+    m_Localized: File1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70177996800
+    m_Localized: File2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70765199360
+    m_Localized: File3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71314653184
+    m_Localized: New Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71935410176
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72476475392
+    m_Localized: Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1135883534336
+    m_Localized: Mute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1174869590016
+    m_Localized: Korean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176291459072
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861015781376
+    m_Localized: UP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1862429261824
+    m_Localized: Down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1863792410624
+    m_Localized: Left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1864861958144
+    m_Localized: Right
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1865897951232
+    m_Localized: Jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3350006284288
+    m_Localized: Korean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3351746920448
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
