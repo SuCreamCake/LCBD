@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -38,6 +39,19 @@ public class Player : MonoBehaviour
     private float time = 0;
     //스테이지
     public int stage;
+    
+    /*지학 추가*/
+    //쿨타임 텍스트
+    public Text text_CoolTime;
+    //쿨타임 이미지
+    public Image image_fill;
+    //스킬 재사용까지 남은시간
+    private float time_current;
+    //time.Time과 비교해서 time 
+    private float time_start;
+    private bool isEnded = true;
+
+
 
     //애니메이션
     Animator ani;
@@ -53,8 +67,12 @@ public class Player : MonoBehaviour
         
 
     }
+    void Start()
+    {
+        Init_UI();
+    }
 
-    private void Update()
+        private void Update()
     {
         //AnimationMotion();
 
@@ -72,9 +90,11 @@ public class Player : MonoBehaviour
          default:
              break;
         }
-
+        
         maxState();
         minState();
+
+        Check_CoolTime();
 
     }
 
@@ -199,6 +219,8 @@ public class Player : MonoBehaviour
         Input.mousePosition.y, -Camera.main.transform.position.z));
         if (time >= attackSpeed && Input.GetMouseButtonDown(0))
         {
+            //쿨타임 추가 -지학-
+            Reset_CoolTime();
             time = 0;
             soundWave.transform.position = new Vector2(point.x, point.y);
             if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
@@ -209,7 +231,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-
+            
             Instantiate(soundWave);
         }
     }
@@ -423,6 +445,50 @@ public class Player : MonoBehaviour
     //    }
     //}
 
-
+    /*지학*/
+    //image_fill의 fillAmount를 360도 시계 반대 방향으로 회전하게 설정
+    private void Init_UI()
+    {
+        image_fill.type = Image.Type.Filled;
+        image_fill.fillMethod = Image.FillMethod.Radial360;
+        image_fill.fillOrigin = (int)Image.Origin360.Top;
+        image_fill.fillClockwise = false;
+    }
+    //쿨타임 리셋
+    private void Check_CoolTime()
+    {
+        time_current = Time.time - time_start;
+        if (time_current < attackSpeed)
+        {
+            Set_FillAmount(attackSpeed - time_current);
+        }
+        else if (!isEnded)
+        {
+            End_CoolTime();
+        }
+    }
+    //쿨타임이 끝나서 스킬 재사용이 가능해진 시점
+    private void End_CoolTime()
+    {
+        Set_FillAmount(0);
+        isEnded = true;
+        text_CoolTime.gameObject.SetActive(false);
+    }
+    //쿨타임 타이머 시작
+    private void Reset_CoolTime()
+    {
+        text_CoolTime.gameObject.SetActive(true);
+        time_current = attackSpeed;
+        time_start = Time.time;
+        Set_FillAmount(attackSpeed);
+        isEnded = false;
+    }
+    //스킬 재사용 시간 시각화
+    private void Set_FillAmount(float _value)
+    {
+        image_fill.fillAmount = _value / attackSpeed;
+        string txt = _value.ToString("0.0");
+        text_CoolTime.text = txt;
+    }
 
 }
