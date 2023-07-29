@@ -40,6 +40,7 @@ public class StageGenerator : MonoBehaviour
 
     private void Start()
     {
+        GenerateFields();
         DrawFields();
     }
 
@@ -48,6 +49,7 @@ public class StageGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Minus)) // '-' 키
         {
+            GenerateFields();
             DrawFields();
         }
     }
@@ -55,7 +57,6 @@ public class StageGenerator : MonoBehaviour
     public void DrawFields()
     {
         mapGenerator = new MapGenerator[FieldSquareMatrixRow, FieldSquareMatrixRow];
-        fieldType = new FieldType[FieldSquareMatrixRow, FieldSquareMatrixRow];
 
         for (int x = 0; x < FieldSquareMatrixRow; x++)
         {
@@ -70,6 +71,16 @@ public class StageGenerator : MonoBehaviour
         }
     }
 
+    public void GenerateFields()
+    {
+        fieldType = new FieldType[FieldSquareMatrixRow, FieldSquareMatrixRow];
+
+
+
+
+        
+    }
+
     //디버그
     void OnDrawGizmos()
     {
@@ -79,17 +90,19 @@ public class StageGenerator : MonoBehaviour
             {
                 for (int j = 0; j < mapGenerator.GetLength(1); j++)
                 {
-                    for (int x = 0; x < mapGenerator[i, j].Fields.Map.GetLength(0); x++)
+                    if(mapGenerator[i, j] !=  null)
                     {
-                        for (int y = 0; y < mapGenerator[i, j].Fields.Map.GetLength(1); y++)
+                        for (int x = 0; x < mapGenerator[i, j].Fields.Map.GetLength(0); x++)
                         {
-                            Gizmos.color = (mapGenerator[i, j].Fields.Map[x, y] == 1) ? Color.white : Color.black;
+                            for (int y = 0; y < mapGenerator[i, j].Fields.Map.GetLength(1); y++)
+                            {
+                                Gizmos.color = (mapGenerator[i, j].Fields.Map[x, y] == 1) ? Color.white : Color.black;
 
-                            Vector3 pos = new Vector3(-(mapGenerator.GetLength(0) * (mapGenerator[i, j].Fields.Map.GetLength(0) + 1)) + (i * (mapGenerator[i, j].Fields.Map.GetLength(0) + 1)) + x, j * (mapGenerator[i, j].Fields.Map.GetLength(1) + 1) + y);
-                            Gizmos.DrawCube(pos, Vector3.one);
+                                Vector3 pos = new Vector3(-(mapGenerator.GetLength(0) * (mapGenerator[i, j].Fields.Map.GetLength(0) + 1)) + (i * (mapGenerator[i, j].Fields.Map.GetLength(0) + 1)) + x, j * (mapGenerator[i, j].Fields.Map.GetLength(1) + 1) + y);
+                                Gizmos.DrawCube(pos, Vector3.one);
+                            }
                         }
                     }
-
                 }
             }
         }
