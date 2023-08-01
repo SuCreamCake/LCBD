@@ -247,8 +247,11 @@ public class Player : MonoBehaviour
             this.rigid.AddForce(transform.right * key * 30);
 
         //스프라이트 반전
-        if (key != 0)
+        if (key != 0 && stage ==1)
             transform.localScale = new Vector3(key, 1, 1);
+        if (key != 0 && stage == 2)
+            transform.localScale = new Vector3(-key* 1.5f , 1.5f, 0);
+
 
         if (key == 0)
             ani.SetBool("isWalking", false);
@@ -299,6 +302,7 @@ public class Player : MonoBehaviour
 
     private void childhood()
     {
+        transform.localScale = new Vector3(1.5f, 1.5f, 0);
         //이동속도
         maxSpeed += 2;
         //점프력
@@ -309,6 +313,8 @@ public class Player : MonoBehaviour
         attackPower += 15;
         //사거리
         crossroads += 2;
+        //애니메이션
+        ani.SetTrigger("isChildhood");
     }
 
     private void adolescence()
