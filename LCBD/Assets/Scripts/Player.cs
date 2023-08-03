@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     private float time = 0;
     //스테이지
     public int stage;
+    //사이즈 변경을 위한 콜라이더
+    CapsuleCollider2D collider2D;
     
     /*지학 추가*/
     //쿨타임 텍스트
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
         ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        collider2D = GetComponent<CapsuleCollider2D>();
 
         infancy();
         
@@ -302,7 +305,9 @@ public class Player : MonoBehaviour
 
     private void childhood()
     {
+        //사이즈 변경
         transform.localScale = new Vector3(1.5f, 1.5f, 0);
+        collider2D.size = new Vector3(0.4f, 0.8f,0);
         //이동속도
         maxSpeed += 2;
         //점프력
