@@ -16,6 +16,7 @@ TagManager:
   - GrowingUp
   - IncubationPeriod
   - ReproductiveOrgans
+  - MeelAttack
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - Player
   - Obstacle
   - background
-  - 
+  - monster
   - 
   - 
   - 

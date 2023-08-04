@@ -55,12 +55,18 @@ public class Player : MonoBehaviour
     bool sDown4;
     //무기 인덱스
     public int weaponeIndex = -1;
-
+    //공격위치
+    public Transform attackPosition;
 
     GameObject equipWeapon;
     //쉴드 오브젝트
     public GameObject shieldObject;
-
+    //사운드 웨이브 공격
+    public GameObject soundWaveAttackObject;
+    //적 레이어 마스크
+    public LayerMask enemyLayers;
+    //음파 공격 시간
+    public float soundWaveAttackTime = 0;
     private void Awake()
     { 
         ani = GetComponent<Animator>();
@@ -76,16 +82,17 @@ public class Player : MonoBehaviour
     {
         AnimationMotion();
 
-
+        attackTime += Time.deltaTime;
         jump();
         stopSpeed();
         getInputBattleKeyKode();
         swapWeapon();
         battleLogic();
+        getInputSoundWaveAttack();
         switch (stage)
         {
          case 1:
-            attack();
+            //attack();
             break;
          case 4:
             ladderJump();
@@ -434,7 +441,6 @@ public class Player : MonoBehaviour
     //맨손 공격
     public void punchAttack()
     {
-        attackTime += Time.deltaTime;
         if (attackTime > (attackSpeed / 2) && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
@@ -452,14 +458,21 @@ public class Player : MonoBehaviour
             //원형레이캐스팅
             Vector2 startAttackPoint = new(startX, startY);
             //공격 가능한 레이어를 추가하고 해당 레이어만 감지하도록 레이어 추가하고 레이어 감지 인자 수정 필요 (여러 레이어도 감지 가능) (일단 플레이어 제외한 모든 레이어 감지)
-            int layerMask = 1 << LayerMask.NameToLayer("Player");
-            layerMask = ~layerMask;
-            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
-            if (raycastHit.collider != null)    //대상 감지되면
-            {
-                Debug.Log("맨손 공격에 감지된 대상 오브젝트: " + raycastHit.collider.gameObject);
-                //진짜 공격해서 감지한 대상 체력 깎아주기
-            }
+            //int layerMask = 1 << LayerMask.NameToLayer("monster");
+            ////layerMask = ~layerMask;
+            //RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
+            //if (raycastHit.collider != null)    //대상 감지되면
+            //{
+            //    Debug.Log("맨손 공격에 감지된 대상 오브젝트: " + raycastHit.collider.gameObject.tag);
+            //    //진짜 공격해서 감지한 대상 체력 깎아주기
+            //}
+
+            //Collider2D hitEnemys = Physics2D.OverlapCircle(startAttackPoint,rangeRadius,enemyLayers);
+          
+
+            if (Physics2D.OverlapCircle(startAttackPoint, rangeRadius, enemyLayers))
+                Debug.Log("몬스터 맞춤");
+
             //수치 디버깅
             Debug.Log("mousePoint: " + mousePoint);
             Debug.Log("characterPoint: " + characterPoint);
@@ -483,7 +496,6 @@ public class Player : MonoBehaviour
     //근접 공격
     private void meleeAttack()
     {
-        attackTime += Time.deltaTime;
         if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
@@ -494,21 +506,39 @@ public class Player : MonoBehaviour
             //공격방향
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
             attackForce = attackForce.normalized;
-            GameObject targetObject = GameObject.Find("MeleeAttack");
-            BoxCollider2D boxCollider = targetObject.GetComponent<BoxCollider2D>();
+
+            //공격 범위
             float xRange = crossroads * 0.3f;
-            float yRange = 2f;
-            Vector2 rangeSize = new Vector2(xRange, yRange);
-            boxCollider.size = rangeSize;
-            boxCollider.transform.right = attackForce;
+            float yRange = 0.7f;
+            Vector2 boxSize = new Vector2(xRange, yRange);
+
+            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            //공격 콜라이더 생성
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition.position, boxSize , angle, enemyLayers);
+            Debug.Log(angle);
+            foreach (Collider2D collider in colliders)
+            {
+                Debug.Log(collider.tag);
+                if(collider.tag=="monster")
+                {
+                    Debug.Log("몬스터 맞춤");
+                    collider.GetComponent<EnemyHit>().TakeDamage();
+                }
+            }
             Debug.Log("공격실행");
         }
+
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawCube(attackPosition.position,new Vector2(crossroads * 0.3f, 0.7f));
+    }
+
 
     //원거리공격 메서드
     private void longDistanceAttack()
     {
-        attackTime += Time.deltaTime;
         if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
@@ -535,6 +565,15 @@ public class Player : MonoBehaviour
         sDown2 = Input.GetKeyDown(KeyCode.F2);
         sDown3 = Input.GetKeyDown(KeyCode.F3);
         sDown4 = Input.GetKeyDown(KeyCode.F4);
+    }
+
+    private void getInputSoundWaveAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.F)) 
+        {
+            soundWaveAttack();
+            Debug.Log("F누름");
+        }
     }
     //공격 타입 인덱스
     private void swapWeapon()
@@ -582,28 +621,72 @@ public class Player : MonoBehaviour
             Vector2 direVec = mousePoint - (Vector2)playerPos;
             direVec = direVec.normalized;
             equipWeapon.transform.position = direVec+(Vector2)transform.position;
+            
             //우측일 경우
             if (Vector3.Dot(transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
                 Debug.Log("우측 방패 생성");
+                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             //위쪽일 경우
             else if (Vector3.Dot(transform.up, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
                 Debug.Log("위측방패 생성");
-                equipWeapon.transform.Rotate(0, 90f , 0);
+                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
             else if (Vector3.Dot(-transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
                 Debug.Log("좌측 방패 생성");
+                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+
             }
             else
             {
                 Debug.Log("하단 방패 생성");
-                equipWeapon.transform.Rotate(90f, 0, 0);
+                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
 
         }
+        else if (Input.GetMouseButtonUp(0)) 
+        {
+            
+            equipWeapon.SetActive(false);
+        }
+    }
+    private void soundWaveAttack()
+    {
+        soundWaveAttackTime += Time.deltaTime;
+        if (true)
+        {
+            RaycastHit2D[] raycastHit2Ds;
+            soundWaveAttackTime = 0;
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+
+            //공격방향
+            Vector2 attackForce = mousePoint - (Vector2)transform.position;
+            attackForce = attackForce.normalized;
+            Debug.Log(attackPower);
+            float startAngle = -attackPower / 2;
+            for (float startAngleIndex = startAngle; startAngleIndex <= attackPower / 2; startAngleIndex += 0.5f)
+            {
+                attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
+                Debug.Log(startAngleIndex);
+                raycastHit2Ds = Physics2D.RaycastAll(transform.position, attackForce, crossroads, enemyLayers);
+                for(int i=0;i<raycastHit2Ds.Length;i++)
+                {
+                    RaycastHit2D hit = raycastHit2Ds[i];
+                    if(hit.collider.tag=="monster")
+                    {
+                        hit.collider.GetComponent<EnemyHit>().TakeDamage();
+                    }
+                }
+            }
+        }
+
+       
     }
 
 }
