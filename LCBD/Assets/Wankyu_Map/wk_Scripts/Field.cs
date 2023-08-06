@@ -11,6 +11,9 @@ public enum FieldType
 [Serializable]
 public class Field
 {
+    public bool IsClear { get; private set; }
+    public void SetIsClear(bool isClear) { IsClear = isClear; }
+
     public FieldType FIeldType { get; private set; }
 
     public int[,] Map { get; private set; }
@@ -18,6 +21,7 @@ public class Field
 
     private void InitMap(int width, int height)
     {
+        IsClear = false;
         Map = new int[width, height];
     }
 
@@ -244,5 +248,7 @@ class DefaultMap
 
         return specialMap;
     }
-
+    
+    
+    //
 }
