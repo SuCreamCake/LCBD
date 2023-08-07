@@ -24,7 +24,7 @@ public class BGscroll : MonoBehaviour
             scrolling(); //스크롤링 실행
     }
 
-    private void scrolling()
+    private void scrolling() //플레이어가 떨어지는 것처럼 보이도록 하는 메소드
     {
         Vector3 curPos = transform.position; //현재 위치를 가져온다
         //떨어지는것처럼 보이기위해 배경을 위로 이동시킴

@@ -33,8 +33,9 @@ public class Openning : MonoBehaviour
             playerDown();
     }
 
-    private void playerDown()
+    private void playerDown() //플레이어가 떨어지는 메소드
     {
+        talkmanager.isTalk = false;
         Vector3 curPos = transform.position; //현재 위치를 가져온다
         Vector3 downPos = Vector3.down * speed * Time.deltaTime;
         transform.position = curPos + downPos;
@@ -57,6 +58,7 @@ public class Openning : MonoBehaviour
             //여기서 바꿔줘야 텍스트가 바뀜...저거 ++한다해도 talkmanager에 update에 영향이안감....
             talkmanager.TalkText.text = "끝도 없이 떨어지는 주인공..\n" +
                 "과거의 기억들이 스쳐 지나간다.";
+            talkmanager.isTalk = true;
         }
         if (collision.CompareTag("TestTag"))
         {
