@@ -18,26 +18,15 @@ public class StageGenerator : MonoBehaviour
     public int MapWidth { get { return _mapWidth; } private set { _mapWidth = value; } }
     public int MapHeight { get { return _mapHeight; } private set { _mapHeight = value; } }
 
-    public void SetMapWidth(int mapWidth)
-    {
-        if (mapWidth > 20)
-            MapWidth = mapWidth;
-    }
-    public void SetMapHeight(int mapHeight)
-    {
-        if (mapHeight > 20)
-            MapHeight = mapHeight;
-    }
-
     public int StartRow { get; private set; }   //시작필드의 행
     public int StartCol { get; private set; }   //시작필드의 열
 
-    private List<Tuple<FieldPoint, FieldPoint>> fieldsPointsEdges;  //None 필드를 제외한 각 필드 간의 연결되는 두 필드(주변 필드)들을 쌍으로 저장하는 리스트
+    public List<Tuple<FieldPoint, FieldPoint>> FieldsPointsEdges { get; private set; }  //None 필드를 제외한 각 필드 간의 연결되는 두 필드(주변 필드)들을 쌍으로 저장하는 리스트
 
     //fieldsPointsEdges 를 초기화하고 연결되는 필드(주변 필드)들을 모두 저장하는 메소드
     private void InitFieldsPointsEdges()
     {
-        fieldsPointsEdges = new List<Tuple<FieldPoint, FieldPoint>>();
+        FieldsPointsEdges = new List<Tuple<FieldPoint, FieldPoint>>();
 
         //가로 연결
         for (int x = 0; x < FieldSquareMatrixRow - 1; x++)
@@ -50,7 +39,7 @@ public class StageGenerator : MonoBehaviour
                     FieldPoint field2 = new(x + 1, y);
 
                     Tuple<FieldPoint, FieldPoint> linkedField = new(field1, field2);
-                    fieldsPointsEdges.Add(linkedField);
+                    FieldsPointsEdges.Add(linkedField);
                 }
             }
         }
@@ -66,25 +55,25 @@ public class StageGenerator : MonoBehaviour
                     FieldPoint field2 = new(x, y + 1);
 
                     Tuple<FieldPoint, FieldPoint> linkedField = new(field1, field2);
-                    fieldsPointsEdges.Add(linkedField);
+                    FieldsPointsEdges.Add(linkedField);
                 }
             }
         }
     }
 
-    private List<FieldPoint> fieldsPointsVertex;    //None 필드를 제외한 필드들을 저장하는 리스트
+    public List<FieldPoint> FieldsPointsVertex { get; private set; }    //None 필드를 제외한 필드들을 저장하는 리스트
 
     //fieldsPointsVertex를 초기화하고 None 필드를 제외한 필드의 좌표를 저장하는 메소드
     private void InitFieldsPointsVertex()
     {
-        fieldsPointsVertex = new List<FieldPoint>();
+        FieldsPointsVertex = new List<FieldPoint>();
         for (int x = 0; x < FieldSquareMatrixRow; x++)
         {
             for (int y = 0; y < FieldSquareMatrixRow; y++)
             {
                 if (fieldType[x, y] != FieldType.None)
                 {
-                    fieldsPointsVertex.Add(new FieldPoint(x, y));
+                    FieldsPointsVertex.Add(new FieldPoint(x, y));
                 }
             }
         }
@@ -92,12 +81,12 @@ public class StageGenerator : MonoBehaviour
 
 
     FieldType[,] fieldType; //각 맵의 필드 타입
+    public FieldType[,] GetFieldType() { return fieldType; }
 
     MapGenerator[,] mapGenerator;   //각 맵(필드)의 생성기
-
     public MapGenerator[,] GetMapGenerator() { return mapGenerator; }
 
-    private void Start()
+    public void GenerateStage()
     {
         FieldCount = 5 * StageLevel + UnityEngine.Random.Range(3, 6);
         FieldSquareMatrixRow = Mathf.FloorToInt(Mathf.Sqrt(FieldCount + 20)) + 1;
@@ -109,24 +98,8 @@ public class StageGenerator : MonoBehaviour
         DrawFields();
     }
 
-    //임시 디버그
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Minus)) // '-' 키
-        {
-            FieldCount = 5 * StageLevel + UnityEngine.Random.Range(3, 6);
-            FieldSquareMatrixRow = Mathf.FloorToInt(Mathf.Sqrt(FieldCount + 20)) + 1;
-
-            Debug.Log("roomCount, stageLevel : " + FieldCount + ", " + StageLevel);
-            Debug.Log("FieldSquareMatrixRow : " + FieldSquareMatrixRow);
-
-            GenerateFields();
-            DrawFields();
-        }
-    }
-
     //각 맵의 필드 타입에 맞게 맵 생성하는 메소드
-    public void DrawFields()
+    private void DrawFields()
     {
         mapGenerator = new MapGenerator[FieldSquareMatrixRow, FieldSquareMatrixRow];
 
@@ -158,7 +131,7 @@ public class StageGenerator : MonoBehaviour
     }
 
     //스테이지의 맵을 배치하고 각 맵의 필드 타입을 지정하는 메소드
-    public void GenerateFields()
+    private void GenerateFields()
     {
         InitFields();
 
@@ -295,7 +268,7 @@ public class StageGenerator : MonoBehaviour
     {
         List<FieldPoint> neighborList = new List<FieldPoint>();
 
-        foreach (var tuple in fieldsPointsEdges)
+        foreach (var tuple in FieldsPointsEdges)
         {
             if (tuple.Item1.X ==  fieldPoint.X && tuple.Item1.Y == fieldPoint.Y)
             {
@@ -317,7 +290,7 @@ public class StageGenerator : MonoBehaviour
         int highestIndex = 0;
 
         int index = 0;
-        foreach (var node in fieldsPointsVertex)
+        foreach (var node in FieldsPointsVertex)
         {
             int cost = CalcPathCost(node);
             if (cost > 0 && cost > highestCost)
@@ -329,8 +302,8 @@ public class StageGenerator : MonoBehaviour
             index++;
         }
 
-        Debug.Log("시작과 제일 먼 필드는 (cost:" + highestCost + ") - " + fieldsPointsVertex.ElementAt(highestIndex).ToString());
-        return fieldsPointsVertex.ElementAt(highestIndex);
+        Debug.Log("시작과 제일 먼 필드는 (cost:" + highestCost + ") - " + FieldsPointsVertex.ElementAt(highestIndex).ToString());
+        return FieldsPointsVertex.ElementAt(highestIndex);
     }
 
 
@@ -351,7 +324,21 @@ public class StageGenerator : MonoBehaviour
                         {
                             for (int y = 0; y < mapGenerator[i, j].Fields.Map.GetLength(1); y++)
                             {
-                                Gizmos.color = (mapGenerator[i, j].Fields.Map[x, y] == 1) ? Color.white : Color.black;
+                                switch(mapGenerator[i, j].Fields.Map[x,y])
+                                {
+                                    case 1: 
+                                        Gizmos.color = Color.white;
+                                        break;
+                                    case 0:
+                                        Gizmos.color = Color.black;
+                                        break;
+                                    case 99:
+                                        Gizmos.color = Color.green;
+                                        break;
+                                    case 80:
+                                        Gizmos.color = Color.red;
+                                        break;
+                                }
 
                                 Vector3 pos = new Vector3(-(mapGenerator.GetLength(0) * (mapGenerator[i, j].Fields.Map.GetLength(0) + 1)) + (i * (mapGenerator[i, j].Fields.Map.GetLength(0) + 1)) + x, j * (mapGenerator[i, j].Fields.Map.GetLength(1) + 1) + y);
                                 Gizmos.DrawCube(pos, Vector3.one);

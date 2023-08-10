@@ -1,14 +1,14 @@
-﻿//필드의 X Y 좌표를 담는 클래스
+﻿//포탈의 X Y 좌표를 담는 클래스
 using System;
 using System.Collections;
 using UnityEngine;
 
-public class FieldPoint
+public class PortalPoint
 {
     private int x;
     private int y;
 
-    public FieldPoint(int x = 0, int y = 0)
+    public PortalPoint(int x = 0, int y = 0)
     {
         this.x = x;
         this.y = y;
@@ -22,10 +22,10 @@ public class FieldPoint
 
     public override bool Equals(object obj)
     {
-        return Equals(obj as FieldPoint);
+        return Equals(obj as PortalPoint);
     }
 
-    public bool Equals(FieldPoint otherField)
+    public bool Equals(PortalPoint otherField)
     {
         return otherField != null &&
             x == otherField.x &&

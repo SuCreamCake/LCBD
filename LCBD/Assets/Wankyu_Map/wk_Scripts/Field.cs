@@ -8,15 +8,19 @@ public enum FieldType
     None, Start, Boss, Common, Special
 }
 
-[Serializable]
 public class Field
 {
     public bool IsClear { get; private set; }
     public void SetIsClear(bool isClear) { IsClear = isClear; }
 
-    public FieldType FIeldType { get; private set; }
+    public FieldType FIeldType { get; private set; }    //각 필드의 필드 타입
 
-    public int[,] Map { get; private set; }
+    public int[,] Map { get; private set; }         //각 필드의 타일 배치
+    // 0. 빈 공간, 1. 벽 블록, 2. 플랫폼 블록, 3. 사다리
+    // 99.스테이지 시작 지점(시작 필드) 95. 스테이지 포탈 위치(보스 필드) 80. 필드 포탈 위치 40. 보상 위치
+
+
+    public Dictionary<int[,], int[,]> portal;       //각 필드의 포탈 정보 //TODO 아직 안씀.
 
 
     private void InitMap(int width, int height)
@@ -81,19 +85,26 @@ public class Field
         //System.Random psuedoRandom = new System.Random(seed.GetHashCode());
         //Debug.Log("seed: " + seed);
 
-        float max = DateTime.Now.Ticks;
+        //float max = DateTime.Now.Ticks;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                Map[x, y] = UnityEngine.Random.Range(0, max) < (max / 10 * 4) ? 1 : 0;
+                if (x == width/2 || y == height/2)
+                {
+                    Map[x,y] = 0;
+                }
+                else
+                {
+                    Map[x, y] = UnityEngine.Random.Range(0, 100) < 42 ? 1 : 0;  //42%확률 로 벽 만듬
+                }
             }
         }
         
         DrawBorder(width, height);
 
         int smoothLevel;
-        smoothLevel = width > height ? width >> 4 : height >> 4;
+        smoothLevel = width > height ? width >> 2 : height >> 2;
         smoothLevel = smoothLevel <= 1 ? 1 : smoothLevel;
 
         for (int i = 0; i < smoothLevel; i++)
@@ -196,6 +207,8 @@ class DefaultMap
             startMap[floorStart + x, floorHeight] = 1;
         }
 
+        startMap[floorStart + floorWidth / 2, floorHeight + 1] = 99; //스테이지 시작 포인트(99)
+
         return startMap;
     }
 
@@ -224,6 +237,8 @@ class DefaultMap
         {
             bossMap[x, secondFloor] = 1;
         }
+
+        bossMap[secondFloorStart + floorWidth / 2, secondFloor + 1] = 95;
 
         return bossMap;
     }

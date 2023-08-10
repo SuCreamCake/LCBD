@@ -16,6 +16,7 @@ TagManager:
   - GrowingUp
   - IncubationPeriod
   - ReproductiveOrgans
+  - StagePortal
   layers:
   - Default
   - TransparentFX
