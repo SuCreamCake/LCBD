@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Openning.unity
     guid: 40921cff330e4cf43a45280408c84ed8
+  - enabled: 1
+    path: Assets/Wankyu_Map/wk_Scenes/RandomMap.unity
+    guid: 048f0e08307c549488598debf080a5a3
+  - enabled: 1
+    path: Assets/Wankyu_Map/wk_Scenes/LoadingScene.unity
+    guid: e253bc545bb93994e95ff0dbb6cc3dc0
   m_configObjects: {}
