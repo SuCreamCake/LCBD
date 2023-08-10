@@ -10,14 +10,17 @@ public class Bullet : MonoBehaviour
     private float bulletSpeed = 10f;
     private float distanceTime;
     private bool isDistanceOver = false;
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Obstacle") //여기 투사체 또는 적대 세력이 들어감)
             Destroy(gameObject);
-        else if (collision.gameObject.tag == "Enemy")
+        else if (collision.gameObject.tag == "monster")
+        {
+            Debug.Log("몬스터와 충돌!");
             Destroy(gameObject);
-
+        }
     }
+ 
     private void Start()
     {
         bulletRigidbody2D = GetComponent<Rigidbody2D>();

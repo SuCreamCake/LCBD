@@ -468,10 +468,15 @@ public class Player : MonoBehaviour
             //}
 
             //Collider2D hitEnemys = Physics2D.OverlapCircle(startAttackPoint,rangeRadius,enemyLayers);
-          
 
-            if (Physics2D.OverlapCircle(startAttackPoint, rangeRadius, enemyLayers))
+            RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, enemyLayers);
+            if (raycastHit.collider!=null)
+            {
+                raycastHit.collider.GetComponent<EnemyHit>().TakeDamage();
                 Debug.Log("몬스터 맞춤");
+
+            }
+                
 
             //수치 디버깅
             Debug.Log("mousePoint: " + mousePoint);
@@ -509,7 +514,7 @@ public class Player : MonoBehaviour
 
             //공격 범위
             float xRange = crossroads * 0.3f;
-            float yRange = 0.7f;
+            float yRange = 0.5f;
             Vector2 boxSize = new Vector2(xRange, yRange);
 
             float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
@@ -670,6 +675,35 @@ public class Player : MonoBehaviour
             attackForce = attackForce.normalized;
             Debug.Log(attackPower);
             float startAngle = -attackPower / 2;
+            ////보조 음파 공격
+            //Vector2 secondaryAttackVecStart = attackForce * crossroads / 3;
+            //Vector2 secondaryAttackVecEnd = Quaternion.AngleAxis(attackPower / 2, Vector3.forward) * secondaryAttackVecStart;
+            //float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            ////보조 공격 y범위
+            //float secondaryAttackYrange = Vector2.Distance(secondaryAttackVecStart, secondaryAttackVecEnd);
+            //Debug.Log(secondaryAttackYrange);
+
+            ////보조 공격 x범위
+            //float secondaryAttackXrange = crossroads / 3;
+
+            //Vector2 boxSize = new Vector2(secondaryAttackXrange, secondaryAttackYrange);
+            ////공격 콜라이더 생성
+            //Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition.position, boxSize, angle, enemyLayers);
+            //Debug.Log(angle);
+            //foreach (Collider2D collider in colliders)
+            //{
+            //    Debug.Log(collider.tag);
+            //    if (collider.tag == "monster")
+            //    {
+            //        Debug.Log("몬스터 맞춤");
+            //        Debug.Log("보조 음파 공격 범위 적 피격");
+            //        collider.GetComponent<EnemyHit>().TakeDamage();
+            //    }
+            //}
+            //Debug.Log("공격실행");
+
+
+            //일반 음파 공격
             for (float startAngleIndex = startAngle; startAngleIndex <= attackPower / 2; startAngleIndex += 0.5f)
             {
                 attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
@@ -680,9 +714,24 @@ public class Player : MonoBehaviour
                     RaycastHit2D hit = raycastHit2Ds[i];
                     if(hit.collider.tag=="monster")
                     {
+                        
                         hit.collider.GetComponent<EnemyHit>().TakeDamage();
                     }
                 }
+            }
+
+            //1/3지역 원형 공격 범위
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, crossroads / 3,enemyLayers);
+            foreach (Collider2D collider in colliders)
+            {
+                Debug.Log(collider.tag);
+                if (collider.tag == "monster")
+                {
+                    Debug.Log("1/3지역 피격");
+                    collider.GetComponent<EnemyHit>().IsCrossroadThird();
+                    collider.GetComponent<EnemyHit>().TakeDamage();
+                }
+
             }
         }
 
