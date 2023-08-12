@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     public int maxEndurance;
     //지구력
     public int endurance;
+    public bool enduranceOnOff;
+    public float stayTime;
     //방어력
     public int defense;
     //강인도
@@ -67,8 +69,7 @@ public class Player : MonoBehaviour
         collider2D = GetComponent<CapsuleCollider2D>();
 
         infancy();
-        
-
+       
     }
     void Start()
     {
@@ -84,14 +85,18 @@ public class Player : MonoBehaviour
 
         switch (stage)
         {
-         case 1:
-            attack();
-            break;
-         case 4:
-            ladderJump();
-            break;
-         default:
-             break;
+            case 1:
+                attack();
+                break;
+            case 3:
+                ladderJump();
+                break;
+
+            case 4:
+                ladderJump();
+                break;
+            default:
+                break;
         }
         
         maxState();
@@ -107,6 +112,17 @@ public class Player : MonoBehaviour
     {
         walk();
         upDown();
+        if (enduranceOnOff == false)
+        {
+            stayTime += Time.deltaTime;
+            CancelInvoke("enduranceRecovery");
+        }
+        if (stayTime > 3)
+        {
+            enduranceOnOff = true;
+            stayTime = 0;
+            InvokeRepeating("enduranceRecovery", 1, 1);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -178,7 +194,7 @@ public class Player : MonoBehaviour
             attackSpeed += 0.2f;
             crossroads += 0.25f;
         }
-        
+    
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -213,7 +229,6 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-
     private void attack()
     {
         //attack
@@ -249,11 +264,21 @@ public class Player : MonoBehaviour
         if (speedx < maxSpeed)
             this.rigid.AddForce(transform.right * key * 30);
 
+
+
         //스프라이트 반전
-        if (key != 0 && stage ==1)
+        if (key != 0 && stage == 1)
+        {
             transform.localScale = new Vector3(key, 1, 1);
+            //지구력 테스트
+            endurance--;
+            enduranceOnOff = false;
+        }
+
+  
+
         if (key != 0 && stage == 2)
-            transform.localScale = new Vector3(-key* 1.5f , 1.5f, 0);
+            transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
 
 
         if (key == 0)
@@ -276,7 +301,6 @@ public class Player : MonoBehaviour
         else
             ani.SetBool("isLadder", false);
     }
-
     private void infancy()
     {
         //이동속도
@@ -289,6 +313,7 @@ public class Player : MonoBehaviour
         //공격력
         attackPower = 15;
         //지구력
+        maxEndurance = 40;
         endurance = 40;
         //방어력
         defense = 50;
@@ -350,10 +375,9 @@ public class Player : MonoBehaviour
 
     private void ladderJump()
     {
-        if (isLadder && Input.GetButtonDown("Jump") /*&& !ani.GetBool("isJumping")*/) //이것도 점프라 올라가고 점프안되게 하려는중.
+        if (isLadder && Input.GetButtonDown("Jump"))
         {
             InvokeRepeating("InvokeJump", 0.01f, 0.01f);
-            //ani.SetBool("isJumping", true);
         }
     }
     private void InvokeJump()
@@ -408,53 +432,15 @@ public class Player : MonoBehaviour
 
     }
 
-
-
-
-
-    //경훈
-    void openningMove()
+    private void enduranceRecovery()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-
-        if (rigid.velocity.x>maxSpeed)
-        {
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        }
-        else if (rigid.velocity.x > maxSpeed*(-1))
-        {
-            rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
-        }
+        if (endurance < maxEndurance)
+            endurance += 4;
+        else
+            endurance = maxEndurance;
 
     }
 
-    //private void AnimationMotion()
-    //{
-    //    if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
-    //    {
-    //        ani.SetBool("isRunning", false);
-    //    }
-    //    else
-    //    {
-    //        ani.SetBool("isRunning", true);
-    //    }
-
-    //    if (rigid.velocity.y < 0)
-    //    {
-    //        Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-    //        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
-    //        if (rayHit.collider != null)
-    //        {
-    //            if (rayHit.distance < 0.5f)
-    //            {
-    //                //Debug.Log("점프 끝");
-    //                ani.SetBool("isJumping", false);
-    //            }
-    //        }
-    //    }
-    //}
 
     /*지학*/
     //image_fill의 fillAmount를 360도 시계 반대 방향으로 회전하게 설정
