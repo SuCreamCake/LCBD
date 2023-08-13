@@ -14,8 +14,8 @@ public class Player : MonoBehaviour
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
-    public int maxHealth;  //최대체력
-    public int health;     //현재체력
+    public float maxHealth;  //최대체력
+    public float health;     //현재체력
     public int attackPower;    //공격력
     public int maxEndurance;    //최대지구력
     //지구력
@@ -45,6 +45,10 @@ public class Player : MonoBehaviour
     //time.Time과 비교해서 time 
     private float time_start;
     private bool isEnded = true;
+    //hp바 텍스트
+    public Text text_hp;
+    //hp바 이미지
+    public Image img;
 
     Animator ani;    //애니메이션
 
@@ -70,9 +74,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         Init_UI();
+        Init_HP();
+        SetFunction_UI();
     }
 
-        private void Update()
+    private void Update()
     {
         //AnimationMotion();
 
@@ -98,6 +104,8 @@ public class Player : MonoBehaviour
         maxState();
         minState();
         Check_CoolTime();
+        SetFunction_UI();
+        Set_HP(health);
 
     }
 
@@ -413,6 +421,7 @@ public class Player : MonoBehaviour
 
     private void personality(Collider2D collision)
     {
+        
         if (collision.CompareTag("OralStage"))
         {
             maxHealth += 5;
@@ -484,6 +493,7 @@ public class Player : MonoBehaviour
             if (genitalStack > 5)
                 attackPower = attackPower - (int)(attackSpeed - 1) * 20 + (int)attackSpeed * 20;
         }
+        
     }
 
 
@@ -531,6 +541,48 @@ public class Player : MonoBehaviour
         image_fill.fillAmount = _value / attackSpeed;
         string txt = _value.ToString("0.0");
         text_CoolTime.text = txt;
+    }
+    //HP의 값과 UI 표시 초기화
+    private void Init_HP()
+    {
+        Set_HP(maxHealth);
+    }
+
+    private void SetFunction_UI()
+    {
+        //Fill Amount Type
+        img.type = Image.Type.Filled;
+        img.fillMethod = Image.FillMethod.Horizontal;
+        img.fillOrigin = (int)Image.OriginHorizontal.Left;
+    }
+    //hp에서 매개 변수로 받은 float 값을 더함
+    private void Change_HP(float _value)
+    {
+        health += _value;
+        Set_HP(health);
+    }
+    //hp를 매개변수로 받은 float 값으로 변경
+    private void Set_HP(float _value)
+    {
+        health = _value;
+
+        string txt = "";
+        if (health <= 0)
+        {
+            health = 0;
+            txt = "Dead";
+        }
+        else
+        {
+            if (health > maxHealth)
+                health = maxHealth;
+            txt = string.Format("{0}/{1}", health, maxHealth);
+        }
+        img.fillAmount = health / maxHealth;
+
+
+        text_hp.text = txt;
+
     }
 
 }
