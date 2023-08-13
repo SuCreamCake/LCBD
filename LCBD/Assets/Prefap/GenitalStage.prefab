@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1257265013632098140}
   - component: {fileID: 1257265013632098143}
   m_Layer: 0
-  m_Name: ReproductiveOrgans
-  m_TagString: ReproductiveOrgans
+  m_Name: GenitalStage
+  m_TagString: GenitalStage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

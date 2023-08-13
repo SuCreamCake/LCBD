@@ -15,7 +15,7 @@ TagManager:
   - AnalStage
   - GrowingUp
   - IncubationPeriod
-  - ReproductiveOrgans
+  - GenitalStage
   layers:
   - Default
   - TransparentFX

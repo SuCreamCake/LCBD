@@ -14,36 +14,27 @@ public class Player : MonoBehaviour
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
-    //최대체력
-    public int maxHealth;
-    //현재체력
-    public int health;
-    //공격력
-    public int attackPower;
-    //최대지구력
-    public int maxEndurance;
+    public int maxHealth;  //최대체력
+    public int health;     //현재체력
+    public int attackPower;    //공격력
+    public int maxEndurance;    //최대지구력
     //지구력
     public int endurance;
     public bool enduranceOnOff;
     public float stayTime;
-    //방어력
-    public int defense;
-    //강인도
-    public int tenacity;
-    //공격속도
-    public float attackSpeed;
-    //사거리
-    public float crossroads;
-    //행운
-    public float luck;
+    public int enduranceRec;
+
+    public int defense;    //방어력
+    public int tenacity;    //강인도
+    public float attackSpeed;    //공격속도
+    public float crossroads;    //사거리
+    public float luck;    //행운
     //음파 오브젝트
     public GameObject soundWave;
     private float time = 0;
-    //스테이지
-    public int stage;
-    //사이즈 변경을 위한 콜라이더
-    CapsuleCollider2D collider2D;
-    
+    public int stage;    //스테이지
+    new CapsuleCollider2D collider2D;    //사이즈 변경을 위한 콜라이더
+
     /*지학 추가*/
     //쿨타임 텍스트
     public Text text_CoolTime;
@@ -55,11 +46,16 @@ public class Player : MonoBehaviour
     private float time_start;
     private bool isEnded = true;
 
+    Animator ani;    //애니메이션
 
+    //인격 스택
+    public int oralStack;   
+    private int analStack;
+    private int phallicStack;
+    private int growingUpStack;
+    private int IncubationStack;
+    private int genitalStack;
 
-    //애니메이션
-    Animator ani;
-    
 
     private void Awake()
     { 
@@ -83,6 +79,7 @@ public class Player : MonoBehaviour
         jump();
         stopSpeed();
 
+        //고유능력
         switch (stage)
         {
             case 1:
@@ -91,7 +88,6 @@ public class Player : MonoBehaviour
             case 3:
                 ladderJump();
                 break;
-
             case 4:
                 ladderJump();
                 break;
@@ -101,7 +97,6 @@ public class Player : MonoBehaviour
         
         maxState();
         minState();
-
         Check_CoolTime();
 
     }
@@ -112,17 +107,7 @@ public class Player : MonoBehaviour
     {
         walk();
         upDown();
-        if (enduranceOnOff == false)
-        {
-            stayTime += Time.deltaTime;
-            CancelInvoke("enduranceRecovery");
-        }
-        if (stayTime > 3)
-        {
-            enduranceOnOff = true;
-            stayTime = 0;
-            InvokeRepeating("enduranceRecovery", 1, 1);
-        }
+        enduranceSystem();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -159,41 +144,8 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-        if(collision.CompareTag("OralStage"))
-        {
-            maxHealth += 5;
-            maxEndurance += 5;
-
-        }
-        if(collision.CompareTag("AnalStage"))
-        {
-            defense += 10;
-            tenacity += 10;
-
-        }
-        if (collision.CompareTag("PhallicStage"))
-        {
-            attackPower += 10;
-            tenacity += 5;
-
-        }
-        if (collision.CompareTag("GrowingUp"))
-        {
-            maxHealth += 5;
-            maxSpeed += 10;
-          
-        }
-        if(collision.CompareTag("IncubationPeriod"))
-        {
-            luck += 5;
-            defense += 5;
-           
-        }
-        if (collision.CompareTag("ReproductiveOrgans"))
-        {
-            attackSpeed += 0.2f;
-            crossroads += 0.25f;
-        }
+        personality(collision);
+     
     
     }
 
@@ -315,6 +267,7 @@ public class Player : MonoBehaviour
         //지구력
         maxEndurance = 40;
         endurance = 40;
+        enduranceRec = 4;
         //방어력
         defense = 50;
         //강인도
@@ -325,7 +278,7 @@ public class Player : MonoBehaviour
         crossroads = 3;
         //행운
         luck = 15 + 20;
-
+        
     }
 
     private void childhood()
@@ -409,6 +362,8 @@ public class Player : MonoBehaviour
             crossroads = 30;
         if (luck > 100)
             luck = 100;
+        if (endurance > maxEndurance)
+            endurance = maxEndurance;
 
     }
     private void minState()
@@ -434,11 +389,101 @@ public class Player : MonoBehaviour
 
     private void enduranceRecovery()
     {
+
         if (endurance < maxEndurance)
-            endurance += 4;
+            endurance += enduranceRec;
         else
             endurance = maxEndurance;
+    }
 
+    private void enduranceSystem()
+    {
+        if (enduranceOnOff == false)
+        {
+            stayTime += Time.deltaTime;
+            CancelInvoke("enduranceRecovery");
+        }
+        if (stayTime > 3)
+        {
+            enduranceOnOff = true;
+            stayTime = 0;
+            InvokeRepeating("enduranceRecovery", 1, 1);
+        }
+    }
+
+    private void personality(Collider2D collision)
+    {
+        if (collision.CompareTag("OralStage"))
+        {
+            maxHealth += 5;
+            maxEndurance += 5;
+            oralStack++;
+            if (oralStack >= 5)
+                enduranceRec = 4 + 4 * (oralStack / 2);    //구강기 특수능력
+            //인격 조각을 통해 얻은 지구력 10당 초당 회복되는 지구력 4 증가
+
+        }
+        if (collision.CompareTag("AnalStage"))
+        {
+            defense += 10;
+            tenacity += 10;
+            analStack++;
+
+            //항문기 특수 능력
+            //방어력의 10%만큼 강인도 최대치 증가
+            if (analStack == 5)
+                tenacity += defense / 10;
+            if (analStack > 5)
+                tenacity = tenacity - (defense - 10) / 10 + (defense / 10);
+
+        }
+        if (collision.CompareTag("PhallicStage"))
+        {
+            attackPower += 10;
+            tenacity += 5;
+            phallicStack++;
+            //남근기 특수 능력
+            //인격 조각으로 얻은 공격력 10% 증가
+            if (phallicStack == 5)
+                attackPower += phallicStack;
+            if (phallicStack > 5)
+                attackPower = attackPower - (phallicStack - 1) + phallicStack;
+
+        }
+        if (collision.CompareTag("GrowingUp"))
+        {
+            maxHealth += 5;
+            maxSpeed += 10;
+            growingUpStack++;
+            //성장기 특수 능력
+            //(먹은 인격 개수 * 5)만큼 생명력 최대치 증가
+            if (growingUpStack == 5)
+                maxHealth += growingUpStack * 5;
+            if (growingUpStack > 5)
+                maxHealth = maxHealth - (growingUpStack - 1) * 5 + growingUpStack * 5;
+
+        }
+        if (collision.CompareTag("IncubationPeriod"))
+        {
+            luck += 5;
+            defense += 5;
+            IncubationStack++;
+            //잠복기 특수 능력
+            //피격 시 행운의 확률로 방어량 10% 증가
+            //피격 미구현으로 보류
+        }
+        if (collision.CompareTag("GenitalStage"))
+        {
+            attackSpeed += 0.2f;
+            crossroads += 0.25f;
+            genitalStack++;
+            //생식기 특수 능력
+            //공격속도 1당 공격력 20 증가
+            if (genitalStack == 5)
+                attackPower += (int)attackSpeed * 20;
+            if (genitalStack > 5)
+                attackPower = attackPower - (int)(attackSpeed - 1) * 20 + (int)attackSpeed * 20;
+        }
     }
 
 
