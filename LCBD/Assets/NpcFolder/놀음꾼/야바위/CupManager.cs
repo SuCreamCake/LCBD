@@ -8,8 +8,31 @@ public class CupManager : MonoBehaviour
     public GameObject Cup1;
     public GameObject Cup2;
     public GameObject Cup3;
+    public GameObject Ball;
+
+    // 컵 업다운
+    private Vector3 originalPos1;
+    private Vector3 originalPos2;
+    private Vector3 originalPos3;
+    private float duration = 1f; // 이동에 걸리는 시간 (1초)
+    private bool isMoving = false;
+    private Vector3 originalBallPos;
 
     private bool isGameRunning = false;
+
+    public string cupTag = "Cup"; // Cup 오브젝트에 설정할 태그 이름
+    public Character characterScript; // Character 스크립트에 접근하기 위한 변수
+
+    public GameObject[] chosenCups;
+
+    void Start()
+    {
+        //컵 업다운을 위한 오브젝트 위치 얻기
+        originalPos1 = Cup1.transform.position;
+        originalPos2 = Cup2.transform.position;
+        originalPos3 = Cup3.transform.position;
+        originalBallPos = Ball.transform.position;
+    }
 
     // UI 버튼에 연결할 메서드를 만듭니다.
     public void OnStartButtonClicked()
@@ -21,13 +44,21 @@ public class CupManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StartGame()
+    public IEnumerator StartGame()
     {
         isGameRunning = true;
+
+        StartCoroutine(UpDownMove());
+        // Wait for 1.5 seconds before proceeding to the next iteration.
+        yield return new WaitForSeconds(1.5f);
+
         for (int i = 0; i < 5; i++)
         {
             // 2개의 컵을 랜덤으로 선택하여 배열에 저장합니다.
-            GameObject[] chosenCups = GetRandomCups(2);
+            chosenCups = GetRandomCups(2);
+
+            //chosenCups 배열을 Character 스크립트에게 전달합니다.
+            PassChosenCupsToCharacters();
 
             // 선택된 컵을 Log로 출력합니다.
             LogChosenCups(chosenCups);
@@ -44,8 +75,8 @@ public class CupManager : MonoBehaviour
             // Ball이 있는 컵을 찾아 Log로 출력합니다.
             FindCupWithBall(chosenCups);
 
-            // Wait for 3 seconds before proceeding to the next iteration.
-            yield return new WaitForSeconds(1f);
+            // Wait for 1.5 seconds before proceeding to the next iteration.
+            yield return new WaitForSeconds(2.0f);
         }
 
         // After the loop is finished, enable the CupClickChecker script on the Cup objects.
@@ -53,6 +84,8 @@ public class CupManager : MonoBehaviour
     }
     public void GameRunningEnd()
     {
+        Start();
+        StartCoroutine(UpMove());
         isGameRunning = false;
     }
 
@@ -143,6 +176,69 @@ public class CupManager : MonoBehaviour
         Cup1.GetComponent<CupClickChecker>().Ing();
         Cup2.GetComponent<CupClickChecker>().Ing();
         Cup3.GetComponent<CupClickChecker>().Ing();
+    }
+
+    // 이 메서드를 통해 chosenCups 배열을 Character 스크립트에게 전달합니다.
+    public void PassChosenCupsToCharacters()
+    {
+        Character[] characters = FindObjectsOfType<Character>();
+
+        foreach (Character character in characters)
+        {
+            character.ReceiveChosenCups(chosenCups);
+        }
+    }
+
+    // 컵 업다운
+    private IEnumerator UpDownMove()
+    {
+        yield return null; // 1 프레임 대기
+
+        // 원하는 시간에 따라 보간 함수를 사용하여 오브젝트를 이동시킵니다.
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0과 1 사이의 보간 값
+
+            Cup1.transform.position = Vector3.Lerp(originalPos1, new Vector3(originalPos1.x, originalPos1.y - 50f, originalPos1.z), t);
+            Cup2.transform.position = Vector3.Lerp(originalPos2, new Vector3(originalPos2.x, originalPos2.y - 50f, originalPos2.z), t);
+            Cup3.transform.position = Vector3.Lerp(originalPos3, new Vector3(originalPos3.x, originalPos3.y - 50f, originalPos3.z), t);
+
+            // 공도 천천히 이동시킵니다.
+            Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalPos1.y - 50f, originalBallPos.z), t);
+
+            yield return null; // 1 프레임 대기
+        }
+
+        isMoving = false;
+    }
+
+    // 컵 업다운
+    private IEnumerator UpMove()
+    {
+        yield return null; // 1 프레임 대기
+
+        // 원하는 시간에 따라 보간 함수를 사용하여 오브젝트를 이동시킵니다.
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0과 1 사이의 보간 값
+
+            Cup1.transform.position = Vector3.Lerp(originalPos1, new Vector3(originalPos1.x, originalPos1.y + 50f, originalPos1.z), t);
+            Cup2.transform.position = Vector3.Lerp(originalPos2, new Vector3(originalPos2.x, originalPos2.y + 50f, originalPos2.z), t);
+            Cup3.transform.position = Vector3.Lerp(originalPos3, new Vector3(originalPos3.x, originalPos3.y + 50f, originalPos3.z), t);
+
+            // 공도 천천히 이동시킵니다.
+            Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalPos1.y - 80f, originalBallPos.z), t);
+
+            yield return null; // 1 프레임 대기
+        }
+
+        isMoving = false;
     }
 }
 
