@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TalkManage : MonoBehaviour
 {
@@ -79,10 +80,19 @@ public class TalkManage : MonoBehaviour
             blackPanel.SetActive(true);
             TalkText.text = "쿵...!";
         }
+        else if(clickCount ==8)
+        {
+            SceneManager.LoadScene("player");
+        }
         else //키 입력의 값이 벗어나면 비활성화 업데이트함수에서도 실행됨.
         {
             talkPanel.SetActive(false);
             isTalk = false;
         }
+    }
+
+    private void skipBtn()
+    {
+        SceneManager.LoadScene("player");
     }
 }
