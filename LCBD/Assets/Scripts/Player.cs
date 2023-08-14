@@ -60,6 +60,8 @@ public class Player : MonoBehaviour
     private int IncubationStack;
     private int genitalStack;
 
+    //사운드 오브젝트
+    public GameObject SoundsPlayer;
 
     private void Awake()
     { 
@@ -128,6 +130,8 @@ public class Player : MonoBehaviour
         }
         if (collision.CompareTag("Potal"))
         {
+            DontDestroyOnLoad(SoundsPlayer);
+            SoundsPlayer.GetComponent<SoundsPlayer>().InteractionSound(0);  // Portal Sound
             switch (stage)
             {
                 case 1:
@@ -178,9 +182,9 @@ public class Player : MonoBehaviour
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             ani.SetTrigger("isJumping");
-        }
 
-        
+            SoundsPlayer.GetComponent<SoundsPlayer>().JumpSound(0);     // Jump Sound 
+        }
 
     }
     private void stopSpeed()
@@ -209,7 +213,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-            
+            SoundsPlayer.GetComponent<SoundsPlayer>().AttackSound(0);
             Instantiate(soundWave);
         }
     }
@@ -246,13 +250,21 @@ public class Player : MonoBehaviour
         else
             ani.SetBool("isWalking", true);
 
-        
+        // Walk Sound 
+        if (stage == 1)
+            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(0);
+        else if (stage == 2)
+            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(1);
+
+
+
     }
     private void upDown()
     {
         //Updown
         if (isLadder)
         {
+            SoundsPlayer.GetComponent<SoundsPlayer>().LadderSound(0);       // Jump Sound
             float ver = Input.GetAxis("Vertical");
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if (Mathf.Abs(ver) != 0)
