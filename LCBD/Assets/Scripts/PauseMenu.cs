@@ -10,10 +10,12 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPause = false; //메뉴 상태여부
     public GameObject pauseMenuPanel;
 
-    private void Awake()
+    private void Start()
     {
-        pauseMenuPanel.SetActive(false); //게임 시작시에는 활성화x
+        Resume();
     }
+
+
 
     void Update()
     {

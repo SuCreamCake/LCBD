@@ -93,6 +93,7 @@ public class Menu_Btn_Event: MonoBehaviour
         Debug.Log("Click Start");
         FindActivePanel();
         NewGamePanel.SetActive(true);
+        SceneManager.LoadScene("player");
        // Debug.Log("백리스트 크기:" + BackList.Count);
     }
 
