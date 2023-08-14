@@ -67,6 +67,10 @@ public class Player : MonoBehaviour
     public LayerMask enemyLayers;
     //음파 공격 시간
     public float soundWaveAttackTime = 0;
+    //총 공격량
+    public int totalAttackPower;
+    //총 방어량
+    public int totalShield;
     private void Awake()
     { 
         ani = GetComponent<Animator>();
@@ -89,6 +93,7 @@ public class Player : MonoBehaviour
         swapWeapon();
         battleLogic();
         getInputSoundWaveAttack();
+        soundWaveAttackTime += Time.deltaTime;
         switch (stage)
         {
          case 1:
@@ -470,9 +475,10 @@ public class Player : MonoBehaviour
             //Collider2D hitEnemys = Physics2D.OverlapCircle(startAttackPoint,rangeRadius,enemyLayers);
 
             RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, enemyLayers);
-            if (raycastHit.collider!=null)
+            if (raycastHit.collider != null)
             {
-                raycastHit.collider.GetComponent<EnemyHit>().TakeDamage();
+                CalDamage();
+                raycastHit.collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
                 Debug.Log("몬스터 맞춤");
 
             }
@@ -527,7 +533,7 @@ public class Player : MonoBehaviour
                 if(collider.tag=="monster")
                 {
                     Debug.Log("몬스터 맞춤");
-                    collider.GetComponent<EnemyHit>().TakeDamage();
+                    collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
                 }
             }
             Debug.Log("공격실행");
@@ -661,9 +667,10 @@ public class Player : MonoBehaviour
     }
     private void soundWaveAttack()
     {
-        soundWaveAttackTime += Time.deltaTime;
-        if (true)
+        
+        if (soundWaveAttackTime >= 3.0f)
         {
+            soundWaveAttackTime = 0;
             RaycastHit2D[] raycastHit2Ds;
             soundWaveAttackTime = 0;
             //마우스의 위치 가져오기
@@ -675,34 +682,7 @@ public class Player : MonoBehaviour
             attackForce = attackForce.normalized;
             Debug.Log(attackPower);
             float startAngle = -attackPower / 2;
-            ////보조 음파 공격
-            //Vector2 secondaryAttackVecStart = attackForce * crossroads / 3;
-            //Vector2 secondaryAttackVecEnd = Quaternion.AngleAxis(attackPower / 2, Vector3.forward) * secondaryAttackVecStart;
-            //float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
-            ////보조 공격 y범위
-            //float secondaryAttackYrange = Vector2.Distance(secondaryAttackVecStart, secondaryAttackVecEnd);
-            //Debug.Log(secondaryAttackYrange);
-
-            ////보조 공격 x범위
-            //float secondaryAttackXrange = crossroads / 3;
-
-            //Vector2 boxSize = new Vector2(secondaryAttackXrange, secondaryAttackYrange);
-            ////공격 콜라이더 생성
-            //Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition.position, boxSize, angle, enemyLayers);
-            //Debug.Log(angle);
-            //foreach (Collider2D collider in colliders)
-            //{
-            //    Debug.Log(collider.tag);
-            //    if (collider.tag == "monster")
-            //    {
-            //        Debug.Log("몬스터 맞춤");
-            //        Debug.Log("보조 음파 공격 범위 적 피격");
-            //        collider.GetComponent<EnemyHit>().TakeDamage();
-            //    }
-            //}
-            //Debug.Log("공격실행");
-
-
+          
             //일반 음파 공격
             for (float startAngleIndex = startAngle; startAngleIndex <= attackPower / 2; startAngleIndex += 0.5f)
             {
@@ -715,7 +695,7 @@ public class Player : MonoBehaviour
                     if(hit.collider.tag=="monster")
                     {
                         
-                        hit.collider.GetComponent<EnemyHit>().TakeDamage();
+                        hit.collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
                     }
                 }
             }
@@ -729,7 +709,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("1/3지역 피격");
                     collider.GetComponent<EnemyHit>().IsCrossroadThird();
-                    collider.GetComponent<EnemyHit>().TakeDamage();
+                    collider.GetComponent<EnemyHit>().TakeDamage(attackPower/3);
                 }
 
             }
@@ -738,4 +718,14 @@ public class Player : MonoBehaviour
        
     }
 
+    //데미지 공식
+    private void CalDamage()
+    {
+        totalAttackPower+=0/*여기 공격량 공식 들어갈 예정*/;
+    }
+    //방어 공식
+    private void TotalShield()
+    {
+        totalShield += 0;/*여기도 마찬가지임*/;
+    }
 }
