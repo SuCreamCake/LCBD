@@ -10,9 +10,12 @@ public class RadiusView : MonoBehaviour
 
     private bool isInView;              // 시야 안에 있는지 여부
 
+    public GameObject npcMenu; // NpcMenu 오브젝트를 연결합니다.
+    private bool isMenuActive = false; // 메뉴 온오프
+
     private void Start()
     {
-        StartCoroutine("FindTargetsWithDelay", 1f);
+        StartCoroutine("FindTargetsWithDelay", 0.5f);
     }
 
     // 일정 시간마다 타겟 검색
@@ -50,10 +53,16 @@ public class RadiusView : MonoBehaviour
                     Debug.Log("태그를 찾을 수 없습니다.");
                     break;
             }
-            NpcTextSc NpcTextSc = GetComponent<NpcTextSc>();
-            if (NpcTextSc != null)
+            // R키를 이용한 말풍선 띄우기 자동 10초 마다로 변경
+            //NpcTextSc NpcTextSc = GetComponent<NpcTextSc>();
+            //if (NpcTextSc != null)
+            //{
+            //    NpcTextSc.TalkNpc();
+            //}
+            if (npcMenu != null)
             {
-                NpcTextSc.TalkNpc();
+                isMenuActive = !isMenuActive; // 상태를 토글합니다.
+                npcMenu.SetActive(isMenuActive); // NpcMenu 오브젝트의 활성화 상태를 변경합니다.
             }
         }
     }

@@ -16,6 +16,9 @@ TagManager:
   - GrowingUp
   - IncubationPeriod
   - GenitalStage
+  - Cup
+  - Ball
+  - npc
   layers:
   - Default
   - TransparentFX
@@ -37,10 +40,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - SkillEffect
+  - Friendship
+  - Neutrality
+  - Hostility
   - 
   - 
   - 
