@@ -17,6 +17,9 @@ TagManager:
   - IncubationPeriod
   - ReproductiveOrgans
   - MeelAttack
+  - Ball
+  - Cup
+  - GenitalStage
   layers:
   - Default
   - TransparentFX
