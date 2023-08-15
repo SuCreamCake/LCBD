@@ -88,6 +88,9 @@ public class StageGenerator : MonoBehaviour
 
     public void GenerateStage()
     {
+        MapWidth = 40;
+        MapHeight = 25;
+
         FieldCount = 5 * StageLevel + UnityEngine.Random.Range(3, 6);
         FieldSquareMatrixRow = Mathf.FloorToInt(Mathf.Sqrt(FieldCount + 20)) + 1;
 
@@ -326,16 +329,25 @@ public class StageGenerator : MonoBehaviour
                             {
                                 switch(mapGenerator[i, j].Fields.Map[x,y])
                                 {
-                                    case 1: 
+                                    case 1:     //벽
                                         Gizmos.color = Color.white;
                                         break;
-                                    case 0:
+                                    case 2:     //발판 플랫폼
+                                        Gizmos.color = Color.gray;
+                                        break;
+                                    case 3:     //사다리
+                                        Gizmos.color = Color.yellow;
+                                        break;
+                                    case 0:     //빈공간
                                         Gizmos.color = Color.black;
                                         break;
-                                    case 99:
+                                    case 99:    //스테이지 시작 지점
                                         Gizmos.color = Color.green;
                                         break;
-                                    case 80:
+                                    case 80:    //필드 포탈
+                                        Gizmos.color = new Color(1, 0.5f, 0); 
+                                        break;
+                                    case 95:    //스테이지 포탈
                                         Gizmos.color = Color.red;
                                         break;
                                 }

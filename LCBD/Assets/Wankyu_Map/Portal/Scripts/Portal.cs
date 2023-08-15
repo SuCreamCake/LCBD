@@ -1,28 +1,23 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : MonoBehaviour //TODO: 포탈 어떻게 배치할 건지 생각해야 함.
 {
     [SerializeField]
     protected GameObject player;
     [SerializeField]
     private GameObject targetPos;
 
-    [field: SerializeField] public int MapX { get; private set; }
-    [field: SerializeField] public int MapY { get; private set; }
-
-    public virtual void SetTargetPos(int i, int j, int x, int y, int mapWidth, int mapHeight)
+    public void SetTargetPos(PortalPoint portalPoint, int mapWidth, int mapHeight)
     {
-        MapX = x;
-        MapY = y;
-
-        Vector3 pos = new(i * (mapWidth + 1) + MapX + 0.5f, j * (mapHeight + 1) + MapY + 0.5f);
-
+        Vector3 pos = new(portalPoint.FieldX * (mapWidth + 1) + portalPoint.MapX, portalPoint.FieldY * (mapHeight + 1) + portalPoint.MapY);
+        
         targetPos.transform.position = pos;
+        targetPos.transform.Translate(0.5f, 0.5f, 0);
     }
 
-    public virtual void Teleport()
+    public void Teleport()
     {
         Vector2 pos = targetPos.transform.position;
 

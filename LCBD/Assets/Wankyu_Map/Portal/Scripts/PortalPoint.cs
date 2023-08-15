@@ -1,24 +1,27 @@
-﻿//포탈의 X Y 좌표를 담는 클래스
+﻿//포탈의 필드의 위치 좌표(i, j)와 맵 안의 좌표(X, Y)를 담는 클래스
 using System;
 using System.Collections;
 using UnityEngine;
 
 public class PortalPoint
 {
-    private int x;
-    private int y;
+    private int fieldX; //필드X
+    private int fieldY; //필드Y
+    private int mapX;   //맵X
+    private int mapY;   //맵Y
 
-    public PortalPoint(int x = 0, int y = 0)
+    public PortalPoint(int i = 0, int j = 0, int x = 0, int y = 0)
     {
-        this.x = x;
-        this.y = y;
+        fieldX = i;
+        fieldY = j;
+        mapX = x;
+        mapY = y;
     }
 
-    public int X { get { return x; } }
-    public int Y { get { return y; } }
-
-    public void SetX(int x) { this.x = x; }
-    public void SetY(int y) { this.y = y; }
+    public int FieldX { get { return fieldX; } private set { fieldX = value; } }
+    public int FieldY { get { return fieldY; } private set { fieldY = value; } }
+    public int MapX { get { return mapX; } private set { mapX = value; } }
+    public int MapY { get { return mapY; } private set { mapY = value; } }
 
     public override bool Equals(object obj)
     {
@@ -28,18 +31,20 @@ public class PortalPoint
     public bool Equals(PortalPoint otherField)
     {
         return otherField != null &&
-            x == otherField.x &&
-            y == otherField.y;
+            fieldX == otherField.fieldX &&
+            fieldY == otherField.fieldY &&
+            mapX == otherField.mapX &&
+            mapY == otherField.mapY;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(x, y);
+        return HashCode.Combine(fieldX, fieldY, mapX, mapY);
     }
 
     public override string ToString()
     {
-        string msg = "(" + x + ", " + y + ")";
+        string msg = "(" + fieldX + ", " + fieldY + ")-" + "-(" + mapX + ", " + mapY + ")";
         return msg;
     }
 }

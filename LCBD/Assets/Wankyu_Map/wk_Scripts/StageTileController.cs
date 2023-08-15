@@ -61,7 +61,11 @@ public class StageTileController : MonoBehaviour
                             else if (map[x, y] == 3) //사다리
                             {
                                 ladderTilemap.SetTile(pos, ladderTile);
-                                platformTilemap.SetTile(pos, platformTile);
+
+                                if (y < map.GetLength(1) - 1 && map[x, y + 1] != 3)
+                                {
+                                    platformTilemap.SetTile(pos, platformTile);
+                                }
                             }
                             else if (map[x, y] == 99)    //스테이지 시작 지점
                             {
@@ -69,8 +73,6 @@ public class StageTileController : MonoBehaviour
                                 StartFieldY = j;
                                 StartMapX = x;
                                 StartMapY = y;
-
-                                //decoTilemap.SetTile(pos, newBrickTileBases[1]);
 
                                 StartPos.transform.position = pos;
                                 StartPos.transform.Translate(0.5f, 0.5f, 0);

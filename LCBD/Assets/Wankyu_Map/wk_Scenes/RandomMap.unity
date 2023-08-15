@@ -322,14 +322,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626972521}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -383,10 +383,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brickTilemap: {fileID: 1879313576}
-  decoTilemap: {fileID: 1503729008}
   ladderTilemap: {fileID: 1673463484}
   platformTilemap: {fileID: 1021830560}
+  decoTilemap: {fileID: 1503729008}
   brickTileBase: {fileID: 11400000, guid: 6d8477babe4feab4dbc8bfb7f73937a4, type: 2}
+  ladderTile: {fileID: 11400000, guid: 4a46dba2b3717774bbcd99baea73824d, type: 2}
+  platformTile: {fileID: 11400000, guid: 5916b259a5035e743896f45d5f2d6ec9, type: 2}
   newBrickTileBases:
   - {fileID: 11400000, guid: 6d8477babe4feab4dbc8bfb7f73937a4, type: 2}
   - {fileID: 11400000, guid: 5916b259a5035e743896f45d5f2d6ec9, type: 2}
@@ -394,13 +396,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc567dd95a48be54a8447c47aafeccec, type: 2}
   - {fileID: 11400000, guid: 229d1b17981793b489373b358688eea8, type: 2}
   - {fileID: 11400000, guid: fbfe4378e747459478bb3d90b25b1e15, type: 2}
-  ladderTile: {fileID: 11400000, guid: 4a46dba2b3717774bbcd99baea73824d, type: 2}
-  platformTile: {fileID: 11400000, guid: 5916b259a5035e743896f45d5f2d6ec9, type: 2}
   <StartPos>k__BackingField: {fileID: 4614710855964767160, guid: 048e6da6f2a82d14fb0c97d66643a984, type: 3}
-  <StartFieldX>k__BackingField: 0
-  <StartFieldY>k__BackingField: 0
-  <StartMapX>k__BackingField: 0
-  <StartMapY>k__BackingField: 0
 --- !u!114 &643425203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,8 +410,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stageLevel: 5
-  _mapWidth: 30
-  _mapHeight: 20
+  _mapWidth: 40
+  _mapHeight: 25
 --- !u!114 &643425204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,7 +441,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <StagePortalObject>k__BackingField: {fileID: 6250138717398671519, guid: 5218bb31b0ab44c4ba373208a9423efb, type: 3}
-  <StagePortalParent>k__BackingField: {fileID: 1191623285}
+  <FieldPortalObject>k__BackingField: {fileID: 8009934752397416548, guid: 868ed15b63bb726458fe5d1224b4106d, type: 3}
+  stagePortalParent: {fileID: 1191623285}
+  fieldPortalParent: {fileID: 910430604}
 --- !u!1 &910430603
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,7 +613,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1283,7 +1281,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

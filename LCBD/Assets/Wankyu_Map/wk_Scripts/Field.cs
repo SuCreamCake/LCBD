@@ -76,87 +76,96 @@ public class Field
 
     private void FillCommonMap(int width, int height)
     {
-        FillRandomMap(width, height);
+        Map = DefaultMap.GetCommonField(width, height);
+        //FillRandomMap(width, height);
     }
 
-    private void FillRandomMap(int width, int height)
-    {
-        //string seed = DateTime.Now.Ticks.ToString();
-        //System.Random psuedoRandom = new System.Random(seed.GetHashCode());
-        //Debug.Log("seed: " + seed);
+    #region // 원래 일반 필드 그릴 때 쓰려고 만든 완전 랜덤으로 맵 그리는 메소드들인데 지금 안쓰임
+    #region // 맵에 벽을 생성할 때 랜덤으로 벽을 만들고, 테두리 그리고, 스무딩해서 맵을 만들어주는 메소드
+    //private void FillRandomMap(int width, int height)
+    //{
+    //    //string seed = DateTime.Now.Ticks.ToString();
+    //    //System.Random psuedoRandom = new System.Random(seed.GetHashCode());
+    //    //Debug.Log("seed: " + seed);
 
-        //float max = DateTime.Now.Ticks;
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (x == width/2 || y == height/2)
-                {
-                    Map[x,y] = 0;
-                }
-                else
-                {
-                    Map[x, y] = UnityEngine.Random.Range(0, 100) < 42 ? 1 : 0;  //42%확률 로 벽 만듬
-                }
-            }
-        }
-        
-        DrawBorder(width, height);
+    //    //float max = DateTime.Now.Ticks;
+    //    for (int x = 0; x < width; x++)
+    //    {
+    //        for (int y = 0; y < height; y++)
+    //        {
+    //            if (x == width/2 || y == height/2)
+    //            {
+    //                Map[x,y] = 0;
+    //            }
+    //            else
+    //            {
+    //                Map[x, y] = UnityEngine.Random.Range(0, 100) < 42 ? 1 : 0;  //42%확률 로 벽 만듬
+    //            }
+    //        }
+    //    }
 
-        int smoothLevel;
-        smoothLevel = width > height ? width >> 2 : height >> 2;
-        smoothLevel = smoothLevel <= 1 ? 1 : smoothLevel;
+    //    DrawBorder(width, height);
 
-        for (int i = 0; i < smoothLevel; i++)
-        {
-            SmoothMap(width, height);
-        }
-    }
+    //    int smoothLevel;
+    //    smoothLevel = width > height ? width >> 2 : height >> 2;
+    //    smoothLevel = smoothLevel <= 1 ? 1 : smoothLevel;
 
-    private void SmoothMap(int width, int height)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                int neighbourWallTiles = GetSurroundingWallCount(width, height, x, y);
+    //    for (int i = 0; i < smoothLevel; i++)
+    //    {
+    //        SmoothMap(width, height);
+    //    }
+    //}
+    #endregion
 
-                if (neighbourWallTiles > 4)
-                {
-                    Map[x, y] = 1;
-                }
-                else if (neighbourWallTiles < 4)
-                {
-                    Map[x, y] = 0;
-                }
-            }
-        }
-    }
+    #region // 스무딩해주는 메소드 / GetSurroundingWallCount()를 통해 주변 벽의 개수에 맞게 자신의 상태를 바꾸는 메소드
+    //private void SmoothMap(int width, int height)
+    //{
+    //    for (int x = 0; x < width; x++)
+    //    {
+    //        for (int y = 0; y < height; y++)
+    //        {
+    //            int neighbourWallTiles = GetSurroundingWallCount(width, height, x, y);
 
-    private int GetSurroundingWallCount(int width, int height, int gridX, int gridY)
-    {
-        int wallCount = 0;
+    //            if (neighbourWallTiles > 4)
+    //            {
+    //                Map[x, y] = 1;
+    //            }
+    //            else if (neighbourWallTiles < 4)
+    //            {
+    //                Map[x, y] = 0;
+    //            }
+    //        }
+    //    }
+    //}
+    #endregion
 
-        for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
-        {
-            for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
-            {
-                if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
-                {
-                    if (neighbourX != gridX || neighbourY != gridY)
-                    {
-                        wallCount += Map[neighbourX, neighbourY];
-                    }
-                }
-                else
-                {
-                    wallCount++;
-                }
-            }
-        }
+    #region // 주변의 벽의 개수 세는 메소드
+    //private int GetSurroundingWallCount(int width, int height, int gridX, int gridY)
+    //{
+    //    int wallCount = 0;
 
-        return wallCount;
-    }
+    //    for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
+    //    {
+    //        for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
+    //        {
+    //            if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
+    //            {
+    //                if (neighbourX != gridX || neighbourY != gridY)
+    //                {
+    //                    wallCount += Map[neighbourX, neighbourY];
+    //                }
+    //            }
+    //            else
+    //            {
+    //                wallCount++;
+    //            }
+    //        }
+    //    }
+
+    //    return wallCount;
+    //}
+    #endregion
+    #endregion
 
     private void FillStartMap(int width, int height)
     {
@@ -196,18 +205,51 @@ class DefaultMap
     {
         int[,] startMap = new int[width, height];
 
-        int floorHeight = height >> 1;
-
-        int floorStart = width >> 2;
-        int floorWidth = width >> 1;
-
-        //발판
-        for (int x = 0; x < floorWidth; x++)
+        //벽
+        for (int x = 0; x < width; x++)
         {
-            startMap[floorStart + x, floorHeight] = 1;
+            for (int y = 0; y < height; y++)
+            {
+                startMap[x, y] = 1;
+            }
         }
 
-        startMap[floorStart + floorWidth / 2, floorHeight + 1] = 99; //스테이지 시작 포인트(99)
+        int roomPointX = width / 4;
+        int roomPointY = height / 4;
+
+        int roomWidth = width / 2;
+        int roomHeight = height / 2;
+
+        //빈 공간
+        for (int x = 0; x < roomWidth; x++)
+        {
+            for (int y = 0; y < roomHeight; y++)
+            {
+                startMap[roomPointX + x, roomPointY + y] = 0;
+            }
+        }
+
+        //발판
+        for (int x = 0; x < roomWidth / 2; x++)
+        {
+            startMap[roomPointX + roomWidth / 4 + x, roomPointY + roomHeight - 3] = 2;
+        }
+        for (int x = 0; x < roomWidth; x++)
+        {
+            startMap[roomPointX + x, roomPointY + roomHeight / 2] = 2;
+        }
+
+        //사다리
+        for (int y = roomPointY + roomHeight / 2 + 1; y < roomPointY + roomHeight - 2; y++)
+        {
+            startMap[width / 2 + 2, y] = 3;
+        }
+        for (int y = roomPointY; y <= roomPointY + roomHeight / 2; y++)
+        {
+            startMap[width / 2 - 2, y] = 3;
+        }
+
+        startMap[roomPointX + roomWidth / 2, roomPointY + roomHeight / 2 + 1] = 99; //스테이지 시작 포인트(99)
 
         return startMap;
     }
@@ -217,28 +259,113 @@ class DefaultMap
     {
         int[,] bossMap = new int[width, height];
 
-        int firstFloor = height / 3;
-        int secondFloor = height / 3 * 2;
-
-        int floorWidth = width / 5;
-
-        int firstFloorStart = width / 5;
-        int firstFloorStart2 = width / 5 * 3;
-
-        int secondFloorStart = width / 5 * 2;
+        //벽
+        for (int x = 0; x < 5; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                bossMap[x, y] = 1;
+                bossMap[width - 1 - x, y] = 1;
+            }
+        }
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < 5; y++)
+            {
+                bossMap[x, y] = 1;
+                bossMap[x, height - 1 - y] = 1;
+            }
+        }
 
         //발판
-        for (int x = 0; x < floorWidth; x++)
+        for (int y = 8; y < height - 8; y += 8)
         {
-            bossMap[firstFloorStart + x, firstFloor] = 1;
-            bossMap[firstFloorStart2 + x, firstFloor] = 1;
+            bossMap[5 + 8, y] = 2;
+            bossMap[5 + 7, y] = 2;
+            bossMap[5 + 6, y] = 2;
+            bossMap[5 + 5, y] = 2;
+            bossMap[5 + 4, y] = 2;
+            bossMap[5 + 3, y] = 2;
+            bossMap[5 + 2, y] = 2;
+
+            bossMap[width - 1 - 8 - 5, y] = 2;
+            bossMap[width - 1 - 7 - 5, y] = 2;
+            bossMap[width - 1 - 6 - 5, y] = 2;
+            bossMap[width - 1 - 5 - 5, y] = 2;
+            bossMap[width - 1 - 4 - 5, y] = 2;
+            bossMap[width - 1 - 3 - 5, y] = 2;
+            bossMap[width - 1 - 2 - 5, y] = 2;
+
+            if (y + 4 <= height - 8)
+            {
+                bossMap[5 + 11, y + 4] = 2;
+                bossMap[5 + 10, y + 4] = 2;
+                bossMap[5 + 9, y + 4] = 2;
+                bossMap[5 + 8, y + 4] = 2;
+                bossMap[5 + 7, y + 4] = 2;
+                bossMap[5 + 6, y + 4] = 2;
+                bossMap[5 + 5, y + 4] = 2;
+
+                bossMap[width - 1 - 11 - 5, y + 4] = 2;
+                bossMap[width - 1 - 10 - 5, y + 4] = 2;
+                bossMap[width - 1 - 9 - 5, y + 4] = 2;
+                bossMap[width - 1 - 8 - 5, y + 4] = 2;
+                bossMap[width - 1 - 7 - 5, y + 4] = 2;
+                bossMap[width - 1 - 6 - 5, y + 4] = 2;
+                bossMap[width - 1 - 5 - 5, y + 4] = 2;
+            }
         }
-        for (int x = secondFloorStart; x < (secondFloorStart + floorWidth); x++)
+        if ((width - 1 - 11 - 5 - 2) - (5 + 11 + 3) > 4)
         {
-            bossMap[x, secondFloor] = 1;
+            for (int x = 5 + 11 + 3; x < width - 1 - 11 - 5 - 2; x++)
+            {
+                for (int y = 8 + 4; y < height - 8; y += 8)
+                {
+                    if (y + 4 <= height - 8)
+                        bossMap[x, y + 4] = 2;
+                }
+            }
+        }
+        //
+
+        //사다리
+        for (int y = 8; y < height - 8; y += 8)
+        {
+            bossMap[5 + 6, y - 0] = 3;
+            bossMap[5 + 6, y - 1] = 3;
+            bossMap[5 + 6, y - 2] = 3;
+            bossMap[5 + 6, y - 3] = 3;
+
+            bossMap[width - 1 - 6 - 5, y - 0] = 3;
+            bossMap[width - 1 - 6 - 5, y - 1] = 3;
+            bossMap[width - 1 - 6 - 5, y - 2] = 3;
+            bossMap[width - 1 - 6 - 5, y - 3] = 3;
+
+            if (y + 4 <= height - 8)
+            {
+                bossMap[6 + 6, y + 4 - 0] = 3;
+                bossMap[6 + 6, y + 4 - 1] = 3;
+                bossMap[6 + 6, y + 4 - 2] = 3;
+                bossMap[6 + 6, y + 4 - 3] = 3;
+
+                bossMap[width - 1 - 6 - 6, y + 4 - 0] = 3;
+                bossMap[width - 1 - 6 - 6, y + 4 - 1] = 3;
+                bossMap[width - 1 - 6 - 6, y + 4 - 2] = 3;
+                bossMap[width - 1 - 6 - 6, y + 4 - 3] = 3;
+            }
         }
 
-        bossMap[secondFloorStart + floorWidth / 2, secondFloor + 1] = 95;
+        if ((width - 1 - 11 - 5 - 2) - (5 + 11 + 3) > 4) //스테이지 포탈 위치(95)
+        {
+            bossMap[width / 2 - 2, 16 + 1] = 95;
+        }
+        else
+        {
+            if (bossMap[width / 2 - 2, 5] == 0)
+            {
+                bossMap[width / 2 - 2, 5] = 95;
+            }
+        }
 
         return bossMap;
     }
@@ -248,22 +375,128 @@ class DefaultMap
     {
         int[,] specialMap = new int[width, height];
 
-        int floorWidth = width / 3;
-        int floorHeight = height / 3;
+        //벽
+        for (int x = 0; x < 5; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                specialMap[x, y] = 1;
+                specialMap[width - 1 - x, y] = 1;
+            }
+        }
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < 5; y++)
+            {
+                specialMap[x, y] = 1;
+                specialMap[x, height - 1 - y] = 1;
+            }
+        }
 
         //발판
-        for (int x = 0; x < floorWidth; x++)
+        for (int x = 10; x < width - 10; x++)
         {
-            specialMap[floorWidth + x, floorHeight] = 1;
+            for (int y = 10; y < height - 5; y += 5)
+            {
+                specialMap[x, y] = 2;
+            }
         }
-        for (int y = 0; y < floorHeight; y++)
+
+        //사다리
+        for (int y = 10; y < height - 5; y += 5)
         {
-            specialMap[floorWidth, floorHeight + y] = 1;
+            if (y % 10 == 0)
+            {
+                specialMap[5 + 6, y - 0] = 3;
+                specialMap[5 + 6, y - 1] = 3;
+                specialMap[5 + 6, y - 2] = 3;
+                specialMap[5 + 6, y - 3] = 3;
+                specialMap[5 + 6, y - 4] = 3;
+
+            }
+            else
+            {
+                specialMap[width - 1 - 6 - 5, y - 0] = 3;
+                specialMap[width - 1 - 6 - 5, y - 1] = 3;
+                specialMap[width - 1 - 6 - 5, y - 2] = 3;
+                specialMap[width - 1 - 6 - 5, y - 3] = 3;
+                specialMap[width - 1 - 6 - 5, y - 4] = 3;
+            }
         }
+
+
 
         return specialMap;
     }
     
-    
-    //
+    //CommonField
+    public static int[,] GetCommonField(int width, int height)
+    {
+        int[,] commonlMap = new int[width, height];
+
+        //벽
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                commonlMap[x, y] = 1;
+            }
+        }
+
+        //int rand = UnityEngine.Random.Range(0, 3);
+        //switch (rand)
+        //{
+        //    case 0:   //↗
+        //        break;
+        //    case 1:   //↖
+        //        break;
+        //    case 2:   //→
+        //        break;
+        //}
+
+        int roomX = width / 2 + UnityEngine.Random.Range(-5, 5 + 1);
+        int roomY = height / 2 + UnityEngine.Random.Range(-5, 5 + 1);
+
+        //빈공간
+        for (int x = 5; x < roomX; x++)
+        {
+            for (int y = 5; y < roomY; y++)
+            {
+                commonlMap[x, y] = 0;
+            }
+        }
+        for (int x = roomX; x < width - 5; x++)
+        {
+            for (int y = roomY; y < height - 5; y++)
+            {
+                commonlMap[x, y] = 0;
+            }
+        }
+
+        int midRoomX = roomX + UnityEngine.Random.Range(-roomX / 2, 0);
+        int midRoomY = roomY + UnityEngine.Random.Range(-roomY / 2, 0);
+        int midRoomWidth = UnityEngine.Random.Range(roomX - midRoomX + 2, 2 * (roomX - midRoomX));
+        int midRoomHeight = UnityEngine.Random.Range(roomY - midRoomY + 2, 2 * (roomY - midRoomY));
+
+        //빈공간 (가운데부분)
+        for (int x = 0; x < midRoomWidth; x++)
+        {
+            for (int y = 0; y < midRoomHeight; y++)
+            {
+                commonlMap[midRoomX + x, midRoomY + y] = 0;
+            }
+        }
+
+        //사다리
+        for (int y = 5; y < midRoomY; y++)
+        {
+            commonlMap[roomX - 1, y] = 3;
+        }
+        for (int y = midRoomY; y < roomY; y++)
+        {
+            commonlMap[midRoomX + midRoomWidth - 1, y] = 3;
+        }
+
+        return commonlMap;
+    }
 }
