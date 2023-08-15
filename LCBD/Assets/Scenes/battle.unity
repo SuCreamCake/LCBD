@@ -1264,7 +1264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950785362}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3536,7 +3536,7 @@ MonoBehaviour:
   weaponeIndex: -1
   attackPosition: {fileID: 950785364}
   shieldObject: {fileID: 1161126713462899527, guid: 2e3a232af1012144d9249625a8d1f758, type: 3}
-  soundWaveAttackObject: {fileID: 5453876524352100480, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
+  soundWaveAttackObject: {fileID: 8604599372958436524, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8192

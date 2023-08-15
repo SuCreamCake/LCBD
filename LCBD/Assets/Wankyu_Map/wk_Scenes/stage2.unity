@@ -1048,7 +1048,7 @@ MonoBehaviour:
   stageGenerator: {fileID: 643425203}
   stageTileController: {fileID: 643425202}
   portalManager: {fileID: 643425205}
-  player: {fileID: 1024726929}
+  player: {fileID: 2869620272705725012, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
 --- !u!114 &643425205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,83 +1065,6 @@ MonoBehaviour:
   <FieldPortalObject>k__BackingField: {fileID: 8009934752397416548, guid: 868ed15b63bb726458fe5d1224b4106d, type: 3}
   stagePortalParent: {fileID: 1191623285}
   fieldPortalParent: {fileID: 910430604}
---- !u!1001 &664146491
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: img
-      value: 
-      objectReference: {fileID: 732223582}
-    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: text_hp
-      value: 
-      objectReference: {fileID: 1318005773}
-    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: image_fill
-      value: 
-      objectReference: {fileID: 682646954}
-    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: SoundsPlayer
-      value: 
-      objectReference: {fileID: 1505460900}
-    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: text_CoolTime
-      value: 
-      objectReference: {fileID: 1155074275}
-    - target: {fileID: 2869620272705725012, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 61.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 117.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
 --- !u!1 &682646952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,11 +1859,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!1 &1024726929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2869620272705725012, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
-  m_PrefabInstance: {fileID: 664146491}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1130837893
 GameObject:
   m_ObjectHideFlags: 0

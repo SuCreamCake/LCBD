@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8604599372958436531}
   - component: {fileID: 5956127893766061925}
   m_Layer: 0
-  m_Name: soundWave 1
+  m_Name: SoundWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8604599372958436524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 312.25375, y: 94.68039, z: 0}
+  m_LocalPosition: {x: 266.57727, y: 117.39754, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

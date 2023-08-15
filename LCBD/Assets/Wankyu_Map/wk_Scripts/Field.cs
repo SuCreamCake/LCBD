@@ -250,6 +250,9 @@ class DefaultMap
         }
 
         startMap[roomPointX + roomWidth / 2, roomPointY + roomHeight / 2 + 1] = 99; //스테이지 시작 포인트(99)
+        startMap[roomPointX + roomWidth / 2+4, roomPointY + roomHeight / 2 + 1] = 95; //스테이지 potal(99)
+
+
 
         return startMap;
     }

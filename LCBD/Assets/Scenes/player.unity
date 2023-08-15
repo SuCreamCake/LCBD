@@ -1371,7 +1371,11 @@ MonoBehaviour:
   SoundsPlayer: {fileID: 803438918}
   attackTime: 0
   bulletObject: {fileID: 0}
-  weapons: []
+  weapons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   weaponeIndex: -1
   attackPosition: {fileID: 0}
   shieldObject: {fileID: 0}

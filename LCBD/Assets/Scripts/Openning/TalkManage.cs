@@ -82,7 +82,7 @@ public class TalkManage : MonoBehaviour
         }
         else if(clickCount ==8)
         {
-            SceneManager.LoadScene("player");
+            SceneManager.LoadScene("RandomMap");
         }
         else //키 입력의 값이 벗어나면 비활성화 업데이트함수에서도 실행됨.
         {
@@ -93,6 +93,6 @@ public class TalkManage : MonoBehaviour
 
     private void skipBtn()
     {
-        SceneManager.LoadScene("player");
+        SceneManager.LoadScene("RandomMap");
     }
 }

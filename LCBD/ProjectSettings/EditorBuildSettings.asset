@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Openning.unity
     guid: 40921cff330e4cf43a45280408c84ed8
@@ -15,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: e115eccef0701d84abb65c49fda27d7c
   - enabled: 1
-    path: Assets/Scenes/player.unity
-    guid: 7fceb2c9e5466e443aa6af91a504c692
+    path: Assets/Wankyu_Map/wk_Scenes/RandomMap.unity
+    guid: 048f0e08307c549488598debf080a5a3
   - enabled: 1
-    path: Assets/Scenes/stage2.unity
-    guid: c6a322dfd4293154a93995ec5e316f00
+    path: Assets/Wankyu_Map/wk_Scenes/stage2.unity
+    guid: ad701f77309a96c488a91faf75699136
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e421e6e2a8f587a49ad9a027ee40f4ef, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 31d8b0119a0d4d4489f97b757eff3d10, type: 2}

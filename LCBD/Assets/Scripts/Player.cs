@@ -164,8 +164,9 @@ public class Player : MonoBehaviour
             rigid.gravityScale = 0;
             rigid.drag = 3;
         }
-        if (collision.CompareTag("Potal"))
+        if (collision.CompareTag("StagePortal"))
         {
+
             DontDestroyOnLoad(SoundsPlayer);
             SoundsPlayer.GetComponent<SoundsPlayer>().InteractionSound(0);  // Portal Sound
             switch (stage)
@@ -173,6 +174,7 @@ public class Player : MonoBehaviour
                 case 1:
                     stage = 2;
                     childhood();
+                    
                     SceneManager.LoadScene("stage2");
                     break;
                 case 2:
@@ -316,8 +318,8 @@ public class Player : MonoBehaviour
         //점프력
         jumpPower = 10 -2;
         //체력
-        maxHealth = 1000000;
-        health = 1000000;
+        maxHealth = 30;
+        health = 30;
         //공격력
         attackPower = 5;
         //지구력

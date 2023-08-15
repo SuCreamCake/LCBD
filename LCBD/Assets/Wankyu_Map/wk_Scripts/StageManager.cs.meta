@@ -3,7 +3,11 @@ guid: 95e18a60a2b800b4b9f79ddf5318aca5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - stageGenerator: {instanceID: 0}
+  - stageTileController: {instanceID: 0}
+  - portalManager: {instanceID: 0}
+  - player: {fileID: 990577761692737635, guid: 2e391c14ab7163a4caa3ae134a29db31, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
