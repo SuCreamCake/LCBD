@@ -3,6 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+  tags:
+  - Ladder
+  - monster
+  - gambler
+  - Grid
+  - Potal
+  - TestTag
+  - OralStage
+  - PhallicStage
+  - AnalStage
+  - GrowingUp
+  - IncubationPeriod
+  - ReproductiveOrgans
+  - MeelAttack
+  - Ball
+  - Cup
+  - GenitalStage
   tags: []
   layers:
   - Default
@@ -14,15 +31,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Obstacle
+  - background
+  - monster
   - 
   - 
   - 

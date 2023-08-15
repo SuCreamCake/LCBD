@@ -9,12 +9,10 @@ public class Openning : MonoBehaviour
     public GameObject Hole;
     public GameObject talkNext;
     SpriteRenderer render; //플레이어 렌더링
-    int speed=7; //플레이어 떨어지는 속도
+    int speed=3; //플레이어 떨어지는 속도
     Animator ani; //애니메이션
     Vector3 startPos;
     bool state; //상태
-
-
 
 
     private void Awake()
