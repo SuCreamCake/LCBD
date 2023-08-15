@@ -20,6 +20,7 @@ TagManager:
   - Ball
   - Cup
   - GenitalStage
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -29,16 +30,11 @@ TagManager:
   - UI
   - 
   - 
-  - platform
   - 
   - Player
   - Obstacle
   - background
   - monster
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
