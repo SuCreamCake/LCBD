@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,69 +14,100 @@ public class Player : MonoBehaviour
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
-    //최대체력
-    public int maxHealth;
-    //현재체력
-    public int health;
-    //공격력
-    public int attackPower;
-    //최대지구력
-    public int maxEndurance;
+    public float maxHealth;  //최대체력
+    public float health;     //현재체력
+    public int attackPower;    //공격력
+    public int maxEndurance;    //최대지구력
     //지구력
     public int endurance;
-    //방어력
-    public int defense;
-    //강인도
-    public int tenacity;
-    //공격속도
-    public float attackSpeed;
-    //사거리
-    public float crossroads;
-    //행운
-    public float luck;
+    public bool enduranceOnOff;
+    public float stayTime;
+    public int enduranceRec;
+
+    public int defense;    //방어력
+    public int tenacity;    //강인도
+    public float attackSpeed;    //공격속도
+    public float crossroads;    //사거리
+    public float luck;    //행운
     //음파 오브젝트
     public GameObject soundWave;
     private float time = 0;
-    //스테이지
-    public int stage;
+    public int stage;    //스테이지
+    new CapsuleCollider2D collider2D;    //사이즈 변경을 위한 콜라이더
 
-    //애니메이션
-    Animator ani;
-    
+    /*지학 추가*/
+    //쿨타임 텍스트
+    public Text text_CoolTime;
+    //쿨타임 이미지
+    public Image image_fill;
+    //스킬 재사용까지 남은시간
+    private float time_current;
+    //time.Time과 비교해서 time 
+    private float time_start;
+    private bool isEnded = true;
+    //hp바 텍스트
+    public Text text_hp;
+    //hp바 이미지
+    public Image img;
+
+    Animator ani;    //애니메이션
+
+    //인격 스택
+    public int oralStack;   
+    private int analStack;
+    private int phallicStack;
+    private int growingUpStack;
+    private int IncubationStack;
+    private int genitalStack;
+
+    //사운드 오브젝트
+    public GameObject SoundsPlayer;
 
     private void Awake()
     { 
         ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        collider2D = GetComponent<CapsuleCollider2D>();
 
         infancy();
-        
-
+       
+    }
+    void Start()
+    {
+        Init_UI();
+        Init_HP();
+        SetFunction_UI();
     }
 
     private void Update()
     {
         //AnimationMotion();
 
-
         jump();
         stopSpeed();
 
+        //고유능력
         switch (stage)
         {
-         case 1:
-            attack();
-            break;
-         case 4:
-            ladderJump();
-            break;
-         default:
-             break;
+            case 1:
+                attack();
+                break;
+            case 3:
+                ladderJump();
+                break;
+            case 4:
+                ladderJump();
+                break;
+            default:
+                break;
         }
-
+        
         maxState();
         minState();
+        Check_CoolTime();
+        SetFunction_UI();
+        Set_HP(health);
 
     }
 
@@ -85,6 +117,7 @@ public class Player : MonoBehaviour
     {
         walk();
         upDown();
+        enduranceSystem();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -97,6 +130,8 @@ public class Player : MonoBehaviour
         }
         if (collision.CompareTag("Potal"))
         {
+            DontDestroyOnLoad(SoundsPlayer);
+            SoundsPlayer.GetComponent<SoundsPlayer>().InteractionSound(0);  // Portal Sound
             switch (stage)
             {
                 case 1:
@@ -121,42 +156,9 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-        if(collision.CompareTag("OralStage"))
-        {
-            maxHealth += 5;
-            maxEndurance += 5;
-
-        }
-        if(collision.CompareTag("AnalStage"))
-        {
-            defense += 10;
-            tenacity += 10;
-
-        }
-        if (collision.CompareTag("PhallicStage"))
-        {
-            attackPower += 10;
-            tenacity += 5;
-
-        }
-        if (collision.CompareTag("GrowingUp"))
-        {
-            maxHealth += 5;
-            maxSpeed += 10;
-          
-        }
-        if(collision.CompareTag("IncubationPeriod"))
-        {
-            luck += 5;
-            defense += 5;
-           
-        }
-        if (collision.CompareTag("ReproductiveOrgans"))
-        {
-            attackSpeed += 0.2f;
-            crossroads += 0.25f;
-        }
-        
+        personality(collision);
+     
+    
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -172,6 +174,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void jump()
     {
         //Jump
@@ -179,9 +182,9 @@ public class Player : MonoBehaviour
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             ani.SetTrigger("isJumping");
-        }
 
-        
+            SoundsPlayer.GetComponent<SoundsPlayer>().JumpSound(0);     // Jump Sound 
+        }
 
     }
     private void stopSpeed()
@@ -190,7 +193,6 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-
     private void attack()
     {
         //attack
@@ -199,6 +201,8 @@ public class Player : MonoBehaviour
         Input.mousePosition.y, -Camera.main.transform.position.z));
         if (time >= attackSpeed && Input.GetMouseButtonDown(0))
         {
+            //쿨타임 추가 -지학-
+            Reset_CoolTime();
             time = 0;
             soundWave.transform.position = new Vector2(point.x, point.y);
             if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
@@ -209,7 +213,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-
+            SoundsPlayer.GetComponent<SoundsPlayer>().AttackSound(0);
             Instantiate(soundWave);
         }
     }
@@ -224,22 +228,43 @@ public class Player : MonoBehaviour
         if (speedx < maxSpeed)
             this.rigid.AddForce(transform.right * key * 30);
 
+
+
         //스프라이트 반전
-        if (key != 0)
+        if (key != 0 && stage == 1)
+        {
             transform.localScale = new Vector3(key, 1, 1);
+            //지구력 테스트
+            endurance--;
+            enduranceOnOff = false;
+        }
+
+  
+
+        if (key != 0 && stage == 2)
+            transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
+
 
         if (key == 0)
             ani.SetBool("isWalking", false);
         else
             ani.SetBool("isWalking", true);
 
-        
+        // Walk Sound 
+        if (stage == 1)
+            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(0);
+        else if (stage == 2)
+            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(1);
+
+
+
     }
     private void upDown()
     {
         //Updown
         if (isLadder)
         {
+            SoundsPlayer.GetComponent<SoundsPlayer>().LadderSound(0);       // Jump Sound
             float ver = Input.GetAxis("Vertical");
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if (Mathf.Abs(ver) != 0)
@@ -248,7 +273,6 @@ public class Player : MonoBehaviour
         else
             ani.SetBool("isLadder", false);
     }
-
     private void infancy()
     {
         //이동속도
@@ -261,7 +285,9 @@ public class Player : MonoBehaviour
         //공격력
         attackPower = 15;
         //지구력
+        maxEndurance = 40;
         endurance = 40;
+        enduranceRec = 4;
         //방어력
         defense = 50;
         //강인도
@@ -272,11 +298,14 @@ public class Player : MonoBehaviour
         crossroads = 3;
         //행운
         luck = 15 + 20;
-
+        
     }
 
     private void childhood()
     {
+        //사이즈 변경
+        transform.localScale = new Vector3(1.5f, 1.5f, 0);
+        collider2D.size = new Vector3(0.4f, 0.8f,0);
         //이동속도
         maxSpeed += 2;
         //점프력
@@ -287,6 +316,8 @@ public class Player : MonoBehaviour
         attackPower += 15;
         //사거리
         crossroads += 2;
+        //애니메이션
+        ani.SetTrigger("isChildhood");
     }
 
     private void adolescence()
@@ -317,10 +348,9 @@ public class Player : MonoBehaviour
 
     private void ladderJump()
     {
-        if (isLadder && Input.GetButtonDown("Jump") /*&& !ani.GetBool("isJumping")*/) //이것도 점프라 올라가고 점프안되게 하려는중.
+        if (isLadder && Input.GetButtonDown("Jump"))
         {
             InvokeRepeating("InvokeJump", 0.01f, 0.01f);
-            //ani.SetBool("isJumping", true);
         }
     }
     private void InvokeJump()
@@ -352,6 +382,8 @@ public class Player : MonoBehaviour
             crossroads = 30;
         if (luck > 100)
             luck = 100;
+        if (endurance > maxEndurance)
+            endurance = maxEndurance;
 
     }
     private void minState()
@@ -375,54 +407,194 @@ public class Player : MonoBehaviour
 
     }
 
-
-
-
-
-    //경훈
-    void openningMove()
+    private void enduranceRecovery()
     {
-        float h = Input.GetAxisRaw("Horizontal");
 
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-
-        if (rigid.velocity.x>maxSpeed)
-        {
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        }
-        else if (rigid.velocity.x > maxSpeed*(-1))
-        {
-            rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
-        }
-
+        if (endurance < maxEndurance)
+            endurance += enduranceRec;
+        else
+            endurance = maxEndurance;
     }
 
-    //private void AnimationMotion()
-    //{
-    //    if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
-    //    {
-    //        ani.SetBool("isRunning", false);
-    //    }
-    //    else
-    //    {
-    //        ani.SetBool("isRunning", true);
-    //    }
+    private void enduranceSystem()
+    {
+        if (enduranceOnOff == false)
+        {
+            stayTime += Time.deltaTime;
+            CancelInvoke("enduranceRecovery");
+        }
+        if (stayTime > 3)
+        {
+            enduranceOnOff = true;
+            stayTime = 0;
+            InvokeRepeating("enduranceRecovery", 1, 1);
+        }
+    }
 
-    //    if (rigid.velocity.y < 0)
-    //    {
-    //        Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-    //        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
-    //        if (rayHit.collider != null)
-    //        {
-    //            if (rayHit.distance < 0.5f)
-    //            {
-    //                //Debug.Log("점프 끝");
-    //                ani.SetBool("isJumping", false);
-    //            }
-    //        }
-    //    }
-    //}
+    private void personality(Collider2D collision)
+    {
+        
+        if (collision.CompareTag("OralStage"))
+        {
+            maxHealth += 5;
+            maxEndurance += 5;
+            oralStack++;
+            if (oralStack >= 5)
+                enduranceRec = 4 + 4 * (oralStack / 2);    //구강기 특수능력
+            //인격 조각을 통해 얻은 지구력 10당 초당 회복되는 지구력 4 증가
+
+        }
+        if (collision.CompareTag("AnalStage"))
+        {
+            defense += 10;
+            tenacity += 10;
+            analStack++;
+
+            //항문기 특수 능력
+            //방어력의 10%만큼 강인도 최대치 증가
+            if (analStack == 5)
+                tenacity += defense / 10;
+            if (analStack > 5)
+                tenacity = tenacity - (defense - 10) / 10 + (defense / 10);
+
+        }
+        if (collision.CompareTag("PhallicStage"))
+        {
+            attackPower += 10;
+            tenacity += 5;
+            phallicStack++;
+            //남근기 특수 능력
+            //인격 조각으로 얻은 공격력 10% 증가
+            if (phallicStack == 5)
+                attackPower += phallicStack;
+            if (phallicStack > 5)
+                attackPower = attackPower - (phallicStack - 1) + phallicStack;
+
+        }
+        if (collision.CompareTag("GrowingUp"))
+        {
+            maxHealth += 5;
+            maxSpeed += 10;
+            growingUpStack++;
+            //성장기 특수 능력
+            //(먹은 인격 개수 * 5)만큼 생명력 최대치 증가
+            if (growingUpStack == 5)
+                maxHealth += growingUpStack * 5;
+            if (growingUpStack > 5)
+                maxHealth = maxHealth - (growingUpStack - 1) * 5 + growingUpStack * 5;
+
+        }
+        if (collision.CompareTag("IncubationPeriod"))
+        {
+            luck += 5;
+            defense += 5;
+            IncubationStack++;
+            //잠복기 특수 능력
+            //피격 시 행운의 확률로 방어량 10% 증가
+            //피격 미구현으로 보류
+        }
+        if (collision.CompareTag("GenitalStage"))
+        {
+            attackSpeed += 0.2f;
+            crossroads += 0.25f;
+            genitalStack++;
+            //생식기 특수 능력
+            //공격속도 1당 공격력 20 증가
+            if (genitalStack == 5)
+                attackPower += (int)attackSpeed * 20;
+            if (genitalStack > 5)
+                attackPower = attackPower - (int)(attackSpeed - 1) * 20 + (int)attackSpeed * 20;
+        }
+        
+    }
 
 
+    /*지학*/
+    //image_fill의 fillAmount를 360도 시계 반대 방향으로 회전하게 설정
+    private void Init_UI()
+    {
+        image_fill.type = Image.Type.Filled;
+        image_fill.fillMethod = Image.FillMethod.Radial360;
+        image_fill.fillOrigin = (int)Image.Origin360.Top;
+        image_fill.fillClockwise = false;
+    }
+    //쿨타임 리셋
+    private void Check_CoolTime()
+    {
+        time_current = Time.time - time_start;
+        if (time_current < attackSpeed)
+        {
+            Set_FillAmount(attackSpeed - time_current);
+        }
+        else if (!isEnded)
+        {
+            End_CoolTime();
+        }
+    }
+    //쿨타임이 끝나서 스킬 재사용이 가능해진 시점
+    private void End_CoolTime()
+    {
+        Set_FillAmount(0);
+        isEnded = true;
+        text_CoolTime.gameObject.SetActive(false);
+    }
+    //쿨타임 타이머 시작
+    private void Reset_CoolTime()
+    {
+        text_CoolTime.gameObject.SetActive(true);
+        time_current = attackSpeed;
+        time_start = Time.time;
+        Set_FillAmount(attackSpeed);
+        isEnded = false;
+    }
+    //스킬 재사용 시간 시각화
+    private void Set_FillAmount(float _value)
+    {
+        image_fill.fillAmount = _value / attackSpeed;
+        string txt = _value.ToString("0.0");
+        text_CoolTime.text = txt;
+    }
+    //HP의 값과 UI 표시 초기화
+    private void Init_HP()
+    {
+        Set_HP(maxHealth);
+    }
+
+    private void SetFunction_UI()
+    {
+        //Fill Amount Type
+        img.type = Image.Type.Filled;
+        img.fillMethod = Image.FillMethod.Horizontal;
+        img.fillOrigin = (int)Image.OriginHorizontal.Left;
+    }
+    //hp에서 매개 변수로 받은 float 값을 더함
+    private void Change_HP(float _value)
+    {
+        health += _value;
+        Set_HP(health);
+    }
+    //hp를 매개변수로 받은 float 값으로 변경
+    private void Set_HP(float _value)
+    {
+        health = _value;
+
+        string txt = "";
+        if (health <= 0)
+        {
+            health = 0;
+            txt = "Dead";
+        }
+        else
+        {
+            if (health > maxHealth)
+                health = maxHealth;
+            txt = string.Format("{0}/{1}", health, maxHealth);
+        }
+        img.fillAmount = health / maxHealth;
+
+
+        text_hp.text = txt;
+
+    }
 
 }
