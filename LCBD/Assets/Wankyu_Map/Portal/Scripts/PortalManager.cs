@@ -332,9 +332,9 @@ public class PortalManager : MonoBehaviour
         // 포탈 생성
         foreach (var field in fieldPortalDict)
         {
-            GameObject obj = null;
-            GameObject fieldIndex = Instantiate(obj);
-            fieldIndex.name = "a";
+            //GameObject obj = null;
+            //GameObject fieldIndex = Instantiate(obj);
+            //fieldIndex.name = "a";
             GameObject fieldPortalPrefab = Instantiate(FieldPortalObject, new(0, 0, 0), new(0, 0, 0, 0), fieldPortalParent);
 
             fieldPortalPrefab.GetComponent<FieldPortal>().SetPortalPos(field.Key, stageGenerator.MapWidth, stageGenerator.MapHeight);
