@@ -396,7 +396,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc567dd95a48be54a8447c47aafeccec, type: 2}
   - {fileID: 11400000, guid: 229d1b17981793b489373b358688eea8, type: 2}
   - {fileID: 11400000, guid: fbfe4378e747459478bb3d90b25b1e15, type: 2}
+  stageGenerator: {fileID: 0}
   <StartPos>k__BackingField: {fileID: 4614710855964767160, guid: 048e6da6f2a82d14fb0c97d66643a984, type: 3}
+  <StartFieldX>k__BackingField: 0
+  <StartFieldY>k__BackingField: 0
+  <StartMapX>k__BackingField: 0
+  <StartMapY>k__BackingField: 0
 --- !u!114 &643425203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,8 +415,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stageLevel: 5
+  <FieldCount>k__BackingField: 0
+  <FieldSquareMatrixRow>k__BackingField: 0
   _mapWidth: 40
   _mapHeight: 25
+  <StartRow>k__BackingField: 0
+  <StartCol>k__BackingField: 0
 --- !u!114 &643425204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,8 +449,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b898743f023a3ee47aed4a52c48cb866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageGenerator: {fileID: 0}
   <StagePortalObject>k__BackingField: {fileID: 6250138717398671519, guid: 5218bb31b0ab44c4ba373208a9423efb, type: 3}
   <FieldPortalObject>k__BackingField: {fileID: 8009934752397416548, guid: 868ed15b63bb726458fe5d1224b4106d, type: 3}
+  <StagePortalFieldX>k__BackingField: 0
+  <StagePortalFieldY>k__BackingField: 0
+  <StagePortalMapX>k__BackingField: 0
+  <StagePortalMapY>k__BackingField: 0
   stagePortalParent: {fileID: 1191623285}
   fieldPortalParent: {fileID: 910430604}
 --- !u!1 &910430603
