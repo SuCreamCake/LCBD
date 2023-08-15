@@ -3,22 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ladder
-  - monster
-  - gambler
-  - Grid
-  - Potal
-  - TestTag
-  - OralStage
-  - PhallicStage
-  - AnalStage
-  - GrowingUp
-  - IncubationPeriod
-  - GenitalStage
-  - Cup
-  - Ball
-  - npc
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -28,22 +13,22 @@ TagManager:
   - UI
   - 
   - 
-  - platform
-  - 
-  - Player
-  - Obstacle
-  - background
-  - minimap
   - 
   - 
   - 
   - 
   - 
   - 
-  - SkillEffect
-  - Friendship
-  - Neutrality
-  - Hostility
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
