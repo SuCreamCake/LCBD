@@ -9,7 +9,7 @@ public class Openning : MonoBehaviour
     public GameObject Hole;
     public GameObject talkNext;
     SpriteRenderer render; //플레이어 렌더링
-    int speed=3; //플레이어 떨어지는 속도
+    public int speed; //플레이어 떨어지는 속도
     Animator ani; //애니메이션
     Vector3 startPos;
     bool state; //상태
@@ -33,7 +33,7 @@ public class Openning : MonoBehaviour
 
     private void playerDown() //플레이어가 떨어지는 메소드
     {
-        talkmanager.isTalk = false;
+        talkmanager.isTalk = false; //엔터 못치게 하려고 설정
         Vector3 curPos = transform.position; //현재 위치를 가져온다
         Vector3 downPos = Vector3.down * speed * Time.deltaTime;
         transform.position = curPos + downPos;
@@ -41,6 +41,13 @@ public class Openning : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("TestTag"))
+        {
+            //여기서 바꿔줘야 텍스트가 바뀜...저거 ++한다해도 talkmanager에 update에 영향이안감....
+            talkmanager.TalkText.text = "이때, 주인공은 나무 밑에 있는 구멍에 빠지게 된다.";
+            ++talkmanager.clickCount;
+            talkmanager.CharPanel.SetActive(false); //이름은 안나오게
+        }
         if (collision.CompareTag("Potal"))
         {
             Debug.Log("홀에 들어감.");
@@ -56,14 +63,7 @@ public class Openning : MonoBehaviour
             //여기서 바꿔줘야 텍스트가 바뀜...저거 ++한다해도 talkmanager에 update에 영향이안감....
             talkmanager.TalkText.text = "끝도 없이 떨어지는 주인공..\n" +
                 "과거의 기억들이 스쳐 지나간다.";
-            talkmanager.isTalk = true;
-        }
-        if (collision.CompareTag("TestTag"))
-        {
-            //여기서 바꿔줘야 텍스트가 바뀜...저거 ++한다해도 talkmanager에 update에 영향이안감....
-            talkmanager.TalkText.text = "이때, 주인공은 나무 밑에 있는 구멍에 빠지게 된다.";
-            ++talkmanager.clickCount;
-            talkNext.SetActive(false);
+            talkmanager.isTalk = true; //구멍에 빠진 뒤로 엔터 가능하게 설정
         }
     }
 
@@ -82,7 +82,8 @@ public class Openning : MonoBehaviour
         {
             render.flipY = true; //얼굴이 아래로 가도록 바꾸고
             state = true;
-            ani.SetBool("isBoxing", false); //놀란표정/공포 애니메이션으로 대체해야함
+            ani.SetBool("isBoxing", false);
+            ani.SetBool("isSurprise", true); //놀란표정/공포 애니메이션으로 대체해야함
         }
     }
 }

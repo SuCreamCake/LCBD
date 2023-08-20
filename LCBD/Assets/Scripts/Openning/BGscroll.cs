@@ -9,7 +9,6 @@ public class BGscroll : MonoBehaviour
     public int startIndex; //시작인덱스
     public int endIndex; //끝 인덱스
     public Transform[] sprites;//배경들 배열
-    public TalkManage talkManager;
     public bool isMove;
     float viewHeight;
 
@@ -34,7 +33,7 @@ public class BGscroll : MonoBehaviour
 
 
         //첫번째 sprite가 카메라위치를 벗어날경우 발생
-        if (sprites[startIndex].position.y > viewHeight*1.3)
+        if (sprites[startIndex].position.y > viewHeight*1.2)
         {
             //마지막 sprite의 위치를 가져온다.
             Vector3 backSpritePos = sprites[endIndex].localPosition;

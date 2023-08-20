@@ -18,8 +18,8 @@ public class TalkManage : MonoBehaviour
     {
         blackPanel.SetActive(false);
         //ani = GetComponent<Animator>();
-        isTalk = true;
         TalkUpdate();
+        isTalk = true;
     }
 
     private void Update()
@@ -33,6 +33,7 @@ public class TalkManage : MonoBehaviour
                 TalkUpdate(); //입력을 통해 계속 대화를 이어가야하기때문에 업데이트에도 넣어줌.
             }
         }
+        Debug.Log(isTalk);
     }
 
     private void TalkUpdate()
@@ -80,7 +81,7 @@ public class TalkManage : MonoBehaviour
             blackPanel.SetActive(true);
             TalkText.text = "쿵...!";
         }
-        else if(clickCount ==8)
+        else if(clickCount == 8)
         {
             SceneManager.LoadScene("RandomMap");
         }

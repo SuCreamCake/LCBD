@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraManager : MonoBehaviour
+public class OpeningCamera : MonoBehaviour
 {
     public GameObject player;
     Transform playerPosition;
+
+    void Awake()
+    {
+        //playerPosition = Transform<>();
+    }
 
     private void Start()
     {
