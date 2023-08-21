@@ -14,7 +14,6 @@ public class OpeningCamera : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("asdddddda");
         player = GameObject.Find("Player");
         playerPosition = player.transform;
     }

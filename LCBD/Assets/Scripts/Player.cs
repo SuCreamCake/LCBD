@@ -95,13 +95,14 @@ public class Player : MonoBehaviour
 
 
 
+
     private void Awake()
     { 
         ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<CapsuleCollider2D>();
-
+        
         infancy();
        
     }

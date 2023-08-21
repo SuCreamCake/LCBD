@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-public class SoundManager : MonoBehaviour
+public class BGMSound : MonoBehaviour
 {
     public Slider soundSlider; //슬라이더
     private float SoundValue; //이전 사운드 저장변수

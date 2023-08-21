@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [System.Serializable]
+
 public class WalkSoundFile
 {
     public string SoundName;
@@ -36,6 +37,7 @@ public class InteractionSoundFile
 
 public class SoundsPlayer : MonoBehaviour
 {
+
     [Header("< WALK >")]
     [SerializeField] AudioSource WalkSoundPlayer;
     [SerializeField] WalkSoundFile[] WalkSounds;
@@ -64,6 +66,8 @@ public class SoundsPlayer : MonoBehaviour
     {
 
     }
+
+ 
 
     public void WalkSound(int soundNum)
     {

@@ -15,6 +15,7 @@ public class Menu_Btn_Event: MonoBehaviour
     public GameObject ControlPanel; //컨트롤 창
     public GameObject MusicPanel; //배경음악 조절 창
     public GameObject LanguagePanel; //언어선택 창
+    public GameObject SFXPanel; //효과음 소리 조절 창
 
     List<GameObject> PanelList;
     List<GameObject> BackList;
@@ -35,16 +36,15 @@ public class Menu_Btn_Event: MonoBehaviour
         PanelList.Add(ControlPanel);
         PanelList.Add(MusicPanel);
         PanelList.Add(LanguagePanel);
+        PanelList.Add(SFXPanel);
 
-        //메인판넬 말고 모두 false
-        MainPanel.SetActive(true);
-        SettingPanel.SetActive(false);
-        HelpPanel.SetActive(false);
-        FileLoadPanel.SetActive(false);
-        NewGamePanel.SetActive(false);
-        ControlPanel.SetActive(false);
-        MusicPanel.SetActive(false);
-        LanguagePanel.SetActive(false);
+        for(int i=0; i<PanelList.Count; i++)
+        {
+            if (i == 0)
+                PanelList[i].SetActive(true);
+            else
+                PanelList[i].SetActive(false);
+        }
 
        // Debug.Log("판넬리스트 크기:" + PanelList.Count);
         //Debug.Log("백리스트 크기:" + BackList.Count);
@@ -136,7 +136,9 @@ public class Menu_Btn_Event: MonoBehaviour
     public void SFXBtn()
     {
         Debug.Log("SFX!");
-        //FindActivePanel();
+        FindActivePanel();
+        // Debug.Log("백리스트 크기:" + BackList.Count);
+        SFXPanel.SetActive(true);
     }
 
     public void MusicBtn()
