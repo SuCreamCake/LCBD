@@ -70,8 +70,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void BackESC() //뒤로가기 버튼
     {
-        Debug.Log("Back!");
-
         for (int i = 0; i < PanelList.Count; i++) //
         {
             if (PanelList[i].activeSelf == true) //활성화 되어있는 게임 찾기
@@ -90,7 +88,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void StartBtn() //메인메뉴 게임시작버튼
     {
-        Debug.Log("Click Start");
         FindActivePanel();
         NewGamePanel.SetActive(true);
         SceneManager.LoadScene("RandomMap");
@@ -105,7 +102,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void SettingBtn() //옵션창 버튼
     {
-        Debug.Log("Setting!");
         FindActivePanel();
         //Debug.Log("백리스트 크기:" + BackList.Count);
         SettingPanel.SetActive(true);
@@ -113,7 +109,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void HelpBtn() //도움창 버튼
     {
-        Debug.Log("Help!");
         FindActivePanel();
         //Debug.Log("백리스트 크기:" + BackList.Count);
         HelpPanel.SetActive(true);
@@ -121,13 +116,11 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void BackBtn() //뒤로가기 버튼 어느 화면이든 뒤로가기 버튼이면 일단 메인메뉴창으로 가도록설정
     {
-        Debug.Log("Back!");
         BackESC();
     }
 
     public void ControlBtn()
     {
-        Debug.Log("Control!");
         FindActivePanel();
         //Debug.Log("백리스트 크기:" + BackList.Count);
         ControlPanel.SetActive(true);
@@ -135,7 +128,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void SFXBtn()
     {
-        Debug.Log("SFX!");
         FindActivePanel();
         // Debug.Log("백리스트 크기:" + BackList.Count);
         SFXPanel.SetActive(true);
@@ -143,7 +135,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void MusicBtn()
     {
-        Debug.Log("Music!");
         FindActivePanel();
        // Debug.Log("백리스트 크기:" + BackList.Count);
         MusicPanel.SetActive(true);
@@ -156,7 +147,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void LanguageBtn()
     {
-        Debug.Log("Language!");
         FindActivePanel();
        // Debug.Log("백리스트 크기:" + BackList.Count);
         LanguagePanel.SetActive(true);
@@ -177,7 +167,6 @@ public class Menu_Btn_Event: MonoBehaviour
 
     public void NewGameBtn() //새게임 버튼 판넬 빈거 밖에 안나옴
     {
-        Debug.Log("New Game!");
         FindActivePanel();
        // Debug.Log("백리스트 크기:" + BackList.Count);
         NewGamePanel.SetActive(true);

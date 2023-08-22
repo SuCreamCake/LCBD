@@ -72,6 +72,7 @@ public class SoundsPlayer : MonoBehaviour
     public void WalkSound(int soundNum)
     {
         WalkSoundPlayer.clip = WalkSounds[soundNum].SoundClip;
+        //WalkSoundPlayer.volume = 0.8f;
         if ((Input.GetAxisRaw("Horizontal") != 0) && (Input.GetAxisRaw("Vertical") == 0) && (!JumpSoundPlayer.isPlaying))
         {
             if (!WalkSoundPlayer.isPlaying)
