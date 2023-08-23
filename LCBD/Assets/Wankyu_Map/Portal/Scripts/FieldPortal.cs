@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class FieldPortal : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    //[SerializeField] private GameObject player;
     [SerializeField] private GameObject targetPos;
 
     public void SetPortalPos(PortalPoint portalPoint, int mapWidth, int mapHeight)
@@ -26,7 +27,22 @@ public class FieldPortal : MonoBehaviour
 
     public void Teleport(GameObject obj)
     {
-        player = obj;
-        player.GetComponent<Transform>().position = targetPos.transform.position;
+        Debug.Log("FieldTeleport");
+
+        if (PortalManager.IsTeleporting == false)
+        {
+            StartCoroutine(FieldTeleportCoroutine(obj));
+        }
+    }
+
+    private IEnumerator FieldTeleportCoroutine(GameObject obj)  //필드 포탈 텔레포트하는 코루틴
+    {
+        PortalManager.setIsTeleporting(true);
+        obj.transform.position = targetPos.transform.position;
+
+        yield return new WaitForEndOfFrame();
+        PortalManager.setIsTeleporting(false);
+
+        yield break;
     }
 }

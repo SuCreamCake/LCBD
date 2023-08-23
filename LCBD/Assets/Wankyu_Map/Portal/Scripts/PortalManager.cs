@@ -23,6 +23,10 @@ public class PortalManager : MonoBehaviour
 
     private Dictionary<PortalPoint, PortalPoint> fieldPortalDict;
 
+    /*static 프로퍼티 및 메소드*/
+    public static bool IsTeleporting { get; private set; } = false;     // 플레이어 캐릭터가 텔레포트(포탈을 타는 행위) 중인지
+    public static void setIsTeleporting(bool b) { IsTeleporting = b; }  // IsTeleporting setter 메소드
+
     public void SetPortal()
     {
         stageGenerator = GetComponent<StageGenerator>();
