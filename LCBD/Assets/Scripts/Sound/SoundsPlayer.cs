@@ -60,11 +60,20 @@ public class SoundsPlayer : MonoBehaviour
 
     void Start()
     {
-
+        
     }
     void Update()
     {
 
+    }
+
+    public void SFX_Mute(bool isMute) //효과음 전체 통괄
+    {
+        WalkSoundPlayer.mute = isMute;
+        JumpSoundPlayer.mute = isMute;
+        AttackSoundPlayer.mute = isMute;
+        LadderSoundPlayer.mute = isMute;
+        InteractionSoundPlayer.mute = isMute;
     }
 
  
