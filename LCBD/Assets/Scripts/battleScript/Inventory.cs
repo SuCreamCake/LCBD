@@ -15,7 +15,8 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryItemList = new List<Item>();
+
+        inventoryItemList = ItemDatabaseManager.instance.itemList;
     }
 
     // Update is called once per frame
@@ -28,16 +29,31 @@ public class Inventory : MonoBehaviour
     {
         
         if (Input.GetButtonDown("Item1"))
+        {
             index = 0;
-        if (Input.GetButtonDown("Item2"))
+            StartUseItem();
+            Debug.Log("1번 인덱스 설정됨!!");
+        }
+                   
+        else if (Input.GetButtonDown("Item2"))
+        {
             index = 1;
-        if (Input.GetButtonDown("Item3"))
+            StartUseItem();
+            Debug.Log("2번 인덱스 설정됨!!");
+        }
+        else if (Input.GetButtonDown("Item3"))
+        {
             index = 2;
+            StartUseItem();
+            Debug.Log("3번 인덱스 설정됨!!");
+        }
+           
     }
     void StartUseItem()
     {
         if(inventoryItemList[index].itemType.ToString().Equals("Ready"))
         {
+            Debug.Log("대기 발동 아이템!!");
             float isWaitOver = 0f;
             while(isWaitOver <= inventoryItemList[index].waitingTime)
             {
@@ -58,8 +74,10 @@ public class Inventory : MonoBehaviour
         }
         else if(inventoryItemList[index].itemType.ToString().Equals("Toggle"))
         {
-            
+            Debug.Log("토글형 아이템!!");
         }
 
     }
+
+   
 }
