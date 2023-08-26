@@ -8,94 +8,96 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]private SoundsPlayer SFX; //효과음
-    [SerializeField] private Slider SFX_soundSlider; //SFX슬라이더
-    public Toggle SFX_toggle; //음소거 토글
+    //[SerializeField] private SFX_Slider SFX_soundSlider; //SFX슬라이더
+    [SerializeField] private SFX_Toggle SFX_toggle; //음소거 토글
 
 
     [SerializeField] private BGM BGM; //배경음
-    [SerializeField] private Slider BGM_soundSlider; //BGM슬라이더
-    public Toggle BGM_toggle;  //음소거 토글
+    //[SerializeField] private BGM_Slider BGM_soundSlider; //BGM슬라이더
+    [SerializeField] private BGM_Toggle BGM_toggle;  //음소거 토글
 
-    [SerializeField] private Slider Master_soundSlider; //Master 슬라이더
     public AudioMixer Mixer; //최종적으로 나오는 사운드장치라 생각하면됨.
-    public Toggle Master_toggle;  //음소거 토글
 
-   // public static SoundManager instance = null;
+
+
+    //[SerializeField] private Slider Master_soundSlider; //Master 슬라이더
+    //public Toggle Master_toggle;  //음소거 토글
+
+    public static SoundManager instance = null; //사운드매니저의 DontDestroyOnLoad 변수
 
     private void Awake()
     {
-        //DontDestroyOnLoad(this);
-        /*if (instance == null)
-        { //오브젝트가 없는경우 기존에 있는 오브젝트를 넣는다.
+        DontDestroySoundManager();
+
+        //BGM_soundSlider.onValueChanged.AddListener(SetBGMVolume);
+        //SFX_soundSlider.onValueChanged.AddListener(SetSFXVolume);
+        //Master_soundSlider.onValueChanged.AddListener(SetMasterVolume);
+    }
+
+    
+
+    public void DontDestroySoundManager() //DontDestroyOnLoad 싱글톤패턴으로
+    {
+        if (instance == null)
+        {
             instance = this;
-            Debug.Log("인스턴스 넣어줌!");
         }
+
         else if (instance != this)
-        { //이미 인스턴스가 있으면 오브젝트 제거
-            Destroy(gameObject);
-            Debug.Log("생성된 인스턴스 삭제!");
+        {
+            Destroy(this.gameObject);
+            return;
         }
 
-        DontDestroyOnLoad(gameObject);*/
-
-        BGM_soundSlider.onValueChanged.AddListener(SetBGMVolume);
-        SFX_soundSlider.onValueChanged.AddListener(SetSFXVolume);
-        Master_soundSlider.onValueChanged.AddListener(SetMasterVolume);
-
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    private void SetSFXVolume(float volume)
+
+    public void SetSFXVolume(float value)
     {
-        //SFX. = volume;
-        Mixer.SetFloat("SFX_Param", Mathf.Log10(volume) * 20);
-        if (volume <= 0.0001)
-            SFX_toggle.isOn = true;
-        else
-            SFX_toggle.isOn = false;
+        SFX.SFX_Volume(value);
     }
 
-    private void SetBGMVolume(float volume)
+
+    public void SetBGMVolume(float value)
     {
-        Mixer.SetFloat("BGM_Param", Mathf.Log10(volume) * 20);
-        if (volume <= 0.0001)
-            BGM_toggle.isOn = true;
-        else
-            BGM_toggle.isOn = false;
+        BGM.BGM_Volume(value);
     }
 
-    private void SetMasterVolume(float volume)
+    /*public void SetMasterVolume(float volume) //필요없음.
     {
         Mixer.SetFloat("Master_Param", Mathf.Log10(volume) * 20);
         if (volume <= 0.0001)
             Master_toggle.isOn = true;
         else
             Master_toggle.isOn = false;
-    }
+    }*/
 
 
-    public void SFX_IsMute()
+    public void SFX_IsMute(bool isOn)
     {
-        if (SFX_toggle.isOn == true) //토글이 isON이면
-            SFX.SFX_Mute(true); //소리를 끈다
+        if (SFX_toggle.Get_SFX_Toggle() == true) //토글이 isON이면
+            SFX.SFX_Mute(isOn); //소리를 끈다
         else
-            SFX.SFX_Mute(false); //소리를 킨다
+            SFX.SFX_Mute(isOn); //소리를 킨다
     }
 
-    public void BGM_IsMute()
+    public void BGM_IsMute(bool isOn)
     {
-        if (BGM_toggle.isOn == true) //토글이 isON이면
-            BGM.BGM_Mute(true); //소리를 끈다
+        if (BGM_toggle.Get_BGM_Toggle() == true) //토글이 isON이면
+            BGM.BGM_Mute(isOn); //소리를 끈다
         else
-            BGM.BGM_Mute(false); //소리를 킨다
+            BGM.BGM_Mute(isOn); //소리를 킨다
     }
 
-    private void Master_IsMute(float volume)
+    /*public void Master_IsMute(float volume) //필요없음.
     {
         if (Master_toggle.isOn == true) //토글이 isON이면
             Mixer.SetFloat("Master_Param", 0);
         else
             Mixer.SetFloat("Master_Param", Mathf.Log10(volume) * 20);
-    }
+    }*/
 
 
 }

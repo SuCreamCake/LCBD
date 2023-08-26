@@ -12,22 +12,18 @@ public class DontDestroyScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            Debug.Log("인스턴스 삽입");
         }
 
         else if (instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+            Debug.Log("인스턴스 파괴");
             return;
         }
 
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
-    {
-        //if (SceneManager.GetActiveScene().name == "StartMenu")
-         //   Destroy(this.gameObject);
-    }
 }
 
