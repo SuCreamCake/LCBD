@@ -1660,6 +1660,7 @@ MonoBehaviour:
   InteractionSounds:
   - SoundName: Portal
     SoundClip: {fileID: 8300000, guid: f50ff27e21fa515418eef93962ef5db9, type: 3}
+  Mixer: {fileID: 0}
 --- !u!4 &1269180607
 Transform:
   m_ObjectHideFlags: 0
@@ -2336,6 +2337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuPanel: {fileID: 339397813}
+  SettingPanel: {fileID: 0}
+  SoundPanel: {fileID: 0}
 --- !u!114 &1501379139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3162,7 +3165,7 @@ GameObject:
   - component: {fileID: 1782931065}
   - component: {fileID: 1782931064}
   - component: {fileID: 1782931067}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: Capsule
   m_TagString: monster
   m_Icon: {fileID: 0}
@@ -3539,7 +3542,7 @@ MonoBehaviour:
   soundWaveAttackObject: {fileID: 8604599372958436524, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 12288
   soundWaveAttackTime: 0
   totalAttackPower: 0
   totalShield: 0

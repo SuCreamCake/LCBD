@@ -306,9 +306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c45a2f33998cd469fec5479abb80a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundJump: {fileID: 8300000, guid: 8b0ac6acc17899e4fad3d695dafe1ba7, type: 3}
-  SoundAttack: {fileID: 8300000, guid: 79134cab91a06e346ae067021097e24c, type: 3}
-  SoundWalk: {fileID: 8300000, guid: c34b410ba8319c94ba9da12444020c71, type: 3}
 --- !u!4 &66677659
 Transform:
   m_ObjectHideFlags: 0
@@ -942,6 +939,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286398365}
   m_CullTransparentMesh: 1
+--- !u!1 &292056816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292056817}
+  m_Layer: 0
+  m_Name: AttackPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &292056817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292056816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.475, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 587067008}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &393322962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,7 +1575,6 @@ MonoBehaviour:
   img: {fileID: 1523113583}
   oralStack: 0
   SoundsPlayer: {fileID: 803438918}
-  SFX: {fileID: 66677657}
   attackTime: 0
   bulletObject: {fileID: 0}
   weapons:
@@ -1556,7 +1583,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   weaponeIndex: -1
-  attackPosition: {fileID: 0}
+  attackPosition: {fileID: 292056817}
   shieldObject: {fileID: 0}
   soundWaveAttackObject: {fileID: 0}
   enemyLayers:
@@ -1649,7 +1676,8 @@ Transform:
   m_LocalPosition: {x: -2.09, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 292056817}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1720,6 +1748,7 @@ MonoBehaviour:
   InteractionSounds:
   - SoundName: Portal
     SoundClip: {fileID: 8300000, guid: f50ff27e21fa515418eef93962ef5db9, type: 3}
+  Mixer: {fileID: 0}
 --- !u!4 &803438920
 Transform:
   m_ObjectHideFlags: 0
@@ -2118,6 +2147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuPanel: {fileID: 1634181433}
+  SettingPanel: {fileID: 0}
+  SoundPanel: {fileID: 0}
 --- !u!1 &945629065
 GameObject:
   m_ObjectHideFlags: 0
