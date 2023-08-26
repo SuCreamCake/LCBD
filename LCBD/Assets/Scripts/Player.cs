@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     //무기 인덱스
     public int weaponeIndex = -1;
     //공격위치
-    public Transform attackPosition;
+    public Vector3 attackPosition;
 
     GameObject equipWeapon;
     //쉴드 오브젝트
@@ -111,6 +111,7 @@ public class Player : MonoBehaviour
         Init_UI();
         Init_HP();
         SetFunction_UI();
+        attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
     }
 
     private void Update()
@@ -736,7 +737,7 @@ public class Player : MonoBehaviour
 
             float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
             //공격 콜라이더 생성
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition.position, boxSize , angle, enemyLayers);
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, boxSize , angle, enemyLayers);
             Debug.Log(angle);
             foreach (Collider2D collider in colliders)
             {
@@ -754,7 +755,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawCube(attackPosition.position,new Vector2(crossroads * 0.3f, 0.7f));
+        Gizmos.DrawCube(attackPosition ,new Vector2(crossroads * 0.3f, 0.7f));
     }
 
 
