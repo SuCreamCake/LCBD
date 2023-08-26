@@ -168,8 +168,6 @@ public class Player : MonoBehaviour
         }
         if (collision.CompareTag("StagePortal"))
         {
-
-            DontDestroyOnLoad(SoundsPlayer);
             SoundsPlayer.GetComponent<SoundsPlayer>().InteractionSound(0);  // Portal Sound
             switch (stage)
             {

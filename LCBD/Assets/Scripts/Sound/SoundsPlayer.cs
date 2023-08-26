@@ -58,13 +58,37 @@ public class SoundsPlayer : MonoBehaviour
     [SerializeField] AudioSource InteractionSoundPlayer;
     [SerializeField] InteractionSoundFile[] InteractionSounds;
 
+
+
+    public AudioMixer Mixer; //해당 오디오의 믹서
+    private SFX_Slider S_Slider; //SFX 슬라이더 값
+    private float saveValue;
+
+    /// ////////////////////////////////////////함수 커트라인////////////////////////////
+
+
     void Start()
     {
-
+        
     }
     void Update()
     {
 
+    }
+
+    public void SFX_Mute(bool isMute) //효과음 전체 통괄
+    {
+        WalkSoundPlayer.mute = isMute;
+        JumpSoundPlayer.mute = isMute;
+        AttackSoundPlayer.mute = isMute;
+        LadderSoundPlayer.mute = isMute;
+        InteractionSoundPlayer.mute = isMute;
+    }
+
+    public void SFX_Volume(float value)
+    {
+        saveValue = value;
+        Mixer.SetFloat("SFX_Param", Mathf.Log10(value) * 20); //슬라이더값을 불러와서 컨트롤
     }
 
  
