@@ -92,7 +92,8 @@ public class Player : MonoBehaviour
     public int totalAttackPower;
     //총 방어량
     public int totalShield;
-
+    //피격 유무 확인
+    private bool isHeat = false;
 
 
 
@@ -952,5 +953,24 @@ public class Player : MonoBehaviour
     private void TotalShield()
     {
         totalShield += 0;/*여기도 마찬가지임*/;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isHeat)
+        {
+            isHeat = true;
+            StartCoroutine(HeatLogic());
+        }
+    }
+
+    IEnumerator HeatLogic()
+    {
+        yield return new WaitForSeconds(1.0f);
+        isHeat = false;
+    }
+    public bool ReturnIsHeat()
+    {
+        return isHeat;
     }
 }
