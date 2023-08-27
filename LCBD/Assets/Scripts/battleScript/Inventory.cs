@@ -51,24 +51,15 @@ public class Inventory : MonoBehaviour
     }
     void StartUseItem()
     {
-        if(inventoryItemList[index].itemType.ToString().Equals("Ready"))
+        if(inventoryItemList[index].itemType.ToString().Equals("Immediate"))
+        {
+            Debug.Log("즉시 아이템 발동!");
+        }
+        else if(inventoryItemList[index].itemType.ToString().Equals("Ready"))
         {
             Debug.Log("대기 발동 아이템!!");
-            float isWaitOver = 0f;
-            while(isWaitOver <= inventoryItemList[index].waitingTime)
-            {
-                isWaitOver += Time.deltaTime;
-                if(Input.GetKeyDown(KeyCode.Escape))
-                {
-                    Debug.Log("중간 입력 받음 취소!!");
-                    return;
-                }
-                if (GameObject.Find("Player").GetComponent<Player>().ReturnIsHeat())
-                {
-                    Debug.Log("피격 됨 이벤트 실행 취소!");
-                    return;
-                }
-            }
+            StartCoroutine(ReadyItemToUse());
+           
             //아이템 사용 구현 로직 들어감
             
         }
@@ -78,6 +69,29 @@ public class Inventory : MonoBehaviour
         }
 
     }
+    IEnumerator ReadyItemToUse()
+    {
+        float isWaitOver = 0f;
+        while (isWaitOver <= inventoryItemList[index].waitingTime)
+        {
+            isWaitOver += Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Debug.Log("중간 입력 받음 취소!!");
+                yield break;
+            }
+            if (GameObject.Find("Player").GetComponent<Player>().ReturnIsHeat())
+            {
+                Debug.Log("피격 됨 이벤트 실행 취소!");
+                yield break;
+            }
+            Debug.Log(isWaitOver);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        Debug.Log("아이템 사용!!");
+        yield return null;
+    }
 
-   
+
+
 }

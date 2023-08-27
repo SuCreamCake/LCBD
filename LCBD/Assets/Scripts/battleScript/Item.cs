@@ -30,7 +30,7 @@ public class Item
         itemType = _itemType;
         itemCount = _itemCount;
         waitingTime = _waitingTime;
-        itemIcon = Resources.Load("ItemIcon/"+itemID.ToString(),typeof(Sprite)) as Sprite;
+        //itemIcon = Resources.Load("ItemIcon/"+itemID.ToString(),typeof(Sprite)) as Sprite;
 
     }
 }
