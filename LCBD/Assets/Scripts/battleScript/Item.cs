@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class Item 
+public class Item
 {
     public int itemID; //아이템 ID값 중복 불가
     public string itemName; // 아이템 이름 중복간으
@@ -21,7 +21,7 @@ public class Item
         Toggle, 
         Throw
     }
-
+    
     public Item(int _itemID, string _itemName, string _itemDes,ItemType _itemType, int _itemCount = 1, float _waitingTime = 0)
     {
         itemID = _itemID;
@@ -31,6 +31,7 @@ public class Item
         itemCount = _itemCount;
         waitingTime = _waitingTime;
         //itemIcon = Resources.Load("ItemIcon/"+itemID.ToString(),typeof(Sprite)) as Sprite;
-
     }
+
+   
 }
