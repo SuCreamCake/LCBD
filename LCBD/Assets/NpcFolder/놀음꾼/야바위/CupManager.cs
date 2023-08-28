@@ -14,24 +14,58 @@ public class CupManager : MonoBehaviour
     private Vector3 originalPos1;
     private Vector3 originalPos2;
     private Vector3 originalPos3;
-    private float duration = 1f; // 이동에 걸리는 시간 (1초)
-    private bool isMoving = false;
+    private float duration = 1.0f; // 이동에 걸리는 시간 (1초)
+
     private Vector3 originalBallPos;
+    private Vector2 firstPos1;
+    private Vector2 firstPos2;
+    private Vector2 firstPos3;
+    private Vector2 firstBallPos;
 
     private bool isGameRunning = false;
 
-    public string cupTag = "Cup"; // Cup 오브젝트에 설정할 태그 이름
-    public Character characterScript; // Character 스크립트에 접근하기 위한 변수
+    private bool first = true;
 
-    public GameObject[] chosenCups;
+    private GameObject[] chosenCups;
+
+    public Button StartButton;
+    public Button ResetButton;
+    public Button ExitButton;
+    
+    void Awake()
+    {
+        firstPos1 = Cup1.GetComponent<RectTransform>().anchoredPosition;
+        firstPos2 = Cup2.GetComponent<RectTransform>().anchoredPosition;
+        firstPos3 = Cup3.GetComponent<RectTransform>().anchoredPosition;
+        firstBallPos = Ball.GetComponent<RectTransform>().anchoredPosition;
+    }
+
+    void OnDisable()
+    {
+        // Cup 오브젝트들의 위치를 초기 위치로 변경합니다.
+        Cup1.GetComponent<RectTransform>().anchoredPosition = firstPos1;
+        Cup2.GetComponent<RectTransform>().anchoredPosition = firstPos2;
+        Cup3.GetComponent<RectTransform>().anchoredPosition = firstPos3;
+
+        // 공의 위치도 초기 위치로 변경합니다.
+        Ball.GetComponent<RectTransform>().anchoredPosition = firstBallPos;
+        StartButton.interactable = true;
+        ResetButton.interactable = false;
+    }
 
     void Start()
     {
+        if (first)
+        {
+            first = false;
+        }
         //컵 업다운을 위한 오브젝트 위치 얻기
         originalPos1 = Cup1.transform.position;
         originalPos2 = Cup2.transform.position;
         originalPos3 = Cup3.transform.position;
         originalBallPos = Ball.transform.position;
+
+        ResetGame(); // Start에서 ResetGame 메서드를 호출합니다.
     }
 
     // UI 버튼에 연결할 메서드를 만듭니다.
@@ -39,18 +73,20 @@ public class CupManager : MonoBehaviour
     {
         if (!isGameRunning)
         {
+            isGameRunning = true;
             // 게임이 실행 중이 아닌 경우에만 실행합니다.
             StartCoroutine(StartGame());
         }
+        StartButton.interactable = false;
     }
 
     public IEnumerator StartGame()
     {
-        isGameRunning = true;
-
-        StartCoroutine(UpDownMove());
+        ExitButton.interactable = false;
+        ResetButton.interactable = false;
+        StartCoroutine(DownMove());
         // Wait for 1.5 seconds before proceeding to the next iteration.
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(duration);
 
         for (int i = 0; i < 5; i++)
         {
@@ -76,17 +112,18 @@ public class CupManager : MonoBehaviour
             FindCupWithBall(chosenCups);
 
             // Wait for 1.5 seconds before proceeding to the next iteration.
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
         }
 
+        ExitButton.interactable = true;
         // After the loop is finished, enable the CupClickChecker script on the Cup objects.
         EnableCupClickChecker();
     }
     public void GameRunningEnd()
     {
-        Start();
         StartCoroutine(UpMove());
         isGameRunning = false;
+        ResetButton.interactable = true;
     }
 
     private GameObject[] GetRandomCups(int count)
@@ -172,6 +209,10 @@ public class CupManager : MonoBehaviour
 
     private void EnableCupClickChecker()
     {
+        // Call the Reset method on each cup click checker script.
+        Cup1.GetComponent<CupClickChecker>().Reset();
+        Cup2.GetComponent<CupClickChecker>().Reset();
+        Cup3.GetComponent<CupClickChecker>().Reset();
         // Call the Ing() method on each cup object.
         Cup1.GetComponent<CupClickChecker>().Ing();
         Cup2.GetComponent<CupClickChecker>().Ing();
@@ -189,11 +230,12 @@ public class CupManager : MonoBehaviour
         }
     }
 
-    // 컵 업다운
-    private IEnumerator UpDownMove()
+    // 컵 다운
+    private IEnumerator DownMove()
     {
         yield return null; // 1 프레임 대기
 
+        Start();
         // 원하는 시간에 따라 보간 함수를 사용하여 오브젝트를 이동시킵니다.
         float elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -207,18 +249,21 @@ public class CupManager : MonoBehaviour
             Cup3.transform.position = Vector3.Lerp(originalPos3, new Vector3(originalPos3.x, originalPos3.y - 50f, originalPos3.z), t);
 
             // 공도 천천히 이동시킵니다.
-            Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalPos1.y - 50f, originalBallPos.z), t);
+            Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalBallPos.y + 50f, originalBallPos.z), t);
 
             yield return null; // 1 프레임 대기
         }
 
-        isMoving = false;
     }
 
-    // 컵 업다운
+    // 컵 업
     private IEnumerator UpMove()
     {
         yield return null; // 1 프레임 대기
+
+        originalBallPos = new Vector3(Ball.transform.position.x, Ball.transform.position.y - 50f, Ball.transform.position.z); // 현재 공의 위치 저장
+        Vector3 targetBallPos = new Vector3(originalBallPos.x, originalBallPos.y - 50f, originalBallPos.z);
+
 
         // 원하는 시간에 따라 보간 함수를 사용하여 오브젝트를 이동시킵니다.
         float elapsedTime = 0f;
@@ -228,17 +273,46 @@ public class CupManager : MonoBehaviour
 
             float t = Mathf.Clamp01(elapsedTime / duration); // 0과 1 사이의 보간 값
 
-            Cup1.transform.position = Vector3.Lerp(originalPos1, new Vector3(originalPos1.x, originalPos1.y + 50f, originalPos1.z), t);
-            Cup2.transform.position = Vector3.Lerp(originalPos2, new Vector3(originalPos2.x, originalPos2.y + 50f, originalPos2.z), t);
-            Cup3.transform.position = Vector3.Lerp(originalPos3, new Vector3(originalPos3.x, originalPos3.y + 50f, originalPos3.z), t);
+            Cup1.transform.position = Vector3.Lerp(Cup1.transform.position, new Vector3(Cup1.transform.position.x, originalPos1.y, originalPos1.z), t);
+            Cup2.transform.position = Vector3.Lerp(Cup2.transform.position, new Vector3(Cup2.transform.position.x, originalPos1.y, originalPos2.z), t);
+            Cup3.transform.position = Vector3.Lerp(Cup3.transform.position, new Vector3(Cup3.transform.position.x, originalPos1.y, originalPos3.z), t);
 
-            // 공도 천천히 이동시킵니다.
-            Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalPos1.y - 80f, originalBallPos.z), t);
+            // 공도 천천히 이동시킵니다. y값만 변경됩니다.
+            Ball.transform.position = Vector3.Lerp(Ball.transform.position, originalBallPos, t);
 
             yield return null; // 1 프레임 대기
         }
+    }
 
-        isMoving = false;
+    // 게임 상태를 초기화하는 메서드를 추가합니다.
+    public void ResetGame()
+    {
+        // 컵 위치를 초기화합니다.
+        Cup1.transform.position = originalPos1;
+        Cup2.transform.position = originalPos2;
+        Cup3.transform.position = originalPos3;
+
+        // 공 위치를 초기화합니다.
+        Ball.transform.position = originalBallPos;
+
+        //// 컵 이름을 초기화합니다.
+        //Cup1.name = "Cup1";
+        //Cup2.name = "Cup2";
+        //Cup3.name = "Cup3";
+
+        // CupClickChecker 스크립트를 초기화합니다.
+        Cup1.GetComponent<CupClickChecker>().Reset();
+        Cup2.GetComponent<CupClickChecker>().Reset();
+        Cup3.GetComponent<CupClickChecker>().Reset();
+
+        isGameRunning = false;
+    }
+
+    public void onResetButton()
+    {
+        Start();
+        ResetButton.interactable = false;
+        StartButton.interactable = true;
     }
 }
 

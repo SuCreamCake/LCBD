@@ -19,6 +19,6 @@ public class ButtonController : MonoBehaviour
     // 버튼 클릭 시 해당 룰렛 멈추도록 설정
     void EnterRoulette()
     {
-        roulettes.EnterButton();
+        roulettes.StopSpinning();
     }
 }

@@ -10,6 +10,8 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
     public GameObject Cup3;
     public GameObject StartButton;
     bool starting = false;
+    public CupManager CupManager;
+
 
     // 클릭할 때 호출되는 함수
     public void OnPointerClick(PointerEventData eventData)
@@ -21,11 +23,11 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
 
             if (ballObject != null)
             {
-                Debug.Log("공을 찾았습니다.");
+                Debug.Log("공을 찾았습니다. 도박 성공");
             }
             else
             {
-                Debug.Log("공이 없습니다.");
+                Debug.Log("공이 없습니다. 원금 손실");
             }
 
             Cup1.GetComponent<CupClickChecker>().End();
@@ -50,13 +52,17 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
         return null;
     }
 
-    // The Ing() method that you want to call.
     public void Ing()
     {
         starting = true;
     }
 
     public void End()
+    {
+        starting = false;
+    }
+
+    public void Reset()
     {
         starting = false;
     }
