@@ -12,14 +12,11 @@ public class DontDestroyScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            Debug.Log("인스턴스 삽입");
         }
 
         else if (instance != this)
         {
             Destroy(gameObject);
-            Debug.Log("인스턴스 파괴");
-            return;
         }
 
         DontDestroyOnLoad(gameObject);

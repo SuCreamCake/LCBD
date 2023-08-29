@@ -10,7 +10,9 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPause = false; //메뉴 상태여부
     public GameObject pauseMenuPanel;
     public GameObject SettingPanel;
-    public GameObject SoundPanel;
+    public GameObject BGMPanel;
+    public GameObject SFXPanel;
+    public GameObject SoundChoicePanel;
 
     List<GameObject> PanelList;
     List<GameObject> BackList;
@@ -46,7 +48,9 @@ public class PauseMenu : MonoBehaviour
 
         PanelList.Add(pauseMenuPanel);
         PanelList.Add(SettingPanel);
-        PanelList.Add(SoundPanel);
+        PanelList.Add(SoundChoicePanel);
+        PanelList.Add(SFXPanel);
+        PanelList.Add(BGMPanel);
 
 
         for (int i = 0; i < PanelList.Count; i++) //모두 비활성화
@@ -91,13 +95,11 @@ public class PauseMenu : MonoBehaviour
 
     public void go_Menu() //메인으로
     {
-        Debug.Log("메인으로");
         SceneManager.LoadScene("StartMenu");
     }
 
     public void SettingBtn() //설정창 열기
     {
-        Debug.Log("설정창 여는데 왜 안되냐");
         FindActivePanel();
         SettingPanel.SetActive(true);
     }
@@ -110,7 +112,17 @@ public class PauseMenu : MonoBehaviour
     public void SoundBtn() //사운드조절 창열기 버튼
     {
         FindActivePanel();
-        SoundPanel.SetActive(true);
+        SoundChoicePanel.SetActive(true);
+    }
+    public void SFXBtn() //사운드조절 창열기 버튼
+    {
+        FindActivePanel();
+        SFXPanel.SetActive(true);
+    }
+    public void BGMBtn() //사운드조절 창열기 버튼
+    {
+        FindActivePanel();
+        BGMPanel.SetActive(true);
     }
 
     private void FindActivePanel() //버튼을 누를때마다 활성화된 판넬은 끄고 BackList에 추가

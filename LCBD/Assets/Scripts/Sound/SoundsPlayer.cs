@@ -61,7 +61,6 @@ public class SoundsPlayer : MonoBehaviour
 
 
     public AudioMixer Mixer; //해당 오디오의 믹서
-    private SFX_Slider S_Slider; //SFX 슬라이더 값
     private float saveValue;
 
     /// ////////////////////////////////////////함수 커트라인////////////////////////////

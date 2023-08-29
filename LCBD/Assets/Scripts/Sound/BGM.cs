@@ -8,6 +8,9 @@ public class BGM : MonoBehaviour
 {
     public AudioSource musicSource; //배경음 오디오소스
     public AudioMixer Mixer; //해당 오디오의 믹서
+    //public Slider BGM_Slider;
+
+
     private float saveValue;
 
     public void BGM_Mute(bool isMute)

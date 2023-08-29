@@ -264,7 +264,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-            SoundsPlayer.GetComponent<SoundsPlayer>().AttackSound(0);
+            SoundsPlayer.GetComponent<SoundsPlayer>().AttackSound(0); //GetComponent 사용 X
             Instantiate(soundWave);
         }
     }
@@ -303,9 +303,9 @@ public class Player : MonoBehaviour
 
         // Walk Sound 
         if (stage == 1)
-            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(0);
+            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(0);  //GetComponent 사용 X 걸을때마다 사운드를 호출시키는데 Getcomponent가 모든 객체 뒤져서 찾는 함수라 효율성 매우 떨어짐
         else if (stage == 2)
-            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(1);
+            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(1);  //GetComponent 사용 X
 
 
 

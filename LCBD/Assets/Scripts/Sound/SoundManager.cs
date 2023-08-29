@@ -8,12 +8,12 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]private SoundsPlayer SFX; //효과음
-    //[SerializeField] private SFX_Slider SFX_soundSlider; //SFX슬라이더
+    [SerializeField] private Slider SFX_soundSlider; //SFX슬라이더
     [SerializeField] private SFX_Toggle SFX_toggle; //음소거 토글
 
 
     [SerializeField] private BGM BGM; //배경음
-    //[SerializeField] private BGM_Slider BGM_soundSlider; //BGM슬라이더
+    [SerializeField] private Slider BGM_soundSlider; //BGM슬라이더
     [SerializeField] private BGM_Toggle BGM_toggle;  //음소거 토글
 
     public AudioMixer Mixer; //최종적으로 나오는 사운드장치라 생각하면됨.
@@ -57,12 +57,14 @@ public class SoundManager : MonoBehaviour
     public void SetSFXVolume(float value)
     {
         SFX.SFX_Volume(value);
+        //Mixer.SetFloat("SFX_Param", Mathf.Log10(value) * 20);
     }
 
 
     public void SetBGMVolume(float value)
     {
         BGM.BGM_Volume(value);
+        //Mixer.SetFloat("BGM_Param", Mathf.Log10(value) * 20);
     }
 
     /*public void SetMasterVolume(float volume) //필요없음.

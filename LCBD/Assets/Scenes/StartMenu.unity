@@ -291,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f7f216488aaa442896abb66ca4cf67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 0}
 --- !u!1 &40003530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3740,6 +3741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 587513100}
   - component: {fileID: 587513099}
+  - component: {fileID: 587513101}
   m_Layer: 5
   m_Name: "BGM\uBCFC\uB968\uC870\uC808\uBC14"
   m_TagString: Untagged
@@ -3833,6 +3835,19 @@ RectTransform:
   m_AnchoredPosition: {x: 120, y: 0}
   m_SizeDelta: {x: 750, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &587513101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587513098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f7f216488aaa442896abb66ca4cf67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundManager: {fileID: 1665078009511958684}
 --- !u!1 &597839355
 GameObject:
   m_ObjectHideFlags: 0
@@ -12531,14 +12546,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFX: {fileID: 827833714416631311}
-  SFX_soundSlider: {fileID: 14617509}
+  SFX_soundSlider: {fileID: 0}
   SFX_toggle: {fileID: 177644702}
   BGM: {fileID: 7745874401673591603}
-  BGM_soundSlider: {fileID: 26118006}
+  BGM_soundSlider: {fileID: 0}
   BGM_toggle: {fileID: 660355494}
   Mixer: {fileID: 24100000, guid: 60df8ec411e16e240bf2105769cd98a8, type: 2}
-  Master_soundSlider: {fileID: 0}
-  Master_toggle: {fileID: 0}
 --- !u!1 &1665078009511958685
 GameObject:
   m_ObjectHideFlags: 0
