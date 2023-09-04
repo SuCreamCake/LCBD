@@ -8,7 +8,6 @@ public class BGM : MonoBehaviour
 {
     public AudioSource musicSource; //배경음 오디오소스
     public AudioMixer Mixer; //해당 오디오의 믹서
-    //public Slider BGM_Slider;
 
 
     private float saveValue;
@@ -20,7 +19,7 @@ public class BGM : MonoBehaviour
 
     public void BGM_Volume(float value)
     {
-        saveValue = value;
+        musicSource.volume = value;
         Mixer.SetFloat("BGM_Param", Mathf.Log10(value) * 20);
     }
 }

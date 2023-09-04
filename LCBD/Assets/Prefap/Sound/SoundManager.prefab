@@ -502,6 +502,7 @@ MonoBehaviour:
   InteractionSounds:
   - SoundName: Portal
     SoundClip: {fileID: 8300000, guid: f50ff27e21fa515418eef93962ef5db9, type: 3}
+  Mixer: {fileID: 0}
 --- !u!1 &8062452013899305012
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,7 +897,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8324077781516071274}
   - component: {fileID: 8324077781516071277}
-  - component: {fileID: 8324077781516071275}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -934,23 +934,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFX: {fileID: 8062452012796598270}
-  SFX_soundSlider: {fileID: 0}
-  SFX_toggle: {fileID: 0}
   BGM: {fileID: 1143989869315445442}
-  BGM_soundSlider: {fileID: 7866713279179787878, guid: 37745c60ede31cd40a39b7dffe3a6d15, type: 3}
-  BGM_toggle: {fileID: 0}
-  Master_soundSlider: {fileID: 0}
   Mixer: {fileID: 24100000, guid: 60df8ec411e16e240bf2105769cd98a8, type: 2}
-  Master_toggle: {fileID: 0}
---- !u!114 &8324077781516071275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8324077781516071276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cbdaf7c8d9392d48bc9dbc4745f8e09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
