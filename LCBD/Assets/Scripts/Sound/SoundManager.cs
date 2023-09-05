@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     private Slider SFX_Slider;
     private float SFX_SaveVolume;
 
+    private static float BGMSoudValue;
 
     public BGM BGM; //배경음
     private Toggle bgm_Toggle; //배경음 음소거 토글
@@ -29,12 +30,14 @@ public class SoundManager : MonoBehaviour
         //Master_soundSlider.onValueChanged.AddListener(SetMasterVolume);
     }
 
-    public void Set_BGM_Volume(float Volume)
+    public void Set_BGM_Volume(float Volume) //BGM볼륨 조절함수
     {
         BGM.BGM_Volume(Volume);
+        BGMSoudValue = Volume;
+        BGM.BGM_Volume(BGMSoudValue);
     }
 
-    public void Set_SFX_Volume(float Volume)
+    public void Set_SFX_Volume(float Volume) //SFX볼륨 조절함수
     {
         Mixer.SetFloat("SFX_Param", Mathf.Log10(Volume) * 20);
     }
