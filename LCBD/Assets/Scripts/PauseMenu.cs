@@ -8,11 +8,11 @@ public class PauseMenu : MonoBehaviour
 {
     //다른 스크립트에서도 사용가능하게 static으로 설정
     public static bool GameIsPause = false; //메뉴 상태여부
-    public GameObject pauseMenuPanel;
-    public GameObject SettingPanel;
-    public GameObject BGMPanel;
-    public GameObject SFXPanel;
-    public GameObject SoundChoicePanel;
+    public GameObject pauseMenuPanel; //처음 ESC누르면 나오는 창
+    public GameObject SettingPanel; //설정버튼 누르면 나오는 창
+    public GameObject BGMPanel; //BGM 창
+    public GameObject SFXPanel; //SFX창
+    public GameObject SoundChoicePanel; //BGM 또는 SFX을 고르는 창
 
     List<GameObject> PanelList;
     List<GameObject> BackList;
