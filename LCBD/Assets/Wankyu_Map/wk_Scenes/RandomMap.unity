@@ -1493,9 +1493,9 @@ MonoBehaviour:
   ladderTilemap: {fileID: 1673463484}
   platformTilemap: {fileID: 1021830560}
   decoTilemap: {fileID: 1503729008}
-  brickTileBase: {fileID: 11400000, guid: 6d8477babe4feab4dbc8bfb7f73937a4, type: 2}
-  ladderTile: {fileID: 11400000, guid: 4a46dba2b3717774bbcd99baea73824d, type: 2}
-  platformTile: {fileID: 11400000, guid: 5916b259a5035e743896f45d5f2d6ec9, type: 2}
+  brickTileBase: {fileID: 11400000, guid: 2e97c6637f4081e4ca46c437355520a8, type: 2}
+  ladderTile: {fileID: 11400000, guid: 6d8477babe4feab4dbc8bfb7f73937a4, type: 2}
+  platformTile: {fileID: 11400000, guid: 5b48754204f63c94db2e859e46382f4a, type: 2}
   newBrickTileBases:
   - {fileID: 11400000, guid: 6d8477babe4feab4dbc8bfb7f73937a4, type: 2}
   - {fileID: 11400000, guid: 5916b259a5035e743896f45d5f2d6ec9, type: 2}
