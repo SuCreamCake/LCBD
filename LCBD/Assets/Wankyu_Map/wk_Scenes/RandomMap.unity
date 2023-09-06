@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b1b1f20ec8ce549bb81ae18a827fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stageLevel: 5
+  _stageLevel: 1
   _mapWidth: 40
   _mapHeight: 25
 --- !u!114 &643425204

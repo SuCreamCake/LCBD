@@ -244,9 +244,13 @@ public class PortalManager : MonoBehaviour
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY - 1] = 2;
 
+                        //사다리
                         int ladderStartY = portalPointY - 1;
                         while (mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX+1, ladderStartY] == 0)
                         {
+                            if (mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX + 1, ladderStartY-1] != 0)
+                                break;
+
                             mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX + 1, ladderStartY] = 3;
                             ladderStartY--;
                         }
