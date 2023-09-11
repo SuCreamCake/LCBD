@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class inGameUI : MonoBehaviour
+public class DontDestroyinGameUI : MonoBehaviour
 {
-    public static inGameUI instance = null;
+    public static DontDestroyinGameUI instance = null;
 
     void Awake()
     {
