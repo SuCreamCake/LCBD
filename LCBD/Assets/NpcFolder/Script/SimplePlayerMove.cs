@@ -31,6 +31,6 @@ public class SimplePlayerMove : MonoBehaviour
     {
         // 점프 로직 구현
         // 여기서는 간단히 Rigidbody2D의 AddForce를 사용하여 위로 힘을 가하는 방식으로 점프를 구현하였습니다.
-        rb.AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(0f, 50f), ForceMode2D.Impulse);
     }
 }

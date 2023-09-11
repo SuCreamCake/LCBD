@@ -240,17 +240,17 @@ class DefaultMap
         }
 
         //사다리
-        for (int y = roomPointY + roomHeight / 2 + 1; y < roomPointY + roomHeight - 2; y++)
+        for (int y = roomPointY + roomHeight / 2 + 1 + 1; y < roomPointY + roomHeight - 2; y++)
         {
             startMap[width / 2 + 2, y] = 3;
         }
-        for (int y = roomPointY; y <= roomPointY + roomHeight / 2; y++)
+        for (int y = roomPointY + 1; y <= roomPointY + roomHeight / 2; y++)
         {
             startMap[width / 2 - 2, y] = 3;
         }
 
         startMap[roomPointX + roomWidth / 2, roomPointY + roomHeight / 2 + 1] = 99; //스테이지 시작 포인트(99)
-        startMap[roomPointX + roomWidth / 2+4, roomPointY + roomHeight / 2 + 1] = 95; //스테이지 potal(99)
+        startMap[roomPointX + roomWidth / 2+4, roomPointY + roomHeight / 2 + 1] = 95; //스테이지 potal(95) (빠른 디버그를 위한 임시 배치)
 
 
 
@@ -337,24 +337,24 @@ class DefaultMap
             bossMap[5 + 6, y - 0] = 3;
             bossMap[5 + 6, y - 1] = 3;
             bossMap[5 + 6, y - 2] = 3;
-            bossMap[5 + 6, y - 3] = 3;
+            //bossMap[5 + 6, y - 3] = 3;
 
             bossMap[width - 1 - 6 - 5, y - 0] = 3;
             bossMap[width - 1 - 6 - 5, y - 1] = 3;
             bossMap[width - 1 - 6 - 5, y - 2] = 3;
-            bossMap[width - 1 - 6 - 5, y - 3] = 3;
+            //bossMap[width - 1 - 6 - 5, y - 3] = 3;
 
             if (y + 4 <= height - 8)
             {
                 bossMap[6 + 6, y + 4 - 0] = 3;
                 bossMap[6 + 6, y + 4 - 1] = 3;
                 bossMap[6 + 6, y + 4 - 2] = 3;
-                bossMap[6 + 6, y + 4 - 3] = 3;
+                //bossMap[6 + 6, y + 4 - 3] = 3;
 
                 bossMap[width - 1 - 6 - 6, y + 4 - 0] = 3;
                 bossMap[width - 1 - 6 - 6, y + 4 - 1] = 3;
                 bossMap[width - 1 - 6 - 6, y + 4 - 2] = 3;
-                bossMap[width - 1 - 6 - 6, y + 4 - 3] = 3;
+                //bossMap[width - 1 - 6 - 6, y + 4 - 3] = 3;
             }
         }
 
@@ -414,7 +414,7 @@ class DefaultMap
                 specialMap[5 + 6, y - 1] = 3;
                 specialMap[5 + 6, y - 2] = 3;
                 specialMap[5 + 6, y - 3] = 3;
-                specialMap[5 + 6, y - 4] = 3;
+                //specialMap[5 + 6, y - 4] = 3;
 
             }
             else
@@ -423,7 +423,7 @@ class DefaultMap
                 specialMap[width - 1 - 6 - 5, y - 1] = 3;
                 specialMap[width - 1 - 6 - 5, y - 2] = 3;
                 specialMap[width - 1 - 6 - 5, y - 3] = 3;
-                specialMap[width - 1 - 6 - 5, y - 4] = 3;
+                //specialMap[width - 1 - 6 - 5, y - 4] = 3;
             }
         }
 
@@ -491,11 +491,11 @@ class DefaultMap
         }
 
         //사다리
-        for (int y = 5; y < midRoomY; y++)
+        for (int y = 5 + 1; y < midRoomY; y++)
         {
             commonlMap[roomX - 1, y] = 3;
         }
-        for (int y = midRoomY; y < roomY; y++)
+        for (int y = midRoomY + 1; y < roomY; y++)
         {
             commonlMap[midRoomX + midRoomWidth - 1, y] = 3;
         }

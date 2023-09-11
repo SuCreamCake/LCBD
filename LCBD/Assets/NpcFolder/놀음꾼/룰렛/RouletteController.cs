@@ -1,14 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class RouletteController : MonoBehaviour {
 
-	float rotSpeed = 0.1f; // 회전속도
-    bool isSpinning = true; // 회전 중인지 여부
+	float rotSpeed = 1.0f; // 회전속도
+    bool isSpinning = true; // 회전 중인지 여부    
+
+    private RouletteManager rouletteManager;
 
 
     void Start() {
-	}
+        rouletteManager = FindObjectOfType<RouletteManager>();
+    }
 
 	void Update() {
 
@@ -30,10 +34,12 @@ public class RouletteController : MonoBehaviour {
         if (currentRotationZ >= 0 && currentRotationZ <= 51.5f)
         {
             Debug.Log("성공");
+            rouletteManager.UpdateRouletteResult(1); // 성공한 경우 1 저장
         }
         else
         {
             Debug.Log("실패");
+            rouletteManager.UpdateRouletteResult(2); // 성공한 경우 2 저장
         }
     }
 
@@ -41,18 +47,17 @@ public class RouletteController : MonoBehaviour {
     public void ResumeSpinning()
     {
         isSpinning = true;
-        this.rotSpeed = 0.1f;
+        this.rotSpeed = 1.0f;
     }
 
-    public void EnterButton()
+    public void AllStop()
     {
-        if (isSpinning)
-        {
-            StopSpinning();
-        }
-        else
-        {
-            ResumeSpinning();
-        }
+        this.rotSpeed = 1.0f;
+        isSpinning = false;
+    }
+
+    void OnDisable()
+    {
+        ResumeSpinning();
     }
 }

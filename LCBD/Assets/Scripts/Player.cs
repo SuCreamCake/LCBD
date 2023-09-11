@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
 
     //사운드 오브젝트
     public GameObject SoundsPlayer;
+    SoundsPlayer sound;
     //동주 전투
     //공격속도를 체크하기 위한 변수
     public float attackTime = 0;
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<CapsuleCollider2D>();
-        
+        sound = SoundsPlayer.GetComponent<SoundsPlayer>();
         infancy();
        
     }
@@ -112,7 +113,11 @@ public class Player : MonoBehaviour
         Init_UI();
         Init_HP();
         SetFunction_UI();
+<<<<<<< HEAD
         attackPosition = this.transform.right + new Vector3(0.2f, 0.2f, 0);
+=======
+        attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
+>>>>>>> main
     }
 
     private void Update()
@@ -169,7 +174,7 @@ public class Player : MonoBehaviour
         }
         if (collision.CompareTag("StagePortal"))
         {
-            SoundsPlayer.GetComponent<SoundsPlayer>().InteractionSound(0);  // Portal Sound
+            sound.InteractionSound(0);  // Portal Sound
             switch (stage)
             {
                 case 1:
@@ -208,7 +213,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.G) && PortalManager.IsTeleporting == false)    //상호작용(G)키를 눌렀고, 텔레포트가 아닌 중에
             {
                 collision.GetComponent<FieldPortal>().Teleport(this.gameObject);        //필드 포탈을 태우고 플레이어를 텔레포트 시킴
-                SoundsPlayer.GetComponent<SoundsPlayer>().InteractionSound(0);  // Portal Sound
+                sound.InteractionSound(0);  // Portal Sound
             }
         }
     }
@@ -235,7 +240,7 @@ public class Player : MonoBehaviour
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             ani.SetTrigger("isJumping");
 
-            SoundsPlayer.GetComponent<SoundsPlayer>().JumpSound(0);     // Jump Sound 
+            sound.JumpSound(0);     // Jump Sound 
         }
 
     }
@@ -265,7 +270,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-            SoundsPlayer.GetComponent<SoundsPlayer>().AttackSound(0);
+            sound.AttackSound(0); //GetComponent 사용 X
             Instantiate(soundWave);
         }
     }
@@ -304,9 +309,9 @@ public class Player : MonoBehaviour
 
         // Walk Sound 
         if (stage == 1)
-            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(0);
+            sound.WalkSound(0);  //GetComponent 사용 X 걸을때마다 사운드를 호출시키는데 Getcomponent가 모든 객체 뒤져서 찾는 함수라 효율성 매우 떨어짐
         else if (stage == 2)
-            SoundsPlayer.GetComponent<SoundsPlayer>().WalkSound(1);
+            sound.WalkSound(1);  //GetComponent 사용 X
 
 
 
@@ -316,7 +321,7 @@ public class Player : MonoBehaviour
         //Updown
         if (isLadder)
         {
-            SoundsPlayer.GetComponent<SoundsPlayer>().LadderSound(0);       // Jump Sound
+            sound.LadderSound(0);       // Jump Sound
             float ver = Input.GetAxis("Vertical");
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if(ver != 0)

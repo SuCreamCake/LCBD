@@ -6,7 +6,7 @@ public class Character : MonoBehaviour
 {
     private Transform object1; // 첫 번째 오브젝트
     private Transform object2; // 두 번째 오브젝트
-    public float rotationSpeed = 1.0f; // 회전 속도
+    private float rotationSpeed = 15.0f; // 회전 속도
 
     private Vector3 center; // 두 오브젝트의 가운데를 기준으로 설정된 중심점
     private float radius; // 두 오브젝트 사이의 거리의 절반 (반지름)

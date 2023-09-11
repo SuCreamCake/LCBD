@@ -3210,7 +3210,7 @@ GameObject:
   - component: {fileID: 1782931065}
   - component: {fileID: 1782931064}
   - component: {fileID: 1782931067}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: Capsule
   m_TagString: monster
   m_Icon: {fileID: 0}
@@ -3589,7 +3589,7 @@ MonoBehaviour:
   soundWaveAttackObject: {fileID: 8604599372958436524, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 12288
   soundWaveAttackTime: 0
   totalAttackPower: 0
   totalShield: 0
