@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private List<Item> inventoryItemList;// ÇÃ·¹ÀÌ¾î°¡ ¼ÒÁöÇÑ ¾ÆÀÌÅÛ¸®½ºÆ®
+    private List<Item> inventoryItemList;// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½Æ®
     private int selectedItem;
     private bool itemActivated = false;
     private bool stopKeypinput;
@@ -32,20 +32,20 @@ public class Inventory : MonoBehaviour
         {
             index = 0;
             StartUseItem();
-            Debug.Log("1¹ø ÀÎµ¦½º ¼³Á¤µÊ!!");
+            Debug.Log("1ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!");
         }
 
         else if (Input.GetButtonDown("Item2"))
         {
             index = 1;
             StartUseItem();
-            Debug.Log("2¹ø ÀÎµ¦½º ¼³Á¤µÊ!!");
+            Debug.Log("2ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!");
         }
         else if (Input.GetButtonDown("Item3"))
         {
             index = 2;
             StartUseItem();
-            Debug.Log("3¹ø ÀÎµ¦½º ¼³Á¤µÊ!!");
+            Debug.Log("3ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!");
         }
 
     }
@@ -62,27 +62,30 @@ public class Inventory : MonoBehaviour
         }
         else if (inventoryItemList[index].itemType.ToString().Equals("Ready"))
         {
-            Debug.Log("´ë±â ¹ßµ¿ ¾ÆÀÌÅÛ!!" + itemActivated);
+            Debug.Log("ï¿½ï¿½ï¿½ ï¿½ßµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!" + itemActivated);
             if (!itemActivated)
             {
                 itemActivated = true;
                 StartCoroutine(ReadyItemToUse(inventoryItemList[index].waitingTime));
             }
-            //¾ÆÀÌÅÛ »ç¿ë ±¸Çö ·ÎÁ÷ µé¾î°¨
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¨
         }
         else if (inventoryItemList[index].itemType.ToString().Equals("Toggle"))
         {
-            Debug.Log("Åä±ÛÇü ¾ÆÀÌÅÛ!!");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!");
         }
         else if(inventoryItemList[index].itemType.ToString().Equals("Throw"))
         {
-            Debug.Log("ÅõÃ´Çü ¾ÆÀÌÅÛ!!");
+            Debug.Log("ï¿½ï¿½Ã´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!");
+            GameObject gameObject = new GameObject();
+            gameObject.AddComponent<ThrowItem>();
+
         }
 
     }
     public void UseImmediateItem()
     {
-        //¾ÆÀÌÅÛ »ç¿ëÈÄ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         itemActivated = false;
     }
 
@@ -96,12 +99,12 @@ public class Inventory : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.I))
             {
                 itemActivated = false;
-                Debug.Log("Áß°£ ÀÔ·Â ¹ÞÀ½ Ãë¼Ò!!");
+                Debug.Log("ï¿½ß°ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½!!");
                 yield break;
             }
             if (GameObject.Find("Player").GetComponent<Player>().ReturnIsHeat())
             {
-                Debug.Log("ÇÇ°Ý µÊ ÀÌº¥Æ® ½ÇÇà Ãë¼Ò!");
+                Debug.Log("ï¿½Ç°ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½!");
                 itemActivated = false;
                 yield break;
             }
@@ -109,7 +112,7 @@ public class Inventory : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
         itemActivated = false;
-        Debug.Log("´ë±â ¾ÆÀÌÅÛ »ç¿ë!!");
+        Debug.Log("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½!!");
         yield return null;
     }
 

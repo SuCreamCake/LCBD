@@ -6,13 +6,13 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    public int itemID; //¾ÆÀÌÅÛ ID°ª Áßº¹ ºÒ°¡
-    public string itemName; // ¾ÆÀÌÅÛ ÀÌ¸§ Áßº¹°£À¸
-    public string itemDescription;  //¾ÆÀÌÅÛ ¼³¸í
-    public int itemCount;  //¼ÒÁö °³¼ö
-    public Sprite itemIcon;  //¾ÆÀÌÅÛÀÇ ¾ÆÀÌÄÜ
+    public int itemID; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ßºï¿½ ï¿½Ò°ï¿½
+    public string itemName; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½
+    public string itemDescription;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int itemCount;  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public Sprite itemIcon;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public ItemType itemType;
-    public float waitingTime;   //¾ÆÀÌÅÛ ´ë±â½Ã°£
+    public float waitingTime;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½
 
     public enum ItemType
     {

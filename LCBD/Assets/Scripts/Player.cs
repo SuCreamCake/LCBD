@@ -113,11 +113,10 @@ public class Player : MonoBehaviour
         Init_UI();
         Init_HP();
         SetFunction_UI();
-<<<<<<< HEAD
+
         attackPosition = this.transform.right + new Vector3(0.2f, 0.2f, 0);
-=======
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
->>>>>>> main
+
     }
 
     private void Update()

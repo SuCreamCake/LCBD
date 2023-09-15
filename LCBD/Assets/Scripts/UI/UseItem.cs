@@ -13,13 +13,6 @@ public class UseItem : MonoBehaviour
 
     private void useItem1()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            item[0].print();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            item[1].print();
-        }
+        
     }
 }

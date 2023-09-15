@@ -20,9 +20,9 @@ public class ItemDatabaseManager : MonoBehaviour
     }
     void Start() 
     {
-        itemList.Add(new Item(10001, "аО╫ц ╧ъ╣©", "аО╫ц╧ъ╣©го╢б ╬фюлеш", Item.ItemType.Immediate));
-        itemList.Add(new Item(10002, "аь╨Я ╧ъ╣©", "аь╨Я╧ъ╣©го╢б ╬фюлеш", Item.ItemType.Ready, 3, 10f));
-        itemList.Add(new Item(10003, "еУц╢ ╬фюлеш", "╬фюлеш ╢ЬаЖ╠Б", Item.ItemType.Throw));
+        itemList.Add(new Item(10001, "О©╫О©╫О©╫ О©╫ъ╣О©╫", "О©╫О©╫ц╧ъ╣О©╫О©╫о╢О©╫ О©╫О©╫О©╫О©╫О©╫О©╫", Item.ItemType.Immediate));
+        itemList.Add(new Item(10002, "О©╫ь╨О©╫ О©╫ъ╣О©╫", "О©╫ь╨О©╫ъ╣О©╫О©╫о╢О©╫ О©╫О©╫О©╫О©╫О©╫О©╫", Item.ItemType.Ready, 3, 10f));
+        itemList.Add(new Item(10003, "О©╫О©╫ц╢ О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫", Item.ItemType.Throw));
     }
 
    
