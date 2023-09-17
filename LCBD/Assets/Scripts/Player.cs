@@ -10,16 +10,17 @@ public class Player : MonoBehaviour
     //TalkManage talkManger;
     Rigidbody2D rigid;
     //이동속도
-    public float maxSpeed;  
+    public float maxSpeed;
+    float nomalSpeed;
     public float jumpPower;
     SpriteRenderer spriteRenderer;
     bool isLadder;
     public float maxHealth;  //최대체력
     public float health;     //현재체력
     public int attackPower;    //공격력
-    public int maxEndurance;    //최대지구력
     //지구력
-    public int endurance;
+    public int maxEndurance;   
+    public float endurance;
     public bool enduranceOnOff;
     public float stayTime;
     public int enduranceRec;
@@ -277,25 +278,29 @@ public class Player : MonoBehaviour
 
         float speedx = Mathf.Abs(this.rigid.velocity.x);
 
+        //달리기 기능 추가
+        if (Input.GetKey(KeyCode.LeftShift) && stage != 1)
+        {
+            maxSpeed = nomalSpeed * 1.4f;
+            ani.SetBool("isRunning", true);
+            endurance -= 0.08f;
+            enduranceOnOff = false;
+        }
+        else
+        {
+            maxSpeed = nomalSpeed;
+            ani.SetBool("isRunning", false);
+        }
+
+
         if (speedx < maxSpeed)
-            this.rigid.AddForce(transform.right * key * 30);
-
-
+            this.rigid.AddForce(transform.right * key * maxSpeed * 10);
 
         //스프라이트 반전
         if (key != 0 && stage == 1)
-        {
             transform.localScale = new Vector3(key, 1, 1);
-            //지구력 테스트
-            endurance--;
-            enduranceOnOff = false;
-        }
-
-  
-
-        if (key != 0 && stage == 2)
+        if (key != 0 && stage != 1)
             transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
-
 
         if (key == 0)
             ani.SetBool("isWalking", false);
@@ -327,7 +332,7 @@ public class Player : MonoBehaviour
     private void infancy()
     {
         //이동속도
-        maxSpeed = 5 -2;
+        nomalSpeed = 5 -2;
         //점프력
         jumpPower = 10 -2;
         //체력
@@ -358,7 +363,7 @@ public class Player : MonoBehaviour
         transform.localScale = new Vector3(1.5f, 1.5f, 0);
         collider2D.size = new Vector3(0.4f, 0.8f,0);
         //이동속도
-        maxSpeed += 2;
+        nomalSpeed += 2;
         //점프력
         jumpPower += 2;
         //행운
@@ -378,7 +383,7 @@ public class Player : MonoBehaviour
         //사거리
         crossroads -= 2;
         //이동속도
-        maxSpeed += 0.5f;
+        nomalSpeed += 0.5f;
         //점프력
         jumpPower += 1;
     }
@@ -392,7 +397,7 @@ public class Player : MonoBehaviour
     private void oldAge()
     {
         //이동속도
-        maxSpeed -= 3;
+        nomalSpeed -= 3;
         //점프력
         jumpPower -= 3;
     }
