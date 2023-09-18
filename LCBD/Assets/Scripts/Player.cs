@@ -266,7 +266,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-            sound.AttackSound(0); //GetComponent 사용 X
+            sound.AttackSound(0);
             Instantiate(soundWave);
         }
     }
