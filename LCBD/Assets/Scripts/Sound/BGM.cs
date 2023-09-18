@@ -23,10 +23,6 @@ public class BGM : MonoBehaviour
     {
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.loop = true;
-    }
-
-    private void Update()
-    {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
     
