@@ -32,11 +32,7 @@ public class DontDestroyinGameUI : MonoBehaviour
 
     private void CheckDestroyScene() //씬 체크 함수
     {
-        if(SceneManager.GetActiveScene().name == "StartMenu") //현재씬이 시작메뉴면
-        {
-            Destroy(this.gameObject); //해당 오브젝트를 파괴
-        }
-        else if (SceneManager.GetActiveScene().name == "Openning") //현재씬이 시작메뉴면
+        if (SceneManager.GetActiveScene().name == "Openning") //현재씬이 시작메뉴면
         {
             Destroy(this.gameObject); //해당 오브젝트를 파괴
         }

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+
     //다른 스크립트에서도 사용가능하게 static으로 설정
     public static bool GameIsPause = false; //메뉴 상태여부
     public GameObject pauseMenuPanel; //처음 ESC누르면 나오는 창

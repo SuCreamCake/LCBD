@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KeyInput {UP,
+public enum KeyInput {
+    UP,
     DOWN,
     LEFT,
     RIGHT,
