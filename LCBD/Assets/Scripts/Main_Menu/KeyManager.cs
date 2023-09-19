@@ -2,12 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KeyInput {UP,DOWN,LEFT,RIGHT,JUMP,KEYCOUNT}
+public enum KeyInput {UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    JUMP,
+    Run,
+    Inventory,
+    Item1,
+    KEYCOUNT} //마지막은 키 갯수를 위해 넣음.
 
 public static class KeySetting { public static Dictionary<KeyInput, KeyCode> keys = new Dictionary<KeyInput, KeyCode>(); }
 public class KeyManager : MonoBehaviour
 {
-    KeyCode[] defaultKeys = new KeyCode[] { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.Space };
+    //반드시 enum과 순서대로 맞춰야함
+    KeyCode[] defaultKeys = new KeyCode[] { 
+        KeyCode.W, 
+        KeyCode.S, 
+        KeyCode.A, 
+        KeyCode.D, 
+        KeyCode.Space,
+        KeyCode.LeftShift,
+        KeyCode.I,
+        KeyCode.Alpha1 };
     void Awake()
     {
         for(int i=0; i < (int)KeyInput.KEYCOUNT; i++)
@@ -36,8 +53,18 @@ public class KeyManager : MonoBehaviour
         key = num;
     }
 
-    private void TestInput()
-    {
+    private void TestInput() {
+    //UP,
+    //DOWN,
+    //LEFT,
+    //RIGHT,
+    //JUMP,
+    //Run,
+    //Inventory,
+    //Item1,
+    //
+    //
+    //
         if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //W입력
         {
             Debug.Log("Up");
@@ -54,9 +81,21 @@ public class KeyManager : MonoBehaviour
         {
             Debug.Log("RIGHT");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP]))
+        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //점프
         {
             Debug.Log("JUMP");
+        }
+        if (Input.GetKey(KeySetting.keys[KeyInput.Run])) //달리기
+        {
+            Debug.Log("Run");
+        }
+        if (Input.GetKey(KeySetting.keys[KeyInput.Inventory])) //인벤토리
+        {
+            Debug.Log("Inventory");
+        }
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item1])) //아이템1번키
+        {
+            Debug.Log("Item1");
         }
     }
 }
