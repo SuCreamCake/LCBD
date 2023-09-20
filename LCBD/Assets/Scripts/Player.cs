@@ -95,8 +95,28 @@ public class Player : MonoBehaviour
     public int totalShield;
     //피격 유무 확인
     private bool isHeat = false;
+    //카피캣 모드on 여부
+    private bool copyCatIsOn = false;
+    //카피캣 버프 지속시간
+    private float copyCatDurationTime = 5f;
+    //카피캣 공격 복사 대기시간
+    private float copyAttackDurationTime = 10f;
+    //몬스터의 공격 정보를 담기위한 변수
+    //공격타입과 데미지를 받을 예정
+    private float monsterDamage;
+    private int monsterAttackType;
+    //카피 캣 대기시간
+    private float copyCatDelayTime = 10f;
+    //카피 캣 대기시간을 재기 위한 변수
+    private float copyCatDelayTimeVariable = 10f;
+    //카피 캣 모드 여부를 확인하는 불형 
+    private bool isEnterCopyCatMode = false;
+    //분신 소환술을 쓰는 게임 오브젝트
+    public GameObject alterEgoGameObject;
 
-
+    //땅에 닿았는지 안 닿았는지 확인하는 레이캐스팅을 사용
+    private RaycastHit2D groundRayCast;
+    private bool isGround;
 
     private void Awake()
     { 
@@ -106,14 +126,12 @@ public class Player : MonoBehaviour
         collider2D = GetComponent<CapsuleCollider2D>();
         sound = SoundsPlayer.GetComponent<SoundsPlayer>();
         infancy();
-       
     }
     void Start()
     {
         Init_UI();
         Init_HP();
         SetFunction_UI();
-
         attackPosition = this.transform.right + new Vector3(0.2f, 0.2f, 0);
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
 
@@ -121,9 +139,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
 
+        initGround();
         attackTime += Time.deltaTime;
+        copyCatDelayTimeVariable += Time.deltaTime;
         jump();
         stopSpeed();
         getInputBattleKeyKode();
@@ -757,6 +776,43 @@ public class Player : MonoBehaviour
         }
 
     }
+    //유니티 함수 오버로딩
+    //근접 공격
+    private void meleeAttack(int damge)
+    {
+        if (attackTime > attackSpeed && Input.GetMouseButtonDown(0))
+        {
+            attackTime = 0;
+            //마우스의 위치 가져오기
+            Vector2 mousePoint = Input.mousePosition;
+            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+
+            //공격방향
+            Vector2 attackForce = mousePoint - (Vector2)transform.position;
+            attackForce = attackForce.normalized;
+
+            //공격 범위
+            float xRange = crossroads * 0.3f;
+            float yRange = 0.5f;
+            Vector2 boxSize = new Vector2(xRange, yRange);
+
+            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            //공격 콜라이더 생성
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, boxSize, angle, enemyLayers);
+            Debug.Log(angle);
+            foreach (Collider2D collider in colliders)
+            {
+                Debug.Log(collider.tag);
+                if (collider.tag == "monster")
+                {
+                    Debug.Log("몬스터 맞춤");
+                    collider.GetComponent<EnemyHit>().TakeDamage(damge);
+                }
+            }
+            Debug.Log("공격실행");
+        }
+
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -801,6 +857,15 @@ public class Player : MonoBehaviour
         {
             soundWaveAttack();
             Debug.Log("F누름");
+        }
+        else if(Input.GetButtonDown("CopyCat"))
+        {
+            Debug.Log("카피캣 실행");
+            copyCatAbility();
+        }
+        else if(Input.GetButtonDown("AlterEgo"))
+        {
+            createAlterEgo();
         }
     }
     //공격 타입 인덱스
@@ -906,6 +971,7 @@ public class Player : MonoBehaviour
                 attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
                 Debug.Log(startAngleIndex);
                 raycastHit2Ds = Physics2D.RaycastAll(transform.position, attackForce, crossroads, enemyLayers);
+                Debug.DrawRay(transform.position, attackForce, Color.red, 0.3f);        //대충 원 좌하향 대각선 범위
                 for (int i = 0; i < raycastHit2Ds.Length; i++)
                 {
                     RaycastHit2D hit = raycastHit2Ds[i];
@@ -965,15 +1031,103 @@ public class Player : MonoBehaviour
             isHeat = true;
             StartCoroutine(HeatLogic());
         }
+        
     }
 
     IEnumerator HeatLogic()
     {
         yield return new WaitForSeconds(1.0f);
+        Debug.Log("플레이어 피격됨!!");
         isHeat = false;
     }
     public bool ReturnIsHeat()
     {
         return isHeat;
     }
+
+    public void copyCatAbility()
+    {
+        Debug.Log("여기까진 실행: copyCatAbility함수");
+        if (copyCatDelayTimeVariable >= copyCatDelayTime)
+        {
+            Debug.Log("카피캣이 실행준비 완료!!");
+            isEnterCopyCatMode = true;
+            StartCoroutine("copyCat");
+        }
+    }
+    IEnumerator copyCat()
+    {
+        Debug.Log("카피캣 에뮬레이터 함수 실행됨");
+        
+        float timeIsOver = 0;
+        while(timeIsOver <= copyCatDurationTime)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            timeIsOver += Time.deltaTime;
+            Debug.Log("카피캣 대기 중... 아직 카피캣이 실행되지 않았습니다...");
+            if(isHeat)
+            {
+                float copyAttackTimeStart = 0;
+                
+                while(copyAttackTimeStart <= copyAttackDurationTime)
+                {
+                    yield return new WaitForSeconds(Time.deltaTime);
+                    copyAttackTimeStart += Time.deltaTime;
+                    if(Input.GetButtonDown("CopyCat"))
+                    {
+                        Debug.Log("카피캣 공격 실행 됨!!");
+                        copyCatDelayTimeVariable = 0f;
+                        meleeAttack();
+                        isEnterCopyCatMode = false;
+                        yield break;
+                    }
+                    copyCatDelayTimeVariable = 0f;
+                    Debug.Log("카피 캣이 실행되지 않았습니다");
+                }
+                isEnterCopyCatMode = false;
+            }
+        }
+        isEnterCopyCatMode = false;
+        Debug.Log("카피캣이 결국 실행되지 않았습니다.");
+        yield return null;
+
+    }
+
+
+    //추락 시스템 구현
+    public void initGround()
+    {
+        groundRayCast = Physics2D.Raycast(rigid.position, Vector3.down);
+        //공중에 있을 때
+        if(groundRayCast.collider.tag.Equals("!null"))
+        {
+            if(rigid.velocity.y > 0.4f * 9.8f)
+            {
+                Debug.Log("캐릭터가 추락했습니다.");
+            }
+        }
+    }
+
+    public void checkIsGround()
+    {
+        
+    }
+
+   //분신 소환술 나루토
+   public void createAlterEgo()
+    {
+        //마우스의 위치 가져오기
+        Vector2 mousePoint = Input.mousePosition;
+        mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+        Instantiate(alterEgoGameObject, mousePoint, Quaternion.identity);
+    }
+
+
+
+
+
 }
+
+
+
+//yield return waitFoseconds(5초)

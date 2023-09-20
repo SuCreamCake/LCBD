@@ -2986,7 +2986,8 @@ GameObject:
   - component: {fileID: 1737383936}
   - component: {fileID: 1737383940}
   - component: {fileID: 1737383939}
-  m_Layer: 13
+  - component: {fileID: 1737383941}
+  m_Layer: 12
   m_Name: Enemy
   m_TagString: monster
   m_Icon: {fileID: 0}
@@ -3119,7 +3120,19 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
+--- !u!114 &1737383941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737383935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f3bc5856caf5f4b96fb4797b828429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1770393480
 GameObject:
   m_ObjectHideFlags: 0
@@ -3594,6 +3607,7 @@ MonoBehaviour:
   soundWaveAttackTime: 0
   totalAttackPower: 0
   totalShield: 0
+  alterEgoGameObject: {fileID: 1731744241258961462, guid: 929e73e6bc9c2f3459f00825ac976727, type: 3}
 --- !u!50 &2075860121
 Rigidbody2D:
   serializedVersion: 4
