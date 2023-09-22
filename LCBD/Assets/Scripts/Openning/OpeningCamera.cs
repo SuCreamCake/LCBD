@@ -18,8 +18,6 @@ public class OpeningCamera : MonoBehaviour
         playerPosition = player.transform;
     }
 
-
-
     void LateUpdate()
     {
         playerPosition = player.transform;
