@@ -38,14 +38,22 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
         if (!canClick)
             return; // 클릭 금지 상태일 때 클릭 이벤트 처리 중단
 
+        if (Clicker)
+        {
+            return; //클릭된 상태
+        }
+
         canClick = !canClick;
         Clicker = true;
         // 마우스 클릭 시 카드 뒤집기
         isCardFlipped = !isCardFlipped;
         //SetCardSide(isCardFlipped);
         Debug.Log(cardFrontSprite.name);
-        FlipManager.AllFlip();
+        //FlipManager.AllFlip();
+        FlipManager.AllClickOff();
         StartCoroutine(RotateOverTime(true));
+
+        FlipManager.Reward();
     }
 
     // 앞면과 뒷면 이미지 설정
@@ -86,17 +94,6 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
         transform.rotation = targetQuaternion;
     }
 
-    public void TrueFlip()
-    {
-        if (Clicker)
-        {
-            return;
-        }
-        canClick = !canClick;
-        isCardFlipped = !isCardFlipped;
-        StartCoroutine(RotateOverTime(false));
-    }
-
     public void ResetCard()
     {
         // 변수들을 초기 상태로 설정
@@ -111,4 +108,13 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
         SetCardSide(isCardFlipped);
     }
 
+    public void canClickOn()
+    {
+        canClick = true;
+    }
+
+    public void canClickOff()
+    {
+        canClick = false;
+    }
 }
