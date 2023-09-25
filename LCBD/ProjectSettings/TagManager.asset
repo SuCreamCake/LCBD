@@ -20,7 +20,8 @@ TagManager:
   - Ball
   - Cup
   - GenitalStage
-  tags: []
+  - StagePortal
+  - FieldPortal
   layers:
   - Default
   - TransparentFX
@@ -49,7 +50,21 @@ TagManager:
   - 
   - 
   - 
+  - 
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 344277681
+    locked: 0
+  - name: Player
+    uniqueID: 2046364989
+    locked: 0
+  - name: BackGround
+    uniqueID: 4054410985
     locked: 0
