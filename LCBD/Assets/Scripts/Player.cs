@@ -118,10 +118,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (endurance > 0)
+        {
+            jump();
+        }
         
 
         attackTime += Time.deltaTime;
-        jump();
         stopSpeed();
         getInputBattleKeyKode();
         swapWeapon();
@@ -155,7 +158,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        walk();
+        move();
         upDown();
         enduranceSystem();
     }
@@ -235,6 +238,8 @@ public class Player : MonoBehaviour
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             ani.SetTrigger("isJumping");
+            endurance -= maxEndurance / 5;
+            enduranceOnOff = false;
 
             sound.JumpSound(0);     // Jump Sound 
         }
@@ -270,7 +275,7 @@ public class Player : MonoBehaviour
             Instantiate(soundWave);
         }
     }
-    private void walk()
+    private void move()
     {
         int key = 0;
         if (Input.GetKey(KeyCode.A)) key = -1;
@@ -279,7 +284,7 @@ public class Player : MonoBehaviour
         float speedx = Mathf.Abs(this.rigid.velocity.x);
 
         //달리기 기능 추가
-        if (Input.GetKey(KeyCode.LeftShift) && stage != 1)
+        if (Input.GetKey(KeyCode.LeftShift) && stage != 1&&endurance>0)
         {
             maxSpeed = nomalSpeed * 1.4f;
             ani.SetBool("isRunning", true);
@@ -353,8 +358,7 @@ public class Player : MonoBehaviour
         //사거리
         crossroads = 3;
         //행운
-        luck = 15 + 20;
-        
+        luck = 15 + 20;   
     }
 
     private void childhood()
@@ -634,31 +638,7 @@ public class Player : MonoBehaviour
     {
         health = _value;
     }
-    private void AnimationMotion()
-    {
-        if (Mathf.Abs(rigid.velocity.normalized.x) < 0.2)
-        {
-            ani.SetBool("isRunning", false);
-        }
-        else
-        {
-            ani.SetBool("isRunning", true);
-        }
 
-        if (rigid.velocity.y < 0)
-        {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("platform"));
-            if (rayHit.collider != null)
-            {
-                if (rayHit.distance < 0.5f)
-                {
-                    //Debug.Log("점프 끝");
-                    ani.SetBool("isJumping", false);
-                }
-            }
-        }
-    }
 
     //동주
     //맨손 공격
