@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    public static QuestManager instance;
+
     public int questIDToRetrieve; // 가져올 퀘스트의 ID 입력
 
-    private QuestData questData;
+    public QuestData questData;
 
-    private void Start()
+    private void Awake()
     {
-        questData = FindObjectOfType<QuestData>(); // QuestData 스크립트 인스턴스를 찾음
+        instance = this;
     }
 
     private void Update()
@@ -80,4 +82,37 @@ public class QuestManager : MonoBehaviour
             Debug.Log("QuestData 스크립트를 찾을 수 없습니다.");
         }
     }
+
+    public void Questing(int questID)
+    {
+        if (questData != null)
+        {
+            if (questData.questDictionary.ContainsKey(questID))
+            {
+                Quest quest = questData.questDictionary[questID];
+
+                // 퀘스트가 진행 중이어야 하고, 완료 조건에 도달하지 않았을 때만 증가시킵니다.
+                if (quest.isQuestInProgress && quest.currentCompletionCount < quest.requiredCompletionCount)
+                {
+                    quest.currentCompletionCount++;
+
+                    // 퀘스트 진행 상태를 출력합니다.
+                    Debug.Log("퀘스트 ID: " + quest.ID + "의 진행도: " + quest.currentCompletionCount);
+                }
+                else
+                {
+                    Debug.Log("퀘스트를 진행할 수 없습니다. 또는 이미 완료되었습니다.");
+                }
+            }
+            else
+            {
+                Debug.Log("해당 ID의 퀘스트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.Log("QuestData 스크립트를 찾을 수 없습니다.");
+        }
+    }
+
 }

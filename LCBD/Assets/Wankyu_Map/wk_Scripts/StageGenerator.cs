@@ -141,8 +141,13 @@ public class StageGenerator : MonoBehaviour
         StartRow = UnityEngine.Random.Range(0, fieldType.GetLength(0));
         StartCol = UnityEngine.Random.Range(0, fieldType.GetLength(1));
 
-        int curRow = StartRow;
-        int curCol = StartCol;
+        //랜덤워크알고리즘 비슷한건데, 하나만 하면 생기는 모양새가 포도송이처럼 뭉치는 경우가 많아서 좀 더 다양하고, 좀 더 길쭉한 모양새도 더 쉽게 나올 수 있도록 두 개로 함.
+        //랜덤 워크1
+        int curRow = StartRow;  //현재 행1
+        int curCol = StartCol;  //현재 열1
+        //랜덤 워크2
+        int curRow2 = StartRow; //현재 행2
+        int curCol2 = StartCol; //현재 열2
 
         //시작 필드 생성 부분
         fieldType[StartRow, StartCol] = FieldType.Start;
@@ -153,32 +158,67 @@ public class StageGenerator : MonoBehaviour
         int loopCount = 0;  //while문 loop Count
         while (count < FieldCount)
         {
+            int current = UnityEngine.Random.Range(0, 2);   //0 : 현재 행,열 1(curRow, curCol) / 1 : 현재 행,열 2(curRow2, curCol2)
             int direction = UnityEngine.Random.Range(1, 5); // 1. ↑ / 2. ↓ / 3. → / 4. ←
-            switch (direction)
+            switch (current)
             {
-                case 1:
-                    if (curRow < FieldSquareMatrixRow - 1)
-                        curRow++;
-                    break;
-                case 2:
-                    if (curRow > 0)
-                        curRow--;
-                    break;
-                case 3:
-                    if (curCol < FieldSquareMatrixRow - 1)
-                        curCol++;
-                    break;
-                case 4:
-                    if (curCol > 0)
-                        curCol--;
-                    break;
-            }
-            if (fieldType[curRow, curCol] == FieldType.None)
-            {
-                fieldType[curRow, curCol] = FieldType.Common;
-                count++;
-            }
+                case 0:
+                    switch (direction)
+                    {
+                        case 1:
+                            if (curRow < FieldSquareMatrixRow - 1)
+                                curRow++;
+                            break;
+                        case 2:
+                            if (curRow > 0)
+                                curRow--;
+                            break;
+                        case 3:
+                            if (curCol < FieldSquareMatrixRow - 1)
+                                curCol++;
+                            break;
+                        case 4:
+                            if (curCol > 0)
+                                curCol--;
+                            break;
+                    }
 
+                    if (fieldType[curRow, curCol] == FieldType.None)
+                    {
+                        fieldType[curRow, curCol] = FieldType.Common;
+                        count++;
+                    }
+                    break;
+
+                case 1:
+                    switch (direction)
+                    {
+                        case 1:
+                            if (curRow2 < FieldSquareMatrixRow - 1)
+                                curRow2++;
+                            break;
+                        case 2:
+                            if (curRow2 > 0)
+                                curRow2--;
+                            break;
+                        case 3:
+                            if (curCol2 < FieldSquareMatrixRow - 1)
+                                curCol2++;
+                            break;
+                        case 4:
+                            if (curCol2 > 0)
+                                curCol2--;
+                            break;
+                    }
+
+                    if (fieldType[curRow2, curCol2] == FieldType.None)
+                    {
+                        fieldType[curRow2, curCol2] = FieldType.Common;
+                        count++;
+                    }
+                    break;
+            }
+            
             loopCount++;
 
             if (loopCount >= 1000)
