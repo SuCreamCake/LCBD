@@ -277,6 +277,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199947328}
   m_CullTransparentMesh: 1
+--- !u!1 &241894471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 241894473}
+  - component: {fileID: 241894472}
+  m_Layer: 0
+  m_Name: battleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &241894472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241894471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3794f11ab868bfa42817bb722783d04b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackTime: 0
+  bulletObject: {fileID: 0}
+  weapons: []
+  weaponeIndex: -1
+  attackPosition: {x: 0, y: 0, z: 0}
+  shieldObject: {fileID: 0}
+  soundWaveAttackObject: {fileID: 0}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  soundWaveAttackTime: 0
+  totalAttackPower: 0
+  totalShield: 0
+--- !u!4 &241894473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241894471}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.40302, y: 113.263016, z: -3.0649748}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &339397813
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,9 +2393,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc39d71bc3c506488f0f244257f3bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuPanel: {fileID: 339397813}
+  GameIsPause: 0
+  ControlPanel: {fileID: 0}
   SettingPanel: {fileID: 0}
-  SoundPanel: {fileID: 0}
+  BGMPanel: {fileID: 0}
+  SFXPanel: {fileID: 0}
+  LananguagePanel: {fileID: 0}
 --- !u!114 &1501379139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3529,23 +3589,6 @@ MonoBehaviour:
   img: {fileID: 362907147}
   oralStack: 0
   SoundsPlayer: {fileID: 1269180605}
-  attackTime: 0
-  bulletObject: {fileID: 242305259456366811, guid: 449c943de4f727e47a187e76dc21c77e, type: 3}
-  weapons:
-  - {fileID: 1023107239259206480, guid: 5985034e3744268419d887e4a6d35fab, type: 3}
-  - {fileID: 1257265013632098142, guid: ba3bd8d9fbcb17a4d90679e2d482e619, type: 3}
-  - {fileID: 4168258280044260285, guid: fda4e452b51f46647a6551df6bf1f876, type: 3}
-  - {fileID: 760574583642991299, guid: 9ce762cb8df9d404b9a60e277408ef25, type: 3}
-  weaponeIndex: -1
-  attackPosition: {fileID: 950785364}
-  shieldObject: {fileID: 1161126713462899527, guid: 2e3a232af1012144d9249625a8d1f758, type: 3}
-  soundWaveAttackObject: {fileID: 8604599372958436524, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 12288
-  soundWaveAttackTime: 0
-  totalAttackPower: 0
-  totalShield: 0
 --- !u!50 &2075860121
 Rigidbody2D:
   serializedVersion: 4
