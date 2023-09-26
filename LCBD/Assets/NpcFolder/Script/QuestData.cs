@@ -36,7 +36,7 @@ public class QuestData : MonoBehaviour
 {
     public Dictionary<int, Quest> questDictionary = new Dictionary<int, Quest>();
 
-    private void Start()
+    private void Awake()
     {
         // 퀘스트 정보를 생성하고 딕셔너리에 추가
         Quest quest1 = new Quest(1, "첫 번째 퀘스트", "첫 번째 퀘스트 세부내용입니다.", new string[] { "안녕하세요!", "L키를 세번 눌러주세요." },
