@@ -41,11 +41,6 @@ public class BGM : MonoBehaviour
         }
     }
 
-
-
-
-    private float saveValue;
-
     public void BGM_Mute(bool isMute)
     {
         musicSource.mute = isMute;
