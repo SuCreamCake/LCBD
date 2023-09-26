@@ -337,10 +337,6 @@ public class BattleManager : MonoBehaviour
                         player.health = player.maxHealth;
                     txt = string.Format("{0}/{1}", player.health, player.maxHealth);
                 }
-                player.img.fillAmount = player.health / player.maxHealth;
-
-                player.text_hp.text = txt;
-
             }
         }
     }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2869620272705725011}
   - component: {fileID: 2869620272705725010}
   - component: {fileID: 2869620272705725013}
+  - component: {fileID: 3965593140642015479}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -145,23 +146,6 @@ MonoBehaviour:
   img: {fileID: 0}
   oralStack: 0
   SoundsPlayer: {fileID: 0}
-  attackTime: 0
-  bulletObject: {fileID: 0}
-  weapons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  weaponeIndex: -1
-  attackPosition: {x: 0, y: 0, z: 0}
-  shieldObject: {fileID: 0}
-  soundWaveAttackObject: {fileID: 0}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  soundWaveAttackTime: 0
-  totalAttackPower: 0
-  totalShield: 0
 --- !u!70 &2869620272705725011
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -210,3 +194,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d22bfc4edea1f84591af2d77f5407de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3965593140642015479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2869620272705725012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b636bf0d5419c684db9f722bda03c216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text_CoolTime: {fileID: 0}
+  image_fill: {fileID: 0}
+  text_hp: {fileID: 0}
+  img: {fileID: 0}

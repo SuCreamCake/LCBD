@@ -20,9 +20,9 @@ public class Player : MonoBehaviour
     public int attackPower;    //공격력
     //지구력
     public int maxEndurance;   
-    public float endurance;
-    public bool enduranceOnOff;
-    public float stayTime;
+    public float endurance;     
+    public bool enduranceOnOff; 
+    public float stayTime;      
     public int enduranceRec;
 
     public int defense;    //방어력
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 
     /*지학 추가*/
     //쿨타임 텍스트
-    public Text text_CoolTime;
+    /*public Text text_CoolTime;
     //쿨타임 이미지
     public Image image_fill;
     //스킬 재사용까지 남은시간
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     //hp바 텍스트
     public Text text_hp;
     //hp바 이미지
-    public Image img;
+    public Image img;*/
 
     Animator ani;    //애니메이션
 
@@ -66,6 +66,10 @@ public class Player : MonoBehaviour
 
     SoundsPlayer SFXPlayer;
     BattleManager battleManager;
+
+    internal object text_hp;
+    internal object img;
+
 
     ////동주 전투
     ////공격속도를 체크하기 위한 변수
@@ -117,9 +121,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        Init_UI();
-        Init_HP();
-        SetFunction_UI();
+        
         //attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
     }
 
@@ -155,9 +157,10 @@ public class Player : MonoBehaviour
         
         maxState();
         minState();
-        Check_CoolTime();
+        //지학
+        /*Check_CoolTime();
         SetFunction_UI();
-        Set_HP(health);
+        Set_HP(health);*/
 
     }
 
@@ -267,7 +270,7 @@ public class Player : MonoBehaviour
         if (time >= attackSpeed && Input.GetMouseButtonDown(0))
         {
             //쿨타임 추가 -지학-
-            Reset_CoolTime();
+            //Reset_CoolTime();
             time = 0;
             soundWave.transform.position = new Vector2(point.x, point.y);
             if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
@@ -576,7 +579,7 @@ public class Player : MonoBehaviour
     }
 
 
-    /*지학*/
+    /*지학*//*
     //image_fill의 fillAmount를 360도 시계 반대 방향으로 회전하게 설정
     private void Init_UI()
     {
@@ -644,7 +647,7 @@ public class Player : MonoBehaviour
     private void Set_HP(float _value)
     {
         health = _value;
-    }
+    }*/
 
 
     ////동주
@@ -928,12 +931,10 @@ public class Player : MonoBehaviour
     //                    health = maxHealth;
     //                txt = string.Format("{0}/{1}", health, maxHealth);
     //            }
-    //            img.fillAmount = health / maxHealth;
-
-    //            text_hp.text = txt;
+    //            
 
     //        }
-    //    }
+    //    }r
     //}
     ////데미지 공식
     //private void CalDamage()
