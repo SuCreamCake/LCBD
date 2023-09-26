@@ -29,8 +29,8 @@ public class Player : MonoBehaviour
     public float attackSpeed;    //공격속도
     public float crossroads;    //사거리
     public float luck;    //행운
-    //음파 오브젝트
-    public GameObject soundWave;
+    
+
     private float time = 0;
     public int stage;    //스테이지
     new CapsuleCollider2D collider2D;    //사이즈 변경을 위한 콜라이더
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     //무기 인덱스
     public int weaponeIndex = -1;
     //공격위치
-    public Vector3 attackPosition;
+    private Vector3 attackPosition;
 
     GameObject equipWeapon;
     //쉴드 오브젝트
@@ -114,9 +114,10 @@ public class Player : MonoBehaviour
     //분신 소환술을 쓰는 게임 오브젝트
     public GameObject alterEgoGameObject;
 
-    //땅에 닿았는지 안 닿았는지 확인하는 레이캐스팅을 사용
-    private RaycastHit2D groundRayCast;
-    private bool isGround;
+    //추락 중인지 확인하는 불형
+    private bool isFalling = false;
+    //추락하는 속도 구하기
+    private float getFallingVelocity;
 
     private void Awake()
     { 
@@ -132,15 +133,13 @@ public class Player : MonoBehaviour
         Init_UI();
         Init_HP();
         SetFunction_UI();
-        attackPosition = this.transform.right + new Vector3(0.2f, 0.2f, 0);
-        attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
+        updateAttackPostion();
+
 
     }
 
     private void Update()
     {
-
-        initGround();
         attackTime += Time.deltaTime;
         copyCatDelayTimeVariable += Time.deltaTime;
         jump();
@@ -149,11 +148,14 @@ public class Player : MonoBehaviour
         swapWeapon();
         battleLogic();
         getInputSoundWaveAttack();
+        getFallingVelocityFunc();
+        caculateFallingVelocity();
+        updateAttackPostion();
         soundWaveAttackTime += Time.deltaTime;
         switch (stage)
         {
             case 1:
-                attack();
+                //attack();
                 break;
             case 3:
                 ladderJump();
@@ -268,30 +270,30 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-    private void attack()
-    {
-        //attack
-        time += Time.deltaTime;
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-        Input.mousePosition.y, -Camera.main.transform.position.z));
-        if (time >= attackSpeed && Input.GetMouseButtonDown(0))
-        {
-            //쿨타임 추가 -지학-
-            Reset_CoolTime();
-            time = 0;
-            soundWave.transform.position = new Vector2(point.x, point.y);
-            if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
-            {
+    //private void attack()
+    //{
+    //    //attack
+    //    time += Time.deltaTime;
+    //    Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+    //    Input.mousePosition.y, -Camera.main.transform.position.z));
+    //    if (time >= attackSpeed && Input.GetMouseButtonDown(0))
+    //    {
+    //        //쿨타임 추가 -지학-
+    //        Reset_CoolTime();
+    //        time = 0;
+    //        soundWave.transform.position = new Vector2(point.x, point.y);
+    //        if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
+    //        {
 
-                float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2));
+    //            float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2));
 
-                soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
-                    , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
-            }
-            sound.AttackSound(0); //GetComponent 사용 X
-            Instantiate(soundWave);
-        }
-    }
+    //            soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
+    //                , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
+    //        }
+    //        sound.AttackSound(0); //GetComponent 사용 X
+    //        Instantiate(soundWave);
+    //    }
+    //}
     private void walk()
     {
         int key = 0;
@@ -1031,7 +1033,6 @@ public class Player : MonoBehaviour
             isHeat = true;
             StartCoroutine(HeatLogic());
         }
-        
     }
 
     IEnumerator HeatLogic()
@@ -1095,24 +1096,23 @@ public class Player : MonoBehaviour
 
 
     //추락 시스템 구현
-    public void initGround()
-    {
-        groundRayCast = Physics2D.Raycast(rigid.position, Vector3.down);
-        //공중에 있을 때
-        if(groundRayCast.collider.tag.Equals("!null"))
+    public void getFallingVelocityFunc()
+    { 
+        if(rigid.velocity.y <= -9.8f *3 )
         {
-            if(rigid.velocity.y > 0.4f * 9.8f)
-            {
-                Debug.Log("캐릭터가 추락했습니다.");
-            }
+            isFalling = true;
+            getFallingVelocity = rigid.velocity.y;
         }
     }
 
-    public void checkIsGround()
-    {
-        
+    public void caculateFallingVelocity()
+    { 
+        if(isFalling && rigid.velocity.y == 0)
+        {
+            Debug.Log("추락하였습니다. 추락시간은" + getFallingVelocity / 9.8f);
+            isFalling = false;
+        }
     }
-
    //분신 소환술 나루토
    public void createAlterEgo()
     {
@@ -1122,7 +1122,10 @@ public class Player : MonoBehaviour
         Instantiate(alterEgoGameObject, mousePoint, Quaternion.identity);
     }
 
-
+    private void updateAttackPostion()
+    {
+        attackPosition = this.transform.right + this.transform.position + new Vector3(0.05f, 0.05f, 0); 
+    }
 
 
 
@@ -1130,4 +1133,3 @@ public class Player : MonoBehaviour
 
 
 
-//yield return waitFoseconds(5초)
