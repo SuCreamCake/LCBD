@@ -3,122 +3,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer),typeof(MeshRenderer))]
 public class CustomFan : MonoBehaviour
 {
+    [SerializeField] [Range(3, 100)]
+    private int polygonPoints = 3; //다각형 점 개수(3 ~ 100개)
+    [SerializeField] [Min(0.1f)]
+    private float outerRadius = 3;  //다각형의 원점부터 외곽 둘레까지의 반지름 (최소값 0.1)
 
-    public Mesh generatedMesh;
-    public int vc = 0;
+    private Mesh mesh;
+    private Vector3[] vertices; //다각형의 정점 정보 배열
+    private int[] indices; //정점을 잇는 폴리곤 정보 배열
 
-    Vector3[] vertices;
-    Vector2[] uv;
-    int[] indices;
-
-    Vector3[] vertices2;
-    Vector2[] uv2;
-    int[] indices2;
-
-    [Range(0, 1)]
-    public float fill = 1;
-    float prevfill;
-
-    void FillQuadData()
+    private void Awake()
     {
-        Array.Copy(vertices, vertices2, 10);
-        Array.Copy(uv, uv2, 10);
+        mesh = new Mesh();
 
-        fill = Mathf.Clamp01(fill);
-
-        int triCount = (int)(fill * 8.0f);
-
-        // 잔여분이 있다면 버텍스 정보 수정  
-        if (triCount < fill * 8.0f)
-        {
-            float adpfill = -fill + 0.25f;
-            triCount += 1;
-            float nz = Mathf.Sin(adpfill * Mathf.PI * 2) * 0.5f;
-            float nx = Mathf.Cos(adpfill * Mathf.PI * 2) * 0.5f;
-
-            if (Mathf.Abs(nz) > Mathf.Abs(nx))
-            {
-                float nztemp = Mathf.Sign(nz) * 0.5f;
-                nx = nztemp * nx / nz;
-                nz = nztemp;
-            }
-            else
-            {
-                float nxtemp = Mathf.Sign(nx) * 0.5f;
-                nz = nxtemp * nz / nx;
-                nx = nxtemp;
-            }
-
-            Debug.Log("TC:" + triCount);
-
-            vertices2[triCount + 1].z = nz;
-            vertices2[triCount + 1].x = nx;
-            uv2[triCount + 1].x = nx + 0.5f;
-            uv2[triCount + 1].y = nz + 0.5f;
-        }
-
-        indices2 = new int[3 * triCount];
-        Array.Copy(indices, indices2, 3 * triCount);
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        meshFilter.mesh = mesh;
     }
 
-    Mesh BuildQuadMesh()
+    private void Update()
     {
-        vertices2 = new Vector3[10];
-        uv2 = new Vector2[10];
+        DrawFilled(polygonPoints, outerRadius);
+    }
 
-        vertices = new Vector3[10]{new Vector3(0, 0, 0),
-            new Vector3(0, 0, 0.5f),new Vector3(0.5f, 0, 0.5f),new Vector3(0.5f, 0, 0),
-            new Vector3(0.5f, 0, -0.5f),new Vector3(0, 0, -0.5f),new Vector3(-0.5f, 0, -0.5f),
-            new Vector3(-0.5f, 0, 0),new Vector3(-0.5f, 0, 0.5f),new Vector3(0, 0, 0.5f)};
+    private void DrawFilled(int sides, float radius)
+    {
+        //정점 정보
+        vertices = GetCircumferencePoints(sides, radius);
+        // 정점을 잇는 폴리곤 정보
+        indices = DrawFilledIndices(vertices);
+        //메시 생성
+        GeneratePolygon(vertices, indices);
+    }
 
-        uv = new Vector2[10]{ new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 1),new Vector2(1, 1), new Vector2(1, 0.5f),
-            new Vector2(1, 0), new Vector2(0.5f, 0), new Vector2(0, 0),
-            new Vector2(0, 0.5f), new Vector2(0, 1), new Vector2(0.5f, 1)};
+    ///<summary>
+    ///반지름이 radius인 원의 둘레 위치에 있는 sides 개수만큼의 정점 위치 정보 반환
+    ///</summary>
+    private Vector3[] GetCircumferencePoints(int sides, float radius)
+    {
+        Vector3[] points = new Vector3[sides];
+        float anglePerStep = 2 * Mathf.PI * ((float)1 / sides);
+        for(int i=0;i<sides;++i)
+        {
+            Vector2 point = Vector2.zero;
+            float angle = anglePerStep * i;
 
-        indices = new int[24] { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7, 0, 7, 8, 0, 8, 9 };
+            point.x = Mathf.Cos(angle) * radius;
+            point.y = Mathf.Sin(angle) * radius;
+            points[i] = point;
+        }
+        return points;
+    }
 
-        FillQuadData();
+    private int[] DrawFilledIndices(Vector3[] vertices)
+    {
+        int triangelCount = vertices.Length - 2;
+        List<int> indices = new List<int>();
+        for(int i=0; i<triangelCount;++i)
+        {
+            indices.Add(0);
+            indices.Add(i + 2);
+            indices.Add(i + 1);
 
-        Mesh mesh = new Mesh();
-        mesh.name = "Generated Mesh";
+        }
+        return indices.ToArray();
+    }
 
-        mesh.vertices = vertices2;
-        mesh.triangles = indices2;
-        mesh.uv = uv2;
+    private void GeneratePolyGon(Vector3[] vertices, int[] indices)
+    {
+        //점, 반지름 정보에 따라 Update()에서
+        //지속적으로 업데이트하기 때문에 기존 mesh 정보를 초기화
+        mesh.Clear();
+        //정점, 폴리곤 설정
+        mesh.vertices = vertices;
+        mesh.triangles = indices;
+        //Bounds, Normal 재연산
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
-        mesh.Optimize();
-        return mesh;
     }
 
-    // Use this for initialization  
-    void Start()
-    {
-        RebuildMesh();
-    }
 
-    void RebuildMesh()
-    {
-        Mesh sm = BuildQuadMesh();
-        MeshFilter mf = GetComponent<MeshFilter>();
-        if (mf != null)
-        {
-            mf.mesh = sm;
-        }
-        prevfill = fill;
-    }
-
-    // Update is called once per frame  
-    void Update()
-    {
-        if (fill != prevfill)
-        {
-            RebuildMesh();
-        }
-    }
 }

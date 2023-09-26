@@ -116,8 +116,8 @@ public class Player : MonoBehaviour
 
     //추락 중인지 확인하는 불형
     private bool isFalling = false;
-    //추락하는 속도 구하기
-    private float getFallingVelocity;
+    //추락하는 위치구하기
+    private float getFallingPosition;
 
     private void Awake()
     { 
@@ -133,7 +133,6 @@ public class Player : MonoBehaviour
         Init_UI();
         Init_HP();
         SetFunction_UI();
-        updateAttackPostion();
 
 
     }
@@ -150,7 +149,6 @@ public class Player : MonoBehaviour
         getInputSoundWaveAttack();
         getFallingVelocityFunc();
         caculateFallingVelocity();
-        updateAttackPostion();
         soundWaveAttackTime += Time.deltaTime;
         switch (stage)
         {
@@ -1094,25 +1092,6 @@ public class Player : MonoBehaviour
 
     }
 
-
-    //추락 시스템 구현
-    public void getFallingVelocityFunc()
-    { 
-        if(rigid.velocity.y <= -9.8f *3 )
-        {
-            isFalling = true;
-            getFallingVelocity = rigid.velocity.y;
-        }
-    }
-
-    public void caculateFallingVelocity()
-    { 
-        if(isFalling && rigid.velocity.y == 0)
-        {
-            Debug.Log("추락하였습니다. 추락시간은" + getFallingVelocity / 9.8f);
-            isFalling = false;
-        }
-    }
    //분신 소환술 나루토
    public void createAlterEgo()
     {
@@ -1122,9 +1101,36 @@ public class Player : MonoBehaviour
         Instantiate(alterEgoGameObject, mousePoint, Quaternion.identity);
     }
 
-    private void updateAttackPostion()
+  
+
+    private void getFallingVelocityFunc()
     {
-        attackPosition = this.transform.right + this.transform.position + new Vector3(0.05f, 0.05f, 0); 
+        if (rigid.velocity.y < 0 && !isFalling)
+        {
+            Debug.Log("캐릭터가 추락했습니다");
+            isFalling = true;
+            getFallingPosition = this.transform.position.y;
+        }
+    }
+
+    public void caculateFallingVelocity()
+    {
+        if (isFalling && rigid.velocity.y == 0)
+        {
+            float fallingDistance;
+            fallingDistance = getFallingPosition - this.transform.position.y;
+            Debug.Log("추락하였습니다. 추락거리는 " + fallingDistance +"낙하 위치"  + getFallingPosition);
+            isFalling = false;
+            //체력을 깍는 로직
+            //떨어진 거리 반올림
+            int damage = Mathf.RoundToInt(getFallingPosition);
+            Debug.Log(damage);
+            damage = damage / 5;
+            //체력깎기
+            this.health = this.health * (1 - (0.2f * damage));
+            Debug.Log("캐릭터의 체력은" + this.health + "받은 피해량" + damage);
+            getFallingPosition = 0;
+        }
     }
 
 
