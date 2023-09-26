@@ -22,17 +22,17 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (!SettingMenu.GameIsPause) //정지상태가 아닐때 누르면 정지시킨다.
+            if (SettingMenu.SettingPanel.activeSelf)
+            {
+                PausePanel.SetActive(true);
+            }
+            if (!GameIsPause) //정지판넬이 활성화 되어있고 정지상태가 아닐때 누르면 정지시킨다.
             {
                 Pause();
             }
-            else if (SettingMenu.GameIsPause && PausePanel.activeSelf)
+            else if(PausePanel.activeSelf && GameIsPause) //정지상태에서 정지메뉴가 활성화 되있으면 실행
             {
-                Resume();
-            }
-            else if(SettingMenu.GameIsPause && SettingMenu.SettingPanel.activeSelf)
-            {
-                SettingMenu.SettingPanel.SetActive(false);
+                Resume(); //계속하기
             }
         }
     }
@@ -41,7 +41,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("정지");
         Time.timeScale = 0.0f;
-        SettingMenu.GameIsPause = true;
+        GameIsPause = true;
         PausePanel.SetActive(true);
     }
     private void Resume()
@@ -49,7 +49,7 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("계속하기");
         PausePanel.SetActive(false);
         Time.timeScale = 1.0f;
-        SettingMenu.GameIsPause = false;
+        GameIsPause = false;
     }
 
     public void go_Main()
@@ -59,7 +59,7 @@ public class PauseMenu : MonoBehaviour
 
     public void go_Setting()
     {
-        SettingMenu.GameIsPause = true;
+        PausePanel.SetActive(false);
         SettingMenu.SettingPanel.SetActive(true);
     }
 

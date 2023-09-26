@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour
             BackESC(); //ESC입력시 닫기
         }
 
-        if (!SettingMenu.GameIsPause && !MainMenuPanel.activeSelf && !MainMenuIsUse)
+        if (SettingMenu.SettingPanel.activeSelf)
         {
             MainMenuIsUse = true; //메인메뉴 쓰임.
             MainMenuPanel.SetActive(true);//메인메뉴 활성화
@@ -77,7 +77,6 @@ public class MainMenu : MonoBehaviour
     {
         MainMenuIsUse = false;
         MainMenuPanel.SetActive(false);
-        SettingMenu.GameIsPause = true;
         SettingMenu.SettingPanel.SetActive(true);
     }
 
