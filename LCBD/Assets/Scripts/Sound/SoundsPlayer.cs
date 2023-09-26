@@ -29,6 +29,12 @@ public class LadderSoundFile
     public AudioClip SoundClip;
 }
 [System.Serializable]
+public class EquipSoundFile
+{
+    public string SoundName;
+    public AudioClip SoundClip;
+}
+[System.Serializable]
 public class InteractionSoundFile
 {
     public string SoundName;
@@ -53,6 +59,10 @@ public class SoundsPlayer : MonoBehaviour
     [Header("< LADDER >")]
     [SerializeField] AudioSource LadderSoundPlayer;
     [SerializeField] LadderSoundFile[] LadderSounds;
+
+    [Header("< Equip >")]
+    [SerializeField] AudioSource EquipSoundFile;
+    [SerializeField] EquipSoundFile[] EquipSounds;
 
     [Header("< INTERACTION >")]
     [SerializeField] AudioSource InteractionSoundPlayer;
