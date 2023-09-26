@@ -62,11 +62,11 @@ public class Player : MonoBehaviour
     private int genitalStack;
 
     //사운드 오브젝트
-    public GameObject SoundsPlayer;
-    SoundsPlayer sound;
+    //public GameObject SoundsPlayer;
 
-
+    SoundsPlayer SFXPlayer;
     BattleManager battleManager;
+
     ////동주 전투
     ////공격속도를 체크하기 위한 변수
     //public float attackTime = 0;
@@ -107,9 +107,11 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<CapsuleCollider2D>();
-        sound = SoundsPlayer.GetComponent<SoundsPlayer>();
-        infancy();
 
+        //soundPlayer = SoundsPlayer.GetComponent<SoundsPlayer>();
+
+        infancy();
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
        
     }
@@ -178,7 +180,7 @@ public class Player : MonoBehaviour
         }
         if (collision.CompareTag("StagePortal"))
         {
-            sound.InteractionSound(0);  // Portal Sound
+            SFXPlayer.InteractionSound(0);  // Portal Sound
             switch (stage)
             {
                 case 1:
@@ -217,7 +219,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.G) && PortalManager.IsTeleporting == false)    //상호작용(G)키를 눌렀고, 텔레포트가 아닌 중에
             {
                 collision.GetComponent<FieldPortal>().Teleport(this.gameObject);        //필드 포탈을 태우고 플레이어를 텔레포트 시킴
-                sound.InteractionSound(0);  // Portal Sound
+                SFXPlayer.InteractionSound(0);  // Portal Sound
             }
         }
     }
@@ -246,7 +248,7 @@ public class Player : MonoBehaviour
             endurance -= maxEndurance / 5;
             enduranceOnOff = false;
 
-            sound.JumpSound(0);     // Jump Sound 
+            SFXPlayer.JumpSound(0);     // Jump Sound 
         }
 
     }
@@ -276,7 +278,7 @@ public class Player : MonoBehaviour
                 soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
                     , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
             }
-            sound.AttackSound(0);
+            SFXPlayer.AttackSound(0);       //attack sound
             Instantiate(soundWave);
         }
     }
@@ -319,9 +321,9 @@ public class Player : MonoBehaviour
 
         // Walk Sound 
         if (stage == 1)
-            sound.WalkSound(0);  //GetComponent 사용 X 걸을때마다 사운드를 호출시키는데 Getcomponent가 모든 객체 뒤져서 찾는 함수라 효율성 매우 떨어짐
+            SFXPlayer.WalkSound(0); 
         else if (stage == 2)
-            sound.WalkSound(1);  //GetComponent 사용 X
+            SFXPlayer.WalkSound(1);  
 
 
 
@@ -331,7 +333,7 @@ public class Player : MonoBehaviour
         //Updown
         if (isLadder)
         {
-            sound.LadderSound(0);       // Jump Sound
+            SFXPlayer.LadderSound(0);       // Jump Sound
             float ver = Input.GetAxis("Vertical");
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if(ver != 0)
