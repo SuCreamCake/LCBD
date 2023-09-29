@@ -36,6 +36,10 @@ public class DontDestroyinGameUI : MonoBehaviour
         {
             Destroy(this.gameObject); //해당 오브젝트를 파괴
         }
+        if (SceneManager.GetActiveScene().name == "StartMenu") //현재씬이 시작메뉴면
+        {
+            Destroy(this.gameObject); //해당 오브젝트를 파괴
+        }
 
     }
 }

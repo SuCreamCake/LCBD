@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SettingMenu : MonoBehaviour
 {
+    public bool SettingIsUse = false;
     public GameObject ControlPanel; //단축키 판넬
     public GameObject SettingPanel; //설정버튼 누르면 나오는 창
     public GameObject BGMPanel; //BGM 창
@@ -15,8 +16,10 @@ public class SettingMenu : MonoBehaviour
     List<GameObject> PanelList;
     List<GameObject> BackList;
 
-    private PauseMenu Ispause;
-
+    private void Awake()
+    {
+        SettingIsUse = false;
+    }
     private void Start()
     {
         StartPanel();
@@ -28,8 +31,15 @@ public class SettingMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)) //esc입력시 Setting메뉴가 사용중이라면 사용
         {
+            if (SettingPanel.activeSelf) //셋팅판넬이 켜져있으면 리턴
+            {
+                SettingIsUse = false;
+                SettingPanel.SetActive(false);
+                return;
+            }
             BackESC(); //ESC입력시 닫기
         }
+        //Debug.Log(BackList.Count);
     }
 
     private void StartPanel()
@@ -87,7 +97,7 @@ public class SettingMenu : MonoBehaviour
         Debug.Log("FullScreenBTN!!");
     }
 
-    public void FindActivePanel() //버튼을 누를때마다 활성화된 판넬은 끄고 BackList에 추가
+    private void FindActivePanel() //버튼을 누를때마다 활성화된 판넬은 끄고 BackList에 추가
     {
         for (int i = 0; i < PanelList.Count; i++)
         {
@@ -98,6 +108,7 @@ public class SettingMenu : MonoBehaviour
                 PanelList[i].SetActive(false); //활성화 되어있는 판넬은 끈다.
             }
         }
+        SettingIsUse = true;
     }
 
     public void BackESC() //뒤로가기 버튼
@@ -106,23 +117,18 @@ public class SettingMenu : MonoBehaviour
         {
             if (PanelList[i].activeSelf == true) //활성화 되어있는 판넬 찾기
             {
-                if (SettingPanel.activeSelf) //셋팅판넬이 활성화 되어있으면
-                {
-                    SettingPanel.SetActive(false); //셋팅판넬은 끄고 함수종료
-                    Debug.Log("셋팅판넬 종료로 Backesc탈출");
-                    return;
-                }
-                //셋팅판넬이 아니면
                 PanelList[i].SetActive(false); //현재 활성화 되어있는 판넬은 종료
                 Debug.Log("비활성화된 판넬이름: " + PanelList[i]);
             }
         }
 
-        if (BackList.Count == 0) //더이상 뒤로갈게 없으면 종료
+        if (BackList.Count == 0)
+        { //더이상 뒤로갈게 없으면 종료
             return;
+        }
 
-            BackList[BackList.Count - 1].SetActive(true); //백리스트의 마지막판넬 활성화
-            BackList.RemoveAt(BackList.Count - 1); //마지막 리스트는 삭제
+        BackList[BackList.Count - 1].SetActive(true); //백리스트의 마지막판넬 활성화
+        BackList.RemoveAt(BackList.Count - 1); //마지막 리스트는 삭제
     }
 
 }

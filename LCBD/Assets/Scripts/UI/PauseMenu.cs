@@ -6,46 +6,46 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
-    [SerializeField] private GameObject PausePanel;
-    public static bool GameIsPause = false;
+    public GameObject PausePanel;
+    private bool GameIsPause = false;
 
     private SettingMenu SettingMenu; //설정창
 
-    void Start()
+
+    private void Awake()
     {
         SettingMenu = FindObjectOfType<SettingMenu>(); //설정창 오브젝트 가져오기
+    }
+    void Start()
+    {
         PausePanel.SetActive(false);
-        GameIsPause = false;
+        Resume();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (SettingMenu.SettingPanel.activeSelf)
-            {
-                PausePanel.SetActive(true);
-            }
-            if (!GameIsPause) //정지판넬이 활성화 되어있고 정지상태가 아닐때 누르면 정지시킨다.
-            {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameIsPause && PausePanel.activeSelf && !SettingMenu.SettingIsUse)
+                Resume();
+            else if (!GameIsPause)
                 Pause();
-            }
-            else if(PausePanel.activeSelf && GameIsPause) //정지상태에서 정지메뉴가 활성화 되있으면 실행
-            {
-                Resume(); //계속하기
-            }
         }
+            
+
+
     }
 
     private void Pause()
     {
         Debug.Log("정지");
         Time.timeScale = 0.0f;
-        GameIsPause = true;
         PausePanel.SetActive(true);
+        GameIsPause = true;
     }
     private void Resume()
-    {
+    { //퍼스판넬을 끈다 / 타이머ㅓ를 1.0으로 정상으로 돌려놓는다. GameIsPause를 false로
         Debug.Log("계속하기");
         PausePanel.SetActive(false);
         Time.timeScale = 1.0f;
@@ -59,7 +59,8 @@ public class PauseMenu : MonoBehaviour
 
     public void go_Setting()
     {
-        PausePanel.SetActive(false);
+        SettingMenu.SettingIsUse = true;
+        PausePanel.SetActive(true);
         SettingMenu.SettingPanel.SetActive(true);
     }
 

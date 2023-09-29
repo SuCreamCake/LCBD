@@ -15,7 +15,7 @@ public class BGM : MonoBehaviour
     }
 
     public BGMType[] BGMList;
-    private AudioSource musicSource; //배경음 오디오소스
+    private AudioSource musicSource =null; //배경음 오디오소스
     public AudioMixer Mixer; //해당 오디오의 믹서
 
 
@@ -33,10 +33,13 @@ public class BGM : MonoBehaviour
         {
             if(arg0.name == BGMList[i].Stagename)
             {
-                musicSource.clip = BGMList[i].audio;
-                musicSource.volume = 0.5f;
-                musicSource.loop = true;
-                musicSource.Play();
+                if (musicSource != null)
+                {
+                    musicSource.clip = BGMList[i].audio;
+                    musicSource.volume = 0.5f;
+                    musicSource.loop = true;
+                    musicSource.Play();
+                }
             }
         }
     }
