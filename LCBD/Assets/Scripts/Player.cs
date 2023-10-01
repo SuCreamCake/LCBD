@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         switch (stage)
         {
             case 1:
-                attack();
+                //attack();
                 break;
             case 3:
                 ladderJump();
@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
         
         maxState();
         minState();
-
+        run();
 
     }
 
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        move();
+        walk();
         upDown();
         enduranceSystem();
     }
@@ -209,34 +209,35 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-    private void attack()
-    {
-        //attack
-        time += Time.deltaTime;
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-        Input.mousePosition.y, -Camera.main.transform.position.z));
-        if (time >= attackSpeed && Input.GetMouseButtonDown(0))
-        {
-            //쿨타임 추가 -지학-
-            //Reset_CoolTime();
-            time = 0;
-            soundWave.transform.position = new Vector2(point.x, point.y);
-            if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
-            {
+    //private void attack()
+    //{
+    //    //attack
+    //    time += Time.deltaTime;
+    //    Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+    //    Input.mousePosition.y, -Camera.main.transform.position.z));
+    //    if (time >= attackSpeed && Input.GetMouseButtonDown(0))
+    //    {
+    //        //쿨타임 추가 -지학-
+    //        //Reset_CoolTime();
+    //        time = 0;
+    //        soundWave.transform.position = new Vector2(point.x, point.y);
+    //        if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
+    //        {
 
-                float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2));
+    //            float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2));
 
-                soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
-                    , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
-            }
-            SFXPlayer.AttackSound(0);       //attack sound
-            Instantiate(soundWave);
-        }
-    }
-    private void move()
+    //            soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
+    //                , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
+    //        }
+    //        SFXPlayer.AttackSound(0);       //attack sound
+    //        Instantiate(soundWave);
+    //    }
+    //}
+    private void walk()
     {
         int key = 0;
-        if (Input.GetKey(KeyCode.A)) { 
+        if (Input.GetKey(KeyCode.A))
+        {
             key = -1;
             downA = true;
         }
@@ -245,20 +246,10 @@ public class Player : MonoBehaviour
             key = 1;
             downD = true;
         }
+
         float speedx = Mathf.Abs(this.rigid.velocity.x);
 
-        if(stage != 1 && endurance > 0)
-        {
-            if (downA || downD)
-            {
-                downTime += Time.deltaTime;
-            }
-            if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
-                downAA = true;
-            if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
-                downDD = true;
-        }
-        if ((downTime > 0.5 && key == 0) || endurance==0)
+        if ((downTime > 0.5 && key == 0) || endurance == 0)
         {
             downA = false;
             downD = false;
@@ -266,7 +257,6 @@ public class Player : MonoBehaviour
             downDD = false;
             downTime = 0;
         }
-
         if (downAA || downDD)
         {
             maxSpeed = nomalSpeed * 1.4f;
@@ -302,6 +292,21 @@ public class Player : MonoBehaviour
 
 
 
+    }
+
+    private void run()
+    {
+        if (stage != 1)
+        {
+            if (downA || downD)
+            {
+                downTime += Time.deltaTime;
+            }
+            if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
+                downAA = true;
+            if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
+                downDD = true;
+        }
     }
     private void upDown()
     {
