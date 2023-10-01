@@ -306,10 +306,10 @@ public class Player : MonoBehaviour
                 downTime += Time.deltaTime;
             }
             //if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
-            if (downTime > 0.01 && Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
+            if (downTime > 0.01 && downA && Input.GetKeyDown(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
                 downAA = true;
            // if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
-            if (downTime > 0.01 && downD && Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
+            if (downTime > 0.01 && downD && Input.GetKeyDown(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
                 downDD = true;
         }
     }
