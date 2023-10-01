@@ -192,7 +192,8 @@ public class Player : MonoBehaviour
     private void jump()
     {
         //Jump
-        if (Input.GetButtonDown("Jump") && rigid.velocity.y == 0)
+        //if (Input.GetButtonDown("Jump") && rigid.velocity.y == 0)
+        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP]) && rigid.velocity.y == 0)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             ani.SetTrigger("isJumping");
@@ -236,12 +237,14 @@ public class Player : MonoBehaviour
     private void walk()
     {
         int key = 0;
-        if (Input.GetKey(KeyCode.A))
+        //if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
         {
             key = -1;
             downA = true;
         }
-        if (Input.GetKey(KeyCode.D))
+        //if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
         {
             key = 1;
             downD = true;
@@ -302,9 +305,11 @@ public class Player : MonoBehaviour
             {
                 downTime += Time.deltaTime;
             }
-            if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
+            //if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
+            if (downTime > 0.01 && Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
                 downAA = true;
-            if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
+           // if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
+            if (downTime > 0.01 && downD && Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
                 downDD = true;
         }
     }
@@ -395,7 +400,8 @@ public class Player : MonoBehaviour
 
     private void ladderJump()
     {
-        if (isLadder && Input.GetButtonDown("Jump"))
+        //if (isLadder && Input.GetButtonDown("Jump"))
+        if (isLadder && Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //KeyManager스크립트를 활용한 코드
         {
             InvokeRepeating("InvokeJump", 0.01f, 0.01f);
         }

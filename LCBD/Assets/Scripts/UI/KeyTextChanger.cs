@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UImanager : MonoBehaviour
+public class KeyTextChanger : MonoBehaviour
 {
     public Text[] txt; //≈ÿΩ∫∆Æ
 
