@@ -11,7 +11,10 @@ public enum KeyInput {
     Run,
     Inventory,
     Item1,
-    KEYCOUNT} //마지막은 키 갯수를 위해 넣음.
+    Item2,
+    Item3,
+    KEYCOUNT
+} //마지막은 키 갯수를 위해 넣음.
 
 public static class KeySetting { public static Dictionary<KeyInput, KeyCode> keys = new Dictionary<KeyInput, KeyCode>(); }
 public class KeyManager : MonoBehaviour
@@ -25,7 +28,10 @@ public class KeyManager : MonoBehaviour
         KeyCode.Space,
         KeyCode.LeftShift,
         KeyCode.I,
-        KeyCode.Alpha1 };
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3
+    };
     void Awake()
     {
         for(int i=0; i < (int)KeyInput.KEYCOUNT; i++)
@@ -97,6 +103,14 @@ public class KeyManager : MonoBehaviour
         if (Input.GetKey(KeySetting.keys[KeyInput.Item1])) //아이템1번키
         {
             Debug.Log("Item1");
+        }
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //아이템1번키
+        {
+            Debug.Log("Item2");
+        }
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //아이템1번키
+        {
+            Debug.Log("Item3");
         }
     }
 }
