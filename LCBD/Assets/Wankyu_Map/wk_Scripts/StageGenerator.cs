@@ -9,11 +9,70 @@ public class StageGenerator : MonoBehaviour
     private int _stageLevel;    //스테이지 레벨
     public int StageLevel { get { return _stageLevel; } private set { _stageLevel = value; } }
 
-    public int FieldCount { get; private set; } //필드의 개수
+    public int FieldCount { get; private set; } // 필드의 개수
+
+    public static int CommonFieldCount { get; private set; }   // 일반필드의 개수 (static)
+    public static int SpecialFieldCount { get; private set; }  // 특수필드의 개수 (static)
+    public static Dictionary<int, int> CommonFieldGeneratedCount { get; private set; }          // 생성된 일반필드 개수 dict (static)
+    public static Dictionary<int, float> CommonFieldWeights { get; private set; }               // 일반필드의 가중치 dict (static)
+    public static void ChangeWeightInCommonFieldWeights(int commonFieldSerial, float weight)    // 일반필드의 가중치 변경 수정 메소드 (static)
+    {
+        CommonFieldWeights[commonFieldSerial] = weight;
+    }
+    public static void InitCommonFieldWeightsAndGeneratedCount(int StageLevel)     // 일반 필드의 유형들의 생성 개수 및 필드 가중치를 (스테이지 레벨과 레벨의 유형에 맞게) 초기화하는 메소드 (static)
+    {
+        CommonFieldGeneratedCount = new Dictionary<int, int>(); //일반 필드 생성 개수 dict 초기화
+        CommonFieldWeights = new Dictionary<int, float>();      //일반 필드 가중치 dict 초기화
+
+        switch (StageLevel)
+        {
+            case 1:
+                foreach (CommonFieldSerial_1 commonItem in Enum.GetValues(typeof(CommonFieldSerial_1)))
+                {
+                    CommonFieldWeights.Add((int)commonItem, CommonFieldCount);    //가중치 초기화
+                    CommonFieldGeneratedCount.Add((int)commonItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 2:
+                foreach (CommonFieldSerial_2 commonItem in Enum.GetValues(typeof(CommonFieldSerial_2)))
+                {
+                    CommonFieldWeights.Add((int)commonItem, CommonFieldCount);    //가중치 초기화
+                    CommonFieldGeneratedCount.Add((int)commonItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 3:
+                foreach (CommonFieldSerial_3 commonItem in Enum.GetValues(typeof(CommonFieldSerial_3)))
+                {
+                    CommonFieldWeights.Add((int)commonItem, CommonFieldCount);    //가중치 초기화
+                    CommonFieldGeneratedCount.Add((int)commonItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 4:
+                foreach (CommonFieldSerial_4 commonItem in Enum.GetValues(typeof(CommonFieldSerial_4)))
+                {
+                    CommonFieldWeights.Add((int)commonItem, CommonFieldCount);    //가중치 초기화
+                    CommonFieldGeneratedCount.Add((int)commonItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 5:
+                foreach (CommonFieldSerial_5 commonItem in Enum.GetValues(typeof(CommonFieldSerial_5)))
+                {
+                    CommonFieldWeights.Add((int)commonItem, CommonFieldCount);    //가중치 초기화
+                    CommonFieldGeneratedCount.Add((int)commonItem, 0);            //생성개수 초기화
+                }
+                break;
+        }
+        return;
+    }
+    public static Dictionary<int, int> SpecialFieldGeneratedCount { get; private set; }         // 생성된 특수필드 개수 dict (static)
+    public static Dictionary<int, float> SpecialFieldWeights { get; private set; }              // 특수필드의 가중치 dict (static)
+    public static void ChangeWeightInSpecialFieldWeights(int specialFieldSerial, float weight)  // 특수필드의 가중치 변경 수정 메소드 (static)
+    {
+        SpecialFieldWeights[specialFieldSerial] = weight;
+    }
+    
 
     public int FieldSquareMatrixRow { get; private set; } //필드의 NxN 배열의 N(행 수)
-
-    [SerializeField, Range(20, 100)]
     private int _mapWidth, _mapHeight;  //한 맵(필드)의 너비, 높이
     public int MapWidth { get { return _mapWidth; } private set { _mapWidth = value; } }
     public int MapHeight { get { return _mapHeight; } private set { _mapHeight = value; } }
@@ -88,8 +147,8 @@ public class StageGenerator : MonoBehaviour
 
     public void GenerateStage()
     {
-        MapWidth = 40;
-        MapHeight = 25;
+        MapWidth = 50;
+        MapHeight = 50;
 
         FieldCount = 5 * StageLevel + UnityEngine.Random.Range(3, 6);
         FieldSquareMatrixRow = Mathf.FloorToInt(Mathf.Sqrt(FieldCount + 20)) + 1;
@@ -98,10 +157,26 @@ public class StageGenerator : MonoBehaviour
         Debug.Log("FieldSquareMatrixRow : " + FieldSquareMatrixRow);
 
         GenerateFields();
+
+        Debug.Log("SpecialFieldCount : " + SpecialFieldCount);  //특수 필드로 지정된 필드 개수
+        Debug.Log("CommonFieldCount : " + CommonFieldCount);    //일반 필드로 지정된 필드 개수
+
+        InitCommonFieldWeightsAndGeneratedCount(StageLevel);    // 일반 필드의 유형들의 생성 개수 및 필드 가중치 초기화 (스테이지 레벨과 레벨의 유형에 맞게)
+
+        // 특수 필드의 유형들의 생성 개수 및 필드 가중치 초기화 // TODO 아직 안 쓰임
+        SpecialFieldGeneratedCount = new Dictionary<int, int>();    //특수 필드 생성 개수 dict 초기화
+        SpecialFieldWeights = new Dictionary<int, float>();         //특수 필드 가중치 dict 초기화
+        // 이 코드도 스테이지별 유형이 달라진다면, 일반 필드처럼 분리하여 작성할 예정 (일단은 아니니 이렇게만 작성함)    // TODO
+        foreach (SpecialFieldSerial specialItem in Enum.GetValues(typeof(SpecialFieldSerial)))      // 특수 필드 유형들의 생성 개수 및 필드 가중치 초기화
+        {
+            SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);    //가중치 초기화
+            SpecialFieldGeneratedCount.Add((int)specialItem, 0);             //생성개수 초기화
+        }
+
         DrawFields();
     }
 
-    //각 맵의 필드 타입에 맞게 맵 생성하는 메소드
+    //각 맵의 필드 타입에 맞게 맵 생성하는 메소드 + 스테이지 레벨에 맞게
     private void DrawFields()
     {
         mapGenerator = new MapGenerator[FieldSquareMatrixRow, FieldSquareMatrixRow];
@@ -110,11 +185,8 @@ public class StageGenerator : MonoBehaviour
         {
             for (int y = 0; y < FieldSquareMatrixRow; y++)
             {
-                //임시 
-                //fieldType[x,y] = (FieldType)Enum.GetValues(typeof(FieldType)).GetValue(new System.Random().Next(0, Enum.GetValues(typeof(FieldType)).Length));
-
                 mapGenerator[x, y] = new MapGenerator();
-                mapGenerator[x, y].InitMap(MapWidth, MapHeight, fieldType[x, y]);
+                mapGenerator[x, y].InitMap(MapWidth, MapHeight, fieldType[x, y], StageLevel);
             }
         }
     }
@@ -236,6 +308,8 @@ public class StageGenerator : MonoBehaviour
         FieldPoint fartheatField = FindLongestPath();
         fieldType[fartheatField.X, fartheatField.Y] = FieldType.Boss;
 
+        //특수 및 일반 필드의 개수 계산 부분
+        SpecialFieldCount = 0;
         //일정 확률로 일반필드를 특수필드로 변경 부분
         for (int x = 0; x < FieldSquareMatrixRow; x++)
         {
@@ -243,12 +317,15 @@ public class StageGenerator : MonoBehaviour
             {
                 if (fieldType[x, y] == FieldType.Common)
                 {
-                    if (UnityEngine.Random.Range(0, 5) == 0) // 0~4 중 0 이므로 1/5 => 20%
+                    if (UnityEngine.Random.Range(0, 10) == 0) // 0~9 중 0 이므로 1/10 => 10%
+                    {
                         fieldType[x, y] = FieldType.Special;
+                        SpecialFieldCount++;    //변경된 만큼 SpecialFieldCount 추가
+                    }
                 }
             }
         }
-
+        CommonFieldCount = FieldCount - SpecialFieldCount - 2; //일반 = 전체 - 특수 - 2(=보스+시작)
     }
 
 
@@ -313,7 +390,7 @@ public class StageGenerator : MonoBehaviour
 
         foreach (var tuple in FieldsPointsEdges)
         {
-            if (tuple.Item1.X ==  fieldPoint.X && tuple.Item1.Y == fieldPoint.Y)
+            if (tuple.Item1.X == fieldPoint.X && tuple.Item1.Y == fieldPoint.Y)
             {
                 neighborList.Add(tuple.Item2);
             }
@@ -345,7 +422,6 @@ public class StageGenerator : MonoBehaviour
             index++;
         }
 
-        Debug.Log("시작과 제일 먼 필드는 (cost:" + highestCost + ") - " + FieldsPointsVertex.ElementAt(highestIndex).ToString());
         return FieldsPointsVertex.ElementAt(highestIndex);
     }
 
@@ -367,7 +443,7 @@ public class StageGenerator : MonoBehaviour
                         {
                             for (int y = 0; y < mapGenerator[i, j].Fields.Map.GetLength(1); y++)
                             {
-                                switch(mapGenerator[i, j].Fields.Map[x,y])
+                                switch (mapGenerator[i, j].Fields.Map[x, y])
                                 {
                                     case 1:     //벽
                                         Gizmos.color = Color.white;
@@ -385,7 +461,7 @@ public class StageGenerator : MonoBehaviour
                                         Gizmos.color = Color.green;
                                         break;
                                     case 80:    //필드 포탈
-                                        Gizmos.color = new Color(1, 0.5f, 0); 
+                                        Gizmos.color = new Color(1, 0.5f, 0);
                                         break;
                                     case 95:    //스테이지 포탈
                                         Gizmos.color = Color.red;

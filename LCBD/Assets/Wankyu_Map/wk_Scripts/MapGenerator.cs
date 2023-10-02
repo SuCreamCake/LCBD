@@ -15,10 +15,10 @@ public class MapGenerator
 
     public Field Fields { get; set; }
 
-    public void InitMap(int mapWidth, int mapHeight, FieldType fieldType)
+    public void InitMap(int mapWidth, int mapHeight, FieldType fieldType, int stageLevel)
     {
         Fields = new Field();
-
+        Fields.SetLevel(stageLevel);
         Fields.FillMap(mapWidth, mapHeight, fieldType);
     }
 
