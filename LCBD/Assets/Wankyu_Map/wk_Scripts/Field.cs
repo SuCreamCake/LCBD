@@ -131,26 +131,15 @@ public class Field
     {
         //(만약 모든 가중치가 0이면 제일 처음 유형이 자동으로 선택된다.)
 
-        // 디버그
-        //Debug.Log("[선택 전 현재 일반 필드의 가중치]");
-        //for (int i = 0; i < StageGenerator.CommonFieldWeights.Count; i++)
-        //{
-        //    Debug.Log("  ㄴ(" + (CommonFieldSerial)i + " : " + StageGenerator.CommonFieldWeights[(CommonFieldSerial)i] + ")");
-        //}
-
-
         //CommonSerial_(1~5) 열거형에서 가중치 랜덤으로 하나를 선택
         //현재 일반 필드의 유형 가중치를 가져와서 초기화
         float[] weights = new float[StageGenerator.CommonFieldWeights.Count];
-        Debug.Log("weights.length : " + weights.Length);
-        Debug.Log("StageGenerator.CommonFieldWeights.Count : " + StageGenerator.CommonFieldWeights.Count);
         float maxWeight = 0;
 
 
         int index = 0;
         foreach (var item in StageGenerator.CommonFieldWeights)
         {
-            Debug.Log("item : " + item);
             weights[index] = item.Value;
             maxWeight += item.Value;
 
@@ -159,8 +148,6 @@ public class Field
 
         // 가중치 중에서 선택
         float selectedPoint = UnityEngine.Random.Range(0f, maxWeight);
-        Debug.Log("maxWeight : " + maxWeight);
-        Debug.Log("selectedPoint : " + selectedPoint);
 
         int selectedIndex = 0;
         //선택된 것의 인덱스로 찾기
@@ -172,7 +159,6 @@ public class Field
             if (selectedPoint <= 0f)
                 break;
         }
-        Debug.Log("selectedIndex : " + selectedIndex);
         SetSerial(selectedIndex);   // 이 필드의 시리얼을 선택된 유형으로 초기화해줌.
 
         int maximumCount;   //유형 최대 생성 가능 개수 => 생성된(생성할) 일반 필드의 개수 / 해당 스테이지의 일반 유형의 개수
@@ -198,13 +184,6 @@ public class Field
                 break;
         }
 
-        //Debug.Log("maximumCount : " + maximumCount);
-        ////현재 유형 생성 개수
-        //for (int i = 0; i < StageGenerator.CommonFieldGeneratedCount.Count; i++)
-        //{
-        //    Debug.Log("  ㄴ(" + (CommonFieldSerial)i + " : " + StageGenerator.CommonFieldGeneratedCount[(CommonFieldSerial)i] + ")");
-        //}
-
         // 가중치 조정 (선택된 유형의 가중치 = x0.5 / 선택되지 않은 유형의 가중치 = x1.5)
         for (int i = 0; i < StageGenerator.CommonFieldWeights.Count; i++)
         {
@@ -223,13 +202,6 @@ public class Field
             StageGenerator.ChangeWeightInCommonFieldWeights(selectedIndex, 0);
         }
 
-        //// 디버그
-        //Debug.Log("[가중치 조정 후 현재 일반 필드의 가중치]");
-        //for (int i = 0; i < StageGenerator.CommonFieldWeights.Count; i++)
-        //{
-        //    Debug.Log("  ㄴ(" + (CommonFieldSerial)i + " : " + StageGenerator.CommonFieldWeights[(CommonFieldSerial)i] + ")");
-        //}
-
         return selectedIndex;
     }
 
@@ -244,96 +216,7 @@ public class Field
         // 정해진 시리얼에 맞는 유형으로 맵을 가져와서 초기화해준다.
         Map = DefaultMap.GetCommonField(width, height, selectedIndex, StageLevel);
 
-        // 지금 안쓰임
-        // FillRandomMap(width, height);
     }
-
-    #region // 원래 일반 필드 그릴 때 쓰려고 만든 완전 랜덤으로 맵 그리는 메소드들인데 지금 안쓰임
-    #region // 맵에 벽을 생성할 때 랜덤으로 벽을 만들고, 테두리 그리고, 스무딩해서 맵을 만들어주는 메소드
-    //private void FillRandomMap(int width, int height)
-    //{
-    //    //string seed = DateTime.Now.Ticks.ToString();
-    //    //System.Random psuedoRandom = new System.Random(seed.GetHashCode());
-    //    //Debug.Log("seed: " + seed);
-
-    //    //float max = DateTime.Now.Ticks;
-    //    for (int x = 0; x < width; x++)
-    //    {
-    //        for (int y = 0; y < height; y++)
-    //        {
-    //            if (x == width/2 || y == height/2)
-    //            {
-    //                Map[x,y] = 0;
-    //            }
-    //            else
-    //            {
-    //                Map[x, y] = UnityEngine.Random.Range(0, 100) < 42 ? 1 : 0;  //42%확률 로 벽 만듬
-    //            }
-    //        }
-    //    }
-
-    //    DrawBorder(width, height);
-
-    //    int smoothLevel;
-    //    smoothLevel = width > height ? width >> 2 : height >> 2;
-    //    smoothLevel = smoothLevel <= 1 ? 1 : smoothLevel;
-
-    //    for (int i = 0; i < smoothLevel; i++)
-    //    {
-    //        SmoothMap(width, height);
-    //    }
-    //}
-    #endregion
-
-    #region // 스무딩해주는 메소드 / GetSurroundingWallCount()를 통해 주변 벽의 개수에 맞게 자신의 상태를 바꾸는 메소드
-    //private void SmoothMap(int width, int height)
-    //{
-    //    for (int x = 0; x < width; x++)
-    //    {
-    //        for (int y = 0; y < height; y++)
-    //        {
-    //            int neighbourWallTiles = GetSurroundingWallCount(width, height, x, y);
-
-    //            if (neighbourWallTiles > 4)
-    //            {
-    //                Map[x, y] = 1;
-    //            }
-    //            else if (neighbourWallTiles < 4)
-    //            {
-    //                Map[x, y] = 0;
-    //            }
-    //        }
-    //    }
-    //}
-    #endregion
-
-    #region // 주변의 벽의 개수 세는 메소드
-    //private int GetSurroundingWallCount(int width, int height, int gridX, int gridY)
-    //{
-    //    int wallCount = 0;
-
-    //    for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
-    //    {
-    //        for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
-    //        {
-    //            if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
-    //            {
-    //                if (neighbourX != gridX || neighbourY != gridY)
-    //                {
-    //                    wallCount += Map[neighbourX, neighbourY];
-    //                }
-    //            }
-    //            else
-    //            {
-    //                wallCount++;
-    //            }
-    //        }
-    //    }
-
-    //    return wallCount;
-    //}
-    #endregion
-    #endregion
 
     private void FillStartMap(int width, int height)
     {
@@ -776,7 +659,6 @@ class DefaultMap
                                 commonMap_Chromosome[x, y] = Math.Abs(commonMap_Chromosome[x, y] + 1);
                         }
                     }
-                    Debug.Log("commonMap_Chromosome's 추가 기믹맵 생성O");
                 }
                 else
                 {
@@ -788,7 +670,6 @@ class DefaultMap
                                 commonMap_Chromosome[x, y] = 1;
                         }
                     }
-                    Debug.Log("commonMap_Chromosome's 추가 기믹맵 생성X");
                 }
 
                 commonlMap_Stage1 = commonMap_Chromosome;
@@ -857,7 +738,6 @@ class DefaultMap
                                 commonMap_Birth[x, y] = Math.Abs(commonMap_Birth[x, y] + 1);
                         }
                     }
-                    Debug.Log("commonMap_Birth's 추가 기믹맵 생성O");
                 }
                 else
                 {
@@ -869,7 +749,6 @@ class DefaultMap
                                 commonMap_Birth[x, y] = 1;
                         }
                     }
-                    Debug.Log("commonMap_Birth's 추가 기믹맵 생성X");
                 }
                 commonlMap_Stage1 = commonMap_Birth;
 
