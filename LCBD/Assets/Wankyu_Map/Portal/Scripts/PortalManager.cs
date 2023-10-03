@@ -86,7 +86,7 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth / 4 * 3;
                         portalPointY = stageGenerator.MapHeight / 2;
 
-                        //mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
+                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
