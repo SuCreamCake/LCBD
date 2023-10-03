@@ -6,43 +6,46 @@ public class BattleManager : MonoBehaviour
 {
     GameObject playerObject;
     Player player;
-    //���� ����
-    //���ݼӵ��� üũ�ϱ� ���� ����
+    //동주 전투
+    //공격속도를 체크하기 위한 변수
     public float attackTime = 0;
-    //���Ÿ� ���� ������Ʈ
+    //원거리 공격 오브젝트
     public GameObject bulletObject;
-    //���� ��ü�� ��� �ڷ���
+    //무기 객체를 담는 자료형
     public GameObject[] weapons;
-    //�Ǽ� ����, ��������, ���Ÿ� ���� �ε���
+    //맨손 공격, 근접공격, 원거리 공격 인덱스
     bool sDown1;
     bool sDown2;
     bool sDown3;
     bool sDown4;
-    //���� �ε���
+    //무기 인덱스
     public int weaponeIndex = -1;
-    //������ġ
-    public Vector3 attackPosition;
+    //공격위치
+    private Vector3 attackPosition;
 
     GameObject equipWeapon;
-    //���� ������Ʈ
+    //쉴드 오브젝트
     public GameObject shieldObject;
-    //���� ���̺� ����
-    public GameObject soundWaveAttackObject;
-    //�� ���̾� ����ũ
+
+    //적 레이어 마스크
     public LayerMask enemyLayers;
-    //���� ���� �ð�
+    //음파 공격 시간
     public float soundWaveAttackTime = 0;
-    //�� ���ݷ�
+    //총 공격량
     public int totalAttackPower;
-    //�� ��
+    //총 방어량
     public int totalShield;
 
-    // Start is called before the first frame update
+    private GameObject mealAttackOBJ;
+    private GameObject soundwaveAttackOBJ;
     void Start()
     {
         playerObject = GameObject.Find("Player");
         player = playerObject.GetComponent<Player>();
-        attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
+        attackPosition = player.transform.right + new Vector3(0.2f, 0.2f, 0);
+        soundwaveAttackOBJ = GameObject.Find("SoundWaveOBJ");
+        soundwaveAttackOBJ.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -54,6 +57,7 @@ public class BattleManager : MonoBehaviour
         swapWeapon();
         battleLogic();
         getInputSoundWaveAttack();
+       
     }
 
     //����
@@ -123,22 +127,23 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
+            equipWeapon.GetComponent<animationAttack>().SetAnimMealAttack();
             attackTime = 0;
-            //���콺�� ��ġ ��������
+            //마우스의 위치 가져오기
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
 
-            //���ݹ���
+            //공격방향
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
             attackForce = attackForce.normalized;
 
-            //���� ����
+            //공격 범위
             float xRange = player.crossroads * 0.3f;
             float yRange = 0.5f;
             Vector2 boxSize = new Vector2(xRange, yRange);
 
             float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
-            //���� �ݶ��̴� ����
+            //공격 콜라이더 생성
             Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, boxSize, angle, enemyLayers);
             Debug.Log(angle);
             foreach (Collider2D collider in colliders)
@@ -146,44 +151,42 @@ public class BattleManager : MonoBehaviour
                 Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("���� ����");
+                    Debug.Log("몬스터 맞춤");
                     collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
                 }
             }
-            Debug.Log("���ݽ���");
+            Debug.Log("공격실행");
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawCube(attackPosition, new Vector2(player.crossroads * 0.3f, 0.7f));
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawCube(attackPosition, new Vector2(player.crossroads * 0.3f, 0.7f));
+    //}
 
-
-    //���Ÿ����� �޼���
+    //원거리 공격
     private void longDistanceAttack()
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
-            //���콺�� ��ġ ��������
+            //마우스의 위치 가져오기
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
 
-            Vector3 playerPos = transform.position;
+            Vector3 playerPos = player.transform.position;
 
             Vector2 direVec = mousePoint - (Vector2)playerPos;
             direVec = direVec.normalized;
             GameObject tempObeject = Instantiate(bulletObject);
-            tempObeject.transform.position = transform.position;
+            tempObeject.transform.position = attackPosition;
             tempObeject.transform.right = direVec;
 
 
         }
     }
-
-    //�������� Ű �Է�
+    //전투관련 키 입력
     private void getInputBattleKeyKode()
     {
         sDown1 = Input.GetKeyDown(KeyCode.F1);
@@ -197,20 +200,43 @@ public class BattleManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             soundWaveAttack();
-            Debug.Log("F����");
+            Debug.Log("F누름");
+        }
+        else if (Input.GetButtonDown("CopyCat"))
+        {
+            Debug.Log("카피캣 실행");
+
+        }
+        else if (Input.GetButtonDown("AlterEgo"))
+        {
+       
         }
     }
-    //���� Ÿ�� �ε���
+    //공격 타입 인덱스
     private void swapWeapon()
     {
         if (sDown1)
         {
             weaponeIndex = 0;
-            Debug.Log("��ư 1Ȱ��ȭ");
+            Debug.Log("버튼 1활성화");
+            
         }
-        if (sDown2) weaponeIndex = 1;
-        if (sDown3) weaponeIndex = 2;
-        if (sDown4) weaponeIndex = 3;
+        if (sDown2)
+        {
+            weaponeIndex = 1;
+         
+
+        }
+        if (sDown3)
+        {
+            weaponeIndex = 2;
+      
+        }
+        if (sDown4)
+        {
+            weaponeIndex = 3;
+            
+        }
         if (sDown1 || sDown2 || sDown3 || sDown4)
         {
             if (equipWeapon != null)
@@ -234,12 +260,13 @@ public class BattleManager : MonoBehaviour
     }
 
     //��� ��� �޼���
+    //방어 방법 메서드
     private void shield()
     {
         if (Input.GetMouseButtonDown(0))
         {
             equipWeapon.SetActive(true);
-            //���콺�� ��ġ ��������
+            //마우스의 위치 가져오기
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
             Vector3 playerPos = transform.position;
@@ -247,28 +274,28 @@ public class BattleManager : MonoBehaviour
             direVec = direVec.normalized;
             equipWeapon.transform.position = direVec + (Vector2)transform.position;
 
-            //������ ���
+            //우측일 경우
             if (Vector3.Dot(transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("���� ���� ����");
+                Debug.Log("우측 방패 생성");
                 equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
-            //������ ���
+            //위쪽일 경우
             else if (Vector3.Dot(transform.up, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("�������� ����");
+                Debug.Log("위측방패 생성");
                 equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
             else if (Vector3.Dot(-transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("���� ���� ����");
+                Debug.Log("좌측 방패 생성");
                 equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
 
 
             }
             else
             {
-                Debug.Log("�ϴ� ���� ����");
+                Debug.Log("하단 방패 생성");
                 equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
 
@@ -284,19 +311,23 @@ public class BattleManager : MonoBehaviour
 
         if (soundWaveAttackTime >= 3.0f)
         {
+            
             soundWaveAttackTime = 0;
             RaycastHit2D[] raycastHit2Ds;
             soundWaveAttackTime = 0;
             //���콺�� ��ġ ��������
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
-
+            if (soundwaveAttackOBJ != null)
+                soundwaveAttackOBJ.SetActive(true);
             //���ݹ���
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
             attackForce = attackForce.normalized;
+            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            soundwaveAttackOBJ.transform.rotation = Quaternion.Euler(0,0,angle);
             Debug.Log(player.attackPower);
             float startAngle = -player.attackPower / 2;
-
+            Invoke("SoundwaveOff", 2f);
             //�Ϲ� ���� ����
             for (float startAngleIndex = startAngle; startAngleIndex <= player.attackPower / 2; startAngleIndex += 0.5f)
             {
@@ -314,6 +345,9 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
+
+           
+
             //1/3���� ���� ���� ����
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
             foreach (Collider2D collider in colliders)
@@ -321,7 +355,7 @@ public class BattleManager : MonoBehaviour
                 Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("1/3���� �ǰ�");
+                    Debug.Log("1/3피격 됨");
                     collider.GetComponent<EnemyHit>().IsCrossroadThird();
                     collider.GetComponent<EnemyHit>().TakeDamage(player.attackPower / 3);
                 }
@@ -344,7 +378,12 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
-    //������ ����
+    //사운드 웨이브 비활성화
+    public void SoundwaveOff()
+    {
+        soundwaveAttackOBJ.SetActive(false);
+    }
+    //데미지 공식
     private void CalDamage()
     {
         totalAttackPower += 0/*���� ���ݷ� ���� �� ����*/;

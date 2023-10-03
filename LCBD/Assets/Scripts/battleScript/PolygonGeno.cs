@@ -1,88 +1,72 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer),typeof(MeshRenderer))]
-public class CustomFan : MonoBehaviour
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+public class PolygonGeno : MonoBehaviour
 {
-    [SerializeField] [Range(3, 100)]
-    private int polygonPoints = 3; //다각형 점 개수(3 ~ 100개)
-    [SerializeField] [Min(0.1f)]
-    private float outerRadius = 3;  //다각형의 원점부터 외곽 둘레까지의 반지름 (최소값 0.1)
+    [SerializeField, Range(3, 100)] private int segments = 20; // 부채꼴을 구성할 세그먼트의 개수
+    [SerializeField, Range(0.1f, 10f)] private float radius = 3f; // 부채꼴의 반지름
+    [SerializeField, Range(0f, 360f)] private float angle = 90f; // 부채꼴의 각도
 
     private Mesh mesh;
-    private Vector3[] vertices; //다각형의 정점 정보 배열
-    private int[] indices; //정점을 잇는 폴리곤 정보 배열
-
+    private Vector3[] vertices;
+    private int[] triangles;
+    public Transform transformPlayer;
     private void Awake()
     {
         mesh = new Mesh();
-
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
-        meshFilter.mesh = mesh;
+        GetComponent<MeshFilter>().mesh = mesh;
     }
+
 
     private void Update()
     {
-        DrawFilled(polygonPoints, outerRadius);
+        DrawFanShape(segments, radius, angle);
+        this.transform.position = transformPlayer.position;
     }
 
-    private void DrawFilled(int sides, float radius)
+    public float ReturnAngle()
     {
-        //정점 정보
-        vertices = GetCircumferencePoints(sides, radius);
-        // 정점을 잇는 폴리곤 정보
-        indices = DrawFilledIndices(vertices);
-        //메시 생성
-        GeneratePolygon(vertices, indices);
+        return this.angle;
     }
 
-    ///<summary>
-    ///반지름이 radius인 원의 둘레 위치에 있는 sides 개수만큼의 정점 위치 정보 반환
-    ///</summary>
-    private Vector3[] GetCircumferencePoints(int sides, float radius)
+
+    public void DrawFanShape(int segments, float radius, float angle)
     {
-        Vector3[] points = new Vector3[sides];
-        float anglePerStep = 2 * Mathf.PI * ((float)1 / sides);
-        for(int i=0;i<sides;++i)
+        List<Vector3> vertexList = new List<Vector3>();
+
+        // 중심점 추가
+        vertexList.Add(Vector3.zero);
+
+        float angleStep = Mathf.Deg2Rad * angle / (segments - 1);
+
+        for (int i = 0; i < segments; i++)
         {
-            Vector2 point = Vector2.zero;
-            float angle = anglePerStep * i;
-
-            point.x = Mathf.Cos(angle) * radius;
-            point.y = Mathf.Sin(angle) * radius;
-            points[i] = point;
+            float theta = i * angleStep;
+            float x = Mathf.Cos(theta) * radius;
+            float y = Mathf.Sin(theta) * radius;
+            vertexList.Add(new Vector3(x, y, 0));
         }
-        return points;
-    }
 
-    private int[] DrawFilledIndices(Vector3[] vertices)
-    {
-        int triangelCount = vertices.Length - 2;
-        List<int> indices = new List<int>();
-        for(int i=0; i<triangelCount;++i)
+        vertices = vertexList.ToArray();
+
+        List<int> triangleList = new List<int>();
+
+        for (int i = 1; i < segments; i++)
         {
-            indices.Add(0);
-            indices.Add(i + 2);
-            indices.Add(i + 1);
-
+            triangleList.Add(0);
+            triangleList.Add(i + 1);
+            triangleList.Add(i);
         }
-        return indices.ToArray();
-    }
 
-    private void GeneratePolyGon(Vector3[] vertices, int[] indices)
-    {
-        //점, 반지름 정보에 따라 Update()에서
-        //지속적으로 업데이트하기 때문에 기존 mesh 정보를 초기화
+        triangles = triangleList.ToArray();
+
         mesh.Clear();
-        //정점, 폴리곤 설정
         mesh.vertices = vertices;
-        mesh.triangles = indices;
-        //Bounds, Normal 재연산
+        mesh.triangles = triangles;
+
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
     }
-
 
 }
