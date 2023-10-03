@@ -318,8 +318,23 @@ public class Player : MonoBehaviour
         //Updown
         if (isLadder)
         {
+            float ver = 0;
             SFXPlayer.LadderSound(0);       // Jump Sound
-            float ver = Input.GetAxis("Vertical");
+            //float ver = Input.GetAxis("Vertical");
+            /*getAxis가 -1부터 0까지 소수점으로 증가감소하는데 이 코드는 -1또는 1로 인식되긴함. 기존 움직임이 이상하거나 다른 코드에
+            영향이 있으면 수정필요*/
+            if (Input.GetKey(KeySetting.keys[KeyInput.UP]))
+            {
+                ver += 1f;
+                if (ver >= 1)
+                    ver = 1;
+            }
+            else if (Input.GetKey(KeySetting.keys[KeyInput.DOWN]))
+            {
+                ver -= 1f;
+                if (ver <= -1)
+                    ver = -1;
+            }
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if(ver != 0)
                 ani.SetBool("isLadder", true);
