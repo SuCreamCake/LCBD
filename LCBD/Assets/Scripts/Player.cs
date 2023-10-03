@@ -25,9 +25,11 @@ public class Player : MonoBehaviour
     //지구력
     public int maxEndurance;   
     public float endurance;     
-    public bool enduranceOnOff; 
+    public int enduranceOnOff; 
     public float stayTime;      
     public int enduranceRec;
+    int nowRec;
+    public bool drained;
 
     public int defense;    //방어력
     public int tenacity;    //강인도
@@ -84,12 +86,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (endurance > 0)
+        if (!drained)
         {
             jump();
+            run();
         }
         
-         stopSpeed();
+        stopSpeed();
 
         switch (stage)
         {
@@ -108,7 +111,7 @@ public class Player : MonoBehaviour
         
         maxState();
         minState();
-        run();
+
 
     }
 
@@ -193,13 +196,12 @@ public class Player : MonoBehaviour
     {
         //Jump
         //if (Input.GetButtonDown("Jump") && rigid.velocity.y == 0)
-        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP]) && rigid.velocity.y == 0)
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && rigid.velocity.y == 0)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             ani.SetTrigger("isJumping");
             endurance -= maxEndurance / 5;
-            enduranceOnOff = false;
-
+            enduranceOnOff = 0;
             SFXPlayer.JumpSound(0);     // Jump Sound 
         }
 
@@ -210,62 +212,44 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
-    //private void attack()
-    //{
-    //    //attack
-    //    time += Time.deltaTime;
-    //    Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-    //    Input.mousePosition.y, -Camera.main.transform.position.z));
-    //    if (time >= attackSpeed && Input.GetMouseButtonDown(0))
-    //    {
-    //        //쿨타임 추가 -지학-
-    //        //Reset_CoolTime();
-    //        time = 0;
-    //        soundWave.transform.position = new Vector2(point.x, point.y);
-    //        if (crossroads < Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2)))
-    //        {
 
-    //            float maxCrossroads = crossroads / Mathf.Sqrt(Mathf.Pow(point.x - this.transform.position.x, 2) + Mathf.Pow(point.y - this.transform.position.y, 2));
-
-    //            soundWave.transform.position = new Vector2(this.transform.position.x + (point.x - this.transform.position.x) * maxCrossroads
-    //                , this.transform.position.y + (point.y - this.transform.position.y) * maxCrossroads);
-    //        }
-    //        SFXPlayer.AttackSound(0);       //attack sound
-    //        Instantiate(soundWave);
-    //    }
-    //}
     private void walk()
     {
         int key = 0;
-        //if (Input.GetKey(KeyCode.A))
         if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
         {
             key = -1;
             downA = true;
+            downD = false;
+            downDD = false;
         }
-        //if (Input.GetKey(KeyCode.D))
         if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
         {
             key = 1;
             downD = true;
+            downA = false;
+            downAA = false;
         }
+    
+
 
         float speedx = Mathf.Abs(this.rigid.velocity.x);
 
-        if ((downTime > 0.5 && key == 0) || endurance == 0)
+        if ((downTime > 0.5 && key == 0) || drained)
         {
             downA = false;
             downD = false;
             downAA = false;
             downDD = false;
             downTime = 0;
+            CancelInvoke("enduranceRun");
         }
         if (downAA || downDD)
         {
             maxSpeed = nomalSpeed * 1.4f;
             ani.SetBool("isRunning", true);
-            enduranceOnOff = false;
-            endurance -= 0.08f;
+            enduranceOnOff = 0;
+           
         }
         else
         {
@@ -307,10 +291,17 @@ public class Player : MonoBehaviour
             }
             //if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
             if (downTime > 0.01 && downA && Input.GetKeyDown(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
+            {
                 downAA = true;
-           // if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
-            if (downTime > 0.01 && downD && Input.GetKeyDown(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
+                Invoke("invokeRun", 1);
+            }
+                // if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
+                if (downTime > 0.01 && downD && Input.GetKeyDown(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
+            {
                 downDD = true;
+                Invoke("invokeRun", 1);
+            }
+
         }
     }
     private void upDown()
@@ -323,18 +314,9 @@ public class Player : MonoBehaviour
             //float ver = Input.GetAxis("Vertical");
             /*getAxis가 -1부터 0까지 소수점으로 증가감소하는데 이 코드는 -1또는 1로 인식되긴함. 기존 움직임이 이상하거나 다른 코드에
             영향이 있으면 수정필요*/
-            if (Input.GetKey(KeySetting.keys[KeyInput.UP]))
-            {
-                ver += 1f;
-                if (ver >= 1)
-                    ver = 1;
-            }
-            else if (Input.GetKey(KeySetting.keys[KeyInput.DOWN]))
-            {
-                ver -= 1f;
-                if (ver <= -1)
-                    ver = -1;
-            }
+            if (Input.GetKey(KeySetting.keys[KeyInput.UP])) ver = 1;
+            else if (Input.GetKey(KeySetting.keys[KeyInput.DOWN])) ver = -1;
+
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if(ver != 0)
                 ani.SetBool("isLadder", true);
@@ -355,7 +337,8 @@ public class Player : MonoBehaviour
         //지구력
         maxEndurance = 40;
         endurance = 40;
-        enduranceRec = 4;
+        enduranceRec = 10;
+        nowRec = enduranceRec;
         //방어력
         defense = 50;
         //강인도
@@ -416,7 +399,7 @@ public class Player : MonoBehaviour
     private void ladderJump()
     {
         //if (isLadder && Input.GetButtonDown("Jump"))
-        if (isLadder && Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //KeyManager스크립트를 활용한 코드
+        if (isLadder && Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP])) //KeyManager스크립트를 활용한 코드
         {
             InvokeRepeating("InvokeJump", 0.01f, 0.01f);
         }
@@ -451,7 +434,10 @@ public class Player : MonoBehaviour
         if (luck > 100)
             luck = 100;
         if (endurance > maxEndurance)
+        {
             endurance = maxEndurance;
+            drained = false;
+        }
 
     }
     private void minState()
@@ -486,17 +472,45 @@ public class Player : MonoBehaviour
 
     private void enduranceSystem()
     {
-        if (enduranceOnOff == false)
+        if(enduranceOnOff == 0)
         {
+            stayTime = 0;
+            enduranceOnOff = -1;
+        }
+        if (enduranceOnOff == -1)
+        {
+            enduranceRec = nowRec;
             stayTime += Time.deltaTime;
             CancelInvoke("enduranceRecovery");
         }
-        if (stayTime > 3)
+        if (endurance == 0 && enduranceRec < 15)    //탈진 시스템
         {
-            enduranceOnOff = true;
+            enduranceOnOff = 1;
             stayTime = 0;
-            InvokeRepeating("enduranceRecovery", 1, 1);
+            nowRec = enduranceRec;
+            enduranceRec = 15;
+            InvokeRepeating("enduranceRecovery", 0, 1);
+            drained = true;
         }
+        if (stayTime > 1.5f && endurance !=0)
+        {
+            enduranceOnOff = 1;
+            stayTime = 0;
+            InvokeRepeating("enduranceRecovery", 0, 1);
+        }
+    }
+
+
+    private void invokeRun()
+    {
+        InvokeRepeating("enduranceRun", 0, 0.2f);  
+    }
+    private void enduranceRun()
+    {
+        if (endurance == 0)
+            CancelInvoke("enduranceRun");
+        else
+            endurance -= 1;
     }
 
     private void personality(Collider2D collision)
