@@ -4,38 +4,43 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [System.Serializable]
-
-public class WalkSoundFile
+public class WalkSoundFile          // 걷기 & 뛰기
 {
     public string SoundName;
     public AudioClip SoundClip;
 }
 [System.Serializable]
-public class JumpSoundFile
+public class JumpSoundFile          // 점프
 {
     public string SoundName;
     public AudioClip SoundClip;
 }
 [System.Serializable]
-public class AttackSoundFile
+public class AttackSoundFile        // 공격
 {
     public string SoundName;
     public AudioClip SoundClip;
 }
 [System.Serializable]
-public class LadderSoundFile
+public class LadderSoundFile        // 사다리
 {
     public string SoundName;
     public AudioClip SoundClip;
 }
 [System.Serializable]
-public class EquipSoundFile
+public class ItemSoundFile          // 장비 & 소모품 등등
 {
     public string SoundName;
     public AudioClip SoundClip;
 }
 [System.Serializable]
-public class InteractionSoundFile
+public class InteractionSoundFile   // 포탈 & @
+{
+    public string SoundName;
+    public AudioClip SoundClip;
+}
+[System.Serializable]
+public class UISoundFile            // 버튼 & @
 {
     public string SoundName;
     public AudioClip SoundClip;
@@ -60,15 +65,17 @@ public class SoundsPlayer : MonoBehaviour
     [SerializeField] AudioSource LadderSoundPlayer;
     [SerializeField] LadderSoundFile[] LadderSounds;
 
-    [Header("< Equip >")]
-    [SerializeField] AudioSource EquipSoundFile;
-    [SerializeField] EquipSoundFile[] EquipSounds;
+    [Header("< Item >")]
+    [SerializeField] AudioSource ItemSoundPlayer;
+    [SerializeField] ItemSoundFile[] ItemSounds;
 
     [Header("< INTERACTION >")]
     [SerializeField] AudioSource InteractionSoundPlayer;
     [SerializeField] InteractionSoundFile[] InteractionSounds;
 
-
+    [Header("< UI >")]
+    [SerializeField] AudioSource UISoundPlayer;
+    [SerializeField] UISoundFile[] UISounds;
 
     public AudioMixer Mixer; //해당 오디오의 믹서
     private float saveValue;
@@ -93,7 +100,6 @@ public class SoundsPlayer : MonoBehaviour
         LadderSoundPlayer.mute = isMute;
         InteractionSoundPlayer.mute = isMute;
     }
-
     public void SFX_Volume(float value)
     {
         saveValue = value;
@@ -102,11 +108,11 @@ public class SoundsPlayer : MonoBehaviour
 
  
 
-    public void WalkSound(int soundNum)
+    public void WalkSound(int soundNum)                                                 // USE
     {
+        
         WalkSoundPlayer.clip = WalkSounds[soundNum].SoundClip;
-        //WalkSoundPlayer.volume = 0.8f;
-        if ((Input.GetAxisRaw("Horizontal") != 0) && (Input.GetAxisRaw("Vertical") == 0) && (!JumpSoundPlayer.isPlaying))
+        if ((Input.GetAxisRaw("Horizontal") != 0) && (Input.GetAxisRaw("Vertical") == 0) && (!JumpSoundPlayer.isPlaying) && (!LadderSoundPlayer.isPlaying))
         {
             if (!WalkSoundPlayer.isPlaying)
             {
@@ -116,20 +122,26 @@ public class SoundsPlayer : MonoBehaviour
         }
         else
         {
+            WalkSoundPlayer.loop = false;
             WalkSoundPlayer.Stop();
+            WalkSoundPlayer.clip = null;
+
         }
+
     }
-    public void JumpSound(int soundNum)
+    public void JumpSound(int soundNum)                                                 // USE
     {
         JumpSoundPlayer.clip = JumpSounds[soundNum].SoundClip;
         JumpSoundPlayer.Play();
     }
-    public void AttackSound(int soundNum)
+    public void AttackSound(int soundNum)                                               // X
     {
         AttackSoundPlayer.clip = AttackSounds[soundNum].SoundClip;
         AttackSoundPlayer.Play();
     }
-    public void LadderSound(int soundNum)
+
+    // 사다리 에니메이션이 사다리 타는 순간 계속 활성화되어 소리도 계속 남
+    public void LadderSound(int soundNum)                                               // USE
     {
         LadderSoundPlayer.clip = LadderSounds[soundNum].SoundClip;
         if (Input.GetAxisRaw("Vertical") != 0)
@@ -141,11 +153,28 @@ public class SoundsPlayer : MonoBehaviour
             }
         }
         else
+        {
             LadderSoundPlayer.Stop();
+        }
+            
     }
-    public void InteractionSound(int soundNum)
+    public void LadderSoundStop()                                                       // USE
+    {
+        LadderSoundPlayer.Stop();
+    }
+    public void ItemSound(int soundNum)                                                 // X
+    {
+        ItemSoundPlayer.clip = ItemSounds[soundNum].SoundClip;
+        ItemSoundPlayer.Play();
+    }
+    public void InteractionSound(int soundNum)                                          // USE
     {
         InteractionSoundPlayer.clip = InteractionSounds[soundNum].SoundClip;
         InteractionSoundPlayer.Play();
+    }
+    public void UISound(int soundNum)                                                   // X
+    {
+        UISoundPlayer.clip = UISounds[soundNum].SoundClip;
+        UISoundPlayer.Play();
     }
 }

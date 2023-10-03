@@ -202,6 +202,7 @@ public class Player : MonoBehaviour
             ani.SetTrigger("isJumping");
             endurance -= maxEndurance / 5;
             enduranceOnOff = 0;
+
             SFXPlayer.JumpSound(0);     // Jump Sound 
         }
 
@@ -249,7 +250,8 @@ public class Player : MonoBehaviour
             maxSpeed = nomalSpeed * 1.4f;
             ani.SetBool("isRunning", true);
             enduranceOnOff = 0;
-           
+            SFXPlayer.WalkSound(1);         // Walk Sound(Run) 문제점: 걷기 소리가 제일 밖에 있어서 뭘 하든 걷기 소리가 남.
+                                            // soundNum이 1(run)로 바꿔도 바로 0(walk)으로 바뀜
         }
         else
         {
@@ -271,13 +273,7 @@ public class Player : MonoBehaviour
         else
             ani.SetBool("isWalking", true);
 
-        // Walk Sound 
-        if (stage == 1)
-            SFXPlayer.WalkSound(0); 
-        else if (stage == 2)
-            SFXPlayer.WalkSound(1);  
-
-
+        SFXPlayer.WalkSound(0);         // Walk Sound
 
     }
 
@@ -310,7 +306,7 @@ public class Player : MonoBehaviour
         if (isLadder)
         {
             float ver = 0;
-            SFXPlayer.LadderSound(0);       // Jump Sound
+
             //float ver = Input.GetAxis("Vertical");
             /*getAxis가 -1부터 0까지 소수점으로 증가감소하는데 이 코드는 -1또는 1로 인식되긴함. 기존 움직임이 이상하거나 다른 코드에
             영향이 있으면 수정필요*/
@@ -320,8 +316,11 @@ public class Player : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x , ver * maxSpeed);
             if(ver != 0)
                 ani.SetBool("isLadder", true);
-            
+
+            SFXPlayer.LadderSound(0);       // Ladder Sound
         }
+        else
+            SFXPlayer.LadderSoundStop();
     }
     private void infancy()
     {
