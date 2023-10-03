@@ -21,7 +21,7 @@ public class StageTileController : MonoBehaviour
     private StageGenerator stageGenerator;
     private MapGenerator[,] mapGenerator;
 
-    [field: SerializeField, Header("StartPos")] public GameObject StartPos { get; private set; }    //스테이지 시작 지점 오브젝트
+    public GameObject StartPos { get; private set; }    //스테이지 시작 지점 오브젝트
     public int StartFieldX { get; private set; }
     public int StartFieldY { get; private set; }
     public int StartMapX { get; private set; }
@@ -74,6 +74,7 @@ public class StageTileController : MonoBehaviour
                                 StartMapX = x;
                                 StartMapY = y;
 
+                                StartPos = new GameObject("StartPos");
                                 StartPos.transform.position = pos;
                                 StartPos.transform.Translate(0.5f, 0.5f, 0);
                             }

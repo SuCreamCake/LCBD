@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -19,7 +20,7 @@ public static class PortalLocation  // 포탈 위치 좌표 static 클래스
     // [0]=좌(맵의 오른쪽 포탈) / [1]=우(맵의 왼쪽 포탈) / [2]=하(맵의 위쪽 포탈) / [3]=상(맵의 아래쪽 포탈)
     public static Point[] CommonFieldPortal_1_Crying = { new Point(47, 21), new Point(1, 19), new Point(15, 42), new Point(13, 5) };
     public static Point[] CommonFieldPortal_1_Chromosome = { new Point(34, 29), new Point(17, 17), new Point(38, 47), new Point(31, 2) };
-    public static Point[] CommonFieldPortal_1_Birth = { new Point(47, 14), new Point(32, 1), new Point(29, 28), new Point(39, 12) };
+    public static Point[] CommonFieldPortal_1_Birth = { new Point(47, 14), new Point(1, 32), new Point(29, 28), new Point(39, 12) };
 }
 
 public class PortalManager : MonoBehaviour
@@ -464,13 +465,31 @@ public class PortalManager : MonoBehaviour
             }
         }
 
-        // 포탈 생성
+        // 필드 포탈 오브젝트 생성
+        List<GameObject> parentObjects = new List<GameObject>();  //필드 포탈들을 필드 별로 분리하여 담을 부모 오브젝트들 리스트
         foreach (var field in fieldPortalDict)
         {
-            //GameObject obj = null;
-            //GameObject fieldIndex = Instantiate(obj);
-            //fieldIndex.name = "a";
-            GameObject fieldPortalPrefab = Instantiate(FieldPortalObject, new(0, 0, 0), new(0, 0, 0, 0), fieldPortalParent);
+            StringBuilder parentName = new();   // 필드 포탈을 담을 부모 오브젝트의 이름
+            parentName.Append("Field(").Append((char)(field.Key.FieldX + '0')).Append(", ").Append((char)(field.Key.FieldY + '0')).Append(")");
+
+            GameObject parentObject = null;
+
+            foreach (var obj in parentObjects)  //부모 오브젝트 리스트를 돌면서 이미 존재하는 지 확인
+            {
+                if (obj.name.Equals(parentName.ToString())) //이름이 이미 존재하면,
+                {
+                    parentObject = obj; //찾아서 넣어주고
+                    break;
+                }
+            }
+            if (parentObject == null)   //없으면,
+            {
+                parentObject = new GameObject(parentName.ToString());   //새로 만들어줌
+                parentObject.transform.parent = fieldPortalParent;      //부모도 필도포탈로 세팅해줌
+                parentObjects.Add(parentObject);    //만들었으니까 리스트에 추가해줌
+            }
+
+            GameObject fieldPortalPrefab = Instantiate(FieldPortalObject, new(0, 0, 0), new(0, 0, 0, 0), parentObject.transform);   //필드에 맞는 부모에게 필드포탈 생성
 
             fieldPortalPrefab.GetComponent<FieldPortal>().SetPortalPos(field.Key, stageGenerator.MapWidth, stageGenerator.MapHeight);
             fieldPortalPrefab.GetComponent<FieldPortal>().SetTargetPos(field.Value, stageGenerator.MapWidth, stageGenerator.MapHeight);
