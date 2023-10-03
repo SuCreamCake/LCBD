@@ -10,6 +10,10 @@ public class PlayerTracking : MonoBehaviour
     MonsterManager MonsterManager;
     SpriteRenderer spriteRenderer;
 
+    public bool noPlayer = true;
+
+    private Transform lastPlayer;
+
     private Rigidbody2D rb;
     float k;
 
@@ -22,11 +26,16 @@ public class PlayerTracking : MonoBehaviour
 
     private void Start()
     {
+        lastPlayer = player.transform;
         k = rb.velocity.y;
+        noPlayer = true;
     }
 
     private void Update()
     {
+        if(noPlayer)
+            lastPlayer = player.transform;
+
         //자신의 한 칸 앞 지형을 탐색
         Vector2 frontVec = new Vector2(rb.position.x + 0.4f, rb.position.y);
         //자신의 한 칸 앞 지형을 탐색
@@ -36,12 +45,12 @@ public class PlayerTracking : MonoBehaviour
         float horizontalInput = 0f;
         if (player != null)
         {
-            if (player.position.x < transform.position.x)
+            if (lastPlayer.position.x < transform.position.x)
             {
                 horizontalInput = -1f;
                 spriteRenderer.flipX = false;
             }
-            else if (player.position.x > transform.position.x)
+            else if (lastPlayer.position.x > transform.position.x)
             {
                 horizontalInput = 1f;
                 spriteRenderer.flipX = true;
@@ -54,21 +63,26 @@ public class PlayerTracking : MonoBehaviour
         // 이동 방향에 따라 몬스터 이동
         Vector2 moveDirection = new Vector2(horizontalInput, k);
 
+
         // x값의 거리만 계산
-        float distanceToPlayerX = Mathf.Abs(transform.position.x - player.position.x);
+        float distanceToPlayerX = Mathf.Abs(transform.position.x - lastPlayer.position.x);
 
         // x값의 거리를 기준으로 떨림을 멈추는 조건 추가 (예: x값 거리가 일정 값 이내일 때)
         float stopDistanceX = 0.2f; // x값 거리를 기준으로 떨림을 멈추는 거리 임계값 설정
+
         if (distanceToPlayerX < stopDistanceX)
         {
             // 몬스터가 플레이어와 x값 거리가 일정 값 이내에 있을 때 떨림 멈추기
             rb.velocity = Vector2.zero;
+            if (!noPlayer)
+            {
+                noPlayer = true;
+                MonsterManager.SearchMode();
+            }
+
         }else {
-            Debug.Log(moveDirection);
             rb.velocity = moveDirection * moveSpeed;
         }
-
-
 
 
         //한칸 앞 부분아래 쪽으로 ray를 쏨
@@ -85,6 +99,11 @@ public class PlayerTracking : MonoBehaviour
             {
                 // 이동 방향이 0.1보다 작을 경우 몬스터 멈추도록 설정
                 rb.velocity = Vector2.zero;
+                if (!noPlayer)
+                {
+                    noPlayer = true;
+                    MonsterManager.SearchMode();
+                }
             }
         }
         else
@@ -96,6 +115,11 @@ public class PlayerTracking : MonoBehaviour
             {
                 // 이동 방향이 0.1보다 작을 경우 몬스터 멈추도록 설정
                 rb.velocity = Vector2.zero;
+                if (!noPlayer)
+                {
+                    noPlayer = true;
+                    MonsterManager.SearchMode();
+                }
             }
         }
     }

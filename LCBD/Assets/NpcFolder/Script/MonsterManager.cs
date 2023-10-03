@@ -7,10 +7,11 @@ public class MonsterManager : MonoBehaviour
     PlayerTracking PlayerTracking;
     FieldOfView FieldOfView;
     EnemyMove EnemyMove;
-    //AIMonster PlayerTracking;
 
     bool once = false;
     bool findPlayer = false;
+
+    public int MonsterID;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,7 +19,6 @@ public class MonsterManager : MonoBehaviour
         PlayerTracking = GetComponent<PlayerTracking>();
         EnemyMove = GetComponent<EnemyMove>();
         FieldOfView = GetComponent<FieldOfView>();
-        //PlayerTracking = GetComponent<AIMonster>();
     }
 
     private void Start()
@@ -43,16 +43,20 @@ public class MonsterManager : MonoBehaviour
     }
     public void DisAppearPlayer()
     {
-        if (!once)
+        if (!once && MonsterID < 1000)
         {
-            EnemyMove.enabled = true;
-            PlayerTracking.enabled = false;
-            once = true;
-            if (findPlayer)
-            {
-                EnemyMove.SearchPalyer();
-            }
+            PlayerTracking.noPlayer = false;
         }
+    }
 
+    public void SearchMode()
+    {
+        EnemyMove.enabled = true;
+        PlayerTracking.enabled = false;
+        once = true;
+        if (findPlayer)
+        {
+            EnemyMove.SearchPalyer();
+        }
     }
 }

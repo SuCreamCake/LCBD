@@ -13,6 +13,10 @@ public class EnemyMove : MonoBehaviour
 
     bool searching = false;
 
+    public float waitingtime = 5.0f;
+
+    int monsterID; //받아오는 몬스터 id
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -24,6 +28,10 @@ public class EnemyMove : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        monsterID = MonsterManager.MonsterID;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -53,11 +61,15 @@ public class EnemyMove : MonoBehaviour
             rigid.velocity = Vector2.zero;
         }
 
+
+
+
     }
 
 
     public void Think()
     {
+        float time = 3.0f;
         //몬스터가 스스로 생각해서 판단 (-1:왼쪽이동 ,1:오른쪽 이동 ,0:멈춤  으로 3가지 행동을 판단)
 
         //Random.Range : 최소<= 난수 <최대 /범위의 랜덤 수를 생성(최대는 제외이므로 주의해야함)
@@ -70,13 +82,22 @@ public class EnemyMove : MonoBehaviour
 
         //Flip Sprite
         if (nextMove != 0) //서있을 때 굳이 방향을 바꿀 필요가 없음 
-            spriteRenderer.flipX = nextMove == 1; //nextmove 가 1이면 방향을 반대로 변경  
+            spriteRenderer.flipX = nextMove == 1; //nextmove 가 1이면 방향을 반대로 변경
 
-
-        //Recursive (재귀함수는 가장 아래에 쓰는게 기본적) 
-        float time = 3.0f; //생각하는 시간을 랜덤으로 부여 
+        if(nextMove != 0)
+        {
+            time = 3.0f; //생각하는 시간
+        } else
+        {
+            time = waitingtime; // 몬스터의 이동속도 능력치 +2 + (2*스테이지 수) / 몬스터의 이동속도 능력치
+        }
         //Think(); : 재귀함수 : 딜레이를 쓰지 않으면 CPU과부화 되므로 재귀함수쓸 때는 항상 주의 ->Think()를 직접 호출하는 대신 Invoke()사용
-        Invoke("Think", time); //매개변수로 받은 함수를 time초의 딜레이를 부여하여 재실행 
+        Invoke("Think", time); //매개변수로 받은 함수를 time초의 딜레이를 부여하여 재실행
+        
+        if(nextMove == 0 && monsterID >= 1000)
+        {
+            SearchPalyer();
+        }
     }
 
     void Turn()
@@ -101,21 +122,25 @@ public class EnemyMove : MonoBehaviour
         CancelInvoke(); //think를 잠시 멈춘 후 재실행
 
         // 2초마다 MyFunction 메서드를 호출합니다.
-        InvokeRepeating("Serch", 0.0f, 1.0f);
-        Invoke("StopSerch", 5.0f);
+        InvokeRepeating("Serch", 0.0f, 2.0f);
+        Invoke("StopSerch", waitingtime);
     }
 
     void Serch()
     {
+        Debug.Log(monsterID);
+        if (spriteRenderer.flipX)
+            nextMove = 1;
+            else
+            nextMove = -1;
         nextMove = nextMove * (-1); //우리가 직접 방향을 바꾸어 주었으니 Think는 잠시 멈추어야함
         spriteRenderer.flipX = nextMove == 1;
     }
     
     void StopSerch()
     {
-        // 10초 후에 반복 호출을 중지합니다.
         CancelInvoke("Serch");
-        Invoke("Think", 5);
+        Invoke("Think", 3);
         searching = false;
     }
 
