@@ -933,6 +933,10 @@ PrefabInstance:
       propertyPath: text_CoolTime
       value: 
       objectReference: {fileID: 1155074275}
+    - target: {fileID: 2869620272705725011, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2869620272705725012, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_Name
       value: Player
