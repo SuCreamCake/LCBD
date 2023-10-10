@@ -834,9 +834,9 @@ MonoBehaviour:
   ladderTilemap: {fileID: 1673463484}
   platformTilemap: {fileID: 1021830560}
   decoTilemap: {fileID: 1503729008}
-  brickTileBase: {fileID: 11400000, guid: f2072758f4ae02f478158bab4474a282, type: 2}
-  ladderTile: {fileID: 11400000, guid: 6af090fd0f29eba44ab456393f876177, type: 2}
-  platformTile: {fileID: 11400000, guid: 5b48754204f63c94db2e859e46382f4a, type: 2}
+  brickTileBase: {fileID: 11400000, guid: 8a99bb1a04472cc47b177aee69093909, type: 2}
+  ladderTile: {fileID: 11400000, guid: f5de926709190374aa649632bd1ceb1f, type: 2}
+  platformTile: {fileID: 11400000, guid: 277adc5f5b182f84bb2cedba4a5e9f56, type: 2}
   newBrickTileBases:
   - {fileID: 11400000, guid: 6d8477babe4feab4dbc8bfb7f73937a4, type: 2}
   - {fileID: 11400000, guid: 5916b259a5035e743896f45d5f2d6ec9, type: 2}
@@ -844,7 +844,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc567dd95a48be54a8447c47aafeccec, type: 2}
   - {fileID: 11400000, guid: 229d1b17981793b489373b358688eea8, type: 2}
   - {fileID: 11400000, guid: fbfe4378e747459478bb3d90b25b1e15, type: 2}
-  <StartPos>k__BackingField: {fileID: 4614710855964767160, guid: 048e6da6f2a82d14fb0c97d66643a984, type: 3}
 --- !u!114 &643425203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,8 +857,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stageLevel: 1
-  _mapWidth: 40
-  _mapHeight: 25
 --- !u!114 &643425204
 MonoBehaviour:
   m_ObjectHideFlags: 0
