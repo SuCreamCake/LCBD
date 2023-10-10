@@ -86,6 +86,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        walk();
         if (!drained)
         {
             jump();
@@ -119,7 +120,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        walk();
+       
+        
         upDown();
         enduranceSystem();
     }
@@ -238,11 +240,13 @@ public class Player : MonoBehaviour
 
         if ((downTime > 0.5 && key == 0) || drained)
         {
+            
             downA = false;
             downD = false;
             downAA = false;
             downDD = false;
             downTime = 0;
+            CancelInvoke("invokeRun");
             CancelInvoke("enduranceRun");
         }
         if (downAA || downDD)
@@ -286,13 +290,13 @@ public class Player : MonoBehaviour
                 downTime += Time.deltaTime;
             }
             //if (downTime > 0.01 && downA && Input.GetKeyDown(KeyCode.A))
-            if (downTime > 0.01 && downA && Input.GetKeyDown(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
+            if (downTime > 0.15 && downA && Input.GetKeyDown(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
             {
                 downAA = true;
                 Invoke("invokeRun", 1);
             }
                 // if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
-                if (downTime > 0.01 && downD && Input.GetKeyDown(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
+            if (downTime > 0.15 && downD && Input.GetKeyDown(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
             {
                 downDD = true;
                 Invoke("invokeRun", 1);
