@@ -277,8 +277,15 @@ public class Player : MonoBehaviour
         else
             ani.SetBool("isWalking", true);
 
-        SFXPlayer.WalkSound(0);         // Walk Sound
-
+        if (maxSpeed == nomalSpeed)
+        {
+            SFXPlayer.WalkSound(0);         // Walk Sound
+        }
+        else
+        {
+            SFXPlayer.WalkSound(1);          // Walk Sound(Run)
+            //Debug.Log("else");
+        }
     }
 
     private void run()

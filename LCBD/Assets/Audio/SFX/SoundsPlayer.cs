@@ -110,8 +110,8 @@ public class SoundsPlayer : MonoBehaviour
 
     public void WalkSound(int soundNum)                                                 // USE
     {
-        
-        WalkSoundPlayer.clip = WalkSounds[soundNum].SoundClip;
+            
+        WalkSoundPlayer.clip = WalkSounds[soundNum].SoundClip;                          // 픽스트업데이트 없애면 기존에 안되던가 될듯?
         if ((Input.GetAxisRaw("Horizontal") != 0) && (Input.GetAxisRaw("Vertical") == 0) && (!JumpSoundPlayer.isPlaying) && (!LadderSoundPlayer.isPlaying))
         {
             if (!WalkSoundPlayer.isPlaying)
@@ -127,8 +127,13 @@ public class SoundsPlayer : MonoBehaviour
             WalkSoundPlayer.clip = null;
 
         }
+        if (soundNum == 0)
+            WalkSoundPlayer.volume = 0.4f;  // 걷기 소리 크기
+        else
+            WalkSoundPlayer.volume = 0.8f;  // 뛰기 소리 크기
 
     }
+
     public void JumpSound(int soundNum)                                                 // USE
     {
         JumpSoundPlayer.clip = JumpSounds[soundNum].SoundClip;
@@ -140,7 +145,7 @@ public class SoundsPlayer : MonoBehaviour
         AttackSoundPlayer.Play();
     }
 
-    // 사다리 에니메이션이 사다리 타는 순간 계속 활성화되어 소리도 계속 남
+    // 사다리 에니메이션이 사다리 타는 순간 계속 활성화되어 소리도 계속 남 -> 해결
     public void LadderSound(int soundNum)                                               // USE
     {
         LadderSoundPlayer.clip = LadderSounds[soundNum].SoundClip;
@@ -160,8 +165,8 @@ public class SoundsPlayer : MonoBehaviour
     }
     public void LadderSoundStop()                                                       // USE
     {
-        LadderSoundPlayer.Stop();
-    }
+        LadderSoundPlayer.Stop();                                                       // 키다운,업 으로 바꿔야지 설정에서 입력키 바꿔도 소리가 남.
+    }                                                                                   // 현재 입력키 바꾸면 소리가 안남
     public void ItemSound(int soundNum)                                                 // X
     {
         ItemSoundPlayer.clip = ItemSounds[soundNum].SoundClip;

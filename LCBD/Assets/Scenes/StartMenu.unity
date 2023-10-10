@@ -5102,7 +5102,7 @@ MonoBehaviour:
   - SoundName: Walk01
     SoundClip: {fileID: 8300000, guid: 4d8020260c475264cb30cb8a29082cbe, type: 3}
   - SoundName: Run_Grass01
-    SoundClip: {fileID: 8300000, guid: 6605809e46b63a04cb8bb41adc4eeafc, type: 3}
+    SoundClip: {fileID: 8300000, guid: 2b0356b40475dd24cb0299c836b5c808, type: 3}
   JumpSoundPlayer: {fileID: 1073536008}
   JumpSounds:
   - SoundName: Jump01
@@ -7085,7 +7085,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3897198542459194302, guid: 60df8ec411e16e240bf2105769cd98a8, type: 2}
   m_audioClip: {fileID: 8300000, guid: c34b410ba8319c94ba9da12444020c71, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.307
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
