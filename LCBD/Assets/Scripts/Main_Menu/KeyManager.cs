@@ -12,13 +12,18 @@ public enum KeyInput {
     Item1,  //7
     Item2, //8
     Item3, //9
+    SoundWave, //10
+    sDown1, //11
+    sDown2, //12
+    sDown3, //13
+    sDown4, //14
     KEYCOUNT } //마지막은 키 갯수를 위해 넣음.
 
 public static class KeySetting { public static Dictionary<KeyInput, KeyCode> keys = new Dictionary<KeyInput, KeyCode>(); }
 public class KeyManager : MonoBehaviour
 {
     //반드시 enum과 순서대로 맞춰야함
-    KeyCode[] defaultKeys = new KeyCode[] { 
+    KeyCode[] defaultKeys = new KeyCode[] {
         KeyCode.W, //UP
         KeyCode.S, //Down
         KeyCode.A,  //Left
@@ -27,14 +32,19 @@ public class KeyManager : MonoBehaviour
         KeyCode.I, //Inventory
         KeyCode.Alpha1, //Item1
         KeyCode.Alpha2, //Item2
-        KeyCode.Alpha3 //Item3
+        KeyCode.Alpha3, //Item3
+        KeyCode.F, //SoundWave
+        KeyCode.F1, //sDown1
+        KeyCode.F2, //sDown2
+        KeyCode.F3, //sDown3
+        KeyCode.F4 //sDown3
     };
     void Awake()
     {
+        KeySetting.keys.Clear(); //있으면 안될 코드같지만 UP오류 때문에 추가
         for(int i=0; i < (int)KeyInput.KEYCOUNT; i++) //0부터 10까지 키셋팅키에 추가.
         {
             KeySetting.keys.Add((KeyInput)i,defaultKeys[i]);
-            
         }
     }
 

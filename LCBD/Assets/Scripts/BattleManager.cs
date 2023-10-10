@@ -186,18 +186,18 @@ public class BattleManager : MonoBehaviour
     //전투관련 키 입력
     private void getInputBattleKeyKode()
     {
-        sDown1 = Input.GetKeyDown(KeyCode.F1);
-        sDown2 = Input.GetKeyDown(KeyCode.F2);
-        sDown3 = Input.GetKeyDown(KeyCode.F3);
-        sDown4 = Input.GetKeyDown(KeyCode.F4);
+        sDown1 = Input.GetKeyDown(KeySetting.keys[KeyInput.sDown1]);
+        sDown2 = Input.GetKeyDown(KeySetting.keys[KeyInput.sDown2]);
+        sDown3 = Input.GetKeyDown(KeySetting.keys[KeyInput.sDown3]);
+        sDown4 = Input.GetKeyDown(KeySetting.keys[KeyInput.sDown4]);
     }
 
     private void getInputSoundWaveAttack()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.SoundWave]))
         {
             soundWaveAttack();
-            Debug.Log("F누름");
+            Debug.Log("특수 능력 누름");
         }
     }
     //공격 타입 인덱스
