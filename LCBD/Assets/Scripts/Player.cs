@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        walk();
+       
         if (!drained)
         {
             jump();
@@ -120,8 +120,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
-        
+        walk();
+
         upDown();
         enduranceSystem();
     }
