@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &82619675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82619676}
+  m_Layer: 0
+  m_Name: SondWaveOBJ
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &82619676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82619675}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 880.38165, y: 531.11163, z: -14.572805}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185237364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,10 +1744,14 @@ MonoBehaviour:
   LadderSounds:
   - SoundName: Ladder
     SoundClip: {fileID: 8300000, guid: 17e3e4f7b945e3f43b7fed663804b26f, type: 3}
+  ItemSoundPlayer: {fileID: 0}
+  ItemSounds: []
   InteractionSoundPlayer: {fileID: 1208781077}
   InteractionSounds:
   - SoundName: Portal
     SoundClip: {fileID: 8300000, guid: f50ff27e21fa515418eef93962ef5db9, type: 3}
+  UISoundPlayer: {fileID: 0}
+  UISounds: []
   Mixer: {fileID: 0}
 --- !u!4 &1269180607
 Transform:
@@ -2393,7 +2428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc39d71bc3c506488f0f244257f3bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameIsPause: 0
+  SettingIsUse: 0
   ControlPanel: {fileID: 0}
   SettingPanel: {fileID: 0}
   BGMPanel: {fileID: 0}
@@ -3568,6 +3603,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 0
   jumpPower: 0
+  downA: 0
+  downD: 0
+  downTime: 0
+  downAA: 0
+  downDD: 0
   maxHealth: 0
   health: 0
   attackPower: 0
@@ -3576,6 +3616,7 @@ MonoBehaviour:
   enduranceOnOff: 0
   stayTime: 0
   enduranceRec: 0
+  drained: 0
   defense: 0
   tenacity: 0
   attackSpeed: 0
@@ -3583,12 +3624,7 @@ MonoBehaviour:
   luck: 0
   soundWave: {fileID: 5453876524352100480, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
   stage: 1
-  text_CoolTime: {fileID: 1580166424}
-  image_fill: {fileID: 185237366}
-  text_hp: {fileID: 918736079}
-  img: {fileID: 362907147}
   oralStack: 0
-  SoundsPlayer: {fileID: 1269180605}
 --- !u!50 &2075860121
 Rigidbody2D:
   serializedVersion: 4

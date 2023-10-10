@@ -27,7 +27,7 @@ public class BattleManager : MonoBehaviour
     //쉴드 오브젝트
     public GameObject shieldObject;
     //사운드 웨이브 공격
-    public GameObject soundWaveAttackObject;
+    //public GameObject soundWaveAttackObject;
     //적 레이어 마스크
     public LayerMask enemyLayers;
     //음파 공격 시간
@@ -36,6 +36,9 @@ public class BattleManager : MonoBehaviour
     public int totalAttackPower;
     //총 방어량
     public int totalShield;
+    private GameObject mealAttackOBJ;
+    private GameObject soundwaveAttackOBJ;
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +46,9 @@ public class BattleManager : MonoBehaviour
         playerObject = GameObject.Find("Player");
         player = playerObject.GetComponent<Player>();
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
+        soundwaveAttackOBJ = GameObject.Find("SoundWaveOBJ");
+        soundwaveAttackOBJ.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -51,7 +57,6 @@ public class BattleManager : MonoBehaviour
         attackTime += Time.deltaTime;
         soundWaveAttackTime += Time.deltaTime;
         getInputBattleKeyKode();
-        swapWeapon();
         battleLogic();
         getInputSoundWaveAttack();
     }
@@ -123,6 +128,8 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
+            //GameObject.Find("MealAttackAnim").GetComponent<animationAttack>().SetAnimMealAttack();
+            equipWeapon.GetComponent<animationAttack>().SetAnimMealAttack();
             attackTime = 0;
             //마우스의 위치 가져오기
             Vector2 mousePoint = Input.mousePosition;
@@ -190,6 +197,7 @@ public class BattleManager : MonoBehaviour
         sDown2 = Input.GetKeyDown(KeyCode.F2);
         sDown3 = Input.GetKeyDown(KeyCode.F3);
         sDown4 = Input.GetKeyDown(KeyCode.F4);
+        swapWeapon();
     }
 
     private void getInputSoundWaveAttack()
@@ -220,7 +228,7 @@ public class BattleManager : MonoBehaviour
                 equipWeapon.SetActive(true);
         }
     }
-    private void battleLogic()
+    public void battleLogic()
     {
         if (weaponeIndex == 0)
             meleeAttack();
@@ -313,6 +321,13 @@ public class BattleManager : MonoBehaviour
                     }
                 }
             }
+            if (soundwaveAttackOBJ != null)
+                soundwaveAttackOBJ.SetActive(true);
+            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            soundwaveAttackOBJ.transform.rotation = Quaternion.Euler(0, 0, angle);
+            Invoke("SoundwaveOff", 2f);
+
+
 
             //1/3지역 원형 공격 범위
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
@@ -350,4 +365,9 @@ public class BattleManager : MonoBehaviour
     {
         totalShield += 0;/*여기도 마찬가지임*/;
     }
+    public void SoundwaveOff()
+    {
+        soundwaveAttackOBJ.SetActive(false);
+    }
+
 }
