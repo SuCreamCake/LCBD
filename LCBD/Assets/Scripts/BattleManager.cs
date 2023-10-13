@@ -128,12 +128,20 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
+            //플레이어 애니메이션
+
+            player.ani.SetTrigger("isMeleeAttack");
+
+
             //GameObject.Find("MealAttackAnim").GetComponent<animationAttack>().SetAnimMealAttack();
             equipWeapon.GetComponent<animationAttack>().SetAnimMealAttack();
             attackTime = 0;
             //마우스의 위치 가져오기
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+
+
+            
 
             //공격방향
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
@@ -206,6 +214,7 @@ public class BattleManager : MonoBehaviour
         {
             soundWaveAttack();
             Debug.Log("F누름");
+            player.ani.SetTrigger("isSkill");
         }
     }
     //공격 타입 인덱스

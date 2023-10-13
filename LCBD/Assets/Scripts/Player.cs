@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     public int stage;    //스테이지
     new CapsuleCollider2D collider2D;    //사이즈 변경을 위한 콜라이더
 
-    Animator ani;    //애니메이션
+    public Animator ani;    //애니메이션
 
     //인격 스택
     public int oralStack;
@@ -246,7 +246,6 @@ public class Player : MonoBehaviour
             downAA = false;
             downDD = false;
             downTime = 0;
-            CancelInvoke("invokeRun");
             CancelInvoke("enduranceRun");
         }
         if (downAA || downDD)
@@ -300,13 +299,13 @@ public class Player : MonoBehaviour
             if (downTime > 0.15 && downA && Input.GetKeyDown(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
             {
                 downAA = true;
-                Invoke("invokeRun", 1);
+                invokeRun();
             }
                 // if (downTime > 0.01 && downD && Input.GetKeyDown(KeyCode.D))
             if (downTime > 0.15 && downD && Input.GetKeyDown(KeySetting.keys[KeyInput.RIGHT])) //KeyManager스크립트를 활용한 코드
             {
                 downDD = true;
-                Invoke("invokeRun", 1);
+                invokeRun();
             }
 
         }
