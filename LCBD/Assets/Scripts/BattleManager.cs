@@ -6,39 +6,41 @@ public class BattleManager : MonoBehaviour
 {
     GameObject playerObject;
     Player player;
-    //µ¿ÁÖ ÀüÅõ
-    //°ø°Ý¼Óµµ¸¦ Ã¼Å©ÇÏ±â À§ÇÑ º¯¼ö
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //ï¿½ï¿½ï¿½Ý¼Óµï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public float attackTime = 0;
-    //¿ø°Å¸® °ø°Ý ¿ÀºêÁ§Æ®
+    //ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public GameObject bulletObject;
-    //¹«±â °´Ã¼¸¦ ´ã´Â ÀÚ·áÇü
-    public GameObject[] weapons;
-    //¸Ç¼Õ °ø°Ý, ±ÙÁ¢°ø°Ý, ¿ø°Å¸® °ø°Ý ÀÎµ¦½º
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ï¿½ï¿½
+    
+    //ï¿½Ç¼ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
     bool sDown1;
     bool sDown2;
     bool sDown3;
     bool sDown4;
-    //¹«±â ÀÎµ¦½º
-    public int weaponeIndex = -1;
-    //°ø°ÝÀ§Ä¡
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
+    
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡
     public Vector3 attackPosition;
+    private Animator anim;
 
-    GameObject equipWeapon;
-    //½¯µå ¿ÀºêÁ§Æ®
+ 
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public GameObject shieldObject;
-    //»ç¿îµå ¿þÀÌºê °ø°Ý
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
     //public GameObject soundWaveAttackObject;
-    //Àû ·¹ÀÌ¾î ¸¶½ºÅ©
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Å©
     public LayerMask enemyLayers;
-    //À½ÆÄ °ø°Ý ½Ã°£
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     public float soundWaveAttackTime = 0;
-    //ÃÑ °ø°Ý·®
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
     public int totalAttackPower;
-    //ÃÑ ¹æ¾î·®
+    //ï¿½ï¿½ ï¿½ï¿½î·®
     public int totalShield;
-    private GameObject mealAttackOBJ;
     private GameObject soundwaveAttackOBJ;
+    private int weaponIndex = -1;
 
+    public GameObject animationEffectMeeleAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -59,36 +61,38 @@ public class BattleManager : MonoBehaviour
         getInputBattleKeyKode();
         battleLogic();
         getInputSoundWaveAttack();
+        //ê³µê²©ë°©í–¥
+        attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
     }
 
-    //µ¿ÁÖ
-    //¸Ç¼Õ °ø°Ý
+    //ï¿½ï¿½ï¿½ï¿½
+    //ï¿½Ç¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void punchAttack()
     {
         if (attackTime > (player.attackSpeed / 2) && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
-            //¸¶¿ì½ºÀÇ À§Ä¡ °¡Á®¿À±â
+            //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
-            //ÇöÀç Ä³¸¯ÅÍÀÇ À§Ä¡ °¡Á®¿À±â
+            //ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 characterPoint = new(transform.position.x, transform.position.y);
-            //startX, startYÁÂÇ¥ ±¸ÇÏ±â À§ÇÑ, °Å¸®¿Í °¢µµ
-            float rangeRadius = player.crossroads / 6.0f; //¿øÀÇ ¹ÝÁö¸§ 1/3 1/2 == 1/6
+            //startX, startYï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            float rangeRadius = player.crossroads / 6.0f; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1/3 1/2 == 1/6
             float rangeRadian = Mathf.Atan2(mousePoint.y - characterPoint.y, mousePoint.x - characterPoint.x);
-            //¿øÇü·¹ÀÌÄ³½ºÆÃ  ½ÃÀÛÁ¡ (=Áß½ÉÁ¡)
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (=ï¿½ß½ï¿½ï¿½ï¿½)
             float startX = characterPoint.x + rangeRadius * Mathf.Cos(rangeRadian);
             float startY = characterPoint.y + rangeRadius * Mathf.Sin(rangeRadian);
-            //¿øÇü·¹ÀÌÄ³½ºÆÃ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
             Vector2 startAttackPoint = new(startX, startY);
-            //°ø°Ý °¡´ÉÇÑ ·¹ÀÌ¾î¸¦ Ãß°¡ÇÏ°í ÇØ´ç ·¹ÀÌ¾î¸¸ °¨ÁöÇÏµµ·Ï ·¹ÀÌ¾î Ãß°¡ÇÏ°í ·¹ÀÌ¾î °¨Áö ÀÎÀÚ ¼öÁ¤ ÇÊ¿ä (¿©·¯ ·¹ÀÌ¾îµµ °¨Áö °¡´É) (ÀÏ´Ü ÇÃ·¹ÀÌ¾î Á¦¿ÜÇÑ ¸ðµç ·¹ÀÌ¾î °¨Áö)
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾î¸¦ ï¿½ß°ï¿½ï¿½Ï°ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ì¾î¸¸ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾îµµ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) (ï¿½Ï´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½)
             //int layerMask = 1 << LayerMask.NameToLayer("monster");
             ////layerMask = ~layerMask;
             //RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
-            //if (raycastHit.collider != null)    //´ë»ó °¨ÁöµÇ¸é
+            //if (raycastHit.collider != null)    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½
             //{
-            //    Debug.Log("¸Ç¼Õ °ø°Ý¿¡ °¨ÁöµÈ ´ë»ó ¿ÀºêÁ§Æ®: " + raycastHit.collider.gameObject.tag);
-            //    //ÁøÂ¥ °ø°ÝÇØ¼­ °¨ÁöÇÑ ´ë»ó Ã¼·Â ±ð¾ÆÁÖ±â
+            //    Debug.Log("ï¿½Ç¼ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®: " + raycastHit.collider.gameObject.tag);
+            //    //ï¿½ï¿½Â¥ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
             //}
 
             //Collider2D hitEnemys = Physics2D.OverlapCircle(startAttackPoint,rangeRadius,enemyLayers);
@@ -98,74 +102,74 @@ public class BattleManager : MonoBehaviour
             {
                 CalDamage();
                 raycastHit.collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
-                Debug.Log("¸ó½ºÅÍ ¸ÂÃã");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
             }
 
 
-            //¼öÄ¡ µð¹ö±ë
+            //ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½
             Debug.Log("mousePoint: " + mousePoint);
             Debug.Log("characterPoint: " + characterPoint);
             Debug.Log("rangeRadian: " + rangeRadian);
             Debug.Log("startAttackPoint: " + startAttackPoint);
 
-            //·¹ÀÌÄ³½ºÆ® ¹üÀ§ ±×¸®±â µð¹ö±×¿ë ÃßÈÄ »èÁ¦
-            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * player.crossroads, Color.white, 0.3f);      //Ä³¸¯ÅÍ ÁßÁ¡ ~ ¿ø·¡ »ç°Å¸®
-            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * player.crossroads / 3f, Color.green, 0.3f); //Ä³¸¯ÅÍ ÁßÁ¡ ~ ¸Ç¼Õ »ç°Å¸®
-            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * rangeRadius, Color.black, 0.3f);     //Ä³¸¯ÅÍ ÁßÁ¡ ~ ¿ø ¹üÀ§ ÁßÁ¡±îÁö °Å¸®
-            Debug.DrawRay(startAttackPoint, Vector2.up * rangeRadius, Color.red, 0.3f);                     //´ëÃæ ¿ø À§ÂÊ ¹üÀ§
-            Debug.DrawRay(startAttackPoint, Vector2.down * rangeRadius, Color.red, 0.3f);                   //´ëÃæ ¿ø ¾Æ·¡ÂÊ ¹üÀ§
-            Debug.DrawRay(startAttackPoint, Vector2.right * rangeRadius, Color.red, 0.3f);                  //´ëÃæ ¿ø ¿À¸¥ÂÊ ¹üÀ§
-            Debug.DrawRay(startAttackPoint, Vector2.left * rangeRadius, Color.red, 0.3f);                   //´ëÃæ ¿ø ¿ÞÂÊ ¹üÀ§
-            Debug.DrawRay(startAttackPoint, Vector2.one.normalized * rangeRadius, Color.red, 0.3f);         //´ëÃæ ¿ø ¿ì»óÇâ ´ë°¢¼± ¹üÀ§
-            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  //´ëÃæ ¿ø ¿ìÇÏÇâ ´ë°¢¼± ¹üÀ§
-            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  //´ëÃæ ¿ø ÁÂ»óÇâ ´ë°¢¼± ¹üÀ§
-            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //´ëÃæ ¿ø ÁÂÇÏÇâ ´ë°¢¼± ¹üÀ§
+            //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½×¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * player.crossroads, Color.white, 0.3f);      //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ~ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * player.crossroads / 3f, Color.green, 0.3f); //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ~ ï¿½Ç¼ï¿½ ï¿½ï¿½Å¸ï¿½
+            Debug.DrawRay(characterPoint, new Vector2(rangeRadius * Mathf.Cos(rangeRadian), rangeRadius * Mathf.Sin(rangeRadian)).normalized * rangeRadius, Color.black, 0.3f);     //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ~ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
+            Debug.DrawRay(startAttackPoint, Vector2.up * rangeRadius, Color.red, 0.3f);                     //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, Vector2.down * rangeRadius, Color.red, 0.3f);                   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, Vector2.right * rangeRadius, Color.red, 0.3f);                  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, Vector2.left * rangeRadius, Color.red, 0.3f);                   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, Vector2.one.normalized * rangeRadius, Color.red, 0.3f);         //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Â»ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
-    //±ÙÁ¢ °ø°Ý
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void meleeAttack()
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
-            //ÇÃ·¹ÀÌ¾î ¾Ö´Ï¸ÞÀÌ¼Ç
-
+            //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
+            Instantiate(animationEffectMeeleAttack, player.transform.position, new (0,0,0,0));
             player.ani.SetTrigger("isMeleeAttack");
-
-
-            //GameObject.Find("MealAttackAnim").GetComponent<animationAttack>().SetAnimMealAttack();
-            equipWeapon.GetComponent<animationAttack>().SetAnimMealAttack();
+            Debug.Log("ê·¼ì ‘ê³µê²© ì‹¤í–‰!!");
+            animationEffectMeeleAttack.transform.position = player.transform.position +new Vector3 (0.2f,0f,0f);
+            anim = animationEffectMeeleAttack.GetComponent<Animator>();
+            anim.SetTrigger("isMeelAttackEffect");
             attackTime = 0;
-            //¸¶¿ì½ºÀÇ À§Ä¡ °¡Á®¿À±â
+            //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
 
 
             
 
-            //°ø°Ý¹æÇâ
+            //ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
             attackForce = attackForce.normalized;
 
-            //°ø°Ý ¹üÀ§
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             float xRange = player.crossroads * 0.3f;
             float yRange = 0.5f;
             Vector2 boxSize = new Vector2(xRange, yRange);
 
             float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
-            //°ø°Ý ÄÝ¶óÀÌ´õ »ý¼º
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, boxSize, angle, enemyLayers);
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, boxSize, 0, enemyLayers);
             Debug.Log(angle);
             foreach (Collider2D collider in colliders)
             {
                 Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("¸ó½ºÅÍ ¸ÂÃã");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                     collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
                 }
             }
-            Debug.Log("°ø°Ý½ÇÇà");
+            Debug.Log("ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½");
         }
 
     }
@@ -176,13 +180,13 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    //¿ø°Å¸®°ø°Ý ¸Þ¼­µå
+    //ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     private void longDistanceAttack()
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
-            //¸¶¿ì½ºÀÇ À§Ä¡ °¡Á®¿À±â
+            //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
 
@@ -198,7 +202,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    //ÀüÅõ°ü·Ã Å° ÀÔ·Â
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å° ï¿½Ô·ï¿½
     private void getInputBattleKeyKode()
     {
         sDown1 = Input.GetKeyDown(KeyCode.F1);
@@ -213,87 +217,88 @@ public class BattleManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             soundWaveAttack();
-            Debug.Log("F´©¸§");
+            Debug.Log("Fï¿½ï¿½ï¿½ï¿½");
             player.ani.SetTrigger("isSkill");
         }
     }
-    //°ø°Ý Å¸ÀÔ ÀÎµ¦½º
+    //ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
     private void swapWeapon()
     {
         if (sDown1)
         {
-            weaponeIndex = 0;
-            Debug.Log("¹öÆ° 1È°¼ºÈ­");
+            weaponIndex = 0;
+            Debug.Log("ï¿½ï¿½Æ° 1È°ï¿½ï¿½È­");
         }
-        if (sDown2) weaponeIndex = 1;
-        if (sDown3) weaponeIndex = 2;
-        if (sDown4) weaponeIndex = 3;
-        if (sDown1 || sDown2 || sDown3 || sDown4)
-        {
-            if (equipWeapon != null)
-                equipWeapon.SetActive(false);
-            equipWeapon = weapons[weaponeIndex];
-            if (weaponeIndex != 3)
-                equipWeapon.SetActive(true);
-        }
+        if (sDown2) weaponIndex = 1;
+        if (sDown3) weaponIndex = 2;
+        if (sDown4) weaponIndex = 3;
+        //if (sDown1 || sDown2 || sDown3 || sDown4)
+        //{
+        //    if (shieldObject != null)
+        //        shieldObject.SetActive(false);
+        //    shieldObject = weapons[weaponIndex];
+        //    shieldObject.SetActive(true);
+        //}
     }
     public void battleLogic()
     {
-        if (weaponeIndex == 0)
+        Debug.Log("ì—¬ê¸° ì‹¤í–‰ë¨ ë°°í‹€ë¡œì§ í•¨ìˆ˜");
+        Debug.Log("weaponIndex");
+        if (weaponIndex == 0)
             meleeAttack();
-        else if (weaponeIndex == 1)
+        else if (weaponIndex == 1)
             longDistanceAttack();
-        else if (weaponeIndex == 2)
+        else if (weaponIndex == 2)
             punchAttack();
-        else if (weaponeIndex == 3)
+        else if (weaponIndex == 3)
             shield();
 
     }
 
-    //¹æ¾î ¹æ¹ý ¸Þ¼­µå
+    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     private void shield()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            equipWeapon.SetActive(true);
-            //¸¶¿ì½ºÀÇ À§Ä¡ °¡Á®¿À±â
+            shieldObject.SetActive(true);
+            //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
             Vector3 playerPos = transform.position;
             Vector2 direVec = mousePoint - (Vector2)playerPos;
             direVec = direVec.normalized;
-            equipWeapon.transform.position = direVec + (Vector2)transform.position;
+            shieldObject.transform.position = direVec + (Vector2)transform.position;
 
-            //¿ìÃøÀÏ °æ¿ì
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             if (Vector3.Dot(transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("¿ìÃø ¹æÆÐ »ý¼º");
-                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                shieldObject.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
-            //À§ÂÊÀÏ °æ¿ì
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             else if (Vector3.Dot(transform.up, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("À§Ãø¹æÆÐ »ý¼º");
-                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 90f);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                shieldObject.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
             else if (Vector3.Dot(-transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("ÁÂÃø ¹æÆÐ »ý¼º");
-                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                shieldObject.transform.rotation = Quaternion.Euler(0, 0, 0);
 
 
             }
             else
             {
-                Debug.Log("ÇÏ´Ü ¹æÆÐ »ý¼º");
-                equipWeapon.transform.rotation = Quaternion.Euler(0, 0, 90f);
+                Debug.Log("ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                shieldObject.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
 
         }
         else if (Input.GetMouseButtonUp(0))
         {
 
-            equipWeapon.SetActive(false);
+            shieldObject.SetActive(false);
         }
     }
     private void soundWaveAttack()
@@ -304,17 +309,17 @@ public class BattleManager : MonoBehaviour
             soundWaveAttackTime = 0;
             RaycastHit2D[] raycastHit2Ds;
             soundWaveAttackTime = 0;
-            //¸¶¿ì½ºÀÇ À§Ä¡ °¡Á®¿À±â
+            //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 mousePoint = Input.mousePosition;
             mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
 
-            //°ø°Ý¹æÇâ
+            //ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
             attackForce = attackForce.normalized;
             Debug.Log(player.attackPower);
             float startAngle = -player.attackPower / 2;
 
-            //ÀÏ¹Ý À½ÆÄ °ø°Ý
+            //ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             for (float startAngleIndex = startAngle; startAngleIndex <= player.attackPower / 2; startAngleIndex += 0.5f)
             {
                 attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
@@ -338,14 +343,14 @@ public class BattleManager : MonoBehaviour
 
 
 
-            //1/3Áö¿ª ¿øÇü °ø°Ý ¹üÀ§
+            //1/3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
             foreach (Collider2D collider in colliders)
             {
                 Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("1/3Áö¿ª ÇÇ°Ý");
+                    Debug.Log("1/3ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½");
                     collider.GetComponent<EnemyHit>().IsCrossroadThird();
                     collider.GetComponent<EnemyHit>().TakeDamage(player.attackPower / 3);
                 }
@@ -364,15 +369,15 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
-    //µ¥¹ÌÁö °ø½Ä
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void CalDamage()
     {
-        totalAttackPower += 0/*¿©±â °ø°Ý·® °ø½Ä µé¾î°¥ ¿¹Á¤*/;
+        totalAttackPower += 0/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½ï¿½ï¿½*/;
     }
-    //¹æ¾î °ø½Ä
+    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void TotalShield()
     {
-        totalShield += 0;/*¿©±âµµ ¸¶Âù°¡ÁöÀÓ*/;
+        totalShield += 0;/*ï¿½ï¿½ï¿½âµµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/;
     }
     public void SoundwaveOff()
     {

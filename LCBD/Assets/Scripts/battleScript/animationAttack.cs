@@ -18,14 +18,14 @@ public class animationAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             anim.SetTrigger("isAttack");
-            Debug.Log("¾Ö´Ï¸ÞÀÌ¼Ç °ø°Ý ¼öÇà!!");
+            Debug.Log("ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!!");
         }
 
     }
 
     public void DebugLog()
     {
-        Debug.Log("¾Ö´Ï¸ÞÀÌ¼Ç ¾îÅÃ µð¹ö±× ·Î±×¸¦ È£ÃâÇÔ..");
+        Debug.Log("ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±×¸ï¿½ È£ï¿½ï¿½ï¿½ï¿½..");
     }
     public void Follow()
     {

@@ -17,12 +17,12 @@ public enum KeyInput {
     sDown2, //12
     sDown3, //13
     sDown4, //14
-    KEYCOUNT } //¸¶Áö¸·Àº Å° °¹¼ö¸¦ À§ÇØ ³ÖÀ½.
+    KEYCOUNT } //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
 public static class KeySetting { public static Dictionary<KeyInput, KeyCode> keys = new Dictionary<KeyInput, KeyCode>(); }
 public class KeyManager : MonoBehaviour
 {
-    //¹Ýµå½Ã enum°ú ¼ø¼­´ë·Î ¸ÂÃç¾ßÇÔ
+    //ï¿½Ýµï¿½ï¿½ enumï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     KeyCode[] defaultKeys = new KeyCode[] {
         KeyCode.W, //UP
         KeyCode.S, //Down
@@ -41,8 +41,8 @@ public class KeyManager : MonoBehaviour
     };
     void Awake()
     {
-        KeySetting.keys.Clear(); //ÀÖÀ¸¸é ¾ÈµÉ ÄÚµå°°Áö¸¸ UP¿À·ù ¶§¹®¿¡ Ãß°¡
-        for(int i=0; i < (int)KeyInput.KEYCOUNT; i++) //0ºÎÅÍ 10±îÁö Å°¼ÂÆÃÅ°¿¡ Ãß°¡.
+        KeySetting.keys.Clear(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½ ï¿½Úµå°°ï¿½ï¿½ï¿½ï¿½ UPï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        for(int i=0; i < (int)KeyInput.KEYCOUNT; i++) //0ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ß°ï¿½.
         {
             KeySetting.keys.Add((KeyInput)i,defaultKeys[i]);
         }
@@ -63,7 +63,7 @@ public class KeyManager : MonoBehaviour
         }
     }
     int key = -1;
-    public void ChangeKey(int num) //Å° º¯°æ
+    public void ChangeKey(int num) //Å° ï¿½ï¿½ï¿½ï¿½
     {
         key = num;
     }
@@ -80,39 +80,39 @@ public class KeyManager : MonoBehaviour
     //
     //
     //
-        if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //WÀÔ·Â
+        if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //Wï¿½Ô·ï¿½
         {
             Debug.Log("Up");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.DOWN])) //SÀÔ·Â
+        if (Input.GetKey(KeySetting.keys[KeyInput.DOWN])) //Sï¿½Ô·ï¿½
         {
             Debug.Log("DOWN");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //AÀÔ·Â
+        if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //Aï¿½Ô·ï¿½
         {
             Debug.Log("LEFT");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //DÀÔ·Â
+        if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //Dï¿½Ô·ï¿½
         {
             Debug.Log("RIGHT");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //Á¡ÇÁ
+        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //ï¿½ï¿½ï¿½ï¿½
         {
             Debug.Log("JUMP");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Inventory])) //ÀÎº¥Åä¸®
+        if (Input.GetKey(KeySetting.keys[KeyInput.Inventory])) //ï¿½Îºï¿½ï¿½ä¸®
         {
             Debug.Log("Inventory");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item1])) //¾ÆÀÌÅÛ1¹øÅ°
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item1])) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Å°
         {
             Debug.Log("Item1");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //¾ÆÀÌÅÛ1¹øÅ°
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Å°
         {
             Debug.Log("Item2");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //¾ÆÀÌÅÛ1¹øÅ°
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Å°
         {
             Debug.Log("Item3");
         }
