@@ -6,6 +6,7 @@ public class BattleManager : MonoBehaviour
 {
     GameObject playerObject;
     Player player;
+
     //���� ����
     //���ݼӵ��� üũ�ϱ� ���� ����
     public float attackTime = 0;
@@ -59,7 +60,7 @@ public class BattleManager : MonoBehaviour
         attackTime += Time.deltaTime;
         soundWaveAttackTime += Time.deltaTime;
         getInputBattleKeyKode();
-        battleLogic();
+        //battleLogic();
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
@@ -132,23 +133,43 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
+           
+
+
             //�÷��̾� �ִϸ��̼�
             Instantiate(animationEffectMeeleAttack, player.transform.position, new (0,0,0,0));
-            player.ani.SetTrigger("isMeleeAttack");
             Debug.Log("근접공격 실행!!");
             animationEffectMeeleAttack.transform.position = player.transform.position +new Vector3 (0.2f,0f,0f);
             anim = animationEffectMeeleAttack.GetComponent<Animator>();
             anim.SetTrigger("isMeelAttackEffect");
             attackTime = 0;
             //���콺�� ��ġ ��������
-            Vector2 mousePoint = Input.mousePosition;
-            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+            //Vector2 mousePoint = Input.mousePosition;
+            //mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                Input.mousePosition.y, -Camera.main.transform.position.z));
+
+            //애니메이션
+            player.ani.SetTrigger("isMeleeAttack");
+            float key =  mousePoint.x -playerObject.transform.position.x ;
+            if (key > 0)
+            {
+                Debug.Log("양수");
+                key = 1;
+                playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
+            }
+            else if(key<0)
+            {
+                Debug.Log("음수");
+                key = -1;
+                playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
+            }
+              
 
 
-            
 
             //���ݹ���
-            Vector2 attackForce = mousePoint - (Vector2)transform.position;
+            Vector2 attackForce = mousePoint - (Vector3)transform.position;
             attackForce = attackForce.normalized;
 
             //���� ����

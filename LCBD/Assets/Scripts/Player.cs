@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
         {
             jump();
             run();
+            battleManager.battleLogic();
         }
         
         stopSpeed();
@@ -268,7 +269,7 @@ public class Player : MonoBehaviour
         //스프라이트 반전
         if (key != 0 && stage == 1)
             transform.localScale = new Vector3(key, 1, 1);
-        if (key != 0 && stage != 1)
+        if (key != 0 && stage != 1 && !ani.GetCurrentAnimatorStateInfo(0).IsName("isMeleeAttack"))
             transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
 
         if (key == 0)
