@@ -197,8 +197,6 @@ public class Player : MonoBehaviour
 
     private void jump()
     {
-        //Jump
-        //if (Input.GetButtonDown("Jump") && rigid.velocity.y == 0)
         if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && rigid.velocity.y == 0)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -208,6 +206,20 @@ public class Player : MonoBehaviour
 
             SFXPlayer.JumpSound(0);     // Jump Sound 
         }
+        if (rigid.velocity.y < 0) //내려갈떄만 스캔
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 0.5f)
+                {
+                    rigid.velocity = Vector2.zero;
+                }
+            }
+        }
+
+
 
     }
     private void stopSpeed()

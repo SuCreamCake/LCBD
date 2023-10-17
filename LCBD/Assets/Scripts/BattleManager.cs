@@ -154,13 +154,11 @@ public class BattleManager : MonoBehaviour
             float key =  mousePoint.x -playerObject.transform.position.x ;
             if (key > 0)
             {
-                Debug.Log("양수");
                 key = 1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
             else if(key<0)
             {
-                Debug.Log("음수");
                 key = -1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
