@@ -4548,7 +4548,7 @@ CompositeCollider2D:
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
 --- !u!50 &1879313573
 Rigidbody2D:
   serializedVersion: 4
