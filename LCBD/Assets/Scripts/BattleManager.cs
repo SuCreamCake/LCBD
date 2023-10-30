@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    GameObject playerObject;
+    GameObject playerObject, gunArm;
     Player player;
+    public bool val;
+    
 
     //���� ����
     //���ݼӵ��� üũ�ϱ� ���� ����
@@ -39,7 +41,7 @@ public class BattleManager : MonoBehaviour
     //�� ��
     public int totalShield;
     private GameObject soundwaveAttackOBJ;
-    private int weaponIndex = -1;
+    public int weaponIndex = -1;
 
     public GameObject animationEffectMeeleAttack;
 
@@ -51,7 +53,7 @@ public class BattleManager : MonoBehaviour
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
         soundwaveAttackOBJ = GameObject.Find("SoundWaveOBJ");
         soundwaveAttackOBJ.SetActive(false);
-
+        val = true;
     }
 
     // Update is called once per frame
@@ -64,6 +66,14 @@ public class BattleManager : MonoBehaviour
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
+
+        if (player.stage == 2 && val)
+        {
+            gunArm = GameObject.Find("gunArm");
+            gunArm.SetActive(false);
+            val = false;
+        }
+
     }
 
     //����
@@ -162,7 +172,7 @@ public class BattleManager : MonoBehaviour
                 key = -1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
-              
+                
 
 
 
@@ -200,25 +210,46 @@ public class BattleManager : MonoBehaviour
 
 
     //���Ÿ����� �޼���
-    private void longDistanceAttack()
+    public bool longDistanceAttack()
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
             //���콺�� ��ġ ��������
-            Vector2 mousePoint = Input.mousePosition;
-            mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+            //Vector2 mousePoint = Input.mousePosition;
+            //mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                Input.mousePosition.y, -Camera.main.transform.position.z));
+
+            player.ani.SetTrigger("isGunAttack");
+            float key = mousePoint.x - playerObject.transform.position.x;
+            if (key > 0)
+            {
+                key = 1;
+                playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
+            }
+            else if (key < 0)
+            {
+                key = -1;
+                playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
+            }
+
+
+            gunArm.SetActive(true);
 
             Vector3 playerPos = transform.position;
 
-            Vector2 direVec = mousePoint - (Vector2)playerPos;
+            Vector2 direVec = mousePoint - (Vector3)playerPos;
             direVec = direVec.normalized;
             GameObject tempObeject = Instantiate(bulletObject);
             tempObeject.transform.position = transform.position;
             tempObeject.transform.right = direVec;
 
 
+            
+            return true;
         }
+        return false;
     }
 
     //�������� Ű �Է�

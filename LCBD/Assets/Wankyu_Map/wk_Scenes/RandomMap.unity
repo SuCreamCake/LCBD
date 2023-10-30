@@ -564,6 +564,7 @@ MonoBehaviour:
   soundWaveAttackTime: 0
   totalAttackPower: 0
   totalShield: 0
+  weaponIndex: -1
   animationEffectMeeleAttack: {fileID: 1825904848170092301, guid: 8d437d37f07d6784894e4ae20373bc9e, type: 3}
 --- !u!114 &528122734
 MonoBehaviour:

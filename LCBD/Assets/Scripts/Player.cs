@@ -143,7 +143,6 @@ public class Player : MonoBehaviour
                 case 1:
                     stage = 2;
                     childhood();
-                    
                     SceneManager.LoadScene("stage2");
                     break;
                 case 2:
@@ -281,13 +280,34 @@ public class Player : MonoBehaviour
         //스프라이트 반전
         if (key != 0 && stage == 1)
             transform.localScale = new Vector3(key, 1, 1);
-        if (key != 0 && stage != 1 && !ani.GetCurrentAnimatorStateInfo(0).IsName("isMeleeAttack"))
+        if (key != 0 && stage != 1 && !(ani.GetCurrentAnimatorStateInfo(0).IsName("isMeleeAttack") ||
+            ani.GetCurrentAnimatorStateInfo(0).IsName("gunAttack"))) 
             transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
 
-        if (key == 0)
-            ani.SetBool("isWalking", false);
-        else
-            ani.SetBool("isWalking", true);
+        switch (battleManager.weaponIndex)
+        {
+            case 0:
+                if (key == 0)
+                    ani.SetBool("isMeleeWalk", false);
+                else
+                    ani.SetBool("isMeleeWalk", true);
+                break;
+            case 1:
+                if (key == 0)
+                    ani.SetBool("isGunWalk", false);
+                else
+                    ani.SetBool("isGunWalk", true);
+                break;
+            default:
+                if (key == 0)
+                    ani.SetBool("isWalking", false);
+                else
+                    ani.SetBool("isWalking", true);
+                break;
+
+
+        }
+
 
         if (maxSpeed == nomalSpeed)
         {
