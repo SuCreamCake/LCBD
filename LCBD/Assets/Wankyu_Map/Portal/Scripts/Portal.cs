@@ -9,7 +9,7 @@ public class Portal : MonoBehaviour //TODO: 포탈 어떻게 배치할 건지 �
     [SerializeField]
     private GameObject targetPos;
 
-    public void SetTargetPos(PortalPoint portalPoint, int mapWidth, int mapHeight)
+    public void SetTargetPos(ObjectPoint portalPoint, int mapWidth, int mapHeight)
     {
         Vector3 pos = new(portalPoint.FieldX * (mapWidth + 1) + portalPoint.MapX, portalPoint.FieldY * (mapHeight + 1) + portalPoint.MapY);
         

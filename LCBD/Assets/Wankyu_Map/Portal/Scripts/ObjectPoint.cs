@@ -1,16 +1,16 @@
-﻿//포탈의 필드의 위치 좌표(i, j)와 맵 안의 좌표(X, Y)를 담는 클래스
+//오브젝트의 필드의 위치 좌표(i, j)와 맵 안의 좌표(X, Y)를 담는 클래스
 using System;
 using System.Collections;
 using UnityEngine;
 
-public class PortalPoint
+public class ObjectPoint
 {
     private int fieldX; //필드X
     private int fieldY; //필드Y
     private int mapX;   //맵X
     private int mapY;   //맵Y
 
-    public PortalPoint(int i = 0, int j = 0, int x = 0, int y = 0)
+    public ObjectPoint(int i = 0, int j = 0, int x = 0, int y = 0)
     {
         fieldX = i;
         fieldY = j;
@@ -25,10 +25,10 @@ public class PortalPoint
 
     public override bool Equals(object obj)
     {
-        return Equals(obj as PortalPoint);
+        return Equals(obj as ObjectPoint);
     }
 
-    public bool Equals(PortalPoint otherField)
+    public bool Equals(ObjectPoint otherField)
     {
         return otherField != null &&
             fieldX == otherField.fieldX &&

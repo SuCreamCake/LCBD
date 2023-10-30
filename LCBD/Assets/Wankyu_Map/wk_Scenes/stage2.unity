@@ -370,7 +370,7 @@ Transform:
   m_Children:
   - {fileID: 2077727817}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311326833
 GameObject:
@@ -675,6 +675,7 @@ GameObject:
   - component: {fileID: 643425203}
   - component: {fileID: 643425204}
   - component: {fileID: 643425205}
+  - component: {fileID: 643425206}
   m_Layer: 0
   m_Name: randomMapGenerator
   m_TagString: Untagged
@@ -751,7 +752,7 @@ MonoBehaviour:
   stageGenerator: {fileID: 643425203}
   stageTileController: {fileID: 643425202}
   portalManager: {fileID: 643425205}
-  player: {fileID: 2869620272705725012, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+  monsterSpawnerManager: {fileID: 643425206}
 --- !u!114 &643425205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,6 +769,22 @@ MonoBehaviour:
   <FieldPortalObject>k__BackingField: {fileID: 8009934752397416548, guid: 868ed15b63bb726458fe5d1224b4106d, type: 3}
   stagePortalParent: {fileID: 1191623285}
   fieldPortalParent: {fileID: 910430604}
+--- !u!114 &643425206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643425200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d221da22925a4784cb4319e1218a0216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterList:
+  - {fileID: 3580148164716198746, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+  <MonsterSpawnerObject>k__BackingField: {fileID: 6250138717398671519, guid: e5b67ba6a4033684aada2cf719120f9c, type: 3}
+  monsterSpawnerParent: {fileID: 1863095936}
 --- !u!1 &885901900
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +850,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &910430603
 GameObject:
@@ -879,7 +896,7 @@ GameObject:
   - component: {fileID: 1021830559}
   - component: {fileID: 1021830561}
   - component: {fileID: 1021830562}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlatformMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1344,7 +1361,7 @@ Transform:
   - {fileID: 311326835}
   - {fileID: 148674695}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673463481
 GameObject:
@@ -1497,6 +1514,37 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!1 &1863095935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1863095936}
+  m_Layer: 0
+  m_Name: MonsterSpawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1863095936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863095935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.70066, y: 36.355698, z: -0.333836}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1879313570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1559,7 @@ GameObject:
   - component: {fileID: 1879313574}
   - component: {fileID: 1879313573}
   - component: {fileID: 1879313572}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: BrickMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1778,7 +1826,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2053926864
 GameObject:

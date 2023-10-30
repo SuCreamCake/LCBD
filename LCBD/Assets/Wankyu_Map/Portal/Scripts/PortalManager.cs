@@ -40,11 +40,11 @@ public class PortalManager : MonoBehaviour
     [SerializeField] private Transform fieldPortalParent;
 
 
-    private Dictionary<PortalPoint, PortalPoint> fieldPortalDict;   //연결된 필드 포탈 dict
+    private Dictionary<ObjectPoint, ObjectPoint> fieldPortalDict;   //연결된 필드 포탈 dict
 
     /*static 프로퍼티 및 메소드*/
     public static bool IsTeleporting { get; private set; } = false;     // 플레이어 캐릭터가 텔레포트(포탈을 타는 행위) 중인지
-    public static void setIsTeleporting(bool b) { IsTeleporting = b; }  // IsTeleporting setter 메소드
+    public static void SetIsTeleporting(bool b) { IsTeleporting = b; }  // IsTeleporting setter 메소드
 
     public void SetPortal()
     {
@@ -63,7 +63,7 @@ public class PortalManager : MonoBehaviour
 
     private void SetFieldPortal()
     {
-        fieldPortalDict = new Dictionary<PortalPoint, PortalPoint>();
+        fieldPortalDict = new Dictionary<ObjectPoint, ObjectPoint>();
 
         List<Tuple<FieldPoint, FieldPoint>> edges = stageGenerator.FieldsPointsEdges;
         FieldType[,] fieldTypes = stageGenerator.GetFieldType();
@@ -73,7 +73,7 @@ public class PortalManager : MonoBehaviour
         // 위치 설정
         foreach (var edge in edges)
         {
-            PortalPoint keyPortalPoint, valuePortalPoint;
+            ObjectPoint keyPortalPoint, valuePortalPoint;
 
             if (edge.Item1.X < edge.Item2.X && edge.Item1.Y == edge.Item2.Y)   //가로 연결 (Item1(좌) - Item2(우))
             {
@@ -88,7 +88,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = stageGenerator.MapHeight / 2;
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
@@ -96,7 +96,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = 5;
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Common:
@@ -153,7 +153,7 @@ public class PortalManager : MonoBehaviour
                         }
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Special:
@@ -161,7 +161,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = 5;
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     default:
@@ -179,7 +179,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = stageGenerator.MapHeight / 2;
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
@@ -187,7 +187,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = 5;
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Common:
@@ -244,7 +244,7 @@ public class PortalManager : MonoBehaviour
                         }
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Special:
@@ -252,7 +252,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = 5;
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     default:
@@ -279,7 +279,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = stageGenerator.MapHeight / 4 * 3 - 1;
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
@@ -288,7 +288,7 @@ public class PortalManager : MonoBehaviour
                         while (portalPointY <= stageGenerator.MapHeight - 8 - 8) { portalPointY += 8; }
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Common:
@@ -345,7 +345,7 @@ public class PortalManager : MonoBehaviour
                         }
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Special:
@@ -358,7 +358,7 @@ public class PortalManager : MonoBehaviour
                         }
 
                         mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        keyPortalPoint = new PortalPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
+                        keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     default:
@@ -376,7 +376,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = stageGenerator.MapHeight / 4;
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
@@ -384,7 +384,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = 5;
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Common:
@@ -441,7 +441,7 @@ public class PortalManager : MonoBehaviour
                         }
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Special:
@@ -449,7 +449,7 @@ public class PortalManager : MonoBehaviour
                         portalPointY = 5;
 
                         mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
-                        valuePortalPoint = new PortalPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
+                        valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     default:

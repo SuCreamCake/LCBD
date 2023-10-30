@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: d221da22925a4784cb4319e1218a0216
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <MonsterSpawnerObject>k__BackingField: {fileID: 6250138717398671519, guid: e5b67ba6a4033684aada2cf719120f9c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

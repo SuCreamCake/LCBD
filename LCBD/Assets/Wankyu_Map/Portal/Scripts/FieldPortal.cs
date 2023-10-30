@@ -7,7 +7,7 @@ public class FieldPortal : MonoBehaviour
     //[SerializeField] private GameObject player;
     [SerializeField] private GameObject targetPos;
 
-    public void SetPortalPos(PortalPoint portalPoint, int mapWidth, int mapHeight)
+    public void SetPortalPos(ObjectPoint portalPoint, int mapWidth, int mapHeight)
     {
         Vector3Int pos = new(portalPoint.FieldX * (mapWidth + 1) + portalPoint.MapX,
                           portalPoint.FieldY * (mapHeight + 1) + portalPoint.MapY);
@@ -16,7 +16,7 @@ public class FieldPortal : MonoBehaviour
         transform.Translate(0.5f, 0.5f, 0);
     }
 
-    public void SetTargetPos(PortalPoint portalPoint, int mapWidth, int mapHeight)
+    public void SetTargetPos(ObjectPoint portalPoint, int mapWidth, int mapHeight)
     {
         Vector3 pos = new(portalPoint.FieldX * (mapWidth + 1) + portalPoint.MapX,
                           portalPoint.FieldY * (mapHeight + 1) + portalPoint.MapY);
@@ -37,11 +37,11 @@ public class FieldPortal : MonoBehaviour
 
     private IEnumerator FieldTeleportCoroutine(GameObject obj)  //필드 포탈 텔레포트하는 코루틴
     {
-        PortalManager.setIsTeleporting(true);
+        PortalManager.SetIsTeleporting(true);
         obj.transform.position = targetPos.transform.position;
 
         yield return new WaitForEndOfFrame();
-        PortalManager.setIsTeleporting(false);
+        PortalManager.SetIsTeleporting(false);
 
         yield break;
     }
