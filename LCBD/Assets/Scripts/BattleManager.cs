@@ -194,7 +194,7 @@ public class BattleManager : MonoBehaviour
                 Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("���� ����");
+                    Debug.Log("몬스터를 맞춤");
                     collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
                 }
             }
@@ -209,7 +209,7 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    //���Ÿ����� �޼���
+    //원거리 공격
     public bool longDistanceAttack()
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
