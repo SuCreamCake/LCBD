@@ -43,7 +43,7 @@ public class gunArm : MonoBehaviour
             spriteRenderer.flipY = false;
 
         if (!playerScript.ani.GetCurrentAnimatorStateInfo(0).IsName("gunAttack"))
-            battleManager.val = true;
+            battleManager.gunBool = true;
 
     }
 }

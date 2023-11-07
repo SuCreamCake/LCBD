@@ -288,9 +288,9 @@ public class Player : MonoBehaviour
         {
             case 0:
                 if (key == 0)
-                    ani.SetBool("isMeleeWalk", false);
+                    ani.SetBool("isWalking", false);
                 else
-                    ani.SetBool("isMeleeWalk", true);
+                    ani.SetBool("isWalking", true);
                 break;
             case 1:
                 if (key == 0)

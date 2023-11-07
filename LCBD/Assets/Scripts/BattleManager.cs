@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    GameObject playerObject, gunArm;
+    GameObject playerObject, gunArm,hammer1,hammer2;
     Player player;
-    public bool val;
+    public bool gunBool,hammer1bool,hammer2bool;
     
 
     //���� ����
@@ -53,7 +53,8 @@ public class BattleManager : MonoBehaviour
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
         soundwaveAttackOBJ = GameObject.Find("SoundWaveOBJ");
         soundwaveAttackOBJ.SetActive(false);
-        val = true;
+        gunBool = true;
+        hammer1bool = true;
     }
 
     // Update is called once per frame
@@ -67,25 +68,9 @@ public class BattleManager : MonoBehaviour
         //공격방향
         attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
 
-        if (player.stage == 2 && val)
-        {
-            gunArm = GameObject.Find("gunArm");
-            gunArm.SetActive(false);
-            val = false;
-        }
-
     }
 
-    private void FixedUpdate()
-    {
 
-        if (player.stage == 2 && val)
-        {
-            gunArm = GameObject.Find("gunArm");
-            gunArm.SetActive(false);
-            val = false;
-        }
-    }
 
     //����
     //�Ǽ� ����
