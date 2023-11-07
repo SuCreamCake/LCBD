@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PlayerTracking : MonoBehaviour
 {
-    public Transform player; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®ÀÇ TransformÀ» ÀúÀåÇÒ º¯¼ö
-    public float moveSpeed = 1f;
-    private float raycastDistance = 0.5f;
+    public Transform player; // í”Œë ˆì´ì–´ì˜ Transformì„ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
+    public float moveSpeed = 1f; // ì´ë™ ì†ë„
+    private float raycastDistance = 0.5f; // ë ˆì´ìºìŠ¤íŠ¸ ê±°ë¦¬
     MonsterManager MonsterManager;
     SpriteRenderer spriteRenderer;
 
-    public bool noPlayer = true;
+    public bool noPlayer = true; // í”Œë ˆì´ì–´ê°€ ì—†ëŠ”ì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
 
-    private Transform lastPlayer;
+    private Transform lastPlayer; // ë§ˆì§€ë§‰ìœ¼ë¡œ ë³¸ í”Œë ˆì´ì–´ì˜ Transformì„ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 
-    private Rigidbody2D rb;
+    private Rigidbody2D rb; // Rigidbody2D ì»´í¬ë„ŒíŠ¸
     float k;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent <SpriteRenderer>();
         MonsterManager = GetComponent<MonsterManager>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -29,19 +29,21 @@ public class PlayerTracking : MonoBehaviour
         lastPlayer = player.transform;
         k = rb.velocity.y;
         noPlayer = true;
+
+        moveSpeed = MonsterManager.speed_Ms; // ì´ë™ ì†ë„ë¥¼ ëª¬ìŠ¤í„° ë§¤ë‹ˆì €ì˜ ì†ë„ë¡œ ì„¤ì •
     }
 
     private void Update()
     {
-        if(noPlayer)
+        if (noPlayer)
             lastPlayer = player.transform;
 
-        //ÀÚ½ÅÀÇ ÇÑ Ä­ ¾Õ ÁöÇüÀ» Å½»ö
+        // ì•ìª½ ë ˆì´ìºìŠ¤íŠ¸ë¥¼ ìƒì„±
         Vector2 frontVec = new Vector2(rb.position.x + 0.4f, rb.position.y);
-        //ÀÚ½ÅÀÇ ÇÑ Ä­ ¾Õ ÁöÇüÀ» Å½»ö
+        // ë’·ìª½ ë ˆì´ìºìŠ¤íŠ¸ë¥¼ ìƒì„±
         Vector2 frontVec2 = new Vector2(rb.position.x - 0.4f, rb.position.y);
 
-        // ÇÃ·¹ÀÌ¾î¿Í ¸ó½ºÅÍÀÇ À§Ä¡¸¦ ºñ±³ÇÏ¿© ÀÌµ¿ ¹æÇâÀ» °áÁ¤
+        // í”Œë ˆì´ì–´ì™€ ëª¬ìŠ¤í„°ì˜ ìƒëŒ€ì ì¸ ê°€ë¡œ ì…ë ¥ì„ ê³„ì‚°
         float horizontalInput = 0f;
         if (player != null)
         {
@@ -55,73 +57,67 @@ public class PlayerTracking : MonoBehaviour
                 horizontalInput = 1f;
                 spriteRenderer.flipX = true;
             }
-                
         }
-        // ¸ó½ºÅÍ°¡ ·¹ÀÌÄ³½ºÆ®¸¦ ±×¸®µµ·Ï µğ¹ö±×·Î Ç¥½Ã
+        // ë•…ê³¼ì˜ ë ˆì´ë¥¼ ë””ë²„ê·¸ë¡œ í‘œì‹œ
         Debug.DrawRay(transform.position, Vector2.down * raycastDistance, Color.red);
 
-        // ÀÌµ¿ ¹æÇâ¿¡ µû¶ó ¸ó½ºÅÍ ÀÌµ¿
+        // ì´ë™ ë°©í–¥ ë²¡í„° ìƒì„±
         Vector2 moveDirection = new Vector2(horizontalInput, k);
 
-
-        // x°ªÀÇ °Å¸®¸¸ °è»ê
+        // í”Œë ˆì´ì–´ì™€ì˜ ê°€ë¡œ ê±°ë¦¬ ê³„ì‚°
         float distanceToPlayerX = Mathf.Abs(transform.position.x - lastPlayer.position.x);
 
-        // x°ªÀÇ °Å¸®¸¦ ±âÁØÀ¸·Î ¶³¸²À» ¸ØÃß´Â Á¶°Ç Ãß°¡ (¿¹: x°ª °Å¸®°¡ ÀÏÁ¤ °ª ÀÌ³»ÀÏ ¶§)
-        float stopDistanceX = 0.2f; // x°ª °Å¸®¸¦ ±âÁØÀ¸·Î ¶³¸²À» ¸ØÃß´Â °Å¸® ÀÓ°è°ª ¼³Á¤
+        // ë©ˆì¶”ëŠ” ê±°ë¦¬ë¥¼ ì„¤ì •
+        float stopDistanceX = 0.2f;
 
         if (distanceToPlayerX < stopDistanceX)
         {
-            // ¸ó½ºÅÍ°¡ ÇÃ·¹ÀÌ¾î¿Í x°ª °Å¸®°¡ ÀÏÁ¤ °ª ÀÌ³»¿¡ ÀÖÀ» ¶§ ¶³¸² ¸ØÃß±â
+            // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬ê°€ ë©ˆì¶”ëŠ” ê±°ë¦¬ë³´ë‹¤ ì‘ìœ¼ë©´ ë©ˆì¶¤
             rb.velocity = Vector2.zero;
             if (!noPlayer)
             {
                 noPlayer = true;
-                MonsterManager.SearchMode();
+                MonsterManager.SearchMode(); // ëª¬ìŠ¤í„° ë§¤ë‹ˆì €ì˜ íƒìƒ‰ ëª¨ë“œ í™œì„±í™”
             }
-
-        }else {
-            rb.velocity = moveDirection * moveSpeed;
+        }
+        else
+        {
+            rb.velocity = moveDirection * moveSpeed; // ì´ë™
         }
 
-
-        //ÇÑÄ­ ¾Õ ºÎºĞ¾Æ·¡ ÂÊÀ¸·Î ray¸¦ ½ô
+        // ì•ìª½ê³¼ ë’·ìª½ì˜ ë ˆì´ë¥¼ ë””ë²„ê·¸ë¡œ í‘œì‹œ
         Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
-        //ÇÑÄ­ ¾Õ ºÎºĞ¾Æ·¡ ÂÊÀ¸·Î ray¸¦ ½ô
         Debug.DrawRay(frontVec2, Vector3.down, new Color(0, 1, 0));
 
-       if (spriteRenderer.flipX)
+        if (spriteRenderer.flipX)
         {
-            //·¹ÀÌ¸¦ ½÷¼­ ¸ÂÀº ¿ÀºêÁ§Æ®¸¦ Å½Áö 
+            // ì•ìª½ìœ¼ë¡œ ë ˆì´ë¥¼ ì´ì„œ ë•…ì„ ê°ì§€
             RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("background"));
-            //Å½ÁöµÈ ¿ÀºêÁ§Æ®°¡ null : ±× ¾Õ¿¡ ÁöÇüÀÌ ¾øÀ½
+            // ê°ì§€ëœ ë•…ì´ ì—†ìœ¼ë©´ ë©ˆì¶¤
             if (raycast.collider == null)
             {
-                // ÀÌµ¿ ¹æÇâÀÌ 0.1º¸´Ù ÀÛÀ» °æ¿ì ¸ó½ºÅÍ ¸ØÃßµµ·Ï ¼³Á¤
                 rb.velocity = Vector2.zero;
                 if (!noPlayer)
                 {
                     noPlayer = true;
-                    MonsterManager.SearchMode();
+                    MonsterManager.SearchMode(); // ëª¬ìŠ¤í„° ë§¤ë‹ˆì €ì˜ íƒìƒ‰ ëª¨ë“œ í™œì„±í™”
                 }
             }
         }
         else
         {
-            //·¹ÀÌ¸¦ ½÷¼­ ¸ÂÀº ¿ÀºêÁ§Æ®¸¦ Å½Áö 
+            // ë’·ìª½ìœ¼ë¡œ ë ˆì´ë¥¼ ì´ì„œ ë•…ì„ ê°ì§€
             RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 1, LayerMask.GetMask("background"));
-                        //Å½ÁöµÈ ¿ÀºêÁ§Æ®°¡ null : ±× ¾Õ¿¡ ÁöÇüÀÌ ¾øÀ½
-        if (raycast2.collider == null)
+            // ê°ì§€ëœ ë•…ì´ ì—†ìœ¼ë©´ ë©ˆì¶¤
+            if (raycast2.collider == null)
             {
-                // ÀÌµ¿ ¹æÇâÀÌ 0.1º¸´Ù ÀÛÀ» °æ¿ì ¸ó½ºÅÍ ¸ØÃßµµ·Ï ¼³Á¤
                 rb.velocity = Vector2.zero;
                 if (!noPlayer)
                 {
                     noPlayer = true;
-                    MonsterManager.SearchMode();
+                    MonsterManager.SearchMode(); // ëª¬ìŠ¤í„° ë§¤ë‹ˆì €ì˜ íƒìƒ‰ ëª¨ë“œ í™œì„±í™”
                 }
             }
         }
     }
 }
-

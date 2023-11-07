@@ -1,36 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyMove : MonoBehaviour
 {
-
     Rigidbody2D rigid;
-    public int nextMove;//´ÙÀ½ Çàµ¿ÁöÇ¥¸¦ °áÁ¤ÇÒ º¯¼ö
+    public int nextMove; // ë‹¤ìŒ ì›€ì§ì„ ë°©í–¥ì„ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
     Animator animator;
     SpriteRenderer spriteRenderer;
     MonsterManager MonsterManager;
+    public int moveSpeed; // ì´ë™ ì†ë„
 
     bool searching = false;
 
-    public float waitingtime = 5.0f;
+    public float waitingtime;
 
-    int monsterID; //¹Ş¾Æ¿À´Â ¸ó½ºÅÍ id
+    int monsterID; // ëª¬ìŠ¤í„°ì˜ ID
+
+    float time = 3.0f; // ì¢Œìš° ë³€ê²½ ëœë¤ìœ¼ë¡œ í•˜ì
+
+    private Coroutine myCoroutine; // time ì½”ë£¨í‹´ ëŒë¦¬ê¸°
 
     // Start is called before the first frame update
     private void Awake()
     {
         MonsterManager = GetComponent<MonsterManager>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent <SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
-        Invoke("Think", 5); // ÃÊ±âÈ­ ÇÔ¼ö ¾È¿¡ ³Ö¾î¼­ ½ÇÇàµÉ ¶§ ¸¶´Ù(ÃÖÃÊ 1È¸) nextMoveº¯¼ö°¡ ÃÊ±âÈ­ µÇµµ·ÏÇÔ 
-
+        Invoke("Think", time); // ì¼ì • ì‹œê°„ ë’¤ì— Think í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ë‹¤ìŒ ì›€ì§ì„ì„ ê²°ì •
+        myCoroutine = StartCoroutine(RandomTimeCoroutine());
     }
 
     private void Start()
     {
         monsterID = MonsterManager.MonsterID;
+        moveSpeed = MonsterManager.speed_Ms;
+        waitingtime = MonsterManager.waiteTime;
     }
 
     // Update is called once per frame
@@ -38,92 +45,85 @@ public class EnemyMove : MonoBehaviour
     {
         if (!searching)
         {
-            //Move
-            rigid.velocity = new Vector2(nextMove, rigid.velocity.y); //nextMove ¿¡ 0:¸ØÃã -1:¿ŞÂÊ 1:¿À¸¥ÂÊ À¸·Î ÀÌµ¿ 
+            // ì´ë™
+            rigid.velocity = new Vector2(nextMove * moveSpeed, rigid.velocity.y); // nextMove ê°’ì— ë”°ë¼ ì¢Œìš°ë¡œ ì´ë™
 
-            //ÀÚ½ÅÀÇ ÇÑ Ä­ ¾Õ ÁöÇüÀ» Å½»öÇØ¾ßÇÏ¹Ç·Î position.x + nextMove(-1,1,0ÀÌ¹Ç·Î ÀûÀıÇÔ)
+            // ìºë¦­í„°ì˜ ì •ë©´ ìœ„ì¹˜ ê³„ì‚° (nextMoveì— ë”°ë¼ ì¢Œìš°ë¡œ ì´ë™)
             Vector2 frontVec = new Vector2(rigid.position.x + nextMove * 0.4f, rigid.position.y);
 
-            //ÇÑÄ­ ¾Õ ºÎºĞ¾Æ·¡ ÂÊÀ¸·Î ray¸¦ ½ô
+            // ì§€ë©´ê³¼ì˜ ì¶©ëŒì„ ê²€ì¶œí•˜ëŠ” Rayë¥¼ ê·¸ë¦¼
             Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
 
-            //·¹ÀÌ¸¦ ½÷¼­ ¸ÂÀº ¿ÀºêÁ§Æ®¸¦ Å½Áö 
+            // ì§€ë©´ê³¼ì˜ ì¶©ëŒì„ ê°ì§€
             RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("background"));
 
-            //Å½ÁöµÈ ¿ÀºêÁ§Æ®°¡ null : ±× ¾Õ¿¡ ÁöÇüÀÌ ¾øÀ½
+            // ì§€ë©´ê³¼ ì¶©ëŒí•˜ì§€ ì•Šìœ¼ë©´ ë°©í–¥ì„ ë°”ê¿ˆ
             if (raycast.collider == null)
             {
                 Turn();
             }
-        } else
+        }
+        else
         {
-            // ¸ó½ºÅÍ ¸ØÃßµµ·Ï ¼³Á¤
+            // ì  íƒìƒ‰ ì¤‘ì—ëŠ” ì›€ì§ì´ì§€ ì•ŠìŒ
             rigid.velocity = Vector2.zero;
         }
-
-
-
-
     }
-
 
     public void Think()
     {
-        float time = 3.0f;
-        //¸ó½ºÅÍ°¡ ½º½º·Î »ı°¢ÇØ¼­ ÆÇ´Ü (-1:¿ŞÂÊÀÌµ¿ ,1:¿À¸¥ÂÊ ÀÌµ¿ ,0:¸ØÃã  À¸·Î 3°¡Áö Çàµ¿À» ÆÇ´Ü)
 
-        //Random.Range : ÃÖ¼Ò<= ³­¼ö <ÃÖ´ë /¹üÀ§ÀÇ ·£´ı ¼ö¸¦ »ı¼º(ÃÖ´ë´Â Á¦¿ÜÀÌ¹Ç·Î ÁÖÀÇÇØ¾ßÇÔ)
+        // ë‹¤ìŒ ì›€ì§ì„ ë°©í–¥ì„ ë¬´ì‘ìœ„ë¡œ ê²°ì • (-1: ì™¼ìª½, 1: ì˜¤ë¥¸ìª½, 0: ì •ì§€, 3ì´ˆë§ˆë‹¤ ë³€ê²½)
+
+        // Random.Range: min ì´ìƒ max ë¯¸ë§Œì˜ ë‚œìˆ˜ë¥¼ ìƒì„± (ì •ìˆ˜ ë‚œìˆ˜ë¥¼ ì–»ìœ¼ë ¤ë©´ Mathf.RoundToInt ì‚¬ìš©)
         nextMove = Random.Range(-1, 2);
 
-        ////Sprite Animation
-        ////WalkSpeedº¯¼ö¸¦ nextMove·Î ÃÊ±âÈ­
-        //animator.SetInteger("WalkSpeed", nextMove);
+        // ìºë¦­í„°ì˜ ìŠ¤í”„ë¼ì´íŠ¸ ì• ë‹ˆë©”ì´ì…˜ì„ ì„¤ì • (WalkSpeed ë³€ìˆ˜ë¥¼ í†µí•´ ì›€ì§ì„ ë°©í–¥ì„ ì „ë‹¬)
+        // animator.SetInteger("WalkSpeed", nextMove);
 
+        // ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ë’¤ì§‘ìŒ
+        if (nextMove != 0)
+            spriteRenderer.flipX = nextMove == 1;
 
-        //Flip Sprite
-        if (nextMove != 0) //¼­ÀÖÀ» ¶§ ±»ÀÌ ¹æÇâÀ» ¹Ù²Ü ÇÊ¿ä°¡ ¾øÀ½ 
-            spriteRenderer.flipX = nextMove == 1; //nextmove °¡ 1ÀÌ¸é ¹æÇâÀ» ¹İ´ë·Î º¯°æ
-
-        if(nextMove != 0)
+        if (nextMove != 0)
         {
-            time = 3.0f; //»ı°¢ÇÏ´Â ½Ã°£
-        } else
-        {
-            time = waitingtime; // ¸ó½ºÅÍÀÇ ÀÌµ¿¼Óµµ ´É·ÂÄ¡ +2 + (2*½ºÅ×ÀÌÁö ¼ö) / ¸ó½ºÅÍÀÇ ÀÌµ¿¼Óµµ ´É·ÂÄ¡
+            time = 3.0f; // ì´ë™ ì‹œê°„ ì„¤ì •
         }
-        //Think(); : Àç±ÍÇÔ¼ö : µô·¹ÀÌ¸¦ ¾²Áö ¾ÊÀ¸¸é CPU°úºÎÈ­ µÇ¹Ç·Î Àç±ÍÇÔ¼ö¾µ ¶§´Â Ç×»ó ÁÖÀÇ ->Think()¸¦ Á÷Á¢ È£ÃâÇÏ´Â ´ë½Å Invoke()»ç¿ë
-        Invoke("Think", time); //¸Å°³º¯¼ö·Î ¹ŞÀº ÇÔ¼ö¸¦ timeÃÊÀÇ µô·¹ÀÌ¸¦ ºÎ¿©ÇÏ¿© Àç½ÇÇà
-        
-        if(nextMove == 0 && monsterID >= 1000)
+        else
         {
-            SearchPalyer();
+            time = waitingtime; // ì •ì§€ ì‹œê°„ ì„¤ì •
+        }
+        // Think()ë¥¼ ì¬ê·€ì ìœ¼ë¡œ í˜¸ì¶œí•˜ì§€ ë§ê³ , Invoke()ë¥¼ ì‚¬ìš©í•˜ì—¬ ë‹¤ìŒ ì›€ì§ì„ì„ ì¼ì • ì‹œê°„ í›„ì— ê²°ì •
+        Invoke("Think", time);
+
+        if (nextMove == 0 && monsterID >= 1000)
+        {
+            SearchPlayer();
         }
     }
 
     void Turn()
     {
-
-        nextMove = nextMove * (-1); //¿ì¸®°¡ Á÷Á¢ ¹æÇâÀ» ¹Ù²Ù¾î ÁÖ¾úÀ¸´Ï Think´Â Àá½Ã ¸ØÃß¾î¾ßÇÔ
+        nextMove = nextMove * (-1); // ì´ë™ ë°©í–¥ì„ ë°˜ëŒ€ë¡œ ë³€ê²½í•˜ì—¬ Think í•¨ìˆ˜ë¥¼ ë‹¤ì‹œ í˜¸ì¶œ
         spriteRenderer.flipX = nextMove == 1;
 
-        CancelInvoke(); //think¸¦ Àá½Ã ¸ØÃá ÈÄ Àç½ÇÇà
-        Invoke("Think", 2);//
-
+        CancelInvoke(); // Think í•¨ìˆ˜ í˜¸ì¶œ ì˜ˆì•½ ì·¨ì†Œ
+        Invoke("Think", time);
     }
 
     public void StopThink()
     {
-        CancelInvoke();
+        CancelInvoke(); // Think í•¨ìˆ˜ í˜¸ì¶œ ì˜ˆì•½ ì·¨ì†Œ
     }
 
-    public void SearchPalyer()
+    public void SearchPlayer()
     {
         searching = true;
-        CancelInvoke(); //think¸¦ Àá½Ã ¸ØÃá ÈÄ Àç½ÇÇà
+        CancelInvoke(); // Think í•¨ìˆ˜ í˜¸ì¶œ ì˜ˆì•½ ì·¨ì†Œ
 
-        // 2ÃÊ¸¶´Ù MyFunction ¸Ş¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
+        // Serch í•¨ìˆ˜ë¥¼ 0ì´ˆë¶€í„° ì‹œì‘í•˜ì—¬ 2ì´ˆ ê°„ê²©ìœ¼ë¡œ ë°˜ë³µ í˜¸ì¶œ
         InvokeRepeating("Serch", 0.0f, 2.0f);
-        Invoke("StopSerch", waitingtime);
+        Invoke("StopSearch", waitingtime);
     }
 
     void Serch()
@@ -131,18 +131,28 @@ public class EnemyMove : MonoBehaviour
         Debug.Log(monsterID);
         if (spriteRenderer.flipX)
             nextMove = 1;
-            else
+        else
             nextMove = -1;
-        nextMove = nextMove * (-1); //¿ì¸®°¡ Á÷Á¢ ¹æÇâÀ» ¹Ù²Ù¾î ÁÖ¾úÀ¸´Ï Think´Â Àá½Ã ¸ØÃß¾î¾ßÇÔ
+        nextMove = nextMove * (-1); // ì´ë™ ë°©í–¥ì„ ë°˜ëŒ€ë¡œ ë³€ê²½í•˜ì—¬ ë‹¤ì‹œ í˜¸ì¶œ
         spriteRenderer.flipX = nextMove == 1;
     }
-    
-    void StopSerch()
+
+    void StopSearch()
     {
         CancelInvoke("Serch");
-        Invoke("Think", 3);
+        Invoke("Think", time);
         searching = false;
     }
 
+    IEnumerator RandomTimeCoroutine()
+    {
+        while (true)
+        {
+            // 2ì´ˆì—ì„œ 4ì´ˆ ì‚¬ì´ì˜ ëœë¤í•œ ì‹œê°„ ê°„ê²©ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
+            time = Random.Range(2.0f, 4.0f);
 
+            // 1ì´ˆì— í•œ ë²ˆ ì‹¤í–‰ë˜ë„ë¡ ëŒ€ê¸°í•©ë‹ˆë‹¤.
+            yield return new WaitForSeconds(2.0f);
+        }
+    }
 }
