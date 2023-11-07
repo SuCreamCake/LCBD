@@ -70,6 +70,30 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    private void LateUpdate()
+    {
+        if (player.stage == 2 && gunBool)
+        {
+            gunArm = GameObject.Find("gunArm");
+            gunArm.SetActive(false);
+            gunBool = false;
+        }
+        if (player.stage == 2 && hammer1bool)
+        {
+            hammer1 = GameObject.Find("hammer1");
+            hammer1.SetActive(false);
+            hammer1bool = false;
+        }
+
+        if (player.stage == 2 && weaponIndex == 0 &&
+            player.ani.GetCurrentAnimatorStateInfo(0).IsName("childhoodStay"))
+        {
+            hammer1.SetActive(true);
+        }
+
+    }
+
+
 
 
     //����
