@@ -4469,7 +4469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990577760277884888}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.76, y: 1.25, z: 0.5}
+  m_LocalPosition: {x: 11.65, y: 3.36, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8932,14 +8932,106 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3580148164716198743, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: viewAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164716198743, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: viewRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164716198743, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: smallViewRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3580148164716198746, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
       propertyPath: m_Name
       value: "\uC774\uB3D9,\uCD94\uC801Monster"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: elite
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: method
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: pattern
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: speed_Ms
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: MonsterID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: health_Ms
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: viewAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: waiteTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: defense_Ms
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: viewRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: tenacity_Ms
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: maxHealth_Ms
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: crossroads_Ms
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: attackPower_Ms
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: attackSpeed_Ms
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316886, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: smallViewRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316888, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: nextMove
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316888, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: waitingtime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3580148164724316889, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 990577760277884884}
+    - target: {fileID: 3580148164724316889, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: noPlayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580148164724316889, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
 --- !u!1001 &7756546807646538676

@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    public float viewRadius;            // ½Ã¾ß ¹İ°æ
+    public float viewRadius;            // ì‹œì•¼ ë°˜ê²½
     [Range(0, 360)]
-    public float viewAngle;             // ½Ã¾ß °¢µµ
-    public float startingAngle;         // ½ÃÀÛ °¢µµ (±âº»°ªÀº 0À¸·Î À§ ¹æÇâ)
+    public float viewAngle;             // ì‹œì•¼ ê°ë„
+    public float startingAngle;         // ì‹œì‘ ê°ë„ (ê¸°ë³¸ì ìœ¼ë¡œ 0ì—ì„œ ì‹œì‘)
 
-    public LayerMask targetMask;        // Player¸¦ Æ÷ÇÔÇÑ Å¸°Ù ·¹ÀÌ¾î
-    public LayerMask obstacleMask;      // °¡¸®´Â Àå¾Ö¹° ·¹ÀÌ¾î
+    public LayerMask targetMask;        // Playerë¥¼ ê°ì§€í•  ë ˆì´ì–´ ë§ˆìŠ¤í¬
+    public LayerMask obstacleMask;      // ì¥ì• ë¬¼ì„ ê°ì§€í•  ë ˆì´ì–´ ë§ˆìŠ¤í¬
 
-    public float smallViewRadius;        // Á¢ÃË ¹İ°æ
+    public float smallViewRadius;        // ì‘ì€ ì‹œì•¼ ë°˜ê²½
 
     MonsterManager MonsterManager;
 
-    bool touch = false;              //Á¢ÃË ¿©ºÎ
-
+    bool touch = false;              // í„°ì¹˜ ì—¬ë¶€
 
     private void Start()
     {
@@ -26,17 +25,17 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine("SmallFindTargetsWithDelay", 0.2f);
     }
 
-    // ÀÏÁ¤ ½Ã°£¸¶´Ù Å¸°Ù °Ë»ö
-    private System.Collections.IEnumerator FindTargetsWithDelay(float delay)
+    // ì£¼ê¸°ì ìœ¼ë¡œ íƒ€ê²Ÿ ì°¾ê¸°
+    private IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
-            
         }
     }
-    // ÀÏÁ¤ ½Ã°£¸¶´Ù Å¸°Ù °Ë»ö
+
+    // ì‘ì€ ì‹œì•¼ ë°˜ê²½ìœ¼ë¡œ ì£¼ê¸°ì ìœ¼ë¡œ íƒ€ê²Ÿ ì°¾ê¸°
     private IEnumerator SmallFindTargetsWithDelay(float delay)
     {
         while (true)
@@ -46,12 +45,12 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    //ÁÖº¯°Ë»ö
+    // ì‹œì•¼ ë‚´ì˜ íƒ€ê²Ÿ ì°¾ê¸°
     private void FindVisibleTargets()
     {
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
 
-        bool playerDetected = false; // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÑÁö ¿©ºÎ¸¦ ÃßÀûÇÏ±â À§ÇÑ º¯¼ö
+        bool playerDetected = false; // í”Œë ˆì´ì–´ë¥¼ ê°ì§€í–ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
@@ -61,7 +60,7 @@ public class FieldOfView : MonoBehaviour
 
             float correctedStartingAngle;
 
-            // ½ÃÀÛ °¢µµ¿Í ½Ã¾ß ¹üÀ§¿¡ Æ÷ÇÔµÇ´ÂÁö È®ÀÎ
+            // ì‹œì‘ ê°ë„ì™€ íƒ€ê²Ÿê³¼ì˜ ê°ë„ë¥¼ ê³„ì‚°
             float angleToTarget = Vector2.SignedAngle(Vector2.up, dirToTarget);
 
             if (GetComponent<SpriteRenderer>() != null && GetComponent<SpriteRenderer>().flipX)
@@ -77,10 +76,10 @@ public class FieldOfView : MonoBehaviour
 
             if (Mathf.Abs(angleBetweenTargetAndStartingAngle) < viewAngle / 2)
             {
-                // ½Ã¾ß ¾È¿¡ ÀÖ´Âµ¥ Àå¾Ö¹°ÀÌ °¡¸®°í ÀÖ´Ù¸é ¹«½Ã
+                // ì‹œì•¼ ë‚´ì— ì¥ì• ë¬¼ì´ ì—†ìœ¼ë©´ íƒ€ê²Ÿì„ ê°ì§€
                 if (!Physics2D.Raycast(transform.position, dirToTarget, viewRadius, obstacleMask))
                 {
-                    // Player¿¡ ¹İÀÀÇÏ´Â ·ÎÁ÷ Ãß°¡
+                    // Player íƒœê·¸ë¥¼ ê°€ì§„ íƒ€ê²Ÿì„ ê°ì§€í•˜ë©´ í”Œë ˆì´ì–´ë¥¼ ê°ì§€í–ˆë‹¤ê³  í‘œì‹œ
                     if (target.CompareTag("Player"))
                     {
                         playerDetected = true;
@@ -94,32 +93,32 @@ public class FieldOfView : MonoBehaviour
             }
         }
 
-        // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇßÀ» ¶§¿Í °¨ÁöÇÏÁö ¾Ê¾ÒÀ» ¶§ °¢°¢ ´Ù¸¥ µ¿ÀÛ ½ÇÇà
+        // í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•˜ê±°ë‚˜ í„°ì¹˜í–ˆìœ¼ë©´ MonsterManagerì— ì•Œë¦¼
         if (playerDetected || touch)
         {
             MonsterManager.AppearPlayer();
-        } else {
+        }
+        else
+        {
             MonsterManager.DisAppearPlayer();
         }
     }
 
-
-    // ±âÁî¸ğ ±×¸®±â
+    // ì‹œê°ì  í‘œì‹œë¥¼ ìœ„í•œ Gizmos ê·¸ë¦¬ê¸°
     private void OnDrawGizmos()
     {
-        //Á¢ÃË ¿ø Ç¥½Ã
+        // ì‘ì€ ì‹œì•¼ ë°˜ê²½ í‘œì‹œ
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, smallViewRadius);
 
-
-        // ¿ø ¹üÀ§Ç¥½Ã
+        // ì‹œì•¼ ë°˜ê²½ í‘œì‹œ
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, viewRadius);
 
         Vector2 viewAngleA = DirFromAngle(-viewAngle / 2 + startingAngle, false);
         Vector2 viewAngleB = DirFromAngle(viewAngle / 2 + startingAngle, false);
 
-        // x °ªÀÌ Ã¼Å©µÇ¾î ÀÖ´Ù¸é ½ÃÁ¡ ¹æÇâÀ» 180µµ µ¹¸³´Ï´Ù.
+        // X ì¢Œìš°ë¡œ ë’¤ì§‘ì–´ì•¼ í•˜ëŠ” ê²½ìš° 180ë„ë¥¼ ë”í•´ì¤Œ
         if (GetComponent<SpriteRenderer>() != null && GetComponent<SpriteRenderer>().flipX)
         {
             viewAngleA = DirFromAngle(viewAngle / 2 + startingAngle + 180f, false);
@@ -129,10 +128,9 @@ public class FieldOfView : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)viewAngleA * viewRadius);
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)viewAngleB * viewRadius);
-
     }
 
-    // °¢µµ·ÎºÎÅÍ ¹æÇâ º¤ÅÍ ¹İÈ¯
+    // ê°ë„ë¥¼ ë²¡í„°ë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜
     public Vector2 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
@@ -144,13 +142,12 @@ public class FieldOfView : MonoBehaviour
         return new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians));
     }
 
-
-    // Á¢ÃË¿¡ ÀÖ´Â Å¸°Ù °Ë»ö
+    // ì‘ì€ ì‹œì•¼ ë°˜ê²½ ë‚´ì˜ íƒ€ê²Ÿ ì°¾ê¸°
     private void SmallFindVisibleTargets()
     {
         Collider2D[] SmalltargetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, smallViewRadius, targetMask);
 
-        touch = false; ;
+        touch = false;
 
         for (int i = 0; i < SmalltargetsInViewRadius.Length; i++)
         {
@@ -160,14 +157,13 @@ public class FieldOfView : MonoBehaviour
 
             if (Physics2D.Raycast(transform.position, dirToTarget, smallViewRadius))
             {
-                // Player¿¡ ¹İÀÀÇÏ´Â ·ÎÁ÷ Ãß°¡
+                // Player íƒœê·¸ë¥¼ ê°€ì§„ íƒ€ê²Ÿì„ ê°ì§€í•˜ë©´ í„°ì¹˜í–ˆë‹¤ê³  í‘œì‹œ
                 if (target.CompareTag("Player"))
                 {
-                    Debug.Log("Á¢ÃËÇÃ·¹ÀÌ¾î");
+                    Debug.Log("í”Œë ˆì´ì–´ í„°ì¹˜í•¨");
                     touch = true;
                 }
             }
         }
     }
-
 }
