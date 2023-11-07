@@ -140,6 +140,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MonsterID: 99
+  pattern: 1
+  maxHealth_Ms: 25
+  health_Ms: 25
+  attackPower_Ms: 54
+  defense_Ms: 10
+  speed_Ms: 1
+  tenacity_Ms: 15
+  attackSpeed_Ms: 1.5
+  crossroads_Ms: 15
+  elite: 1
+  method: 0
+  smallViewRadius: 0.5
+  viewRadius: 5
+  viewAngle: 90
+  waiteTime: 3
 --- !u!114 &3580148164716198743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86a1552add217e409a4afa2a20ee3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 3
-  viewAngle: 40
+  viewRadius: 5
+  viewAngle: 90
   startingAngle: 180
   targetMask:
     serializedVersion: 2
@@ -161,7 +176,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  smallViewRadius: 1
+  smallViewRadius: 0.5
 --- !u!114 &3580148164724316889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,4 +205,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextMove: 1
-  waitingtime: 5
+  moveSpeed: 0
+  waitingtime: 3
