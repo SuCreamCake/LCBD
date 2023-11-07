@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     //원거리 공격 데미지
-    public int damage;
+    public float damage;
     private Rigidbody2D bulletRigidbody2D;
     private float bulletSpeed = 10f;
     private float distanceTime;
@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
         else if (collision.gameObject.tag == "monster")
         {
             Debug.Log("몬스터와 충돌!");
+            collision.gameObject.GetComponent<MonsterManager>().TakeDamage((int)damage);
             Destroy(gameObject);
         }
     }
@@ -41,4 +42,9 @@ public class Bullet : MonoBehaviour
         }
         
     }
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
+    }
+
 }

@@ -7,7 +7,7 @@ public class BattleManager : MonoBehaviour
     GameObject playerObject, gunArm;
     Player player;
     public bool val;
-    
+
 
     //���� ����
     //���ݼӵ��� üũ�ϱ� ���� ����
@@ -15,19 +15,19 @@ public class BattleManager : MonoBehaviour
     //���Ÿ� ���� ������Ʈ
     public GameObject bulletObject;
     //���� ��ü�� ��� �ڷ���
-    
+
     //�Ǽ� ����, ��������, ���Ÿ� ���� �ε���
     bool sDown1;
     bool sDown2;
     bool sDown3;
     bool sDown4;
     //���� �ε���
-    
+
     //������ġ
     public Vector3 attackPosition;
     private Animator anim;
 
- 
+
     //���� ������Ʈ
     public GameObject shieldObject;
     //���� ���̺� ����
@@ -40,7 +40,7 @@ public class BattleManager : MonoBehaviour
     public int totalAttackPower;
     //�� ��
     public int totalShield;
-    private GameObject soundwaveAttackOBJ;
+    public GameObject soundwaveAttackOBJ;
     public int weaponIndex = -1;
 
     public GameObject animationEffectMeeleAttack;
@@ -112,7 +112,7 @@ public class BattleManager : MonoBehaviour
             if (raycastHit.collider != null)
             {
                 CalDamage();
-                raycastHit.collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
+                raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
                 Debug.Log("���� ����");
 
             }
@@ -143,15 +143,10 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
         {
-           
 
 
-            //�÷��̾� �ִϸ��̼�
-            Instantiate(animationEffectMeeleAttack, player.transform.position, new (0,0,0,0));
-            Debug.Log("근접공격 실행!!");
-            animationEffectMeeleAttack.transform.position = player.transform.position +new Vector3 (0.2f,0f,0f);
-            anim = animationEffectMeeleAttack.GetComponent<Animator>();
-            anim.SetTrigger("isMeelAttackEffect");
+
+
             attackTime = 0;
             //���콺�� ��ġ ��������
             //Vector2 mousePoint = Input.mousePosition;
@@ -161,19 +156,32 @@ public class BattleManager : MonoBehaviour
 
             //애니메이션
             player.ani.SetTrigger("isMeleeAttack");
-            float key =  mousePoint.x -playerObject.transform.position.x ;
+            float key = mousePoint.x - playerObject.transform.position.x;
             if (key > 0)
             {
                 key = 1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
-            else if(key<0)
+            else if (key < 0)
             {
                 key = -1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
-                
 
+            if (key > 0)
+            {
+                Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(0.8f, 0, 0), new(0, 0, 0, 0));
+                Debug.Log("근접공격 실행!!");
+                anim = animationEffectMeeleAttack.GetComponent<Animator>();
+                anim.SetTrigger("isMeelAttackEffect");
+            }
+            else
+            {
+                Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(-0.8f, 0, 0), new(0, 0, 0, 0));
+                Debug.Log("근접공격 실행!!");
+                anim = animationEffectMeeleAttack.GetComponent<Animator>();
+                anim.SetTrigger("isMeelAttackEffect");
+            }
 
 
             //���ݹ���
@@ -195,7 +203,7 @@ public class BattleManager : MonoBehaviour
                 if (collider.tag == "monster")
                 {
                     Debug.Log("몬스터를 맞춤");
-                    collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
+                    collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
                 }
             }
             Debug.Log("���ݽ���");
@@ -205,7 +213,7 @@ public class BattleManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawCube(attackPosition, new Vector2(player.crossroads * 0.3f, 0.7f));
+        Gizmos.DrawCube(player.transform.position, new Vector2(player.crossroads * 0.3f, 0.7f));
     }
 
 
@@ -237,16 +245,13 @@ public class BattleManager : MonoBehaviour
 
             gunArm.SetActive(true);
 
-            Vector3 playerPos = transform.position;
-
+            Vector3 playerPos = playerObject.transform.position;
             Vector2 direVec = mousePoint - (Vector3)playerPos;
             direVec = direVec.normalized;
             GameObject tempObeject = Instantiate(bulletObject);
-            tempObeject.transform.position = transform.position;
+            tempObeject.GetComponent<Bullet>().SetDamage(totalAttackPower);
+            tempObeject.transform.position = playerObject.transform.position;
             tempObeject.transform.right = direVec;
-
-
-            
             return true;
         }
         return false;
@@ -370,39 +375,38 @@ public class BattleManager : MonoBehaviour
             float startAngle = -player.attackPower / 2;
 
             //�Ϲ� ���� ����
-            for (float startAngleIndex = startAngle; startAngleIndex <= player.attackPower / 2; startAngleIndex += 0.5f)
-            {
-                attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
-                Debug.Log(startAngleIndex);
-                raycastHit2Ds = Physics2D.RaycastAll(transform.position, attackForce, player.crossroads, enemyLayers);
-                for (int i = 0; i < raycastHit2Ds.Length; i++)
-                {
-                    RaycastHit2D hit = raycastHit2Ds[i];
-                    if (hit.collider.tag == "monster")
-                    {
+            //for (float startAngleIndex = startAngle; startAngleIndex <= player.attackPower / 2; startAngleIndex += 0.5f)
+            //{
+            //    attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
+            //    Debug.Log(startAngleIndex);
+            //    raycastHit2Ds = Physics2D.RaycastAll(transform.position, attackForce, player.crossroads, enemyLayers);
+            //    for (int i = 0; i < raycastHit2Ds.Length; i++)
+            //    {
+            //        RaycastHit2D hit = raycastHit2Ds[i];
+            //        if (hit.collider.tag == "monster")
+            //        {
 
-                        hit.collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
-                    }
-                }
-            }
-            if (soundwaveAttackOBJ != null)
-                soundwaveAttackOBJ.SetActive(true);
-            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
-            soundwaveAttackOBJ.transform.rotation = Quaternion.Euler(0, 0, angle);
-            Invoke("SoundwaveOff", 2f);
+            //            hit.collider.GetComponent<EnemyHit>().TakeDamage(totalAttackPower);
+            //        }
+            //    }
+            //}
+            //if (soundwaveAttackOBJ != null)
+            //    soundwaveAttackOBJ.SetActive(true);
+            //float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            //soundwaveAttackOBJ.transform.rotation = Quaternion.Euler(0, 0, angle);
+            //Invoke("SoundwaveOff", 2f);
 
 
 
-            //1/3���� ���� ���� ����
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(playerObject.transform.position, player.crossroads / 3, enemyLayers);
+            Instantiate(soundwaveAttackOBJ, playerObject.transform.position, Quaternion.identity);
             foreach (Collider2D collider in colliders)
             {
                 Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
                     Debug.Log("1/3���� �ǰ�");
-                    collider.GetComponent<EnemyHit>().IsCrossroadThird();
-                    collider.GetComponent<EnemyHit>().TakeDamage(player.attackPower / 3);
+                    collider.GetComponent<MonsterManager>().TakeDamage(player.attackPower / 3);
                 }
                 string txt = "";
                 if (player.health <= 0)
@@ -422,12 +426,12 @@ public class BattleManager : MonoBehaviour
     //������ ����
     private void CalDamage()
     {
-        totalAttackPower += 0/*���� ���ݷ� ���� �� ����*/;
+        totalAttackPower += 0;
     }
     //��� ����
     private void TotalShield()
     {
-        totalShield += 0;/*���⵵ ����������*/;
+        totalShield += 0;
     }
     public void SoundwaveOff()
     {
