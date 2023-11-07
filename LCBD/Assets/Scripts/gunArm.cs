@@ -28,7 +28,7 @@ public class gunArm : MonoBehaviour
     {
 
         playerPosition = player.transform;
-        //Ä«¸Þ¶ó°¡ ÇÃ·¹ÀÌ¾î µû¶ó°¡±â
+        //Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ó°¡±ï¿½
         transform.position = new Vector3(playerPosition.position.x, playerPosition.position.y, transform.position.z);
         target = transform.position;
         mouse = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
