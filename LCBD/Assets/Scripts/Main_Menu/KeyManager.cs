@@ -17,7 +17,8 @@ public enum KeyInput {
     sDown2, //12
     sDown3, //13
     sDown4, //14
-    KEYCOUNT } //�������� Ű ������ ���� ����.
+    TouchNPC, //15
+    KEYCOUNT } //키 카운트를 재기위해 keycount설정
 
 public static class KeySetting { public static Dictionary<KeyInput, KeyCode> keys = new Dictionary<KeyInput, KeyCode>(); }
 public class KeyManager : MonoBehaviour
@@ -37,7 +38,8 @@ public class KeyManager : MonoBehaviour
         KeyCode.F1, //sDown1
         KeyCode.F2, //sDown2
         KeyCode.F3, //sDown3
-        KeyCode.F4 //sDown3
+        KeyCode.F4, //sDown3
+        KeyCode.G, //NPC 상호작용 대화
     };
     void Awake()
     {
@@ -63,23 +65,27 @@ public class KeyManager : MonoBehaviour
         }
     }
     int key = -1;
-    public void ChangeKey(int num) //Ű ����
+    public void ChangeKey(int num) //키 값 바꾸는 함수
     {
         key = num;
     }
 
     private void TestInput() {
-    //UP,
-    //DOWN,
-    //LEFT,
-    //RIGHT,
-    //JUMP,
-    //Run,
-    //Inventory,
-    //Item1,
-    //
-    //
-    //
+        //UP,
+        //DOWN,
+        //LEFT,
+        //RIGHT,
+        //JUMP,
+        //Run,
+        //Inventory,
+        //Item1,
+        //SoundWave
+        //sDown1
+        //sDown2
+        //sDown3
+        //sDown3
+        //
+        //
         if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //W�Է�
         {
             Debug.Log("Up");
@@ -113,6 +119,10 @@ public class KeyManager : MonoBehaviour
             Debug.Log("Item2");
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //������1��Ű
+        {
+            Debug.Log("Item3");
+        }
+        if (Input.GetKey(KeySetting.keys[KeyInput.TouchNPC])) //������1��Ű
         {
             Debug.Log("Item3");
         }
