@@ -76,6 +76,17 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+
+        if (player.stage == 2 && val)
+        {
+            gunArm = GameObject.Find("gunArm");
+            gunArm.SetActive(false);
+            val = false;
+        }
+    }
+
     //����
     //�Ǽ� ����
     public void punchAttack()
