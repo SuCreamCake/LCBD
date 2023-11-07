@@ -8,6 +8,7 @@ public class MonsterManager : MonoBehaviour
     PlayerTracking PlayerTracking;
     FieldOfView FieldOfView;
     EnemyMove EnemyMove;
+    SpriteRenderer SpriteRenderer;
 
     bool once = false; // 한 번만
     bool findPlayer = false; // 플레이어 발견 여부
@@ -39,6 +40,7 @@ public class MonsterManager : MonoBehaviour
         PlayerTracking = GetComponent<PlayerTracking>();
         EnemyMove = GetComponent<EnemyMove>();
         FieldOfView = GetComponent <FieldOfView>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
 
         if (elite == 2)
         {
@@ -119,5 +121,18 @@ public class MonsterManager : MonoBehaviour
     public void BehaviorPattern()
     {
         pattern = true; // 행동 패턴 활성화
+    }
+
+    public void TakeDamage(int damage)
+    {
+        StartCoroutine(OnDamage(damage));
+    }
+    IEnumerator OnDamage(int damage)
+    {
+        SpriteRenderer.material.color = Color.red;
+        Debug.Log("EnemyHit��ũ��Ʈ 28��° �� Damage��" + damage);
+        maxHealth_Ms -= damage;
+        yield return new WaitForSeconds(0.01f);
+        SpriteRenderer.material.color = Color.white;
     }
 }
