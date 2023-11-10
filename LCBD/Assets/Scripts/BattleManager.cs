@@ -51,8 +51,8 @@ public class BattleManager : MonoBehaviour
     public bool iSmeleeAttack = false;
     public float setKey;
 
-    public float longWeaponeAttackPower;
-
+    public int weaponPower;
+    public float addAttackSpeed = 0;
     SoundsPlayer SFXPlayer;
 
     // Start is called before the first frame update
@@ -66,14 +66,14 @@ public class BattleManager : MonoBehaviour
         attackTimeDelay = player.attackSpeed;
         gunBool = true;
         hammer1bool = true;
-        longWeaponeAttackPower = 3;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         soundWaveAttackTime += Time.deltaTime;
-        attackTimeDelay = player.attackSpeed;
+        attackTimeDelay = player.attackSpeed + addAttackSpeed;
         attackTimeDelay = 1f / attackTimeDelay;
         attackTime += Time.deltaTime;
         getInputBattleKeyKode();
@@ -176,6 +176,8 @@ public class BattleManager : MonoBehaviour
         {
             player.enduranceOnOff = 0;
             player.endurance -= player.maxEndurance / 15;
+            this.GetComponent<WeaponManager>().Set(WeaponManager.Weapon.hammer);
+            addAttackSpeed = 0;
             attackTime = 0;
             //���콺�� ��ġ ��������
             //Vector2 mousePoint = Input.mousePosition;
@@ -268,8 +270,9 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
+            this.GetComponent<WeaponManager>().Set(WeaponManager.Weapon.candy);
             player.enduranceOnOff = 0;
-            player.endurance -= longWeaponeAttackPower;
+            player.endurance -= weaponPower;
             SFXPlayer.AttackSound(0);
             attackTime = 0;
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
@@ -446,6 +449,7 @@ public class BattleManager : MonoBehaviour
     {
         int sum = 0;
         sum += player.GetComponent<Player>().attackPower;
+        sum += weaponPower;
         totalAttackPower = sum;
     }
     //��� ����
