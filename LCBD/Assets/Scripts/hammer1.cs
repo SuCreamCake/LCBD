@@ -20,7 +20,7 @@ public class hammer1 : MonoBehaviour
         battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
     }
 
-    void LateUpdate()
+    void Update()
     {
         
         if (Input.GetKey(KeySetting.keys[KeyInput.LEFT]))

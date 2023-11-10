@@ -307,16 +307,15 @@ public class BattleManager : MonoBehaviour
         sDown2 = Input.GetKeyDown(KeyCode.F2);
         sDown3 = Input.GetKeyDown(KeyCode.F3);
         sDown4 = Input.GetKeyDown(KeyCode.F4);
-        swapWeapon();
+        if(player.stage==2)
+            swapWeapon();
     }
 
     private void getInputSoundWaveAttack()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && player.stage == 1)
         {
             soundWaveAttack();
-
-           
         }
     }
     //���� Ÿ�� �ε���
