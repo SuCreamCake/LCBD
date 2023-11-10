@@ -5,16 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class Quest
 {
-    public int ID; //Äù½ºÆ®ID
-    public string name; //Äù½ºÆ® ÀÌ¸§
-    public string description; //Äù½ºÆ® »ó¼¼ Á¤º¸
-    public string[] dialogues; //Äù½ºÆ® ¼±Çà ´ë»ç
-    public int nextQuestID; // ´ÙÀ½ Äù½ºÆ® ¹øÈ£
-    public bool isPrerequisiteComplete; // ¼±Çà Äù½ºÆ® ¿Ï·á ¿©ºÎ
-    public string[] completionDialogues; // Äù½ºÆ® ¿Ï·á ´ë»ç
-    public int requiredCompletionCount; // Äù½ºÆ® Å¬¸®¾î Á¶°Ç´Ş¼º¿¡ ÇÊ¿äÇÑ È½¼ö
-    public int currentCompletionCount; // ÇöÀç Äù½ºÆ® ÁøÇàµµ
-    public bool isQuestInProgress; // ÇöÀç Äù½ºÆ® ÁøÇà ¿©ºÎ
+    public int ID; //í€˜ìŠ¤íŠ¸ID
+    public string name; //í€˜ìŠ¤íŠ¸ ì´ë¦„
+    public string description; //í€˜ìŠ¤íŠ¸ ìƒì„¸ ì •ë³´
+    public string[] dialogues; //í€˜ìŠ¤íŠ¸ ì„ í–‰ ëŒ€ì‚¬
+    public int nextQuestID; // ë‹¤ìŒ í€˜ìŠ¤íŠ¸ ë²ˆí˜¸
+    public bool isPrerequisiteComplete; // ì„ í–‰ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ì—¬ë¶€
+    public string[] completionDialogues; // í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬
+    public int requiredCompletionCount; // í€˜ìŠ¤íŠ¸ í´ë¦¬ì–´ ì¡°ê±´ë‹¬ì„±ì— í•„ìš”í•œ íšŸìˆ˜
+    public int currentCompletionCount; // í˜„ì¬ í€˜ìŠ¤íŠ¸ ì§„í–‰ë„
+    public bool isQuestInProgress; // í˜„ì¬ í€˜ìŠ¤íŠ¸ ì§„í–‰ ì—¬ë¶€
 
     public Quest(int id, string questName, string questDescription, string[] questDialogues, int nextID, bool prerequisite,
                  string[] completeDialogues, int completionCount)
@@ -27,8 +27,8 @@ public class Quest
         isPrerequisiteComplete = prerequisite;
         completionDialogues = completeDialogues;
         requiredCompletionCount = completionCount;
-        currentCompletionCount = 0; // Äù½ºÆ® ÁøÇàµµ ÃÊ±âÈ­
-        isQuestInProgress = false; // Äù½ºÆ® ÁøÇà ¿©ºÎ ÃÊ±âÈ­
+        currentCompletionCount = 0; // í€˜ìŠ¤íŠ¸ ì§„í–‰ë„ ì´ˆê¸°í™”
+        isQuestInProgress = false; // í€˜ìŠ¤íŠ¸ ì§„í–‰ ì—¬ë¶€ ì´ˆê¸°í™”
     }
 }
 
@@ -38,15 +38,15 @@ public class QuestData : MonoBehaviour
 
     private void Awake()
     {
-        // Äù½ºÆ® Á¤º¸¸¦ »ı¼ºÇÏ°í µñ¼Å³Ê¸®¿¡ Ãß°¡
-        Quest quest1 = new Quest(1, "Ã¹ ¹øÂ° Äù½ºÆ®", "Ã¹ ¹øÂ° Äù½ºÆ® ¼¼ºÎ³»¿ëÀÔ´Ï´Ù.", new string[] { "¾È³çÇÏ¼¼¿ä!", "LÅ°¸¦ ¼¼¹ø ´­·¯ÁÖ¼¼¿ä." },
-                                 10, true, new string[] { "1Äù½ºÆ® ¿Ï·á ´ë»ç1", "1Äù½ºÆ® ¿Ï·á ´ë»ç2..." }, 3);
+        // í€˜ìŠ¤íŠ¸ ì •ë³´ë¥¼ ìƒì„±í•˜ê³  ë”•ì…”ë„ˆë¦¬ì— ì¶”ê°€
+        Quest quest1 = new Quest(1, "ì²« ë²ˆì§¸ í€˜ìŠ¤íŠ¸", "ì²« ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì„¸ë¶€ë‚´ìš©ì…ë‹ˆë‹¤.", new string[] { "ì•ˆë…•í•˜ì„¸ìš”!", "Lí‚¤ë¥¼ ì„¸ë²ˆ ëˆŒëŸ¬ì£¼ì„¸ìš”." },
+                                 10, true, new string[] { "1í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬1", "1í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬2..." }, 3);
 
-        Quest quest2 = new Quest(2, "µÎ ¹øÂ° Äù½ºÆ®", "µÎ ¹øÂ° Äù½ºÆ® ¼¼ºÎ³»¿ëÀÔ´Ï´Ù.", new string[] { "ÀÌ Äù½ºÆ®´Â ¾î·Á¿ö¿ä." },
-                                 0, true, new string[] { "µÎ ¹øÂ° Äù½ºÆ® ¿Ï·á ´ë»ç1", "µÎ ¹øÂ° Äù½ºÆ® ¿Ï·á ´ë»ç2" }, 10);
+        Quest quest2 = new Quest(2, "ë‘ ë²ˆì§¸ í€˜ìŠ¤íŠ¸", "ë‘ ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì„¸ë¶€ë‚´ìš©ì…ë‹ˆë‹¤.", new string[] { "ì´ í€˜ìŠ¤íŠ¸ëŠ” ì–´ë ¤ì›Œìš”." },
+                                 0, true, new string[] { "ë‘ ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬1", "ë‘ ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬2" }, 10);
 
-        Quest quest10 = new Quest(10, "¿­ ¹øÂ° Äù½ºÆ®", "¿­ ¹øÂ° Äù½ºÆ® ¼¼ºÎ³»¿ëÀÔ´Ï´Ù.", new string[] { "ÀÌ Äù½ºÆ®´Â ¾î·Á¿ö¿ä.", "¤»¤»" },
-                                  0, false, new string[] { "¿­ ¹øÂ° Äù½ºÆ® ¿Ï·á ´ë»ç1", "¿­ ¹øÂ° Äù½ºÆ® ¿Ï·á ´ë»ç2" }, 15);
+        Quest quest10 = new Quest(10, "ì—´ ë²ˆì§¸ í€˜ìŠ¤íŠ¸", "ì—´ ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì„¸ë¶€ë‚´ìš©ì…ë‹ˆë‹¤.", new string[] { "ì´ í€˜ìŠ¤íŠ¸ëŠ” ì–´ë ¤ì›Œìš”.", "ã…‹ã…‹" },
+                                  0, false, new string[] { "ì—´ ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬1", "ì—´ ë²ˆì§¸ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ëŒ€ì‚¬2" }, 15);
 
         questDictionary.Add(quest1.ID, quest1);
         questDictionary.Add(quest2.ID, quest2);

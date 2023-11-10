@@ -131,8 +131,12 @@ public class MonsterManager : MonoBehaviour
     {
         SpriteRenderer.material.color = Color.red;
         Debug.Log("EnemyHit��ũ��Ʈ 28��° �� Damage��" + damage);
-        maxHealth_Ms -= damage;
+        health_Ms -= damage;
         yield return new WaitForSeconds(0.01f);
         SpriteRenderer.material.color = Color.white;
+        if(health_Ms <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
