@@ -52,6 +52,11 @@ public class Player : MonoBehaviour
     private int IncubationStack;
     private int genitalStack;
 
+    //낙하 데미지
+    private bool fall;
+    private Vector2 start;
+    private Vector2 end;
+
 
     SoundsPlayer SFXPlayer;
     BattleManager battleManager;
@@ -115,6 +120,7 @@ public class Player : MonoBehaviour
         minState();
 
 
+
     }
 
 
@@ -125,6 +131,9 @@ public class Player : MonoBehaviour
 
         upDown();
         enduranceSystem();
+        falling();
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -163,6 +172,9 @@ public class Player : MonoBehaviour
             }
         }
         personality(collision);
+
+
+
      
     
     }
@@ -319,7 +331,29 @@ public class Player : MonoBehaviour
             //Debug.Log("else");
         }
     }
-
+    private void falling()
+    {
+        if (rigid.velocity.y < 0 && rigid.velocity.y > -0.5)
+            start = transform.position;
+        if (rigid.velocity.y > -5.1 && rigid.velocity.y < -5)
+        {
+            fall = true;
+        }
+        if (fall) //내려갈떄만 스캔
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("background"));
+            if (rayHit.collider != null && fall)
+            {
+                end = transform.position;
+                float demege = Mathf.FloorToInt((start.y - end.y) / 5);
+                health -= maxHealth / 5 * demege;
+                fall = false;
+            }
+        }
+        if (rigid.velocity.y == 0)
+            fall = false;
+    }
     private void run()
     {
         if (stage != 1)

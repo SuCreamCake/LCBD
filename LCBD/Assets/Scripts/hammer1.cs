@@ -44,7 +44,8 @@ public class hammer1 : MonoBehaviour
             transform.position = new Vector3(playerPosition.position.x + 0.3f, playerPosition.position.y - 0.3f, transform.position.z);
         }
 
-        if (!playerScript.ani.GetCurrentAnimatorStateInfo(0).IsName("childhoodStay"))
+        if (!playerScript.ani.GetCurrentAnimatorStateInfo(0).IsName("childhoodStay") ||
+            playerScript.stage !=2)
             battleManager.hammer1bool = true;
     }
 }

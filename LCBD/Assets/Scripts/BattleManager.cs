@@ -67,7 +67,7 @@ public class BattleManager : MonoBehaviour
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
-        Debug.Log(attackPosition.y);
+        //Debug.Log(attackPosition.y);
 
     }
 
@@ -292,7 +292,7 @@ public class BattleManager : MonoBehaviour
 
     private void getInputSoundWaveAttack()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && player.stage==1)
         {
             soundWaveAttack();
             Debug.Log("F����");
