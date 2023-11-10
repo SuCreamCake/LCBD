@@ -316,7 +316,7 @@ public class BattleManager : MonoBehaviour
         {
             soundWaveAttack();
 
-            player.ani.SetTrigger("isSkill");
+           
         }
     }
     //���� Ÿ�� �ε���
@@ -402,6 +402,7 @@ public class BattleManager : MonoBehaviour
     {
         if (soundWaveAttackTime >= 3.0f)
         {
+            player.ani.SetTrigger("isSkill");
             soundWaveAttackTime = 0;
             RaycastHit2D[] raycastHit2Ds;
             soundWaveAttackTime = 0;
