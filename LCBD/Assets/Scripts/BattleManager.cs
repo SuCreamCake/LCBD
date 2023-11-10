@@ -340,11 +340,20 @@ public class BattleManager : MonoBehaviour
         if (sDown1)
         {
             weaponIndex = 0;
-            Debug.Log("��ư 1Ȱ��ȭ");
+            player.ani.SetTrigger("isChildhood");
         }
-        if (sDown2) weaponIndex = 1;
+        if (sDown2)
+        {
+            weaponIndex = 1;
+            player.ani.SetTrigger("isGun");
+        }
         if (sDown3) weaponIndex = 2;
-        if (sDown4) weaponIndex = 3;
+        if (sDown4)
+        {
+            weaponIndex = 3;
+            player.ani.SetTrigger("isChildhood");
+        }
+
         //if (sDown1 || sDown2 || sDown3 || sDown4)
         //{
         //    if (shieldObject != null)
