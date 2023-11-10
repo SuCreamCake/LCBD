@@ -23,6 +23,8 @@ TagManager:
   - StagePortal
   - FieldPortal
   - npc
+  - portal
+  - WeaponSlot
   layers:
   - Default
   - TransparentFX

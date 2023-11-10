@@ -10,11 +10,11 @@ public class CupManager : MonoBehaviour
     public GameObject Cup3;
     public GameObject Ball;
 
-    // ÄÅ ¾÷´Ù¿î
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¿ï¿½
     private Vector3 originalPos1;
     private Vector3 originalPos2;
     private Vector3 originalPos3;
-    private float duration = 1.0f; // ÀÌµ¿¿¡ °É¸®´Â ½Ã°£ (1ÃÊ)
+    private float duration = 1.0f; // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ (1ï¿½ï¿½)
 
     private Vector3 originalBallPos;
     private Vector2 firstPos1;
@@ -42,12 +42,12 @@ public class CupManager : MonoBehaviour
 
     void OnDisable()
     {
-        // Cup ¿ÀºêÁ§Æ®µéÀÇ À§Ä¡¸¦ ÃÊ±â À§Ä¡·Î º¯°æÇÕ´Ï´Ù.
+        // Cup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         Cup1.GetComponent<RectTransform>().anchoredPosition = firstPos1;
         Cup2.GetComponent<RectTransform>().anchoredPosition = firstPos2;
         Cup3.GetComponent<RectTransform>().anchoredPosition = firstPos3;
 
-        // °øÀÇ À§Ä¡µµ ÃÊ±â À§Ä¡·Î º¯°æÇÕ´Ï´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         Ball.GetComponent<RectTransform>().anchoredPosition = firstBallPos;
         StartButton.interactable = true;
         ResetButton.interactable = false;
@@ -59,22 +59,24 @@ public class CupManager : MonoBehaviour
         {
             first = false;
         }
-        //ÄÅ ¾÷´Ù¿îÀ» À§ÇÑ ¿ÀºêÁ§Æ® À§Ä¡ ¾ò±â
+        //ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
         originalPos1 = Cup1.transform.position;
         originalPos2 = Cup2.transform.position;
         originalPos3 = Cup3.transform.position;
         originalBallPos = Ball.transform.position;
 
-        ResetGame(); // Start¿¡¼­ ResetGame ¸Ş¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
+        ResetGame(); // Startï¿½ï¿½ï¿½ï¿½ ResetGame ï¿½Ş¼ï¿½ï¿½å¸¦ È£ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     }
 
-    // UI ¹öÆ°¿¡ ¿¬°áÇÒ ¸Ş¼­µå¸¦ ¸¸µì´Ï´Ù.
+    // UI ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
     public void OnStartButtonClicked()
     {
+        //ì—¬ê¸°ì— ëˆ ê´€ë ¨ ë©”ì†Œë“œ ì‘ì„±í•´ì•¼ê² ì§€?
+
         if (!isGameRunning)
         {
             isGameRunning = true;
-            // °ÔÀÓÀÌ ½ÇÇà ÁßÀÌ ¾Æ´Ñ °æ¿ì¿¡¸¸ ½ÇÇàÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             StartCoroutine(StartGame());
         }
         StartButton.interactable = false;
@@ -90,25 +92,25 @@ public class CupManager : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            // 2°³ÀÇ ÄÅÀ» ·£´ıÀ¸·Î ¼±ÅÃÇÏ¿© ¹è¿­¿¡ ÀúÀåÇÕ´Ï´Ù.
+            // 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             chosenCups = GetRandomCups(2);
 
-            //chosenCups ¹è¿­À» Character ½ºÅ©¸³Æ®¿¡°Ô Àü´ŞÇÕ´Ï´Ù.
+            //chosenCups ï¿½è¿­ï¿½ï¿½ Character ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             PassChosenCupsToCharacters();
 
-            // ¼±ÅÃµÈ ÄÅÀ» Log·Î Ãâ·ÂÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ Logï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             LogChosenCups(chosenCups);
 
-            // 2°³ÀÇ ¼±ÅÃµÈ ÄÅÀÇ ÀÌ¸§À» ±³Â÷ÇÏ¿© º¯°æÇÕ´Ï´Ù.
+            // 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             SwapCupNames(chosenCups[0], chosenCups[1]);
 
-            // º¯°æµÈ ÄÅ ÀÌ¸§À» Log·Î Ãâ·ÂÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ Logï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             LogSwappedCupNames(chosenCups);
 
-            // 2°³ÀÇ ÄÅÀÇ À§Ä¡¸¦ ±³Â÷ÇÏ¿© º¯°æÇÕ´Ï´Ù.
+            // 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             SwapCupPositions(chosenCups[0], chosenCups[1]);
 
-            // BallÀÌ ÀÖ´Â ÄÅÀ» Ã£¾Æ Log·Î Ãâ·ÂÇÕ´Ï´Ù.
+            // Ballï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ Logï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             FindCupWithBall(chosenCups);
 
             // Wait for 1.5 seconds before proceeding to the next iteration.
@@ -128,10 +130,10 @@ public class CupManager : MonoBehaviour
 
     private GameObject[] GetRandomCups(int count)
     {
-        // 3°³ÀÇ ÄÅÀ» ¹è¿­¿¡ ÀúÀåÇÕ´Ï´Ù.
+        // 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         GameObject[] cups = new GameObject[] { Cup1, Cup2, Cup3 };
 
-        // ·£´ıÀ¸·Î ÄÅÀ» ¼±ÅÃÇÏ±â À§ÇØ ¹è¿­À» ¼¯½À´Ï´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
         for (int i = 0; i < cups.Length; i++)
         {
             int randomIndex = Random.Range(i, cups.Length);
@@ -140,7 +142,7 @@ public class CupManager : MonoBehaviour
             cups[randomIndex] = temp;
         }
 
-        // count °³¼ö¸¸Å­ ¾Õ¿¡¼­ºÎÅÍ ¼±ÅÃÇÕ´Ï´Ù.
+        // count ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½Õ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         GameObject[] chosenCups = new GameObject[count];
         for (int i = 0; i < count; i++)
         {
@@ -164,7 +166,7 @@ public class CupManager : MonoBehaviour
     {
         foreach (GameObject cup in cups)
         {
-            // ÄÅÀÇ ÇÏÀ§ ¿ÀºêÁ§Æ®¸¦ °Ë»çÇÏ¿© BallÀÌ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï¿ï¿½ Ballï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             bool hasBall = false;
             foreach (Transform child in cup.transform)
             {
@@ -175,10 +177,10 @@ public class CupManager : MonoBehaviour
                 }
             }
 
-            // BallÀÌ ÀÖ´Â ÄÅÀÎ °æ¿ì Log·Î Ãâ·ÂÇÕ´Ï´Ù.
+            // Ballï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Logï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             if (hasBall)
             {
-                Debug.Log(cup.name + "°¡ °øÀ» °¡Áö°í ÀÖ´Ù.");
+                Debug.Log(cup.name + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.");
             }
         }
     }
@@ -219,7 +221,7 @@ public class CupManager : MonoBehaviour
         Cup3.GetComponent<CupClickChecker>().Ing();
     }
 
-    // ÀÌ ¸Ş¼­µå¸¦ ÅëÇØ chosenCups ¹è¿­À» Character ½ºÅ©¸³Æ®¿¡°Ô Àü´ŞÇÕ´Ï´Ù.
+    // ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ chosenCups ï¿½è¿­ï¿½ï¿½ Character ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     public void PassChosenCupsToCharacters()
     {
         Character[] characters = FindObjectsOfType<Character>();
@@ -230,77 +232,77 @@ public class CupManager : MonoBehaviour
         }
     }
 
-    // ÄÅ ´Ù¿î
+    // ï¿½ï¿½ ï¿½Ù¿ï¿½
     private IEnumerator DownMove()
     {
-        yield return null; // 1 ÇÁ·¹ÀÓ ´ë±â
+        yield return null; // 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
         Start();
-        // ¿øÇÏ´Â ½Ã°£¿¡ µû¶ó º¸°£ ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ¿ÀºêÁ§Æ®¸¦ ÀÌµ¿½ÃÅµ´Ï´Ù.
+        // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsedTime / duration); // 0°ú 1 »çÀÌÀÇ º¸°£ °ª
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
             Cup1.transform.position = Vector3.Lerp(originalPos1, new Vector3(originalPos1.x, originalPos1.y - 50f, originalPos1.z), t);
             Cup2.transform.position = Vector3.Lerp(originalPos2, new Vector3(originalPos2.x, originalPos2.y - 50f, originalPos2.z), t);
             Cup3.transform.position = Vector3.Lerp(originalPos3, new Vector3(originalPos3.x, originalPos3.y - 50f, originalPos3.z), t);
 
-            // °øµµ ÃµÃµÈ÷ ÀÌµ¿½ÃÅµ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ ÃµÃµï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.
             Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalBallPos.y + 50f, originalBallPos.z), t);
 
-            yield return null; // 1 ÇÁ·¹ÀÓ ´ë±â
+            yield return null; // 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         }
 
     }
 
-    // ÄÅ ¾÷
+    // ï¿½ï¿½ ï¿½ï¿½
     private IEnumerator UpMove()
     {
-        yield return null; // 1 ÇÁ·¹ÀÓ ´ë±â
+        yield return null; // 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-        originalBallPos = new Vector3(Ball.transform.position.x, Ball.transform.position.y - 50f, Ball.transform.position.z); // ÇöÀç °øÀÇ À§Ä¡ ÀúÀå
+        originalBallPos = new Vector3(Ball.transform.position.x, Ball.transform.position.y - 50f, Ball.transform.position.z); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
         Vector3 targetBallPos = new Vector3(originalBallPos.x, originalBallPos.y - 50f, originalBallPos.z);
 
 
-        // ¿øÇÏ´Â ½Ã°£¿¡ µû¶ó º¸°£ ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ¿ÀºêÁ§Æ®¸¦ ÀÌµ¿½ÃÅµ´Ï´Ù.
+        // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsedTime / duration); // 0°ú 1 »çÀÌÀÇ º¸°£ °ª
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
             Cup1.transform.position = Vector3.Lerp(Cup1.transform.position, new Vector3(Cup1.transform.position.x, originalPos1.y, originalPos1.z), t);
             Cup2.transform.position = Vector3.Lerp(Cup2.transform.position, new Vector3(Cup2.transform.position.x, originalPos1.y, originalPos2.z), t);
             Cup3.transform.position = Vector3.Lerp(Cup3.transform.position, new Vector3(Cup3.transform.position.x, originalPos1.y, originalPos3.z), t);
 
-            // °øµµ ÃµÃµÈ÷ ÀÌµ¿½ÃÅµ´Ï´Ù. y°ª¸¸ º¯°æµË´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ ÃµÃµï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½. yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½.
             Ball.transform.position = Vector3.Lerp(Ball.transform.position, originalBallPos, t);
 
-            yield return null; // 1 ÇÁ·¹ÀÓ ´ë±â
+            yield return null; // 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         }
     }
 
-    // °ÔÀÓ »óÅÂ¸¦ ÃÊ±âÈ­ÇÏ´Â ¸Ş¼­µå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï´ï¿½ ï¿½Ş¼ï¿½ï¿½å¸¦ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.
     public void ResetGame()
     {
-        // ÄÅ À§Ä¡¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        // ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Õ´Ï´ï¿½.
         Cup1.transform.position = originalPos1;
         Cup2.transform.position = originalPos2;
         Cup3.transform.position = originalPos3;
 
-        // °ø À§Ä¡¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        // ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Õ´Ï´ï¿½.
         Ball.transform.position = originalBallPos;
 
-        //// ÄÅ ÀÌ¸§À» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        //// ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Õ´Ï´ï¿½.
         //Cup1.name = "Cup1";
         //Cup2.name = "Cup2";
         //Cup3.name = "Cup3";
 
-        // CupClickChecker ½ºÅ©¸³Æ®¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        // CupClickChecker ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Õ´Ï´ï¿½.
         Cup1.GetComponent<CupClickChecker>().Reset();
         Cup2.GetComponent<CupClickChecker>().Reset();
         Cup3.GetComponent<CupClickChecker>().Reset();

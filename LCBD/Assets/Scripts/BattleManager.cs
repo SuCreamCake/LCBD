@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    GameObject playerObject, gunArm,hammer1,hammer2;
+    GameObject playerObject, gunArm, hammer1, hammer2;
     Player player;
-    public bool gunBool,hammer1bool,hammer2bool;
-    
+    public bool gunBool, hammer1bool, hammer2bool;
 
     //���� ����
     //���ݼӵ��� üũ�ϱ� ���� ����
-    public float attackTime = 0;
+
     //���Ÿ� ���� ������Ʈ
     public GameObject bulletObject;
     //���� ��ü�� ��� �ڷ���
-    
+
     //�Ǽ� ����, ��������, ���Ÿ� ���� �ε���
     bool sDown1;
     bool sDown2;
     bool sDown3;
     bool sDown4;
     //���� �ε���
-    
+
     //������ġ
     public Vector3 attackPosition;
     private Animator anim;
 
- 
     //���� ������Ʈ
     public GameObject shieldObject;
     //���� ���̺� ����
@@ -46,30 +44,46 @@ public class BattleManager : MonoBehaviour
     public GameObject animationEffectMeeleAttack;
 
     public GameObject soundWakeAttack;
+    public float attackTimeDelay;
+    public float attackTime = 0;
+
+    public bool iSmeleeAttackEnd = false;
+    public bool iSmeleeAttack = false;
+    public float setKey;
+
+    public float longWeaponeAttackPower;
+
+    SoundsPlayer SFXPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
         playerObject = GameObject.Find("Player");
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         player = playerObject.GetComponent<Player>();
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
         soundwaveAttackOBJ = GameObject.Find("SoundWaveOBJ");
-        soundwaveAttackOBJ.SetActive(false);
+        attackTimeDelay = player.attackSpeed;
         gunBool = true;
         hammer1bool = true;
+        longWeaponeAttackPower = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-        attackTime += Time.deltaTime;
         soundWaveAttackTime += Time.deltaTime;
+        attackTimeDelay = player.attackSpeed;
+        attackTimeDelay = 1f / attackTimeDelay;
+        attackTime += Time.deltaTime;
         getInputBattleKeyKode();
         //battleLogic();
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
-        Debug.Log(attackPosition.y);
 
+        iSmeleeAttackEnd = player.ani.GetCurrentAnimatorStateInfo(0).IsName("isMeleeAttack");
+        SetTrrigerMeleeAtack();
     }
 
     private void LateUpdate()
@@ -96,13 +110,11 @@ public class BattleManager : MonoBehaviour
     }
 
 
-
-
     //����
     //�Ǽ� ����
     public void punchAttack()
     {
-        if (attackTime > (player.attackSpeed / 2) && Input.GetMouseButtonDown(0))
+        if (attackTime > (attackTimeDelay / 2) && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
             //���콺�� ��ġ ��������
@@ -124,8 +136,7 @@ public class BattleManager : MonoBehaviour
             //RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, layerMask);
             //if (raycastHit.collider != null)    //��� �����Ǹ�
             //{
-            //    Debug.Log("�Ǽ� ���ݿ� ������ ��� ������Ʈ: " + raycastHit.collider.gameObject.tag);
-            //    //��¥ �����ؼ� ������ ��� ü�� ����ֱ�
+
             //}
 
             //Collider2D hitEnemys = Physics2D.OverlapCircle(startAttackPoint,rangeRadius,enemyLayers);
@@ -135,10 +146,7 @@ public class BattleManager : MonoBehaviour
             {
                 CalDamage();
                 raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
-                Debug.Log("���� ����");
-
             }
-
 
             //��ġ �����
             Debug.Log("mousePoint: " + mousePoint);
@@ -163,8 +171,11 @@ public class BattleManager : MonoBehaviour
     //���� ����
     private void meleeAttack()
     {
-        if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
+        
+        if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
+            player.enduranceOnOff = 0;
+            player.endurance -= player.maxEndurance / 15;
             attackTime = 0;
             //���콺�� ��ġ ��������
             //Vector2 mousePoint = Input.mousePosition;
@@ -174,33 +185,20 @@ public class BattleManager : MonoBehaviour
 
             //애니메이션
             player.ani.SetTrigger("isMeleeAttack");
-            float key =  mousePoint.x -playerObject.transform.position.x ;
+            float key = mousePoint.x - playerObject.transform.position.x;
             if (key > 0)
             {
                 key = 1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
-            else if(key<0)
+            else if (key < 0)
             {
                 key = -1;
                 playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
             }
-
-            if (key > 0)
-            {
-                Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(0.8f, 0, 0), new(0, 0, 0, 0));
-                Debug.Log("근접공격 실행!!");
-                anim = animationEffectMeeleAttack.GetComponent<Animator>();
-                anim.SetTrigger("isMeelAttackEffect");
-            }
-            else
-            {
-                Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(-0.8f, 0, 0), new(0, 0, 0, 0));
-                Debug.Log("근접공격 실행!!");
-                anim = animationEffectMeeleAttack.GetComponent<Animator>();
-                anim.SetTrigger("isMeelAttackEffect");
-            }
-
+            
+            iSmeleeAttack = true;
+            setKey = key;
 
             //���ݹ���
             Vector2 attackForce = mousePoint - (Vector3)playerObject.transform.position;
@@ -211,26 +209,53 @@ public class BattleManager : MonoBehaviour
             float yRange = 0.5f;
             Vector2 boxSize = new Vector2(xRange, yRange);
 
-            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+            float angle = 0;
             Vector3 attackPositionForMel = attackPosition;
-            attackPositionForMel.x = attackPositionForMel.x * key;
             Debug.Log("키값" + key);
             //���� �ݶ��̴� ����
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, 0, enemyLayers);
-            Debug.Log(angle);
+            if (key < 0)
+            {
+                attackPositionForMel = attackPositionForMel - 2 * (attackPosition - playerObject.transform.position);
+                angle = 180f;
+            }
+
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, angle, enemyLayers);
+
+            CalDamage();
             foreach (Collider2D collider in colliders)
             {
-                Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
                     Debug.Log("몬스터를 맞춤");
                     collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
                 }
             }
-            Debug.Log("���ݽ���");
         }
-
     }
+
+    //근접 공격
+    private void SetTrrigerMeleeAtack()
+    {
+        float key = setKey;
+        if (iSmeleeAttack && !iSmeleeAttackEnd)
+        {
+            SFXPlayer.AttackSound(2);
+            if (key > 0)
+            {
+                Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(0.8f, 0, 0), new(0, 0, 0, 0));
+                anim = animationEffectMeeleAttack.GetComponent<Animator>();
+                anim.SetTrigger("isMeelAttackEffect");
+            }
+            else
+            {
+                Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(-0.8f, 0, 0), new(0, 0, 0, 0));
+                anim = animationEffectMeeleAttack.GetComponent<Animator>();
+                anim.SetTrigger("isMeelAttackEffect");
+            }
+            iSmeleeAttack = false;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -239,16 +264,16 @@ public class BattleManager : MonoBehaviour
 
 
     //원거리 공격
-    public bool longDistanceAttack()
+    public void longDistanceAttack()
     {
-        if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
+        if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
+            player.enduranceOnOff = 0;
+            player.endurance -= longWeaponeAttackPower;
+            SFXPlayer.AttackSound(0);
             attackTime = 0;
-            //���콺�� ��ġ ��������
-            //Vector2 mousePoint = Input.mousePosition;
-            //mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                Input.mousePosition.y, -Camera.main.transform.position.z));
+            Input.mousePosition.y, -Camera.main.transform.position.z));
 
             player.ani.SetTrigger("isGunAttack");
             float key = mousePoint.x - playerObject.transform.position.x;
@@ -263,25 +288,19 @@ public class BattleManager : MonoBehaviour
                 playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
             }
 
-
             gunArm.SetActive(true);
 
             Vector3 playerPos = playerObject.transform.position;
-            
+
             Vector2 direVec = mousePoint - (Vector3)playerPos;
             direVec = direVec.normalized;
             GameObject tempObeject = Instantiate(bulletObject);
             tempObeject.transform.position = playerObject.transform.position;
             tempObeject.transform.right = direVec;
 
-
-            
-            return true;
         }
-        return false;
     }
 
-    //�������� Ű �Է�
     private void getInputBattleKeyKode()
     {
         sDown1 = Input.GetKeyDown(KeyCode.F1);
@@ -296,8 +315,8 @@ public class BattleManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             soundWaveAttack();
-            Debug.Log("F����");
-            player.ani.SetTrigger("isSkill");
+
+           
         }
     }
     //���� Ÿ�� �ε���
@@ -306,11 +325,20 @@ public class BattleManager : MonoBehaviour
         if (sDown1)
         {
             weaponIndex = 0;
-            Debug.Log("��ư 1Ȱ��ȭ");
+            player.ani.SetTrigger("isChildhood");
         }
-        if (sDown2) weaponIndex = 1;
+        if (sDown2)
+        {
+            weaponIndex = 1;
+            player.ani.SetTrigger("isGun");
+        }
         if (sDown3) weaponIndex = 2;
-        if (sDown4) weaponIndex = 3;
+        if (sDown4)
+        {
+            weaponIndex = 3;
+            player.ani.SetTrigger("isChildhood");
+        }
+
         //if (sDown1 || sDown2 || sDown3 || sDown4)
         //{
         //    if (shieldObject != null)
@@ -321,8 +349,7 @@ public class BattleManager : MonoBehaviour
     }
     public void battleLogic()
     {
-        Debug.Log("여기 실행됨 배틀로직 함수");
-        Debug.Log("weaponIndex");
+
         if (weaponIndex == 0)
             meleeAttack();
         else if (weaponIndex == 1)
@@ -331,7 +358,6 @@ public class BattleManager : MonoBehaviour
             punchAttack();
         else if (weaponIndex == 3)
             shield();
-
     }
 
     //��� ��� �޼���
@@ -351,40 +377,32 @@ public class BattleManager : MonoBehaviour
             //������ ���
             if (Vector3.Dot(transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("���� ���� ����");
                 shieldObject.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             //������ ���
             else if (Vector3.Dot(transform.up, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("�������� ����");
                 shieldObject.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
             else if (Vector3.Dot(-transform.right, direVec) > Mathf.Cos(45f * Mathf.Deg2Rad))
             {
-                Debug.Log("���� ���� ����");
                 shieldObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-
-
             }
             else
             {
-                Debug.Log("�ϴ� ���� ����");
                 shieldObject.transform.rotation = Quaternion.Euler(0, 0, 90f);
             }
-
         }
         else if (Input.GetMouseButtonUp(0))
         {
-
             shieldObject.SetActive(false);
         }
     }
     private void soundWaveAttack()
     {
-
         if (soundWaveAttackTime >= 3.0f)
         {
+            player.ani.SetTrigger("isSkill");
             soundWaveAttackTime = 0;
             RaycastHit2D[] raycastHit2Ds;
             soundWaveAttackTime = 0;
@@ -395,22 +413,18 @@ public class BattleManager : MonoBehaviour
             //���ݹ���
             Vector2 attackForce = mousePoint - (Vector2)transform.position;
             attackForce = attackForce.normalized;
-            Debug.Log(player.attackPower);
-            float startAngle = -player.attackPower / 2;
 
+            float startAngle = -player.attackPower / 2;
 
             Instantiate(soundWakeAttack, playerObject.transform.position, new(0, 0, 0, 0));
             anim = animationEffectMeeleAttack.GetComponent<Animator>();
             anim.SetTrigger("IsTrigger");
             //1/3���� ���� ���� ����
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(player.transform.position, player.crossroads / 3, enemyLayers);
             foreach (Collider2D collider in colliders)
             {
-                Debug.Log(collider.tag);
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("1/3���� �ǰ�");
-                  
                     collider.GetComponent<MonsterManager>().TakeDamage(player.attackPower / 3);
                 }
                 string txt = "";
@@ -431,12 +445,14 @@ public class BattleManager : MonoBehaviour
     //������ ����
     private void CalDamage()
     {
-        totalAttackPower += 0/*���� ���ݷ� ���� �� ����*/;
+        int sum = 0;
+        sum += player.GetComponent<Player>().attackPower;
+        totalAttackPower = sum;
     }
     //��� ����
     private void TotalShield()
     {
-        totalShield += 0;/*���⵵ ����������*/;
+        totalShield += 0;
     }
     public void SoundwaveOff()
     {

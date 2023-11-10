@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class FlipManager : MonoBehaviour
 {
-    public CardFlip[] cardArray; // Ä«µå ¿ÀºêÁ§Æ® ¹è¿­
+    public CardFlip[] cardArray; // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½è¿­
     public Button ResetButton;
     public Button UesButton;
-
+    private int CheckforReset;
     public GameObject prefab;
 
     private void Start()
@@ -19,7 +19,7 @@ public class FlipManager : MonoBehaviour
         {
             cardArray[i].canClickOff();
         }
-
+        CheckforReset = 0;
     }
 
     public void AllClickOff()
@@ -29,28 +29,38 @@ public class FlipManager : MonoBehaviour
             cardArray[i].canClickOff();
         }
 
-
-        UesButton.interactable = true;
+        CheckforReset++;
+        if (CheckforReset >= cardArray.Length)
+        {
+            StartCoroutine(ButtonDelay(5f, ResetButton));
+            
+        } else
+        {
+            UesButton.interactable = true;
+        }
+        
     }
 
-    IEnumerator EnableResetButtonAfterDelay(float delay)
+    IEnumerator ButtonDelay(float delay, Button button)
     {
         yield return new WaitForSeconds(delay);
-        ResetButton.interactable = true;
+        button.interactable = true;
     }
 
     public void AllReset()
     {
-        foreach (CardFlip card in cardArray)
+        for (int i = 0; i < cardArray.Length; i++)
         {
-            card.ResetCard();
+            cardArray[i].ResetCard();
         }
+        StartCoroutine(ButtonDelay(5f, UesButton));
         ResetButton.interactable = false;
+        CheckforReset = 0;
     }
 
     private void OnDisable()
     {
-        AllReset();
+        //AllReset();
     }
 
     private void OnEnable()
@@ -60,7 +70,7 @@ public class FlipManager : MonoBehaviour
 
     public void UseButtonClick()
     {
-        Debug.Log("»Ì±â ºñ¿ë°¡Á®°¨");
+        Debug.Log("ï¿½Ì±ï¿½ ï¿½ï¿½ë°¡ï¿½ï¿½ï¿½ï¿½");
         for (int i = 0; i < cardArray.Length; i++)
         {
             cardArray[i].canClickOn();
@@ -75,12 +85,12 @@ public class FlipManager : MonoBehaviour
 
     void SpawnObjectAtPlayerPosition()
     {
-        // ÇÃ·¹ÀÌ¾î ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£½À´Ï´Ù.
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Â±×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObject != null)
         {
-            // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®ÀÇ À§Ä¡¸¦ ±âÁØÀ¸·Î ÇÁ¸®ÆÕÀ» ÀÎ½ºÅÏ½ºÈ­ÇÕ´Ï´Ù.
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½È­ï¿½Õ´Ï´ï¿½.
             Vector3 playerPosition = playerObject.transform.position;
             Vector3 NewPalyerPosition = playerPosition;
             NewPalyerPosition.z -= 0.1f;
@@ -91,12 +101,12 @@ public class FlipManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("ÇÁ¸®ÆÕ ·Îµå ½ÇÆÐ: ");
+                Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½: ");
             }
         }
         else
         {
-            Debug.LogError("ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. 'Player'°¡ ¾ø´Ù.");
+            Debug.LogError("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. 'Player'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.");
         }
     }
 }

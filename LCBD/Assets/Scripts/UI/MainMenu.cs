@@ -12,11 +12,14 @@ public class MainMenu : MonoBehaviour
 
     private SettingMenu SettingMenu; //설정창
 
+    SoundsPlayer SFXPlayer;
+
     List<GameObject> PanelList;
     List<GameObject> BackList;
     void Start()
     {
         SettingMenu = FindObjectOfType<SettingMenu>();
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         StartPanel();
     }
 
@@ -34,7 +37,10 @@ public class MainMenu : MonoBehaviour
         }
 
     }
-
+    public void ClickSound()
+    {
+        SFXPlayer.UISound(0);
+    }
 
     private void StartPanel()
     {
@@ -83,6 +89,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoSettingBTN()
     {
+        ClickSound();
         MainMenuPanel.SetActive(false);
         SettingMenu.SettingPanel.SetActive(true);
         SettingMenu.SettingIsUse = true;
@@ -90,6 +97,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoHelpBTN()
     {
+        ClickSound();
         FindActivePanel();
         HelpMenu.SetActive(true);
         Debug.Log("도움창!");
@@ -97,6 +105,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoNewGameBTN()
     {
+        ClickSound();
         FindActivePanel();
         NewGameMenu.SetActive(true);
         Debug.Log("새게임버튼");
@@ -104,6 +113,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoFileLoadBTN()
     {
+        ClickSound();
         FindActivePanel();
         FileLoadMenu.SetActive(true);
         Debug.Log("파일로드창");
@@ -111,6 +121,7 @@ public class MainMenu : MonoBehaviour
 
     public void GameStartBTN()
     {
+        ClickSound();
         SceneManager.LoadScene("RandomMap");
     }
 
@@ -129,6 +140,7 @@ public class MainMenu : MonoBehaviour
 
     public void QuitBtn() //게임 나가기 버튼
     {
+        ClickSound();
         Application.Quit();
         Debug.Log("Click Quit");
     }
@@ -137,35 +149,42 @@ public class MainMenu : MonoBehaviour
 
     public void FileLoad1() //파일1 선택시
     {
+        ClickSound();
         Debug.Log("File 1 Load!");
     }
     public void FileLoad2() //파일2 선택시
     {
+        ClickSound();
         Debug.Log("File 2 Load!");
     }
     public void FileLoad3() //파일3 선택시
     {
+        ClickSound();
         Debug.Log("File 3 Load!");
     }
 
 
     public void LoadBtn() //불러오기 버튼
     {
+        ClickSound();
         Debug.Log("Load!");
     }
 
     public void DeleteBtn() //삭제 버튼
     {
+        ClickSound();
         Debug.Log("Delete!");
     }
 
     public void KoreanBtn()
     {
+        ClickSound();
         Debug.Log("한국어");
     }
 
     public void EnglishBtn()
     {
+        ClickSound();
         Debug.Log("English");
     }
 }
