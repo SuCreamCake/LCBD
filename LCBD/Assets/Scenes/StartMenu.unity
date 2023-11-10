@@ -5761,11 +5761,11 @@ MonoBehaviour:
   AttackSoundPlayer: {fileID: 771469027}
   AttackSounds:
   - SoundName: Attack_Gun01
-    SoundClip: {fileID: 8300000, guid: 421e72be1e127ad42aab7bd23a93674c, type: 3}
+    SoundClip: {fileID: 8300000, guid: 1d0ce690cd504ea40afe1b8d8919adf6, type: 3}
   - SoundName: Attack_Gun02
     SoundClip: {fileID: 8300000, guid: 698bd36f98724d74097368869d630f40, type: 3}
   - SoundName: Attack_Hammer01
-    SoundClip: {fileID: 8300000, guid: 99119bc22ed499a4686bd77b1828bc4a, type: 3}
+    SoundClip: {fileID: 8300000, guid: ec1e84ae0ca821d4394ee011d06587e3, type: 3}
   LadderSoundPlayer: {fileID: 898950148}
   LadderSounds:
   - SoundName: Ladder_Normal
@@ -6169,7 +6169,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3897198542459194302, guid: 60df8ec411e16e240bf2105769cd98a8, type: 2}
   m_audioClip: {fileID: 8300000, guid: 79134cab91a06e346ae067021097e24c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -15251,7 +15251,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0

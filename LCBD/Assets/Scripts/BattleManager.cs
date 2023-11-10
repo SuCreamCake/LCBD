@@ -270,7 +270,7 @@ public class BattleManager : MonoBehaviour
         {
             player.enduranceOnOff = 0;
             player.endurance -= longWeaponeAttackPower;
-            SFXPlayer.AttackSound(1);
+            SFXPlayer.AttackSound(0);
             attackTime = 0;
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
             Input.mousePosition.y, -Camera.main.transform.position.z));
