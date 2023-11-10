@@ -16,8 +16,11 @@ public class SettingMenu : MonoBehaviour
     List<GameObject> PanelList;
     List<GameObject> BackList;
 
+    SoundsPlayer SFXPlayer;
+
     private void Awake()
     {
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         SettingIsUse = false;
     }
     private void Start()
@@ -40,6 +43,10 @@ public class SettingMenu : MonoBehaviour
             BackESC(); //ESC입력시 닫기
         }
         //Debug.Log(BackList.Count);
+    }
+    public void ClickSound()
+    {
+        SFXPlayer.UISound(0);
     }
 
     private void StartPanel()
@@ -67,6 +74,7 @@ public class SettingMenu : MonoBehaviour
 
     public void go_ControlBtn() //컨트롤창 열기
     {
+        ClickSound();
         FindActivePanel();
         ControlPanel.SetActive(true);
     }
@@ -78,22 +86,26 @@ public class SettingMenu : MonoBehaviour
 
     public void LanguageBtn() //언어창열기 버튼
     {
+        ClickSound();
         FindActivePanel();
         LananguagePanel.SetActive(true);
     }
     public void SFXBtn() //효과음조절 창열기 버튼
     {
+        ClickSound();
         FindActivePanel();
         SFXPanel.SetActive(true);
     }
     public void BGMBtn() //배경음조절 창열기 버튼
     {
+        ClickSound();
         FindActivePanel();
         BGMPanel.SetActive(true);
     }
 
     public void FullScreenBtn() //배경음조절 창열기 버튼
     {
+        ClickSound();
         Debug.Log("FullScreenBTN!!");
     }
 
