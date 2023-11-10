@@ -447,6 +447,7 @@ GameObject:
   - component: {fileID: 528122732}
   - component: {fileID: 528122733}
   - component: {fileID: 528122734}
+  - component: {fileID: 528122735}
   m_Layer: 0
   m_Name: battleManager
   m_TagString: Untagged
@@ -501,7 +502,8 @@ MonoBehaviour:
   iSmeleeAttackEnd: 0
   iSmeleeAttack: 0
   setKey: 0
-  longWeaponeAttackPower: 0
+  weaponPower: 0
+  addAttackSpeed: 0
 --- !u!114 &528122734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +516,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3cb31f259bcae429b4056a01aa8cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &528122735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528122731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4410bb1b06998be46a786fced7317cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: 0
 --- !u!1 &530078533
 GameObject:
   m_ObjectHideFlags: 0

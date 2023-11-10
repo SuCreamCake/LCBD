@@ -70,7 +70,6 @@ public class MainMenu : MonoBehaviour
             {
                 if (MainMenuPanel.activeSelf)
                 {
-                    Debug.Log("이게먹히나?");
                     return;
                 }
                 else
@@ -152,39 +151,10 @@ public class MainMenu : MonoBehaviour
         ClickSound();
         Debug.Log("File 1 Load!");
     }
-    public void FileLoad2() //파일2 선택시
-    {
-        ClickSound();
-        Debug.Log("File 2 Load!");
-    }
-    public void FileLoad3() //파일3 선택시
-    {
-        ClickSound();
-        Debug.Log("File 3 Load!");
-    }
-
 
     public void LoadBtn() //불러오기 버튼
     {
         ClickSound();
         Debug.Log("Load!");
-    }
-
-    public void DeleteBtn() //삭제 버튼
-    {
-        ClickSound();
-        Debug.Log("Delete!");
-    }
-
-    public void KoreanBtn()
-    {
-        ClickSound();
-        Debug.Log("한국어");
-    }
-
-    public void EnglishBtn()
-    {
-        ClickSound();
-        Debug.Log("English");
     }
 }

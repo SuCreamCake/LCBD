@@ -427,7 +427,7 @@ public class BattleManager : MonoBehaviour
             {
                 if (collider.tag == "monster")
                 {
-                    collider.GetComponent<MonsterManager>().TakeDamage(player.attackPower / 3);
+                    collider.GetComponent<MonsterManager>().TakeDamage(player.attackPower);
                 }
                 string txt = "";
                 if (player.health <= 0)
