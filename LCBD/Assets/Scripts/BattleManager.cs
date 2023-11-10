@@ -45,6 +45,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject animationEffectMeeleAttack;
 
+    public GameObject soundWakeAttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -397,30 +398,10 @@ public class BattleManager : MonoBehaviour
             Debug.Log(player.attackPower);
             float startAngle = -player.attackPower / 2;
 
-            ////�Ϲ� ���� ����
-            //for (float startAngleIndex = startAngle; startAngleIndex <= player.attackPower / 2; startAngleIndex += 0.5f)
-            //{
-            //    attackForce = Quaternion.Euler(0, 0, startAngleIndex) * attackForce;
-            //    Debug.Log(startAngleIndex);
-            //    raycastHit2Ds = Physics2D.RaycastAll(transform.position, attackForce, player.crossroads, enemyLayers);
-            //    for (int i = 0; i < raycastHit2Ds.Length; i++)
-            //    {
-            //        RaycastHit2D hit = raycastHit2Ds[i];
-            //        if (hit.collider.tag == "monster")
-            //        {
 
-            //            hit.collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
-            //        }
-            //    }
-            //}
-            //if (soundwaveAttackOBJ != null)
-            //    soundwaveAttackOBJ.SetActive(true);
-            //float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
-            //soundwaveAttackOBJ.transform.rotation = Quaternion.Euler(0, 0, angle);
-            //Invoke("SoundwaveOff", 2f);
-
-
-
+            Instantiate(soundWakeAttack, playerObject.transform.position, new(0, 0, 0, 0));
+            anim = animationEffectMeeleAttack.GetComponent<Animator>();
+            anim.SetTrigger("IsTrigger");
             //1/3���� ���� ���� ����
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
             foreach (Collider2D collider in colliders)
