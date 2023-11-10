@@ -30,7 +30,7 @@ public class EnemyHit : MonoBehaviour
     {
         isHeat = true;   
         this.GetComponent<SpriteRenderer>().material.color = Color.red;
-        Debug.Log("EnemyHit½ºÅ©¸³Æ® 28¹øÂ° ÁÙ Damage·®" + damage);
+        Debug.Log("EnemyHitï¿½ï¿½Å©ï¿½ï¿½Æ® 28ï¿½ï¿½Â° ï¿½ï¿½ Damageï¿½ï¿½" + damage);
         maxHealth -= damage;
         yield return new WaitForSeconds(0.01f);
         this.GetComponent<SpriteRenderer>().material.color = Color.white;

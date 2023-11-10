@@ -552,7 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3794f11ab868bfa42817bb722783d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  val: 0
+  gunBool: 0
+  hammer1bool: 0
+  hammer2bool: 0
   attackTime: 0
   bulletObject: {fileID: 7964746791692325721, guid: 60255a9713612d94f9e063c3a0db3fca, type: 3}
   attackPosition: {x: 0, y: 0, z: 0}
@@ -565,6 +567,7 @@ MonoBehaviour:
   totalShield: 0
   weaponIndex: -1
   animationEffectMeeleAttack: {fileID: 1825904848170092301, guid: 8d437d37f07d6784894e4ae20373bc9e, type: 3}
+  soundWakeAttack: {fileID: 8333193453524061194, guid: fa2f55c98f228f94d93f98f90c14cb20, type: 3}
 --- !u!114 &528122734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3770,63 +3773,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 804461968}
---- !u!1 &1797612449
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1797612451}
-  - component: {fileID: 1797612450}
-  - component: {fileID: 1797612452}
-  m_Layer: 0
-  m_Name: SoundWaveOBJ
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1797612450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797612449}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf52855218c348e41993e7a5fd6ebd0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  polygonPoints: 100
-  outerRadius: 3
-  innerRadius: 0
-  repeatCount: 1
---- !u!4 &1797612451
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797612449}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 880.38165, y: 531.11163, z: -14.572805}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1797612452
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797612449}
-  m_Mesh: {fileID: 0}
 --- !u!1 &1818419653
 GameObject:
   m_ObjectHideFlags: 0
