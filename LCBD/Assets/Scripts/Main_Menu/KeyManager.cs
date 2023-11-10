@@ -8,7 +8,6 @@ public enum KeyInput {
     LEFT, //3
     RIGHT, //4
     JUMP, //5
-    Inventory, //6
     Item1,  //7
     Item2, //8
     Item3, //9
@@ -30,7 +29,6 @@ public class KeyManager : MonoBehaviour
         KeyCode.A,  //Left
         KeyCode.D,  //Right
         KeyCode.Space, //Jump
-        KeyCode.I, //Inventory
         KeyCode.Alpha1, //Item1
         KeyCode.Alpha2, //Item2
         KeyCode.Alpha3, //Item3
@@ -105,10 +103,6 @@ public class KeyManager : MonoBehaviour
         if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //����
         {
             Debug.Log("JUMP");
-        }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Inventory])) //�κ��丮
-        {
-            Debug.Log("Inventory");
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.Item1])) //������1��Ű
         {
