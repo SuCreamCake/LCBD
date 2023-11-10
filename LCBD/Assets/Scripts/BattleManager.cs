@@ -270,7 +270,7 @@ public class BattleManager : MonoBehaviour
         {
             player.enduranceOnOff = 0;
             player.endurance -= longWeaponeAttackPower;
-            SFXPlayer.AttackSound(1);
+            SFXPlayer.AttackSound(0);
             attackTime = 0;
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
             Input.mousePosition.y, -Camera.main.transform.position.z));
@@ -420,7 +420,7 @@ public class BattleManager : MonoBehaviour
             anim = animationEffectMeeleAttack.GetComponent<Animator>();
             anim.SetTrigger("IsTrigger");
             //1/3���� ���� ���� ����
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(player.transform.position, player.crossroads / 3, enemyLayers);
             foreach (Collider2D collider in colliders)
             {
                 if (collider.tag == "monster")

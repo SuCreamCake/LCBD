@@ -6,7 +6,7 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager instance;
 
-    public int questIDToRetrieve; // °¡Á®¿Ã Äù½ºÆ®ÀÇ ID ÀÔ·Â
+    public int questIDToRetrieve; // ê°€ì ¸ì˜¬ í€˜ìŠ¤íŠ¸ì˜ ID ì…ë ¥
 
     public QuestData questData;
 
@@ -31,19 +31,19 @@ public class QuestManager : MonoBehaviour
             {
                 Quest retrievedQuest = questData.questDictionary[questIDToRetrieve];
 
-                // ¼±Çà Äù½ºÆ® ¿Ï·á ¿©ºÎ È®ÀÎ
+                // ì„ í–‰ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ì—¬ë¶€ í™•ì¸
                 if (!retrievedQuest.isPrerequisiteComplete)
                 {
-                    Debug.Log("¼±Çà Äù½ºÆ®°¡ ¿Ï·áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                    Debug.Log("ì„ í–‰ í€˜ìŠ¤íŠ¸ê°€ ì™„ë£Œë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
                     return;
                 }
 
                 if (!retrievedQuest.isQuestInProgress)
                 {
-                    Debug.Log("Äù½ºÆ® ID: " + retrievedQuest.ID);
-                    Debug.Log("Äù½ºÆ® ÀÌ¸§: " + retrievedQuest.name);
-                    Debug.Log("Äù½ºÆ® ³»¿ë: " + retrievedQuest.description);
-                    Debug.Log("Äù½ºÆ® ¼±Çà´ëÈ­:");
+                    Debug.Log("í€˜ìŠ¤íŠ¸ ID: " + retrievedQuest.ID);
+                    Debug.Log("í€˜ìŠ¤íŠ¸ ì´ë¦„: " + retrievedQuest.name);
+                    Debug.Log("í€˜ìŠ¤íŠ¸ ë‚´ìš©: " + retrievedQuest.description);
+                    Debug.Log("í€˜ìŠ¤íŠ¸ ì„ í–‰ëŒ€í™”:");
                     foreach (string dialogue in retrievedQuest.dialogues)
                     {
                         Debug.Log("- " + dialogue);
@@ -54,32 +54,33 @@ public class QuestManager : MonoBehaviour
                 {
                     if (retrievedQuest.requiredCompletionCount <= retrievedQuest.currentCompletionCount)
                     {
-                        Debug.Log("Äù½ºÆ® ¿Ï·á´ëÈ­:");
+                        Debug.Log("í€˜ìŠ¤íŠ¸ ì™„ë£ŒëŒ€í™”:");
                         foreach (string dialogue in retrievedQuest.completionDialogues)
                         {
                             Debug.Log("- " + dialogue);
                         }
-                        // ´ÙÀ½ Äù½ºÆ® Ã³¸®
+                        // ë‹¤ìŒ í€˜ìŠ¤íŠ¸ ì²˜ë¦¬
                         if (retrievedQuest.nextQuestID != 0)
                         {
                             Quest nextQuest = questData.questDictionary[retrievedQuest.nextQuestID];
-                            nextQuest.isPrerequisiteComplete = true; // ´ÙÀ½ Äù½ºÆ®ÀÇ ¼±Çà Äù½ºÆ® ¿Ï·á ¿©ºÎ¸¦ true·Î ¼³Á¤
-                            Debug.Log("´ÙÀ½ Äù½ºÆ® Ã³¸®: ID - " + nextQuest.ID + "  " + nextQuest.isPrerequisiteComplete);
+                            nextQuest.isPrerequisiteComplete = true; // ë‹¤ìŒ í€˜ìŠ¤íŠ¸ì˜ ì„ í–‰ í€˜ìŠ¤íŠ¸ ì™„ë£Œ ì—¬ë¶€ë¥¼ trueë¡œ ì„¤ì •
+                            Debug.Log("ë‹¤ìŒ í€˜ìŠ¤íŠ¸ ì²˜ë¦¬: ID - " + nextQuest.ID + "  " + nextQuest.isPrerequisiteComplete);
                         }
-                    } else
+                    }
+                    else
                     {
-                        Debug.Log("Äù½ºÆ® ¼öÇàÀÌ ¿Ïº®ÇÏÁö ¾Ê½À´Ï´Ù.");
+                        Debug.Log("í€˜ìŠ¤íŠ¸ ìˆ˜í–‰ì´ ì™„ë²½í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
                     }
                 }
             }
             else
             {
-                Debug.Log("ÇØ´ç IDÀÇ Äù½ºÆ®°¡ ¾ø½À´Ï´Ù.");
+                Debug.Log("í•´ë‹¹ IDì˜ í€˜ìŠ¤íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-            Debug.Log("QuestData ½ºÅ©¸³Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("QuestData ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 
@@ -91,27 +92,27 @@ public class QuestManager : MonoBehaviour
             {
                 Quest quest = questData.questDictionary[questID];
 
-                // Äù½ºÆ®°¡ ÁøÇà ÁßÀÌ¾î¾ß ÇÏ°í, ¿Ï·á Á¶°Ç¿¡ µµ´ŞÇÏÁö ¾Ê¾ÒÀ» ¶§¸¸ Áõ°¡½ÃÅµ´Ï´Ù.
+                // í€˜ìŠ¤íŠ¸ê°€ ì§„í–‰ ì¤‘ì´ì–´ì•¼ í•˜ê³ , ì™„ë£Œ ì¡°ê±´ì— ë„ë‹¬í•˜ì§€ ì•Šì•˜ì„ ë•Œë§Œ ì¦ê°€ì‹œí‚µë‹ˆë‹¤.
                 if (quest.isQuestInProgress && quest.currentCompletionCount < quest.requiredCompletionCount)
                 {
                     quest.currentCompletionCount++;
 
-                    // Äù½ºÆ® ÁøÇà »óÅÂ¸¦ Ãâ·ÂÇÕ´Ï´Ù.
-                    Debug.Log("Äù½ºÆ® ID: " + quest.ID + "ÀÇ ÁøÇàµµ: " + quest.currentCompletionCount);
+                    // í€˜ìŠ¤íŠ¸ ì§„í–‰ ìƒíƒœë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
+                    Debug.Log("í€˜ìŠ¤íŠ¸ ID: " + quest.ID + "ì˜ ì§„í–‰ë„: " + quest.currentCompletionCount);
                 }
                 else
                 {
-                    Debug.Log("Äù½ºÆ®¸¦ ÁøÇàÇÒ ¼ö ¾ø½À´Ï´Ù. ¶Ç´Â ÀÌ¹Ì ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+                    Debug.Log("í€˜ìŠ¤íŠ¸ë¥¼ ì§„í–‰í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë˜ëŠ” ì´ë¯¸ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
                 }
             }
             else
             {
-                Debug.Log("ÇØ´ç IDÀÇ Äù½ºÆ®°¡ ¾ø½À´Ï´Ù.");
+                Debug.Log("í•´ë‹¹ IDì˜ í€˜ìŠ¤íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-            Debug.Log("QuestData ½ºÅ©¸³Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("QuestData ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 

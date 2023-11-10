@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     //원거리 공격 데미지
     public float damage;
     private Rigidbody2D bulletRigidbody2D;
-    private float bulletSpeed = 10f;
+    private float bulletSpeed = 17f;
     private float distanceTime;
     private bool isDistanceOver = false;
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,6 +26,7 @@ public class Bullet : MonoBehaviour
     {
         bulletRigidbody2D = GetComponent<Rigidbody2D>();
         bulletRigidbody2D.velocity = bulletSpeed * transform.right;
+        SetDamage();
         //자기 자신을 삭제한 메서드
         if (gameObject != null)
         {
@@ -35,16 +36,17 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         distanceTime += Time.deltaTime;
-        if((GameObject.Find("Player").GetComponent<Player>().crossroads < distanceTime*bulletSpeed)&& !isDistanceOver)
+        if((GameObject.Find("Player").GetComponent<Player>().crossroads * 2 < distanceTime*bulletSpeed)&& !isDistanceOver)
         {
             this.bulletRigidbody2D.gravityScale = 1f;
             isDistanceOver = true;
         }
         
     }
-    public void SetDamage(float damage)
+    public void SetDamage()
     {
-        this.damage = damage;
+        this.damage = GameObject.Find("Player").GetComponent<Player>().attackPower;
+      
     }
 
 }

@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 3580148164716198743}
   - component: {fileID: 3580148164724316889}
   - component: {fileID: 3580148164724316888}
-  m_Layer: 10
+  - component: {fileID: 8306248862392423945}
+  m_Layer: 12
   m_Name: "\uC774\uB3D9,\uCD94\uC801Monster"
-  m_TagString: gambler
+  m_TagString: monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,3 +208,23 @@ MonoBehaviour:
   nextMove: 1
   moveSpeed: 0
   waitingtime: 3
+--- !u!95 &8306248862392423945
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580148164716198746}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
