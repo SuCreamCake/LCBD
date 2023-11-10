@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class RadiusView : MonoBehaviour
 {
-    public float viewRadius;            // ½Ã¾ß ¹İ°æ
-    public LayerMask targetMask;        // Player¸¦ Æ÷ÇÔÇÑ Å¸°Ù ·¹ÀÌ¾î
-    public LayerMask obstacleMask;      // °¡¸®´Â Àå¾Ö¹° ·¹ÀÌ¾î
+    public float viewRadius;            // ì‹œì•¼ ë°˜ê²½
+    public LayerMask targetMask;        // Playerì™€ ìƒí˜¸ì‘ìš©í•  ë ˆì´ì–´ ë§ˆìŠ¤í¬
+    public LayerMask obstacleMask;      // ì¥ì• ë¬¼ ë ˆì´ì–´ ë§ˆìŠ¤í¬
 
-    private bool isInView;              // ½Ã¾ß ¾È¿¡ ÀÖ´ÂÁö ¿©ºÎ
+    private bool isInView;              // ì‹œì•¼ì— ìˆëŠ”ì§€ ì—¬ë¶€
 
-    public GameObject npcMenu; // NpcMenu ¿ÀºêÁ§Æ®¸¦ ¿¬°áÇÕ´Ï´Ù.
-    private bool isMenuActive = false; // ¸Ş´º ¿Â¿ÀÇÁ
+    public GameObject npcMenu; // NpcMenu ê²Œì„ ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•œ ì°¸ì¡°
+    private bool isMenuActive = false; // ë©”ë‰´ í™œì„±í™” ì—¬ë¶€
 
     private void Start()
     {
         StartCoroutine("FindTargetsWithDelay", 0.5f);
     }
 
-    // ÀÏÁ¤ ½Ã°£¸¶´Ù Å¸°Ù °Ë»ö
+    // ì¼ì • ì‹œê°„ ê°„ê²©ìœ¼ë¡œ ëŒ€ìƒì„ ì°¾ëŠ” ì½”ë£¨í‹´
     private IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
@@ -27,6 +27,7 @@ public class RadiusView : MonoBehaviour
             FindVisibleTargets();
         }
     }
+
     private void Update()
     {
         if (isInView && Input.GetKeyDown(KeyCode.R))
@@ -35,39 +36,34 @@ public class RadiusView : MonoBehaviour
             switch (objectTag)
             {
                 case "shop":
-                    Debug.Log("»óÀÎÀÔ´Ï´Ù.");
+                    Debug.Log("ìƒì ì„ ì—´ì—ˆìŠµë‹ˆë‹¤.");
                     break;
                 case "gambler":
-                    Debug.Log("³îÀ½²ÛÀÔ´Ï´Ù.");
+                    Debug.Log("ë„ë°•ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
                     break;
                 case "client":
-                    Debug.Log("ÀÇ·ÚÀÎÀÔ´Ï´Ù.");
+                    Debug.Log("ìƒë‹´ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
                     break;
                 case "citizen":
-                    Debug.Log("ÁÖ¹ÎÀÔ´Ï´Ù.");
+                    Debug.Log("ì¸ì‚¬í•©ë‹ˆë‹¤.");
                     break;
                 case "monster":
-                    Debug.Log("¸ó½ºÅÍÀÔ´Ï´Ù.");
+                    Debug.Log("ëª¬ìŠ¤í„°ë¥¼ ê³µê²©í•©ë‹ˆë‹¤.");
                     break;
                 default:
-                    Debug.Log("ÅÂ±×¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                    Debug.Log("í•´ë‹¹ íƒœê·¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                     break;
             }
-            // RÅ°¸¦ ÀÌ¿ëÇÑ ¸»Ç³¼± ¶ç¿ì±â ÀÚµ¿ 10ÃÊ ¸¶´Ù·Î º¯°æ
-            //NpcTextSc NpcTextSc = GetComponent<NpcTextSc>();
-            //if (NpcTextSc != null)
-            //{
-            //    NpcTextSc.TalkNpc();
-            //}
+            // Rí‚¤ë¥¼ ëˆ„ë¥´ë©´ ëŒ€í™” ë©”ë‰´ë¥¼ ì—½ë‹ˆë‹¤.
             if (npcMenu != null)
             {
-                isMenuActive = !isMenuActive; // »óÅÂ¸¦ Åä±ÛÇÕ´Ï´Ù.
-                npcMenu.SetActive(isMenuActive); // NpcMenu ¿ÀºêÁ§Æ®ÀÇ È°¼ºÈ­ »óÅÂ¸¦ º¯°æÇÕ´Ï´Ù.
+                isMenuActive = !isMenuActive;
+                npcMenu.SetActive(isMenuActive);
             }
         }
     }
 
-    // ÁÖº¯¿¡ ÀÖ´Â Å¸°Ù °Ë»ö
+    // ì‹œì•¼ ë‚´ì˜ ëŒ€ìƒì„ ì°¾ëŠ” ë©”ì†Œë“œ
     private void FindVisibleTargets()
     {
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
@@ -80,24 +76,24 @@ public class RadiusView : MonoBehaviour
 
             Vector2 dirToTarget = (target.transform.position - transform.position).normalized;
 
-            // ½Ã¾ß ¾È¿¡ ÀÖ´Âµ¥ Àå¾Ö¹°ÀÌ °¡¸®°í ÀÖ´Ù¸é ¹«½Ã
+            // ì‹œì•¼ ì•ˆì— ì¥ì• ë¬¼ì´ ì—†ìœ¼ë©´
             if (!Physics2D.Raycast(transform.position, dirToTarget, viewRadius, obstacleMask))
             {
-                // Player¿¡ ¹İÀÀÇÏ´Â ·ÎÁ÷ Ãß°¡
+                // Playerë¥¼ ì°¾ì•˜ì„ ë•Œ
                 if (target.CompareTag("Player"))
                 {
-                    Debug.Log("Á¢ÃË ÇÃ·¹ÀÌ¾î");
+                    Debug.Log("í”Œë ˆì´ì–´ë¥¼ ì°¾ì•˜ìŠµë‹ˆë‹¤.");
                     isInView = true;
                 }
             }
             else
             {
-                Debug.Log("»ç¹° »çÀÌ Á¢ÃË ÇÃ·¹ÀÌ¾î");
+                Debug.Log("ì‹œì•¼ ë‚´ì— ì¥ì• ë¬¼ì´ ìˆìŠµë‹ˆë‹¤.");
             }
         }
     }
 
-    // ±âÁî¸ğ ±×¸®±â
+    // ì‹œì•¼ ë°˜ê²½ì„ ê·¸ë¦¬ëŠ” ë©”ì†Œë“œ
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
