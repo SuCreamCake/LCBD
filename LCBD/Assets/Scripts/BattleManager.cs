@@ -51,6 +51,8 @@ public class BattleManager : MonoBehaviour
     public bool iSmeleeAttack = false;
     public float setKey;
 
+    public float longWeaponeAttackPower;
+
     SoundsPlayer SFXPlayer;
 
     // Start is called before the first frame update
@@ -64,6 +66,7 @@ public class BattleManager : MonoBehaviour
         attackTimeDelay = player.attackSpeed;
         gunBool = true;
         hammer1bool = true;
+        longWeaponeAttackPower = 3;
     }
 
     // Update is called once per frame
@@ -168,8 +171,11 @@ public class BattleManager : MonoBehaviour
     //���� ����
     private void meleeAttack()
     {
+        
         if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
+            player.enduranceOnOff = 0;
+            player.endurance -= player.maxEndurance / 15;
             attackTime = 0;
             //���콺�� ��ġ ��������
             //Vector2 mousePoint = Input.mousePosition;
@@ -262,6 +268,8 @@ public class BattleManager : MonoBehaviour
     {
         if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
+            player.enduranceOnOff = 0;
+            player.endurance -= longWeaponeAttackPower;
             SFXPlayer.AttackSound(1);
             attackTime = 0;
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
