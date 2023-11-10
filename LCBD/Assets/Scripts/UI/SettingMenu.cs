@@ -11,7 +11,6 @@ public class SettingMenu : MonoBehaviour
     public GameObject SettingPanel; //설정버튼 누르면 나오는 창
     public GameObject BGMPanel; //BGM 창
     public GameObject SFXPanel; //SFX창
-    public GameObject LananguagePanel;
 
     List<GameObject> PanelList;
     List<GameObject> BackList;
@@ -56,7 +55,6 @@ public class SettingMenu : MonoBehaviour
 
         PanelList.Add(SettingPanel);
         PanelList.Add(ControlPanel);
-        PanelList.Add(LananguagePanel);
         PanelList.Add(SFXPanel);
         PanelList.Add(BGMPanel);
 
@@ -84,12 +82,7 @@ public class SettingMenu : MonoBehaviour
         Debug.Log("게임 종료함");
     }
 
-    public void LanguageBtn() //언어창열기 버튼
-    {
-        ClickSound();
-        FindActivePanel();
-        LananguagePanel.SetActive(true);
-    }
+
     public void SFXBtn() //효과음조절 창열기 버튼
     {
         ClickSound();
