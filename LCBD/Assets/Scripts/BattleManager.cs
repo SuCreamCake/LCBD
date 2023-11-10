@@ -211,12 +211,18 @@ public class BattleManager : MonoBehaviour
                 float yRange = 0.5f;
                 Vector2 boxSize = new Vector2(xRange, yRange);
 
-                float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+                float angle = 0;
                 Vector3 attackPositionForMel = attackPosition;
-                attackPositionForMel.x = attackPositionForMel.x * key;
                 Debug.Log("키값" + key);
-                //���� �ݶ��̴� ����
-                Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, 0, enemyLayers);
+            //���� �ݶ��̴� ����
+            if (key < 0)
+            {
+                attackPositionForMel = attackPositionForMel - 2 * (attackPosition - playerObject.transform.position);
+                angle = 180f;
+            }
+
+
+                Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, angle, enemyLayers);
                 Debug.Log(angle);
                 CalDamage();
                 foreach (Collider2D collider in colliders)
