@@ -93,7 +93,8 @@ public class Player : MonoBehaviour
         {
             jump();
             run();
-            battleManager.battleLogic();
+            if(!isLadder)
+                battleManager.battleLogic();
         }
         
         stopSpeed();
@@ -121,11 +122,18 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        walk();
 
-        upDown();
-        enduranceSystem();
-        falling();
+        if (health > 0)
+        {
+            walk();
+            upDown();
+            enduranceSystem();
+            falling();
+        }
+        else
+        {
+            ani.SetTrigger("die");
+        }
 
     }
 
