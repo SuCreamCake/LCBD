@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     SoundsPlayer SFXPlayer;
     BattleManager battleManager;
-
+    
     internal object text_hp;
     internal object img;
 
@@ -93,7 +93,8 @@ public class Player : MonoBehaviour
         {
             jump();
             run();
-            battleManager.battleLogic();
+            if(!isLadder)
+                battleManager.battleLogic();
         }
         
         stopSpeed();
@@ -121,11 +122,18 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        walk();
 
-        upDown();
-        enduranceSystem();
-        falling();
+        if (health > 0)
+        {
+            walk();
+            upDown();
+            enduranceSystem();
+            falling();
+        }
+        else
+        {
+            ani.SetTrigger("die");
+        }
 
     }
 
@@ -187,6 +195,8 @@ public class Player : MonoBehaviour
             isLadder = false;
             rigid.gravityScale = 2;
             ani.SetBool("isLadder", false);
+            if(battleManager.weaponIndex==1)
+                ani.SetTrigger("isGun");
         }
         if (collision.CompareTag("TestTag"))
         {
@@ -320,7 +330,7 @@ public class Player : MonoBehaviour
     }
     private void falling()
     {
-        if (rigid.velocity.y < 0 && rigid.velocity.y > -0.5)
+        if (rigid.velocity.y < 0 && rigid.velocity.y > -1)
             start = transform.position;
         if (rigid.velocity.y > -5.1 && rigid.velocity.y < -5)
         {
@@ -338,7 +348,7 @@ public class Player : MonoBehaviour
                 fall = false;
             }
         }
-        if (rigid.velocity.y == 0)
+        if (rigid.velocity.y >= 0)
             fall = false;
     }
     private void run()

@@ -484,7 +484,6 @@ MonoBehaviour:
   gunBool: 0
   hammer1bool: 0
   hammer2bool: 0
-  attackTime: 0
   bulletObject: {fileID: 7964746791692325721, guid: 60255a9713612d94f9e063c3a0db3fca, type: 3}
   attackPosition: {x: 0, y: 0, z: 0}
   shieldObject: {fileID: 0}
@@ -497,6 +496,12 @@ MonoBehaviour:
   weaponIndex: -1
   animationEffectMeeleAttack: {fileID: 1825904848170092301, guid: 8d437d37f07d6784894e4ae20373bc9e, type: 3}
   soundWakeAttack: {fileID: 8333193453524061194, guid: fa2f55c98f228f94d93f98f90c14cb20, type: 3}
+  attackTimeDelay: 0
+  attackTime: 0
+  iSmeleeAttackEnd: 0
+  iSmeleeAttack: 0
+  setKey: 0
+  longWeaponeAttackPower: 0
 --- !u!114 &528122734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,6 +1054,10 @@ PrefabInstance:
       propertyPath: img
       value: 
       objectReference: {fileID: 732223582}
+    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: tomb
+      value: 
+      objectReference: {fileID: 21300000, guid: 4caec7c4a678d794292dedd1c3d85dde, type: 3}
     - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: text_hp
       value: 
