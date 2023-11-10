@@ -26,6 +26,7 @@ public class Bullet : MonoBehaviour
     {
         bulletRigidbody2D = GetComponent<Rigidbody2D>();
         bulletRigidbody2D.velocity = bulletSpeed * transform.right;
+        SetDamage();
         //자기 자신을 삭제한 메서드
         if (gameObject != null)
         {
@@ -42,9 +43,10 @@ public class Bullet : MonoBehaviour
         }
         
     }
-    public void SetDamage(float damage)
+    public void SetDamage()
     {
-        this.damage = damage;
+        this.damage = GameObject.Find("Player").GetComponent<Player>().attackPower;
+      
     }
 
 }

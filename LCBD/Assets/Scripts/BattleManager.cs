@@ -420,7 +420,7 @@ public class BattleManager : MonoBehaviour
             anim = animationEffectMeeleAttack.GetComponent<Animator>();
             anim.SetTrigger("IsTrigger");
             //1/3���� ���� ���� ����
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, player.crossroads / 3, enemyLayers);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(player.transform.position, player.crossroads / 3, enemyLayers);
             foreach (Collider2D collider in colliders)
             {
                 if (collider.tag == "monster")
