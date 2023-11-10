@@ -139,7 +139,7 @@ public class SoundsPlayer : MonoBehaviour
         JumpSoundPlayer.clip = JumpSounds[soundNum].SoundClip;
         JumpSoundPlayer.Play();
     }
-    public void AttackSound(int soundNum)                                               // X
+    public void AttackSound(int soundNum)                                               // USE
     {
         AttackSoundPlayer.clip = AttackSounds[soundNum].SoundClip;
         AttackSoundPlayer.Play();
@@ -167,6 +167,7 @@ public class SoundsPlayer : MonoBehaviour
     {
         LadderSoundPlayer.Stop();                                                       // 키다운,업 으로 바꿔야지 설정에서 입력키 바꿔도 소리가 남.
     }                                                                                   // 현재 입력키 바꾸면 소리가 안남
+
     public void ItemSound(int soundNum)                                                 // X
     {
         ItemSoundPlayer.clip = ItemSounds[soundNum].SoundClip;
@@ -177,7 +178,7 @@ public class SoundsPlayer : MonoBehaviour
         InteractionSoundPlayer.clip = InteractionSounds[soundNum].SoundClip;
         InteractionSoundPlayer.Play();
     }
-    public void UISound(int soundNum)                                                   // X
+    public void UISound(int soundNum)                                                   // X_아마 버튼 사운드에 사용될 듯
     {
         UISoundPlayer.clip = UISounds[soundNum].SoundClip;
         UISoundPlayer.Play();
