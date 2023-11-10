@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
 
     //���� ����
     //���ݼӵ��� üũ�ϱ� ���� ����
-    public float attackTime = 0;
+   
     //���Ÿ� ���� ������Ʈ
     public GameObject bulletObject;
     //���� ��ü�� ��� �ڷ���
@@ -46,6 +46,13 @@ public class BattleManager : MonoBehaviour
     public GameObject animationEffectMeeleAttack;
 
     public GameObject soundWakeAttack;
+    public float attackTimeDelay;
+    public float attackTime = 0;
+
+    public bool iSmeleeAttackEnd = false;
+    public bool iSmeleeAttack = false;
+    public float setKey;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +60,7 @@ public class BattleManager : MonoBehaviour
         player = playerObject.GetComponent<Player>();
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
         soundwaveAttackOBJ = GameObject.Find("SoundWaveOBJ");
-        soundwaveAttackOBJ.SetActive(false);
+        attackTimeDelay = player.attackSpeed;
         gunBool = true;
         hammer1bool = true;
     }
@@ -61,14 +68,19 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        attackTime += Time.deltaTime;
+        
         soundWaveAttackTime += Time.deltaTime;
+        attackTimeDelay = player.attackSpeed;
+        attackTimeDelay = 1f / attackTimeDelay;
+        attackTime += Time.deltaTime;
         getInputBattleKeyKode();
         //battleLogic();
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
         Debug.Log(attackPosition.y);
+        iSmeleeAttackEnd = player.ani.GetCurrentAnimatorStateInfo(0).IsName("isMeleeAttack");
+        SetTrrigerMeleeAtack();
 
     }
 
@@ -102,7 +114,7 @@ public class BattleManager : MonoBehaviour
     //�Ǽ� ����
     public void punchAttack()
     {
-        if (attackTime > (player.attackSpeed / 2) && Input.GetMouseButtonDown(0))
+        if (attackTime > (attackTimeDelay / 2) && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
             //���콺�� ��ġ ��������
@@ -163,29 +175,73 @@ public class BattleManager : MonoBehaviour
     //���� ����
     private void meleeAttack()
     {
-        if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
+        if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
-            attackTime = 0;
-            //���콺�� ��ġ ��������
-            //Vector2 mousePoint = Input.mousePosition;
-            //mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
-            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                Input.mousePosition.y, -Camera.main.transform.position.z));
+                attackTime = 0;
+                //���콺�� ��ġ ��������
+                //Vector2 mousePoint = Input.mousePosition;
+                //mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
+                Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                    Input.mousePosition.y, -Camera.main.transform.position.z));
 
-            //애니메이션
-            player.ani.SetTrigger("isMeleeAttack");
-            float key =  mousePoint.x -playerObject.transform.position.x ;
-            if (key > 0)
-            {
-                key = 1;
-                playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
-            }
-            else if(key<0)
-            {
-                key = -1;
-                playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
-            }
+                //애니메이션
+                player.ani.SetTrigger("isMeleeAttack");
+                float key = mousePoint.x - playerObject.transform.position.x;
+                if (key > 0)
+                {
+                    key = 1;
+                    playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
+                }
+                else if (key < 0)
+                {
+                    key = -1;
+                    playerObject.transform.localScale = new Vector3(key * 1.5f, 1.5f, 0);
+                }
 
+                 iSmeleeAttack = true;
+                 setKey = key;
+            
+
+                //���ݹ���
+                Vector2 attackForce = mousePoint - (Vector3)playerObject.transform.position;
+                attackForce = attackForce.normalized;
+
+                //���� ����
+                float xRange = player.crossroads * 0.3f;
+                float yRange = 0.5f;
+                Vector2 boxSize = new Vector2(xRange, yRange);
+
+                float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
+                Vector3 attackPositionForMel = attackPosition;
+                attackPositionForMel.x = attackPositionForMel.x * key;
+                Debug.Log("키값" + key);
+                //���� �ݶ��̴� ����
+                Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, 0, enemyLayers);
+                Debug.Log(angle);
+                CalDamage();
+                foreach (Collider2D collider in colliders)
+                {
+                    Debug.Log(collider.tag);
+                    if (collider.tag == "monster")
+                    {
+                        Debug.Log("몬스터를 맞춤");
+                        collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
+                    }
+                }
+                Debug.Log("���ݽ���");
+            }
+        
+
+    }
+    
+    //근접 공격
+    private void SetTrrigerMeleeAtack()
+    {
+        
+        float key = setKey;
+        if (iSmeleeAttack && !iSmeleeAttackEnd)
+        {
+            Debug.Log("근접 공격 이펙트 실행!!");
             if (key > 0)
             {
                 Instantiate(animationEffectMeeleAttack, playerObject.transform.position + new Vector3(0.8f, 0, 0), new(0, 0, 0, 0));
@@ -200,37 +256,11 @@ public class BattleManager : MonoBehaviour
                 anim = animationEffectMeeleAttack.GetComponent<Animator>();
                 anim.SetTrigger("isMeelAttackEffect");
             }
-
-
-            //���ݹ���
-            Vector2 attackForce = mousePoint - (Vector3)playerObject.transform.position;
-            attackForce = attackForce.normalized;
-
-            //���� ����
-            float xRange = player.crossroads * 0.3f;
-            float yRange = 0.5f;
-            Vector2 boxSize = new Vector2(xRange, yRange);
-
-            float angle = Mathf.Atan2(attackForce.y, attackForce.x) * Mathf.Rad2Deg;
-            Vector3 attackPositionForMel = attackPosition;
-            attackPositionForMel.x = attackPositionForMel.x * key;
-            Debug.Log("키값" + key);
-            //���� �ݶ��̴� ����
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, 0, enemyLayers);
-            Debug.Log(angle);
-            foreach (Collider2D collider in colliders)
-            {
-                Debug.Log(collider.tag);
-                if (collider.tag == "monster")
-                {
-                    Debug.Log("몬스터를 맞춤");
-                    collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
-                }
-            }
-            Debug.Log("���ݽ���");
+            iSmeleeAttack = false;
         }
-
+       
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -241,47 +271,45 @@ public class BattleManager : MonoBehaviour
     //원거리 공격
     public bool longDistanceAttack()
     {
-        if (attackTime > player.attackSpeed && Input.GetMouseButtonDown(0))
+        if (attackTime > attackTimeDelay && Input.GetMouseButtonDown(0))
         {
             attackTime = 0;
-            //���콺�� ��ġ ��������
-            //Vector2 mousePoint = Input.mousePosition;
-            //mousePoint = Camera.main.ScreenToWorldPoint(mousePoint);
-            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                Vector3 mousePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y, -Camera.main.transform.position.z));
 
-            player.ani.SetTrigger("isGunAttack");
-            float key = mousePoint.x - playerObject.transform.position.x;
-            if (key > 0)
-            {
-                key = 1;
-                playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
-            }
-            else if (key < 0)
-            {
-                key = -1;
-                playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
-            }
+                player.ani.SetTrigger("isGunAttack");
+                float key = mousePoint.x - playerObject.transform.position.x;
+                if (key > 0)
+                {
+                    key = 1;
+                    playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
+                }
+                else if (key < 0)
+                {
+                    key = -1;
+                    playerObject.transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
+                }
 
 
-            gunArm.SetActive(true);
+                gunArm.SetActive(true);
 
-            Vector3 playerPos = playerObject.transform.position;
-            
-            Vector2 direVec = mousePoint - (Vector3)playerPos;
-            direVec = direVec.normalized;
-            GameObject tempObeject = Instantiate(bulletObject);
-            tempObeject.transform.position = playerObject.transform.position;
-            tempObeject.transform.right = direVec;
+                Vector3 playerPos = playerObject.transform.position;
 
+                Vector2 direVec = mousePoint - (Vector3)playerPos;
+                direVec = direVec.normalized;
+                GameObject tempObeject = Instantiate(bulletObject);
+                tempObeject.transform.position = playerObject.transform.position;
+                tempObeject.transform.right = direVec;
 
-            
+                Debug.Log("원거리 공격 실행");
+               
             return true;
         }
+            return true;
+        
         return false;
     }
-
-    //�������� Ű �Է�
+   
     private void getInputBattleKeyKode()
     {
         sDown1 = Input.GetKeyDown(KeyCode.F1);
@@ -431,12 +459,14 @@ public class BattleManager : MonoBehaviour
     //������ ����
     private void CalDamage()
     {
-        totalAttackPower += 0/*���� ���ݷ� ���� �� ����*/;
+        int sum = 0;
+        sum += player.GetComponent<Player>().attackPower; 
+        totalAttackPower = sum;
     }
     //��� ����
     private void TotalShield()
     {
-        totalShield += 0;/*���⵵ ����������*/;
+        totalShield += 0;
     }
     public void SoundwaveOff()
     {
