@@ -5760,10 +5760,12 @@ MonoBehaviour:
     SoundClip: {fileID: 8300000, guid: 6cfe4fd64065a56409dfd22f567c59f4, type: 3}
   AttackSoundPlayer: {fileID: 771469027}
   AttackSounds:
-  - SoundName: Attack01
+  - SoundName: Attack_Gun01
     SoundClip: {fileID: 8300000, guid: 421e72be1e127ad42aab7bd23a93674c, type: 3}
-  - SoundName: Attack02
+  - SoundName: Attack_Gun02
     SoundClip: {fileID: 8300000, guid: 698bd36f98724d74097368869d630f40, type: 3}
+  - SoundName: Attack_Hammer01
+    SoundClip: {fileID: 8300000, guid: 99119bc22ed499a4686bd77b1828bc4a, type: 3}
   LadderSoundPlayer: {fileID: 898950148}
   LadderSounds:
   - SoundName: Ladder_Normal

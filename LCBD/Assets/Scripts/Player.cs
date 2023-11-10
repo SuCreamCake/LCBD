@@ -76,8 +76,6 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<CapsuleCollider2D>();
 
-        //soundPlayer = SoundsPlayer.GetComponent<SoundsPlayer>();
-
         infancy();
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
@@ -85,7 +83,6 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        
         //attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
     }
 
@@ -119,10 +116,7 @@ public class Player : MonoBehaviour
         maxState();
         minState();
 
-
-
     }
-
 
 
     private void FixedUpdate()
@@ -132,7 +126,6 @@ public class Player : MonoBehaviour
         upDown();
         enduranceSystem();
         falling();
-
 
     }
 
@@ -173,10 +166,6 @@ public class Player : MonoBehaviour
         }
         personality(collision);
 
-
-
-     
-    
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -320,7 +309,6 @@ public class Player : MonoBehaviour
 
         }
 
-
         if (maxSpeed == nomalSpeed)
         {
             SFXPlayer.WalkSound(0);         // Walk Sound
@@ -328,7 +316,6 @@ public class Player : MonoBehaviour
         else
         {
             SFXPlayer.WalkSound(1);          // Walk Sound(Run)
-            //Debug.Log("else");
         }
     }
     private void falling()
