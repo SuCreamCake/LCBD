@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -123,11 +124,11 @@ public class MonsterManager : MonoBehaviour
         pattern = true; // 행동 패턴 활성화
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         StartCoroutine(OnDamage(damage));
     }
-    IEnumerator OnDamage(int damage)
+    IEnumerator OnDamage(float damage)
     {
         SpriteRenderer.material.color = Color.red;
         Debug.Log("EnemyHit��ũ��Ʈ 28��° �� Damage��" + damage);

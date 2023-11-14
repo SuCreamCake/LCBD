@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour
     //���� ���� �ð�
     public float soundWaveAttackTime = 0;
     //�� ���ݷ�
-    public int totalAttackPower;
+    public float totalAttackPower;
     //�� ��
     public int totalShield;
     private GameObject soundwaveAttackOBJ;
@@ -447,7 +447,7 @@ public class BattleManager : MonoBehaviour
     //������ ����
     private void CalDamage()
     {
-        int sum = 0;
+        float sum = 0;
         sum += player.GetComponent<Player>().attackPower;
         sum += weaponPower;
         totalAttackPower = sum;
