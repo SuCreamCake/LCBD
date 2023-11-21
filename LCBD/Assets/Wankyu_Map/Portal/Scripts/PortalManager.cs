@@ -22,6 +22,7 @@ public static class PortalLocation  // 포탈 위치 좌표 static 클래스
     public static Point[] CommonFieldPortal_1_Chromosome = { new Point(34, 29), new Point(17, 17), new Point(38, 47), new Point(31, 2) };
     public static Point[] CommonFieldPortal_1_Birth = { new Point(47, 14), new Point(1, 32), new Point(29, 28), new Point(39, 12) };
     public static Point[] CommonFieldPortal_1_BabyBottle_g = { new Point(40, 26), new Point(10, 26), new Point(27, 47), new Point(25, 1) };
+    public static Point[] BossFieldPortal_1_ghosthouse = { new Point(31, 20), new Point(15, 22), new Point(23, 31), new Point(22, 17) };
 }
 
 public class PortalManager : MonoBehaviour
@@ -92,8 +93,8 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = stageGenerator.MapWidth - 5 - 1;
-                        portalPointY = 5;
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[0].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[0].y;
 
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
@@ -189,8 +190,8 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = 5;
-                        portalPointY = 5;
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[1].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[1].y;
 
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
@@ -295,9 +296,8 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = 5 + 3;
-                        portalPointY = 9;
-                        while (portalPointY <= stageGenerator.MapHeight - 8 - 8) { portalPointY += 8; }
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[2].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[2].y;
 
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
@@ -401,9 +401,8 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = stageGenerator.MapWidth / 2 + 2;
-                        portalPointY = 5;
-
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[3].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[3].y;
 
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
