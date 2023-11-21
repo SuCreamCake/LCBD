@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 528122734}
   - component: {fileID: 528122735}
   m_Layer: 0
-  m_Name: battleManager
+  m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -942,7 +942,7 @@ GameObject:
   - component: {fileID: 643425205}
   - component: {fileID: 643425206}
   m_Layer: 0
-  m_Name: randomMapGenerator
+  m_Name: RandomMapGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
