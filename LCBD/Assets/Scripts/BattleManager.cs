@@ -51,9 +51,20 @@ public class BattleManager : MonoBehaviour
     public bool iSmeleeAttack = false;
     public float setKey;
 
+    //Damage of Weapon or SoundWaveAttack;
     public int weaponPower;
     public float addAttackSpeed = 0;
     SoundsPlayer SFXPlayer;
+    public int playerAttackPower;
+
+    //monster defensed
+    public int monsterDefense;
+
+    //monster tenacity
+    public int monsterTenacity;
+    //monsterManager
+    MonsterManager monsterManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +88,7 @@ public class BattleManager : MonoBehaviour
         attackTimeDelay = 1f / attackTimeDelay;
         attackTime += Time.deltaTime;
         getInputBattleKeyKode();
-        //battleLogic();
+        battleLogic();
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
@@ -144,7 +155,8 @@ public class BattleManager : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, enemyLayers);
             if (raycastHit.collider != null)
             {
-                CalDamage();
+                GetCurrentInfo(raycastHit.collider);
+                raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(CalDamage(playerAttackPower, monsterDefense, monsterTenacity));
                 raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
             }
 
@@ -223,13 +235,13 @@ public class BattleManager : MonoBehaviour
 
             Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPositionForMel, boxSize, angle, enemyLayers);
 
-            CalDamage();
             foreach (Collider2D collider in colliders)
             {
                 if (collider.tag == "monster")
                 {
-                    Debug.Log("몬스터를 맞춤");
-                    collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
+                    //getInfoOfMonster
+                    GetCurrentInfo(collider);
+                    collider.GetComponent<MonsterManager>().TakeDamage(CalDamage(playerAttackPower,monsterDefense, monsterTenacity));
                 }
             }
         }
@@ -427,7 +439,8 @@ public class BattleManager : MonoBehaviour
             {
                 if (collider.tag == "monster")
                 {
-                    collider.GetComponent<MonsterManager>().TakeDamage(player.attackPower);
+                    GetCurrentInfo(collider);
+                    collider.GetComponent<MonsterManager>().TakeDamage(CalDamage(playerAttackPower, monsterDefense, monsterTenacity));
                 }
                 string txt = "";
                 if (player.health <= 0)
@@ -445,12 +458,15 @@ public class BattleManager : MonoBehaviour
         }
     }
     //������ ����
-    private void CalDamage()
+    public float CalDamage(int atk, int defense, int tenacity)
     {
         float sum = 0;
-        sum += player.GetComponent<Player>().attackPower;
-        sum += weaponPower;
-        totalAttackPower = sum;
+        sum = atk - defense;
+        if(tenacity < 0)
+        {
+            sum  = sum * 1.3f;
+        }
+        return sum;
     }
     //��� ����
     private void TotalShield()
@@ -460,6 +476,21 @@ public class BattleManager : MonoBehaviour
     public void SoundwaveOff()
     {
         soundwaveAttackOBJ.SetActive(false);
+    }
+
+    //getInfomationOfMonster
+     public void GetCurrentInfo(Collider2D monster)
+    {
+        monsterManager = monster.GetComponent<MonsterManager>();
+        monsterDefense = monsterManager.defense_Ms;
+        monsterTenacity = monsterManager.tenacity_Ms;
+        playerAttackPower = player.attackPower;
+        
+    }
+
+    public void HandleAttack()
+    {
+
     }
 
 }

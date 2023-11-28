@@ -25,6 +25,7 @@ TagManager:
   - npc
   - portal
   - WeaponSlot
+  - BattleManager
   layers:
   - Default
   - TransparentFX
