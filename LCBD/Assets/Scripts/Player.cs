@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
         infancy();
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
-        battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
        
     }
     void Start()
