@@ -9,6 +9,7 @@ public class PlayerTracking : MonoBehaviour
     private float raycastDistance = 0.5f; // 레이캐스트 거리
     MonsterManager MonsterManager;
     SpriteRenderer spriteRenderer;
+    public LayerMask backMask; // 바닥 레이어
 
     public bool noPlayer = true; // 플레이어가 없는지 여부를 나타내는 변수
 
@@ -16,6 +17,8 @@ public class PlayerTracking : MonoBehaviour
 
     private Rigidbody2D rb; // Rigidbody2D 컴포넌트
     float k;
+
+    private float attackRange = 1f;// 몬스터 사거리 계산
 
     private void Awake()
     {
@@ -31,6 +34,8 @@ public class PlayerTracking : MonoBehaviour
         noPlayer = true;
 
         moveSpeed = MonsterManager.speed_Ms; // 이동 속도를 몬스터 매니저의 속도로 설정
+        attackRange = MonsterManager.range_Ms;
+        MonsterManager.ChangeState(1);
     }
 
     private void Update()
@@ -92,7 +97,7 @@ public class PlayerTracking : MonoBehaviour
         if (spriteRenderer.flipX)
         {
             // 앞쪽으로 레이를 쏴서 땅을 감지
-            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, backMask);
             // 감지된 땅이 없으면 멈춤
             if (raycast.collider == null)
             {
@@ -107,7 +112,7 @@ public class PlayerTracking : MonoBehaviour
         else
         {
             // 뒷쪽으로 레이를 쏴서 땅을 감지
-            RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 1, backMask);
             // 감지된 땅이 없으면 멈춤
             if (raycast2.collider == null)
             {
@@ -119,5 +124,6 @@ public class PlayerTracking : MonoBehaviour
                 }
             }
         }
+        MonsterManager.ChangeState(1);
     }
 }
