@@ -17,7 +17,7 @@ public class hammer1 : MonoBehaviour
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<Player>();
         playerPosition = player.transform;
-        battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
     }
 
     void Update()
@@ -45,7 +45,9 @@ public class hammer1 : MonoBehaviour
         }
 
         if (!playerScript.ani.GetCurrentAnimatorStateInfo(0).IsName("childhoodStay") ||
-            playerScript.stage !=2)
+            playerScript.stage != 2)
+        {
             battleManager.hammer1bool = true;
+        }
     }
 }

@@ -19,7 +19,7 @@ public class gunArm : MonoBehaviour
         playerScript = player.GetComponent<Player>();
         playerPosition = player.transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
     }
 
 
