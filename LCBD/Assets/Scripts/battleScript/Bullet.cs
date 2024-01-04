@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         battleManager = GameObject.FindWithTag("BattleManager").GetComponent<BattleManager>();
-        bulletRigidbody2D = GetComponent<Rigidbody2D>();
+        bulletRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         bulletRigidbody2D.velocity = bulletSpeed * transform.right;
         SetDamage();
         //자기 자신을 삭제한 메서드

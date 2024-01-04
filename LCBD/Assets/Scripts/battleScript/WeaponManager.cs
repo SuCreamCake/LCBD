@@ -17,7 +17,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        battleManager = GameObject.Find("battleManager");
+        battleManager = GameObject.Find("BattleManager");
       
     }
 
