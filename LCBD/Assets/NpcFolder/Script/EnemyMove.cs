@@ -9,7 +9,7 @@ public class EnemyMove : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
     MonsterManager MonsterManager;
-    public int moveSpeed; // 이동 속도
+    public float moveSpeed; // 이동 속도
 
     bool searching = false;
 

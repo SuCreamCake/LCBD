@@ -147,11 +147,10 @@ MonoBehaviour:
   health_Ms: 25
   attackPower_Ms: 54
   defense_Ms: 10
-  speed_Ms: 1
+  speed_Ms: 1.5
   maxtenacity_Ms: 15
   tenacity_Ms: 15
   attackSpeed_Ms: 1.5
-  range_Ms: 4
   crossroads_Ms: 15
   elite: 1
   method: 0
@@ -194,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  moveSpeed: 1
+  moveSpeed: 1.5
   backMask:
     serializedVersion: 2
     m_Bits: 2560
@@ -250,5 +249,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
-  attackColliderPrefab: {fileID: 0}
+  attackColliderPrefab: {fileID: 7742878122363875503, guid: eb6103d155f4f6747916658ef385db01, type: 3}
   attackRange: 1

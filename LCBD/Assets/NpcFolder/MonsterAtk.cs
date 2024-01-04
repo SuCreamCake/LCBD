@@ -34,6 +34,11 @@ public class MonsterAtk : MonoBehaviour
         {
             Debug.LogError("SpriteRenderer 컴포넌트를 찾을 수 없습니다.");
         }
+        if (MonsterManager != null)
+        {
+            attackSpeed = MonsterManager.attackSpeed_Ms;
+            attackRange = MonsterManager.crossroads_Ms;
+        }
         AtkCall = false;
         // "Player" 태그를 가진 오브젝트를 찾아서 playerTransform에 할당
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -54,7 +59,7 @@ public class MonsterAtk : MonoBehaviour
             {
                 Attack();
                 timeSinceLastAttack = Time.time;
-                Invoke("OutAtkAni", 1f);
+                Invoke("OutAtkAni", 0.3f);
             }
         }
     }
@@ -68,7 +73,7 @@ public class MonsterAtk : MonoBehaviour
         if (!AtkCall)
         {
             MonsterManager.SetFind(true);
-            Invoke("OutAtkAni", 1f);
+            Invoke("OutAtkAni", 0.3f);
             AtkCall = true;
             Invoke("LastAtk", attackSpeed);
 

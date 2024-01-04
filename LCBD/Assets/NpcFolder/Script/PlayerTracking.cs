@@ -34,7 +34,7 @@ public class PlayerTracking : MonoBehaviour
         noPlayer = true;
 
         moveSpeed = MonsterManager.speed_Ms; // 이동 속도를 몬스터 매니저의 속도로 설정
-        attackRange = MonsterManager.range_Ms;
+        attackRange = MonsterManager.crossroads_Ms;
         MonsterManager.ChangeState(1);
     }
 

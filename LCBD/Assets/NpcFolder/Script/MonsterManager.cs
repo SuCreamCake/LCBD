@@ -23,12 +23,12 @@ public class MonsterManager : MonoBehaviour
     public float health_Ms; // 현재 체력
     public int attackPower_Ms; // 공격력
     public int defense_Ms; // 방어력
-    public int speed_Ms; // 이동 속도
+    public float speed_Ms; // 이동 속도
     public int maxtenacity_Ms; // 총 강인도
     public int tenacity_Ms; // 현재 강인도
     public float attackSpeed_Ms; // 공격 속도
-    public int range_Ms;
-    public int crossroads_Ms; // 십자로 이동 여부
+    //public int range_Ms;
+    public int crossroads_Ms; // 사거리
     public int elite; // 엘리트 여부 (1: 일반, 2: 엘리트, 3: 보스)
     public bool method; // 공격 방식 (true: 근접, false: 원거리)
     public float smallViewRadius; // 작은 시야 반지름
@@ -82,7 +82,10 @@ public class MonsterManager : MonoBehaviour
     private void Start()
     {
         PlayerTracking.enabled = false;
-        monsterAtk.enabled = false;
+        if(monsterAtk != null)
+        {
+            monsterAtk.enabled = false;
+        }
     }
 
     private void Update()
@@ -110,7 +113,7 @@ public class MonsterManager : MonoBehaviour
         SetStun(true);
         //속도 줄이고 = 0
         // int a = ?
-        int walkspeed1 = speed_Ms;
+        float walkspeed1 = speed_Ms;
         EnemyMove.moveSpeed = 0;
         PlayerTracking.moveSpeed = 0;
         yield return new WaitForSeconds(3.0f);
@@ -126,7 +129,10 @@ public class MonsterManager : MonoBehaviour
         EnemyMove.StopThink();
         EnemyMove.enabled = false;
         PlayerTracking.enabled = true;
-        monsterAtk.enabled = true;
+        if(monsterAtk != null)
+        {
+            monsterAtk.enabled = true;
+        }
         once = false;
 
         findPlayer = true;
@@ -144,7 +150,10 @@ public class MonsterManager : MonoBehaviour
     {
         EnemyMove.enabled = true;
         PlayerTracking.enabled = false;
-        monsterAtk.enabled = false;
+        if(monsterAtk != null)
+        {
+            monsterAtk.enabled = false;
+        }
         once = true;
         if (findPlayer)
         {

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3580148164716198743}
   - component: {fileID: 3580148164724316889}
   - component: {fileID: 3580148164724316888}
+  - component: {fileID: -7213734551510018185}
   - component: {fileID: 8306248862392423945}
   m_Layer: 12
   m_Name: "\uC774\uB3D9,\uCD94\uC801Monster"
@@ -147,6 +148,7 @@ MonoBehaviour:
   attackPower_Ms: 54
   defense_Ms: 10
   speed_Ms: 1
+  maxtenacity_Ms: 0
   tenacity_Ms: 15
   attackSpeed_Ms: 1.5
   crossroads_Ms: 15
@@ -192,6 +194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   moveSpeed: 2
+  backMask:
+    serializedVersion: 2
+    m_Bits: 0
   noPlayer: 1
 --- !u!114 &3580148164724316888
 MonoBehaviour:
@@ -208,6 +213,24 @@ MonoBehaviour:
   nextMove: 1
   moveSpeed: 0
   waitingtime: 3
+  backMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &-7213734551510018185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580148164716198746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc33c5cedd198b646818d2c4c2b8015c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSpeed: 1
+  attackColliderPrefab: {fileID: 7742878122363875503, guid: eb6103d155f4f6747916658ef385db01, type: 3}
+  attackRange: 1
 --- !u!95 &8306248862392423945
 Animator:
   serializedVersion: 4
