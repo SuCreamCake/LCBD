@@ -7,6 +7,13 @@ public class HP_Potion : MonoBehaviour
     public string itemName; // 아이템의 이름
     public Sprite itemSprite; // 인벤토리에 표시할 아이템의 이미지
 
+
+    public void Use()
+    {
+
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
