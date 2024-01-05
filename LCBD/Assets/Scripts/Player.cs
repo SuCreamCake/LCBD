@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
 
 
     SoundsPlayer SFXPlayer;
-    BattleManager battleManager;
+    Battle battleManager;
     
     internal object text_hp;
     internal object img;
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
         infancy();
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
-        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+        battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();
        
     }
     void Start()
