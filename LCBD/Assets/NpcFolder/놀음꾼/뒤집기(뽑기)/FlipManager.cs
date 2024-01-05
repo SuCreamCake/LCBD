@@ -5,17 +5,23 @@ using UnityEngine.UI;
 
 public class FlipManager : MonoBehaviour
 {
-    public CardFlip[] cardArray; // ī�� ������Ʈ �迭
+    public CardFlip[] cardArray; // 카드 오브젝트 배열
     public Button ResetButton;
-    public Button UesButton;
+    public Button UseButton;
+    public GameObject Window;
     private int CheckforReset;
-    public GameObject prefab;
+    public GameObject[] prefabs; // 여러 개의 프리팹을 저장하는 배열
+    
 
     private void Start()
     {
+        if(Window != null)
+        {
+            Window.SetActive(false);
+        }
         ResetButton.interactable = false;
 
-        for(int i = 0; i < cardArray.Length; i++)
+        for (int i = 0; i < cardArray.Length; i++)
         {
             cardArray[i].canClickOff();
         }
@@ -32,13 +38,13 @@ public class FlipManager : MonoBehaviour
         CheckforReset++;
         if (CheckforReset >= cardArray.Length)
         {
-            StartCoroutine(ButtonDelay(5f, ResetButton));
-            
-        } else
-        {
-            UesButton.interactable = true;
+            StartCoroutine(ButtonDelay(4f, ResetButton));
         }
-        
+        else
+        {
+            UseButton.interactable = true;
+        }
+
     }
 
     IEnumerator ButtonDelay(float delay, Button button)
@@ -53,7 +59,7 @@ public class FlipManager : MonoBehaviour
         {
             cardArray[i].ResetCard();
         }
-        StartCoroutine(ButtonDelay(5f, UesButton));
+        UseButton.interactable = true;
         ResetButton.interactable = false;
         CheckforReset = 0;
     }
@@ -70,12 +76,12 @@ public class FlipManager : MonoBehaviour
 
     public void UseButtonClick()
     {
-        Debug.Log("�̱� ��밡����");
+        MinusMoney(2000);
         for (int i = 0; i < cardArray.Length; i++)
         {
             cardArray[i].canClickOn();
         }
-        UesButton.interactable = false;
+        UseButton.interactable = false;
     }
 
     public void Reward()
@@ -85,29 +91,40 @@ public class FlipManager : MonoBehaviour
 
     void SpawnObjectAtPlayerPosition()
     {
-        // �÷��̾� �±׸� ���� ������Ʈ�� ã���ϴ�.
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObject != null)
         {
-            // �÷��̾� ������Ʈ�� ��ġ�� �������� �������� �ν��Ͻ�ȭ�մϴ�.
             Vector3 playerPosition = playerObject.transform.position;
-            Vector3 NewPalyerPosition = playerPosition;
-            NewPalyerPosition.z -= 0.1f;
+            Vector3 newPlayerPosition = playerPosition;
+            newPlayerPosition.z -= 0.1f;
 
-            if (prefab != null)
+            for (int i = 0; i < prefabs.Length; i++)
             {
-                Instantiate(prefab, NewPalyerPosition, Quaternion.identity);
-            }
-            else
-            {
-                Debug.LogError("������ �ε� ����: ");
+                if (prefabs[i] != null)
+                {
+                    Instantiate(prefabs[i], newPlayerPosition, Quaternion.identity);
+                    newPlayerPosition.x += 1f; // 프리팹 간의 간격 조절
+                }
+                else
+                {
+                    Debug.LogError("프리팹을 찾을 수 없습니다: " + i);
+                }
             }
         }
         else
         {
-            Debug.LogError("�÷��̾� ������Ʈ�� ã�� �� �����ϴ�. 'Player'�� ����.");
+            Debug.LogError("플레이어 오브젝트를 찾을 수 없습니다. 'Player' 태그를 확인해주세요.");
         }
     }
-}
 
+    public void PlusMoney(int money)
+    {
+        Debug.Log("성공 Money : " + money);
+    }
+
+    public void MinusMoney(int money)
+    {
+        Debug.Log("차감 Money : " + money);
+    }
+}

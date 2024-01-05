@@ -8,17 +8,23 @@ public class RouletteManager : MonoBehaviour
     private int[] dataArray = new int[3];
     private int index;
     public Button ResetButton;
+    public GameObject Window;
 
     private void Start()
     {
+        if (Window != null)
+        {
+            Window.SetActive(false);
+        }
         index = 0;
-        // ¹è¿­À» 0À¸·Î ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        // ï¿½è¿­ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Õ´Ï´ï¿½.
         for (int i = 0; i < dataArray.Length; i++)
         {
             dataArray[i] = 0;
         }
-        //¸®¼Â ¹öÆ° ºñÈ°¼ºÈ­
-        ResetButton.interactable = false;
+        AllStop();
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½È°ï¿½ï¿½È­
+        //ResetButton.interactable = false;
     }
 
     public void UpdateRouletteResult(int value)
@@ -33,7 +39,7 @@ public class RouletteManager : MonoBehaviour
             if (dataArray[i] == 2)
             {
                 hasTwo = true;
-                break; // ÇÏ³ª¶óµµ 2°¡ ÀÖ´Ù¸é °Ë»ç Áß´Ü
+                break; // ï¿½Ï³ï¿½ï¿½ï¿½ 2ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Ë»ï¿½ ï¿½ß´ï¿½
             }
 
             if (dataArray[i] != 1)
@@ -44,21 +50,23 @@ public class RouletteManager : MonoBehaviour
 
         if (hasTwo)
         {
-            Debug.Log("¿ø±İ ¼Õ½Ç");
+            Debug.Log("ì „ì²´ ì‹¤íŒ¨");
             ResetArray();
             AllStop();
-            //¸®¼Â ¹öÆ° È°¼ºÈ­
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° È°ï¿½ï¿½È­
             ResetButton.interactable = true;
         }
         else if (allOnes)
         {
-            Debug.Log("»ó±İ È¹µæ");
+            Debug.Log("ì „ì²´ ì„±ê³µ");
             ResetArray();
-            //¸®¼Â ¹öÆ° È°¼ºÈ­
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° È°ï¿½ï¿½È­
             ResetButton.interactable = true;
+            //1000ì› ì„±ê³µ ë¨¸ë‹ˆ
+            PlusMoney(1000);
         }
 
-        index = (index + 1) % dataArray.Length; // index°¡ ¹è¿­ ±æÀÌ¸¦ ÃÊ°úÇÒ °æ¿ì ¿øÇüÀ¸·Î µ¹¾Æ°¡µµ·Ï Ã³¸®
+        index = (index + 1) % dataArray.Length; // indexï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     }
 
     public void ResetArray()
@@ -73,7 +81,7 @@ public class RouletteManager : MonoBehaviour
 
     public void AllStop()
     {
-        // ¸ğµç RouletteController ½ºÅ©¸³Æ®ÀÇ ResumeSpinning ¸Ş¼­µå ½ÇÇà
+        // ï¿½ï¿½ï¿½ RouletteController ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ResumeSpinning ï¿½Ş¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         RouletteController[] roulettes = FindObjectsOfType<RouletteController>();
         foreach (RouletteController roulette in roulettes)
         {
@@ -84,5 +92,17 @@ public class RouletteManager : MonoBehaviour
     void OnDisable()
     {
         ResetArray();
+    }
+
+    public void PlusMoney(int money)
+    {
+        // ëˆ ì¶”ê°€ ë©”ì†Œë“œì— ì—°ê²°
+        Debug.Log("ì„±ê³µ Money : " + money);
+    }
+
+    public void MinusMoney(int money)
+    {
+        // ëˆ ë¹¼ê¸° ë©”ì†Œë“œì— ì—°ê²°\
+        Debug.Log("ì°¨ê° Money : " + money);
     }
 }

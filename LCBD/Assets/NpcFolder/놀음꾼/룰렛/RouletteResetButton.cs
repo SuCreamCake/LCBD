@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class RouletteResetButton : MonoBehaviour
 {
     public Button ResetButton;
+    public RouletteManager RouletteManager;
 
     public void OnButtonClicked()
     {
         ResetGame();
-        //¸®¼Â ¹öÆ° ºñÈ°¼ºÈ­
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½È°ï¿½ï¿½È­
         ResetButton.interactable = false;
+        if(RouletteManager != null)
+        {
+            RouletteManager.MinusMoney(1000);
+        }
     }
 
     public void ResetGame()
     {
-        // ¸ðµç RouletteController ½ºÅ©¸³Æ®ÀÇ ResumeSpinning ¸Þ¼­µå ½ÇÇà
+        // ï¿½ï¿½ï¿½ RouletteController ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ResumeSpinning ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         RouletteController[] roulettes = FindObjectsOfType<RouletteController>();
         foreach (RouletteController roulette in roulettes)
         {

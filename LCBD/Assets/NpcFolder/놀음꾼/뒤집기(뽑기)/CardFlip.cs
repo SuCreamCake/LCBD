@@ -7,12 +7,12 @@ using UnityEngine.EventSystems;
 public class CardFlip : MonoBehaviour, IPointerClickHandler
 {
     public FlipManager FlipManager;
-    public Sprite cardFrontSprite; // ¾Õ¸é ÀÌ¹ÌÁö
-    public Sprite cardBackSprite;  // µŞ¸é ÀÌ¹ÌÁö
+    public Sprite cardFrontSprite; // ì¹´ë“œ ì•ë©´ ì´ë¯¸ì§€
+    public Sprite cardBackSprite;  // ì¹´ë“œ ë’·ë©´ ì´ë¯¸ì§€
 
-    private bool canClick = true; // Å¬¸¯ °¡´ÉÇÑ »óÅÂÀÎÁö ¿©ºÎ
+    private bool canClick = true; // í´ë¦­ ê°€ëŠ¥í•œì§€ ì—¬ë¶€ë¥¼ í™•ì¸
 
-    private bool Clicker = false; // Å¬¸¯ÇÑ Ä«µåÀÎÁö È®ÀÎ
+    private bool Clicker = false; // í´ë¦­ì´ ì´ë£¨ì–´ì¡ŒëŠ”ì§€ í™•ì¸
 
     private Image imageComponent;
     private bool isCardFlipped = false;
@@ -36,16 +36,16 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!canClick)
-            return; // Å¬¸¯ ±İÁö »óÅÂÀÏ ¶§ Å¬¸¯ ÀÌº¥Æ® Ã³¸® Áß´Ü
+            return; // í´ë¦­ ê°€ëŠ¥í•˜ì§€ ì•Šìœ¼ë©´ í´ë¦­ ì´ë²¤íŠ¸ë¥¼ ë¬´ì‹œ
 
         if (Clicker)
         {
-            return; //Å¬¸¯µÈ »óÅÂ
+            return; //í´ë¦­ì´ ì´ë£¨ì–´ì¡Œë‹¤ë©´ ë°˜í™˜
         }
 
         canClick = !canClick;
         Clicker = true;
-        // ¸¶¿ì½º Å¬¸¯ ½Ã Ä«µå µÚÁı±â
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œ ì¹´ë“œë¥¼ ë’¤ì§‘ìŒ
         isCardFlipped = !isCardFlipped;
         //SetCardSide(isCardFlipped);
         Debug.Log(cardFrontSprite.name);
@@ -56,7 +56,7 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
         FlipManager.Reward();
     }
 
-    // ¾Õ¸é°ú µŞ¸é ÀÌ¹ÌÁö ¼³Á¤
+    // ì¹´ë“œ ì•ë©´ ë˜ëŠ” ë’·ë©´ ì´ë¯¸ì§€ ì„¤ì •
     private void SetCardSide(bool isFlipped)
     {
         if (!isFlipped)
@@ -73,7 +73,7 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
         bool setCardSideCalled = false;
 
         if (!select)
-            yield return new WaitForSeconds(1f); // 1ÃÊ µ¿¾È ±â´Ù¸²
+            yield return new WaitForSeconds(1f); // 1ì´ˆ ë™ì•ˆ ê¸°ë‹¤ë¦¼
 
         while (timeElapsed < rotationDuration)
         {
@@ -82,29 +82,29 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
             transform.rotation = Quaternion.Lerp(startRotation, targetQuaternion, t);
             yield return null;
 
-            // ½Ã°£ÀÇ Àı¹İÀ» Áö³­ °æ¿ì SetCardSide ÇÔ¼ö¸¦ È£Ãâ
+            // ì‹œê°„ì´ ì ˆë°˜ ì§€ë‚˜ë©´ ì¹´ë“œ ì´ë¯¸ì§€ SetCardSide í•¨ìˆ˜ í˜¸ì¶œ
             if (!setCardSideCalled && timeElapsed >= rotationDuration / 2f)
             {
                 setCardSideCalled = true;
-                SetCardSide(isCardFlipped); // SetCardSide ÇÔ¼ö È£Ãâ
+                SetCardSide(isCardFlipped); // SetCardSide í•¨ìˆ˜ í˜¸ì¶œ
             }
         }
 
-        // Á¤È®È÷ ¸ñÇ¥ °¢µµ·Î ¼³Á¤
+        // ìµœì¢…ì ìœ¼ë¡œ ëª©í‘œ ì§€ì ìœ¼ë¡œ íšŒì „
         transform.rotation = targetQuaternion;
     }
 
     public void ResetCard()
     {
-        // º¯¼öµéÀ» ÃÊ±â »óÅÂ·Î ¼³Á¤
-        canClick = true;
+        // í´ë¦­ ê°€ëŠ¥ìƒíƒœë¡œ ì´ˆê¸°í™”
+        canClickOff();
         Clicker = false;
         isCardFlipped = false;
 
         // Set the card's rotation around the Y-axis to 0
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        // Ä«µå¸¦ µŞ¸éÀ¸·Î ¼³Á¤
+        // ì¹´ë“œë¥¼ ë’·ë©´ìœ¼ë¡œ ë³€ê²½
         SetCardSide(isCardFlipped);
     }
 

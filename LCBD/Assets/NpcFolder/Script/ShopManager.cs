@@ -2,36 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // TextMeshPro¸¦ »ç¿ëÇÏ±â À§ÇØ Ãß°¡
+using TMPro; // TextMeshProï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 
 public class ShopManager : MonoBehaviour
 {
-    public TMP_Text CountNumText; // ¼ö·®
-    public Button increaseButton; // ¼ö·® ¾÷ ¹öÆ°
-    public Button decreaseButton; // ¼ö·® ´Ù¿î ¹öÆ°
+    public TMP_Text CountNumText; // ï¿½ï¿½ï¿½ï¿½
+    public Button increaseButton; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Æ°
+    public Button decreaseButton; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ ï¿½ï¿½Æ°
+    public TMP_Text TotalPriceText; // ï¿½ï¿½ï¿½ï¿½
 
-    private int Count = 1; // ¼ö·® ¼ıÀÚ ÀúÀå
+    private int Count = 1; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Start()
     {
-        // TextMeshPro Text ¿¤¸®¸ÕÆ®¿¡ ÃÊ±â ¼ıÀÚ Ç¥½Ã
+        // TextMeshPro Text ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
         UpdateNumberText();
-
-        // ¹öÆ° Å¬¸¯ ÀÌº¥Æ® ¼³Á¤
+        // ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         increaseButton.onClick.AddListener(IncreaseNumber);
         decreaseButton.onClick.AddListener(DecreaseNumber);
     }
 
     public void IncreaseNumber()
     {
-        // À§ ¹öÆ° Å¬¸¯ ½Ã ¼ıÀÚ¸¦ 1 Áõ°¡
+        // ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ 1 ï¿½ï¿½ï¿½ï¿½
         Count++;
         UpdateNumberText();
     }
 
     public void DecreaseNumber()
     {
-        // ¾Æ·¡ ¹öÆ° Å¬¸¯ ½Ã ¼ıÀÚ¸¦ 1 °¨¼Ò (0º¸´Ù ÀÛ¾ÆÁöÁö ¾Êµµ·Ï)
+        // ï¿½Æ·ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ (0ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½)
         if (Count > 1)
         {
             Count--;
@@ -41,8 +41,18 @@ public class ShopManager : MonoBehaviour
 
     private void UpdateNumberText()
     {
-        // TextMeshPro Text ¿¤¸®¸ÕÆ®¿¡ ÇöÀç ¼ıÀÚ¸¦ Ç¥½Ã
+        // TextMeshPro Text ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ Ç¥ï¿½
         CountNumText.text = Count.ToString();
+    }
+
+    private void Total()
+    {
+        if (TotalPriceText != null)
+        {
+            int a = 100;
+            // í…ìŠ¤íŠ¸ë¥¼ ë³€ê²½í•©ë‹ˆë‹¤.
+            TotalPriceText.text = a.ToString() + "G";
+        }
     }
 }
 

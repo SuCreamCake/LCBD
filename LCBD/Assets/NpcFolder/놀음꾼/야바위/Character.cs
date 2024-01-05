@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private Transform object1; // Ã¹ ¹øÂ° ¿ÀºêÁ§Æ®
-    private Transform object2; // µÎ ¹øÂ° ¿ÀºêÁ§Æ®
-    private float rotationSpeed = 15.0f; // È¸Àü ¼Óµµ
+    private Transform object1; // ì²« ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸
+    private Transform object2; // ë‘ ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸
+    private float rotationSpeed = 3.75f; // íšŒì „ ì†ë„
 
-    private Vector3 center; // µÎ ¿ÀºêÁ§Æ®ÀÇ °¡¿îµ¥¸¦ ±âÁØÀ¸·Î ¼³Á¤µÈ Áß½ÉÁ¡
-    private float radius; // µÎ ¿ÀºêÁ§Æ® »çÀÌÀÇ °Å¸®ÀÇ Àı¹İ (¹İÁö¸§)
+    private Vector3 center; // ë‘ ì˜¤ë¸Œì íŠ¸ì˜ ì¤‘ì‹¬ì ì„ ê¸°ì¤€ìœ¼ë¡œ íšŒì „í•˜ëŠ” ì›ì˜ ì¤‘ì‹¬ ì¢Œí‘œ
+    private float radius; // ë‘ ì˜¤ë¸Œì íŠ¸ ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ë°˜ì§€ë¦„ìœ¼ë¡œ í•˜ëŠ” ì›ì˜ ë°˜ì§€ë¦„ (ë°˜ê²½)
 
     private float currentAngle = 180f;
     private bool isRotating = false;
@@ -18,19 +18,24 @@ public class Character : MonoBehaviour
 
     int randomValue = 3;
 
-    // ¿ÀºêÁ§Æ® ÀÌ¸§¿¡¼­ ¼ıÀÚ¸¦ ÃßÃâÇÏ´Â º¸Á¶ ¸Ş¼­µå
+    public void ChangerotationSpeed(float speed)
+    {
+        rotationSpeed = speed;
+    }
+
+    // ì˜¤ë¸Œì íŠ¸ ì´ë¦„ì—ì„œ ìˆ«ìë¥¼ ì¶”ì¶œí•˜ëŠ” ë©”ì†Œë“œ
     private int GetNumberFromName(string name)
     {
-        string numberStr = name.Substring(name.Length - 1); // °¡Á¤: ÀÌ¸§ÀÇ ¸¶Áö¸· ¹®ÀÚ°¡ ¼ıÀÚ·Î ³¡³³´Ï´Ù.
+        string numberStr = name.Substring(name.Length - 1); // ì£¼ì˜: ì´ë¦„ì˜ ë§ˆì§€ë§‰ ê¸€ìë¥¼ ì¶”ì¶œí•©ë‹ˆë‹¤.
         int number;
         if (int.TryParse(numberStr, out number))
         {
             return number;
         }
-        return 0; // ÀÌ¸§ÀÇ ¸¶Áö¸· ¹®ÀÚ°¡ ¼ıÀÚ°¡ ¾Æ´Ï°Å³ª ÀÌ¸§ÀÌ ºñ¾îÀÖ´Â °æ¿ì 0À» ¹İÈ¯ÇÕ´Ï´Ù.
+        return 0; // ì´ë¦„ì˜ ë§ˆì§€ë§‰ ê¸€ìê°€ ìˆ«ìê°€ ì•„ë‹ˆê±°ë‚˜ ì´ë¦„ì´ ì—†ì„ ê²½ìš° 0ì„ ë°˜í™˜í•©ë‹ˆë‹¤.
     }
 
-    // CupManager·ÎºÎÅÍ chosenCups ¹è¿­À» Àü´Ş¹Ş¾Æ ÀúÀåÇÏ´Â ¸Ş¼­µå
+    // CupManagerì—ì„œ chosenCups ë°°ì—´ì„ ì „ë‹¬ë°›ëŠ” ë©”ì†Œë“œ
     public void ReceiveChosenCups(GameObject[] chosenCups)
     {
         object1 = chosenCups[0].transform;
@@ -40,21 +45,21 @@ public class Character : MonoBehaviour
 
     public void SoStart()
     {
-        // ·£´ı °ª »ı¼º (0 ¶Ç´Â 1), È¸Àü ¹æÇâÀ» ¼³Á¤
+        // íšŒì „ ë°©í–¥ (0 ë˜ëŠ” 1), íšŒì „ í¬ê¸°ë¥¼ ëœë¤ìœ¼ë¡œ ê²°ì •
         randomValue = Random.Range(0, 2);
 
-        // µÎ ¿ÀºêÁ§Æ® »çÀÌÀÇ Áß°£ ÁöÁ¡À» °è»ê
+        // ë‘ ì˜¤ë¸Œì íŠ¸ì˜ ì¤‘ì‹¬ì ì„ ê³„ì‚°í•˜ì—¬ ì¶”ê°€
         center = (object1.position + object2.position) / 2f;
 
-        // µÎ ¿ÀºêÁ§Æ® »çÀÌÀÇ °Å¸®ÀÇ Àı¹İÀ» ¹İÁö¸§À¸·Î ¼³Á¤
+        // ë‘ ì˜¤ë¸Œì íŠ¸ ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ë°˜ì§€ë¦„ìœ¼ë¡œ í•˜ëŠ” ì›ì˜ ë°˜ì§€ë¦„ ê³„ì‚°
         radius = Vector3.Distance(object1.position, object2.position) / 2f;
 
-        // ½ºÅ©¸³Æ®°¡ Àû¿ëµÈ °ÔÀÓ¿ÀºêÁ§Æ®¿Í ÀÎ½ºÆåÅÍ¸¦ ÅëÇØ ¼±ÅÃÇÑ µÎ °³ÀÇ ¿ÀºêÁ§Æ® ÀÌ¸§À» °¡Á®¿É´Ï´Ù.
+        // ìŠ¤í¬ë¦½íŠ¸ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ê³¼ ë‘ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ì„ ë¹„êµí•˜ì—¬ íšŒì „ ì—¬ë¶€ë¥¼ ê²°ì •í•©ë‹ˆë‹¤.
         string scriptObjectName = gameObject.name;
         string object1Name = object1.name;
         string object2Name = object2.name;
 
-        // ÀÌ¸§À» ºñ±³ÇÏ¿© µğ¹ö±× ·Î±×·Î °á°ú¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+        // ì´ë¦„ì„ ë¹„êµí•˜ì—¬ íšŒì „ì„ ì‹œì‘í•©ë‹ˆë‹¤.
         if (scriptObjectName == object1Name || scriptObjectName == object2Name)
         {
             int scriptObjectNumber = GetNumberFromName(scriptObjectName);
@@ -76,29 +81,24 @@ public class Character : MonoBehaviour
         }
         else
         {
-            Debug.Log("ÀÏÄ¡ÇÏÁö ¾ÊÀ½");
+            Debug.Log("ìœ„ì¹˜ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
             isRotating = false;
         }
-
-
     }
-
 
     void Update()
     {
         if (isRotating)
         {
-
-            if (!size) // È¸Àü ½ºÅ¸Æ®¸¦ ¼³Á¤(¿ŞÂÊ, ¿À¸¥ÂÊ)
+            if (!size) // íšŒì „ í¬ê¸°ê°€ ì‘ì€ ê²½ìš° (ì‘ì•„ì§€ëŠ” ê²½ìš°, ì»¤ì§€ëŠ” ê²½ìš°)
             {
-
                 if (randomValue == 0)
                 {
                     currentAngle += rotationSpeed;
 
                     if (currentAngle >= 360f)
                     {
-                        // 180µµ È¸ÀüÀ» ¸¶Ä¡¸é È¸ÀüÀ» ¸ØÃã
+                        // 180ë„ íšŒì „ìœ¼ë¡œ ìœ„ì¹˜ê°€ íšŒì „í•œ ê²½ìš°
                         currentAngle = 360f;
                         isRotating = false;
                     }
@@ -109,7 +109,7 @@ public class Character : MonoBehaviour
 
                     if (currentAngle <= 0f)
                     {
-                        //180µµ È¸ÀüÀ» ¸¶Ä¡¸é È¸ÀüÀ» ¸ØÃã
+                        // 180ë„ íšŒì „ìœ¼ë¡œ ìœ„ì¹˜ê°€ íšŒì „í•œ ê²½ìš°
                         currentAngle = 0f;
                         isRotating = false;
                     }
@@ -123,7 +123,7 @@ public class Character : MonoBehaviour
 
                     if (currentAngle >= 180f)
                     {
-                        // 180µµ È¸ÀüÀ» ¸¶Ä¡¸é È¸ÀüÀ» ¸ØÃã
+                        // 180ë„ íšŒì „ìœ¼ë¡œ ìœ„ì¹˜ê°€ íšŒì „í•œ ê²½ìš°
                         currentAngle = 180f;
                         isRotating = false;
                     }
@@ -134,7 +134,7 @@ public class Character : MonoBehaviour
 
                     if (currentAngle <= -180f)
                     {
-                        // 180µµ È¸ÀüÀ» ¸¶Ä¡¸é È¸ÀüÀ» ¸ØÃã
+                        // 180ë„ íšŒì „ìœ¼ë¡œ ìœ„ì¹˜ê°€ íšŒì „í•œ ê²½ìš°
                         currentAngle = -180f;
                         isRotating = false;
                     }

@@ -20,6 +20,17 @@ public class PlayerTracking : MonoBehaviour
 
     private float attackRange = 1f;// 몬스터 사거리 계산
 
+    private bool CurrentAtk = false;
+
+    public void AtkTrue()
+    {
+        CurrentAtk = true;
+    }
+    public void AtkFalse()
+    {
+        CurrentAtk = false;
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent <SpriteRenderer>();
@@ -42,7 +53,10 @@ public class PlayerTracking : MonoBehaviour
     {
         if (noPlayer)
             lastPlayer = player.transform;
+        moveSpeed = MonsterManager.speed_Ms; // 이동 속도를 몬스터 매니저의 속도로 설정
 
+        if (CurrentAtk)
+            moveSpeed = 0;
         // 앞쪽 레이캐스트를 생성
         Vector2 frontVec = new Vector2(rb.position.x + 0.4f, rb.position.y);
         // 뒷쪽 레이캐스트를 생성
