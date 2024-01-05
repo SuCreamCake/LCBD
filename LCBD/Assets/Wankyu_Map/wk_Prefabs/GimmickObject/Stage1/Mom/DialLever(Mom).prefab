@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3761627624872074949}
   - component: {fileID: 7134105404783763948}
   - component: {fileID: -5334487508794459010}
+  - component: {fileID: 1937934427855285657}
   m_Layer: 0
-  m_Name: ClearLever
+  m_Name: DialLever(Mom)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +97,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.25}
@@ -133,3 +134,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1937934427855285657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193166683374040395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88335a96bb3a1014ea2eb17180d0a329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialObject: {fileID: 0}
+  CurrentCount: {fileID: 0}
