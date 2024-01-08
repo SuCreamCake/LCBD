@@ -4,20 +4,94 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
-    private int item_number; //아이템 번호
-    private string item_Name; //아이템이름
-    private string Rank; //아이템 희귀도
-    private string item_type; //아이템 타입
-    private float effect_time; //사용 유지 시간
-    private string drop_age; //흭득 가능한 년기
+    public int item_number; //아이템 번호
+    public string item_Name; //아이템이름
+    public Item_Rank Rank; //아이템 희귀도
+    public Item_Type item_type; //아이템 타입
+    public Drop_age drop_age; //흭득 가능한 년기
+    public Effect_Type effect_type; //효과 타입
+    public Effect_Info effect_info; //효과 정보
+    public Effect_Target effect_target; //효과 적용 대상
+    public float effect_figures; //얼마나 버프먹는지 정도
+    public Effect_Active_Type effect_active_type; //효과 유형
+    public float effect_maintain_time; //효과발동 후 효과적용되는 시간
+    public Sprite item_sprite; //아이템 이미지
+    public int max_count; //최대 소지갯수
+
 
     public abstract void Use_Effect(); //사용효과 추상메소드
     public abstract void DestraoyAfterTime(); //사용 후 파괴 추상메소드
 
-    public enum ItemRarity
+    public enum Item_Type //아이템 타입
     {
-
+        Parts,
+        List,
+        Goods
     }
 
+    public enum Item_Rank //아이템 희귀도
+    {
+        Rare, 
+        Common, 
+        Unique
+    }
 
+    public enum Drop_age //얻을 수 있는 성장기
+    {
+        Child, //유아기
+        Youth, //청년기
+        Adult, //성년
+        Infancy, //초기
+        Old, //갱년기
+        All //전체에서 얻기가능
+
+    }
+    public enum Effect_Type //효과 타입
+    {
+        Buff, //버프류
+        invincible, //무적류
+        ending_key, //엔딩키
+        Open_Stage, //오픈스테이지
+        Purchace, //구매류
+        Null
+    }
+
+    public enum Effect_Info //효과정보 번역후 다시사용
+    {
+        Attack_Speed, //공격속도
+        Offense_Power, //공격력
+        Infinite, //지속효과
+        Health, //체력회복
+        endurance
+    }
+
+    public enum Effect_Target //효과대상 누구에게 적용
+    {
+        Self, //자기자신
+        Object, //오브젝트
+        Null //적용대상없음
+    }
+
+    public enum Effect_Active_Type //효과유형 지속,쿨타임 등
+    {
+        Infinite, //지속효과
+        Once, //한번
+        Null //사용안함
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (ItemInventory.instance.AddItem(item_Name, item_sprite, this))
+            {
+                //Destroy(gameObject); // 아이템을 씬에서 제거
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
+            }
+        }
+    }
 }
