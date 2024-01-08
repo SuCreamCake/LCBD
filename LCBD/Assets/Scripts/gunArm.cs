@@ -9,7 +9,7 @@ public class gunArm : MonoBehaviour
     float angle;
     Vector2  target, mouse;
     SpriteRenderer spriteRenderer;
-    BattleManager battleManager;
+    Battle battle;
     Player playerScript;
 
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class gunArm : MonoBehaviour
         playerScript = player.GetComponent<Player>();
         playerPosition = player.transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+        battle = GameObject.Find("BattleManager").GetComponent<Battle>();
     }
 
 
@@ -43,7 +43,7 @@ public class gunArm : MonoBehaviour
             spriteRenderer.flipY = false;
 
         if (!playerScript.ani.GetCurrentAnimatorStateInfo(0).IsName("gunAttack"))
-            battleManager.gunBool = true;
+            battle.gunBool = true;
 
     }
 }

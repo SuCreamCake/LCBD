@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Battle : MonoBehaviour
 {
-    GameObject playerObject, gunArm, hammer1, hammer2;
+    GameObject playerObject, gunArm, hammer1;
     Player player;
     public bool gunBool, hammer1bool, hammer2bool;
     public GameObject bulletObject;
@@ -101,13 +101,13 @@ public class Battle : MonoBehaviour
             hammer1bool = false;
         }
 
-        //if (player.stage == 2 && weaponIndex == 0 &&
-        //    player.ani.GetCurrentAnimatorStateInfo(0).IsName("childhoodStay"))
-        //{
-        //    hammer1.SetActive(true);
-        //    gunArm.Set
-        //}
-        
+        if (player.stage == 2 && weaponIndex == 0 &&
+            player.ani.GetCurrentAnimatorStateInfo(0).IsName("childhoodStay"))
+        {
+            hammer1.SetActive(true);
+        }
+
+
     }
 
     public void punchAttack()
