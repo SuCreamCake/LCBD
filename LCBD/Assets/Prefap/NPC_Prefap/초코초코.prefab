@@ -251,3 +251,4 @@ MonoBehaviour:
   attackSpeed: 1.5
   attackColliderPrefab: {fileID: 7742878122363875503, guid: eb6103d155f4f6747916658ef385db01, type: 3}
   attackRange: 2
+  close: 1

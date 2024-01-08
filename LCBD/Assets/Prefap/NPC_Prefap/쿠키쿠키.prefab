@@ -126,7 +126,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0.35000002, y: -0.11825892}
+  m_Offset: {x: 0, y: -0.11825892}
   m_Size: {x: 1.7, y: 2.1791296}
   m_Direction: 0
 --- !u!114 &6126296750359564366
@@ -251,3 +251,4 @@ MonoBehaviour:
   attackSpeed: 1
   attackColliderPrefab: {fileID: 7742878122363875503, guid: eb6103d155f4f6747916658ef385db01, type: 3}
   attackRange: 1
+  close: 1

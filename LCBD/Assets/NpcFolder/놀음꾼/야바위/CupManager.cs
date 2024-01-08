@@ -34,6 +34,8 @@ public class CupManager : MonoBehaviour
 
     public GameObject Window;
 
+    private Player PlayerScript;
+
     void Awake()
     {
         firstPos1 = Cup1.GetComponent<RectTransform>().anchoredPosition;
@@ -73,6 +75,17 @@ public class CupManager : MonoBehaviour
         originalBallPos = Ball.transform.position;
 
         ResetGame(); // Start에서 ResetGame 함수를 호출합니다.
+
+        // "Player" 태그를 가진 첫 번째 오브젝트를 찾아 스크립트 가져오기
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            PlayerScript = playerObject.GetComponent<Player>();
+        }
+        else
+        {
+            Debug.Log("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+        }
     }
 
     // UI 버튼을 처리하는 메소드를 정의합니다.
@@ -329,11 +342,19 @@ public class CupManager : MonoBehaviour
     public void PlusMoney(int money)
     {
         Debug.Log("성공 Money : " + money);
+        if (PlayerScript != null)
+        {
+            PlayerScript.plusMoney(money);
+        }
     }
 
     public void MinusMoney(int money)
     {
         Debug.Log("차감 Money : " + money);
+        if (PlayerScript != null)
+        {
+            PlayerScript.minusMoney(money);
+        }
     }
 }
 

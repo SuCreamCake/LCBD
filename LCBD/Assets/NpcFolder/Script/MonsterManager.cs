@@ -30,7 +30,7 @@ public class MonsterManager : MonoBehaviour
     //public int range_Ms;
     public int crossroads_Ms; // 사거리
     public int elite; // 엘리트 여부 (1: 일반, 2: 엘리트, 3: 보스)
-    public bool method; // 공격 방식 (true: 근접, false: 원거리)
+    //public bool method; // 공격 방식 (true: 근접, false: 원거리)
     public float smallViewRadius; // 작은 시야 반지름
     public float viewRadius; // 시야 반지름
     [Range(0, 360)]
@@ -113,6 +113,7 @@ public class MonsterManager : MonoBehaviour
         SetStun(true);
         //속도 줄이고 = 0
         // int a = ?
+        monsterAtk.enabled = false;
         float walkspeed1 = speed_Ms;
         EnemyMove.moveSpeed = 0;
         PlayerTracking.moveSpeed = 0;
@@ -121,6 +122,7 @@ public class MonsterManager : MonoBehaviour
         tenacity_Ms = maxtenacity_Ms;
         EnemyMove.moveSpeed = walkspeed1;
         PlayerTracking.moveSpeed = walkspeed1;
+        monsterAtk.enabled = true;
         SetStun(false);
     }
 

@@ -22,6 +22,7 @@ public class MonsterAtk : MonoBehaviour
 
     bool AtkCall;
 
+    public bool close = false; //근거리 원거리 판별
     Transform player;
 
     void Start()
@@ -40,10 +41,15 @@ public class MonsterAtk : MonoBehaviour
         {
             attackSpeed = MonsterManager.attackSpeed_Ms;
             attackRange = MonsterManager.crossroads_Ms;
+            if (close)
+            {
+                attackRange = Mathf.Round(attackRange * 0.1f * 10) / 10f;
+            }
         }
         AtkCall = false;
         // "Player" 태그를 가진 오브젝트를 찾아서 playerTransform에 할당
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
 
     }
 
@@ -52,7 +58,7 @@ public class MonsterAtk : MonoBehaviour
     {
         // 플레이어와 몬스터 사이의 거리 계산
         float atk = Vector2.Distance(transform.position, player.position);
-
+        
         if (atk <= attackRange)
         {
             // 사거리에 오면 PlayerTracking에게 쏜다.
@@ -62,10 +68,9 @@ public class MonsterAtk : MonoBehaviour
             {
                 Attack();
                 timeSinceLastAttack = Time.time;
-                Invoke("OutAtkAni", 0.3f);
             }
         }
-        PlayerTracking.AtkFalse();
+        
     }
 
 
@@ -77,9 +82,9 @@ public class MonsterAtk : MonoBehaviour
         if (!AtkCall)
         {
             MonsterManager.SetFind(true);
-            Invoke("OutAtkAni", 0.3f);
+            Invoke("OutAtkAni", 1 / attackSpeed);
             AtkCall = true;
-            Invoke("LastAtk", attackSpeed);
+            Invoke("LastAtk", 1 / attackSpeed);
 
             // flipX 값 확인
             isFlipped = spriteRenderer.flipX;
@@ -87,12 +92,12 @@ public class MonsterAtk : MonoBehaviour
             if (isFlipped)
             {
                 // 오른쪽으로 공격
-                SpawnAttackCollider(transform.position + new Vector3(attackRange * (0.05f), 0f, 0f));
+                SpawnAttackCollider(transform.position + new Vector3(attackRange / 2.0f, 0f, 0f));
             }
             else
             {
                 // 왼쪽으로 공격
-                SpawnAttackCollider(transform.position + new Vector3(attackRange * (0.05f) * -1.0f, 0f, 0f));
+                SpawnAttackCollider(transform.position + new Vector3(attackRange / 2.0f * -1.0f, 0f, 0f));
             }
         }
     }
@@ -108,7 +113,7 @@ public class MonsterAtk : MonoBehaviour
         attackCollider.transform.parent = transform;
 
         // 콜라이더 크기 조절 예시
-        colliderWidth = attackRange * (0.05f) * 2; // 원하는 가로 크기
+        colliderWidth = attackRange; // 원하는 가로 크기
         colliderHeight = 1.0f; // 원하는 세로 크기
         // BoxCollider2D가 있는 경우에만 크기 조절
         BoxCollider2D boxCollider = attackCollider.GetComponent<BoxCollider2D>();
@@ -133,5 +138,6 @@ public class MonsterAtk : MonoBehaviour
     public void LastAtk()
     {
         AtkCall = false;
+        PlayerTracking.AtkFalse();
     }
 }

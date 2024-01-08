@@ -9,6 +9,7 @@ public class RouletteManager : MonoBehaviour
     private int index;
     public Button ResetButton;
     public GameObject Window;
+    private Player PlayerScript;
 
     private void Start()
     {
@@ -25,6 +26,17 @@ public class RouletteManager : MonoBehaviour
         AllStop();
         //���� ��ư ��Ȱ��ȭ
         //ResetButton.interactable = false;
+
+        // "Player" 태그를 가진 첫 번째 오브젝트를 찾아 스크립트 가져오기
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            PlayerScript = playerObject.GetComponent<Player>();
+        }
+        else
+        {
+            Debug.Log("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+        }
     }
 
     public void UpdateRouletteResult(int value)
@@ -96,13 +108,19 @@ public class RouletteManager : MonoBehaviour
 
     public void PlusMoney(int money)
     {
-        // 돈 추가 메소드에 연결
         Debug.Log("성공 Money : " + money);
+        if (PlayerScript != null)
+        {
+            PlayerScript.plusMoney(money);
+        }
     }
 
     public void MinusMoney(int money)
     {
-        // 돈 빼기 메소드에 연결\
         Debug.Log("차감 Money : " + money);
+        if (PlayerScript != null)
+        {
+            PlayerScript.minusMoney(money);
+        }
     }
 }
