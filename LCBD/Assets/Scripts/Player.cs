@@ -57,6 +57,9 @@ public class Player : MonoBehaviour
     private Vector2 start;
     private Vector2 end;
 
+    //머니
+    private int money;
+
 
     SoundsPlayer SFXPlayer;
     Battle battleManager;
@@ -80,10 +83,6 @@ public class Player : MonoBehaviour
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();
        
-    }
-    void Start()
-    {
-        //attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
     }
 
     private void Update()
@@ -421,7 +420,9 @@ public class Player : MonoBehaviour
         //사거리
         crossroads = 3;
         //행운
-        luck = 15 + 20;   
+        luck = 15 + 20;
+        //돈
+        money = 0;
     }
 
     private void childhood()
@@ -531,6 +532,8 @@ public class Player : MonoBehaviour
             crossroads = 0;
         if (luck < 0)
             luck = 0;
+        if (money < 0)
+            money = 0;
 
     }
 
@@ -572,8 +575,6 @@ public class Player : MonoBehaviour
             InvokeRepeating("enduranceRecovery", 0, 1);
         }
     }
-
-
     private void invokeRun()
     {
         InvokeRepeating("enduranceRun", 0, 0.2f);  
@@ -663,6 +664,14 @@ public class Player : MonoBehaviour
         
     }
 
+    public void plusMoney(int money)
+    {
+        this.money += money;
+    }
 
+    public void minusMoney(int money)
+    {
+        this.money -= money;
+    }
 
 }
