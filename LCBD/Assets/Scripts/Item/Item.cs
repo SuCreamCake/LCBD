@@ -24,32 +24,32 @@ public abstract class Item : MonoBehaviour
 
     public enum Item_Type //아이템 타입
     {
-        Parts,
-        List,
-        Goods
+        Parts, //파츠형
+        List, //리스트형
+        Goods //재화형
     }
 
     public enum Item_Rank //아이템 희귀도
     {
-        Rare, 
-        Common, 
-        Unique
+        Rare, //희귀등급
+        Common,  //일반등급
+        Unique //유일등급
     }
 
     public enum Drop_age //얻을 수 있는 성장기
     {
-        Child, //유아기
-        Youth, //청년기
-        Adult, //성년
-        Infancy, //초기
-        Old, //갱년기
+        Baby,  //유아기
+        Child, //아동기
+        Young, //청년기
+        Adult, //성인기
+        Old, //노년기
         All //전체에서 얻기가능
 
     }
     public enum Effect_Type //효과 타입
     {
-        Buff, //버프류
-        invincible, //무적류
+        Enhance, //버프류
+        unbeatable, //무적류
         ending_key, //엔딩키
         Open_Stage, //오픈스테이지
         Purchace, //구매류
@@ -62,13 +62,19 @@ public abstract class Item : MonoBehaviour
         Offense_Power, //공격력
         Infinite, //지속효과
         Health, //체력회복
-        endurance
+        Stamina, //지구력
+        Defense, //방어력
+        Range, //사거리
+        Endurance, //강인도
+        Random, //랜덤
+        Money //돈
     }
 
     public enum Effect_Target //효과대상 누구에게 적용
     {
         Self, //자기자신
         Object, //오브젝트
+        NPC, //NPC
         Null //적용대상없음
     }
 

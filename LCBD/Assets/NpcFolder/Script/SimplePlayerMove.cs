@@ -5,12 +5,16 @@ using UnityEngine;
 public class SimplePlayerMove : MonoBehaviour
 {
     public float speed = 5f; // 이동 속도 설정
+    public float HP;
+    public float MaxHP;
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        MaxHP = 100;
+        HP = 50;
     }
 
     void Update()

@@ -111,11 +111,13 @@ public class KeyManager : MonoBehaviour
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //Item2
         {
-            Debug.Log("Item2");
+            ItemInventory.instance.selectedItemIndex = 1; // 첫 번째 아이템 슬롯 선택
+            ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //Item3
         {
-            Debug.Log("Item3");
+            ItemInventory.instance.selectedItemIndex = 2; // 첫 번째 아이템 슬롯 선택
+            ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.TouchNPC])) //TouchNPC
         {
