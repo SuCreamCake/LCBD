@@ -24,7 +24,9 @@ public abstract class Item : MonoBehaviour
 
     public enum Item_Type //아이템 타입
     {
-        Parts, //파츠형
+        Hand_Parts, //손 장착형 파츠
+        Body_Parts, //몸 장착형 파츠
+        Potion_Parts, //소모형 파츠
         List, //리스트형
         Goods //재화형
     }
@@ -67,7 +69,8 @@ public abstract class Item : MonoBehaviour
         Range, //사거리
         Endurance, //강인도
         Random, //랜덤
-        Money //돈
+        Money, //돈
+        Null
     }
 
     public enum Effect_Target //효과대상 누구에게 적용

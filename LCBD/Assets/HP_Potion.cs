@@ -10,7 +10,7 @@ public class HP_Potion : Item
         item_number = 27; //아이템 번호
         item_Name = "HP_Potion";; //아이템이름
         Rank = Item_Rank.Common; //아이템 희귀도
-        item_type = Item_Type.Parts; //아이템 타입
+        item_type = Item_Type.Potion_Parts; //아이템 타입
         drop_age = Drop_age.All; //흭득 가능한 년기
         effect_type = Effect_Type.Enhance; //아이템 타입
         effect_info = Effect_Info.Health; //아이템 정보
