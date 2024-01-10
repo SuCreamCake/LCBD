@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
 
     private void jump()
     {
-        if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && Mathf.Abs(rigid.velocity.y) <= 0.1)
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && Mathf.Abs(rigid.velocity.y) <= 0.001)
         {
             transform.Translate(new Vector3(0, 0.2f, 0));
 

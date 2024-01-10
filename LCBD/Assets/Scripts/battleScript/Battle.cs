@@ -77,7 +77,7 @@ public class Battle : MonoBehaviour
         attackTimeDelay = 1f / attackTimeDelay;
         attackTime += Time.deltaTime;
         getInputBattleKeyKode();
-        battleLogic();
+        //battleLogic();
         getInputSoundWaveAttack();
         //공격방향
         attackPosition = playerObject.transform.position + new Vector3(0.2f, 0.2f, 0);
