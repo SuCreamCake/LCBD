@@ -90,7 +90,8 @@ public class Player : MonoBehaviour
        
         if (!drained)
         {
-            jump();
+            if (health > 0)
+                jump();
             run();
             if(!isLadder)
                 battleManager.battleLogic();
@@ -345,7 +346,7 @@ public class Player : MonoBehaviour
                 fall = false;
             }
         }
-        if (rigid.velocity.y >= 0)
+        if (rigid.velocity.y >= -3)
             fall = false;
     }
     private void run()
