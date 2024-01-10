@@ -25,6 +25,9 @@ public class MonsterAtk : MonoBehaviour
     public bool close = false; //근거리 원거리 판별
     Transform player;
 
+    private bool See; //플레이어 본다.
+    private bool FirstAtk = true;
+
     void Start()
     {
         // 현재 오브젝트의 SpriteRenderer 컴포넌트 가져오기
@@ -56,21 +59,38 @@ public class MonsterAtk : MonoBehaviour
     // Update 함수는 프레임마다 호출됩니다.
     void Update()
     {
-        // 플레이어와 몬스터 사이의 거리 계산
-        float atk = Vector2.Distance(transform.position, player.position);
-        
-        if (atk <= attackRange)
+        if (See)
         {
-            // 사거리에 오면 PlayerTracking에게 쏜다.
-            // 만약 공격 속도에 만족한다면
-            PlayerTracking.AtkTrue();
-            if (Time.time - timeSinceLastAttack > 1 / attackSpeed)
+            // 플레이어와 몬스터 사이의 거리 계산
+            float atk = Vector2.Distance(transform.position, player.position);
+            
+            if (atk <= attackRange)
             {
-                Attack();
-                timeSinceLastAttack = Time.time;
+                if (FirstAtk)
+                {
+                    timeSinceLastAttack = Time.time;
+                    FirstAtk = false;
+                } else
+                {
+                    // 사거리에 오면 PlayerTracking에게 쏜다.
+                    PlayerTracking.AtkTrue();
+                    if (Time.time - timeSinceLastAttack > 1 / attackSpeed)
+                    {
+                        Attack();
+                        timeSinceLastAttack = Time.time;
+                    }
+                }
+            } else
+            {
+                FirstAtk = true;
             }
         }
-        
+        else
+        {
+            AtkCall = false;
+            PlayerTracking.AtkFalse();
+            FirstAtk = true;
+        }
     }
 
 
@@ -139,5 +159,14 @@ public class MonsterAtk : MonoBehaviour
     {
         AtkCall = false;
         PlayerTracking.AtkFalse();
+    }
+
+    public void FindPlayer()
+    {
+        See = true;
+    }
+    public void NotFindPlayer()
+    {
+        See = false;
     }
 }

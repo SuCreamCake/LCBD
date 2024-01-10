@@ -136,7 +136,7 @@ public class MonsterManager : MonoBehaviour
             monsterAtk.enabled = true;
         }
         once = false;
-
+        monsterAtk.FindPlayer();
         findPlayer = true;
     }
 
@@ -145,6 +145,7 @@ public class MonsterManager : MonoBehaviour
         if (!once && pattern)
         {
             PlayerTracking.noPlayer = false;
+            monsterAtk.NotFindPlayer();
         }
     }
 

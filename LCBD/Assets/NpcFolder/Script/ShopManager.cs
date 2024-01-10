@@ -43,13 +43,14 @@ public class ShopManager : MonoBehaviour
     {
         // TextMeshPro Text ������Ʈ�� ���� ���ڸ� ǥ�
         CountNumText.text = Count.ToString();
+        Total();
     }
 
     private void Total()
     {
         if (TotalPriceText != null)
         {
-            int a = 100;
+            int a = 100 * Count;
             // 텍스트를 변경합니다.
             TotalPriceText.text = a.ToString() + "G";
         }

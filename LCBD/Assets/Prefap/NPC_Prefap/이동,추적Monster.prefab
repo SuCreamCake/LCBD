@@ -148,12 +148,11 @@ MonoBehaviour:
   attackPower_Ms: 54
   defense_Ms: 10
   speed_Ms: 1
-  maxtenacity_Ms: 0
-  tenacity_Ms: 15
+  maxtenacity_Ms: 10
+  tenacity_Ms: 10
   attackSpeed_Ms: 1.5
   crossroads_Ms: 15
   elite: 1
-  method: 0
   smallViewRadius: 0.5
   viewRadius: 5
   viewAngle: 90
@@ -231,6 +230,7 @@ MonoBehaviour:
   attackSpeed: 1
   attackColliderPrefab: {fileID: 7742878122363875503, guid: eb6103d155f4f6747916658ef385db01, type: 3}
   attackRange: 1
+  close: 0
 --- !u!95 &8306248862392423945
 Animator:
   serializedVersion: 4
