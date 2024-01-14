@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BabyBib : Body_Parts_Item
+public class PersonalHistory : List_Item
 {
     private void Awake() //해당아이템 초기값 설정
     {
-        item_number = 17;
-        item_Name = "BabyBib"; //아이템이름
-        Rank = Item_Rank.Common; //아이템 희귀도
-        drop_age = Drop_age.Baby; //흭득 가능한 년기
+        item_number = 41;
+        item_Name = "PersonalHistory"; //아이템이름
+        Rank = Item_Rank.Unique; //아이템 희귀도
+        drop_age = Drop_age.Adult; //흭득 가능한 년기
         effect_type = Effect_Type.Null; //효과 타입
         effect_info = Effect_Info.Null; //효과 정보
         effect_target = Effect_Target.Null; //효과 적용 대상

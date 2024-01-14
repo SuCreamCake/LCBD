@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Body_Parts_Item : Item
 {
+    public int Price; //АЁАн
     public override void DestraoyAfterTime()
     { }
 

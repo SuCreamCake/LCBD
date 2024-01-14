@@ -28,7 +28,8 @@ public abstract class Item : MonoBehaviour
         Body_Parts, //몸 장착형 파츠
         Potion_Parts, //소모형 파츠
         List, //리스트형
-        Goods //재화형
+        Goods, //재화형
+        Status //상태??
     }
 
     public enum Item_Rank //아이템 희귀도
@@ -64,6 +65,7 @@ public abstract class Item : MonoBehaviour
         Offense_Power, //공격력
         Infinite, //지속효과
         Health, //체력회복
+        Speed, //이동속도
         Stamina, //지구력
         Defense, //방어력
         Range, //사거리
