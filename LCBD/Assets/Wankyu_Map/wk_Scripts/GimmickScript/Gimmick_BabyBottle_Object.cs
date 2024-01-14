@@ -17,28 +17,23 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
         player = FindObjectOfType<StageManager>().GetPlayer();
     }
 
-
-
-
     public void ControlGimmickObject()
     {
-        RiseFlatform(player.attackPower);
+        RisePlatform(player.attackPower);
     }
 
-    public void RiseFlatform(int attackPower)
+    public void RisePlatform(int attackPower)
     {
         float risingDistance = (float)attackPower / 3;
         if (!isRisingPlatform)
         {
-            StartCoroutine(RiseFlatformCoroutine(risingDistance));
+            StartCoroutine(RisePlatformCoroutine(risingDistance));
         }
     }
 
-    private IEnumerator RiseFlatformCoroutine(float risingDistance)
+    private IEnumerator RisePlatformCoroutine(float risingDistance)
     {
-        Debug.Log("start_StartCoroutine(RiseFlatformCoroutine(risingDistance))");
         isRisingPlatform = true;
-
 
         int layerMask = 1 << LayerMask.NameToLayer("background");   // 변경 필요 레이어 분리 필요 
         bool isHit;
@@ -61,7 +56,6 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
             if (isHit)  // 만약, 부딪히면 break;
             {
                 isRisingPlatform = false;
-                Debug.Log("break_StartCoroutine(RiseFlatformCoroutine(risingDistance))");
                 yield break;
             }
             yield return null;
@@ -70,17 +64,15 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
         fallingPlatform.transform.position = endPosition;   // 정상 종료되면, 확실히 하기위해 endPosition 넣어줌
 
         isRisingPlatform = false;
-        Debug.Log("end_StartCoroutine(RiseFlatformCoroutine(risingDistance))");
         yield break;
     }
 
-
-    void FixedUpdate()
+    void Update()
     {
-        FallFlatform();
+        FallPlatform();
     }
 
-    private void FallFlatform()
+    private void FallPlatform()
     {
         // 하강
         int layerMask = LayerMask.GetMask("background");   // 변경 필요 레이어 분리 필요 
@@ -89,10 +81,10 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
         Vector3 flatformScale = new Vector3(fallingPlatform.transform.lossyScale.x, fallingPlatform.transform.lossyScale.y * 0.8f, fallingPlatform.transform.lossyScale.z);
         bool isHit = Physics2D.BoxCast(flatformPosition, flatformScale, 0f, fallingPlatform.transform.up * -1, 1f, layerMask);
 
-        // raycast 초당 -0.2씩 y축 이동 (상승 중이 아닐 때 && "background" layer 감지 중이 아닐 때).
+        // 플랫폼 하강 (상승 중이 아닐 때 && "background" layer 감지 중이 아닐 때).
         if (isRisingPlatform == false && !isHit)
         {
-            fallingPlatform.transform.Translate(0, -0.2f * Time.deltaTime, 0);
+            fallingPlatform.transform.Translate(0, -0.1f * Time.deltaTime, 0);
         }
     }
 

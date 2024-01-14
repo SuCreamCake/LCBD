@@ -63,11 +63,11 @@ public class FieldPortal : MonoBehaviour
             
             if (parent.Find(targetParentName.ToString()).childCount > 0)   // 이동할 맵에 기믹 오브젝트가 있으면.
             {
-                GameObject startPoint = parent.Find(targetParentName.ToString()).GetChild(0).Find("mapStartPoint").gameObject; // 기믹의 시작 위치를 가져옴.
+                Transform startPoint = parent.Find(targetParentName.ToString()).GetChild(0).Find("mapStartPoint"); // 기믹의 시작 위치를 가져옴.
                 if (startPoint != null)
                 {
                     // 기믹의 시작위치가 있으면,
-                    obj.transform.position = startPoint.transform.position; // 지정된 시작 지점으로 이동.
+                    obj.transform.position = startPoint.position;           // 지정된 시작 지점으로 이동.
                 }
                 else
                 {

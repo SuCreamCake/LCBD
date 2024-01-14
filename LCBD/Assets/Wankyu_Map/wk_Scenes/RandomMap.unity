@@ -1827,7 +1827,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterList:
-  - {fileID: 3580148164716198746, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+  - {fileID: 3238601399923968408, guid: 7c5ef22168deb614cb9b07b08d1207fc, type: 3}
+  - {fileID: 6126296750359564356, guid: 9d530f0497fbf0b4fb248dbab62b65bb, type: 3}
+  - {fileID: 1876006292905475143, guid: 4bac203756a43164eb8259417269cca2, type: 3}
   <MonsterSpawnerObject>k__BackingField: {fileID: 6250138717398671519, guid: e5b67ba6a4033684aada2cf719120f9c, type: 3}
   monsterSpawnerParent: {fileID: 79472688}
 --- !u!114 &643425207
@@ -2045,7 +2047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2869620272705725023, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4488,7 +4490,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1663904251
 GameObject:
