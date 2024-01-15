@@ -7,6 +7,8 @@ public class SimplePlayerMove : MonoBehaviour
     public float speed = 5f; // 이동 속도 설정
     public float HP;
     public float MaxHP;
+    public float AttackSpeed = 1;
+    public int Attack = 2;
 
     private Rigidbody2D rb;
 

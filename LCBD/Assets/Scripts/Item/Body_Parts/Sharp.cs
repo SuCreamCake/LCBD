@@ -20,6 +20,20 @@ public class Sharp : Body_Parts_Item
         //item_sprite; //아이템 이미지 이미지가 없어요
     }
 
+    private void Update()
+    {
+        GameObject findPlayer = GameObject.Find("간단Player");
+        if (findPlayer != null)
+        {
+            Player player = findPlayer.GetComponent<Player>();
+            if (player != null)
+            {
+                player.attackPower += (int)effect_figures; // 이동속도 2 향상
+                //Debug.Log("이동속도 2 향상.");
+            }
+        }
+    }
+
     public override void DestraoyAfterTime() //사용후 작업
     { }
 

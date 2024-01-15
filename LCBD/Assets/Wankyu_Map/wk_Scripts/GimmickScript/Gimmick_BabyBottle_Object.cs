@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
@@ -35,7 +34,7 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
     {
         isRisingPlatform = true;
 
-        int layerMask = 1 << LayerMask.NameToLayer("background");   // 변경 필요 레이어 분리 필요 
+        int layerMask = 1 << LayerMask.NameToLayer("Block");
         bool isHit;
 
         float risingTime = 0f;
@@ -75,7 +74,7 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
     private void FallPlatform()
     {
         // 하강
-        int layerMask = LayerMask.GetMask("background");   // 변경 필요 레이어 분리 필요 
+        int layerMask = LayerMask.GetMask("Block");   // 변경 필요 레이어 분리 필요 
 
         Vector3 flatformPosition = fallingPlatform.transform.position + new Vector3(0, fallingPlatform.transform.lossyScale.y * -0.1f, 0);
         Vector3 flatformScale = new Vector3(fallingPlatform.transform.lossyScale.x, fallingPlatform.transform.lossyScale.y * 0.8f, fallingPlatform.transform.lossyScale.z);
@@ -90,7 +89,7 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
 
     void OnDrawGizmos()
     {
-        int layerMask = LayerMask.GetMask("background");
+        int layerMask = LayerMask.GetMask("Block");
 
         bool isHit = Physics2D.BoxCast(fallingPlatform.transform.position, fallingPlatform.transform.lossyScale, 0, fallingPlatform.transform.up, 0, layerMask);
 

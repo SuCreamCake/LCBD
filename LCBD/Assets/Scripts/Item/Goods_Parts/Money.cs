@@ -21,5 +21,17 @@ public class Money : Goods_Item
     { }
 
     public override void Use_Effect() //사용효과
-    { }
+    {
+        Debug.Log("지폐");
+        GameObject findPlayer = GameObject.Find("간단Player");
+        if (findPlayer != null)
+        {
+            Player player = findPlayer.GetComponent<Player>();
+            if (player != null)
+            {
+                player.plusMoney((int)effect_figures); // 돈 얻기
+                Debug.Log("20원 추가");
+            }
+        }
+    }
 }
