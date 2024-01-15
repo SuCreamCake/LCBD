@@ -2894,7 +2894,7 @@ GameObject:
   - component: {fileID: 1021830559}
   - component: {fileID: 1021830561}
   - component: {fileID: 1021830562}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: PlatformMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4252,7 +4252,7 @@ GameObject:
   - component: {fileID: 1503729002}
   - component: {fileID: 1503729008}
   - component: {fileID: 1503729007}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DecoMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5076,7 +5076,7 @@ GameObject:
   - component: {fileID: 1879313574}
   - component: {fileID: 1879313573}
   - component: {fileID: 1879313572}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: BrickMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
