@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterID: 1
   pattern: 1
+  Relationship: 0
   maxHealth_Ms: 35
   health_Ms: 35
   attackPower_Ms: 40
@@ -153,7 +154,6 @@ MonoBehaviour:
   attackSpeed_Ms: 2
   crossroads_Ms: 5
   elite: 1
-  method: 0
   smallViewRadius: 0.5
   viewRadius: 5
   viewAngle: 90
@@ -196,7 +196,7 @@ MonoBehaviour:
   moveSpeed: 0.3
   backMask:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 2432
   noPlayer: 0
 --- !u!114 &6126296750359564353
 MonoBehaviour:
@@ -215,7 +215,7 @@ MonoBehaviour:
   waitingtime: 3
   backMask:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 2432
 --- !u!95 &6126296750359564354
 Animator:
   serializedVersion: 4

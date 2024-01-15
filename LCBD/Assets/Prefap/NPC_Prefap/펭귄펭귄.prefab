@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterID: 1
   pattern: 1
+  Relationship: 0
   maxHealth_Ms: 15
   health_Ms: 15
   attackPower_Ms: 56
@@ -153,7 +154,6 @@ MonoBehaviour:
   attackSpeed_Ms: 1
   crossroads_Ms: 10
   elite: 1
-  method: 0
   smallViewRadius: 0.5
   viewRadius: 5
   viewAngle: 90
@@ -196,7 +196,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   backMask:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 2432
   noPlayer: 0
 --- !u!114 &1876006292905475160
 MonoBehaviour:
@@ -215,7 +215,7 @@ MonoBehaviour:
   waitingtime: 3
   backMask:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 2432
 --- !u!95 &1876006292905475161
 Animator:
   serializedVersion: 4
@@ -251,3 +251,4 @@ MonoBehaviour:
   attackSpeed: 1
   attackColliderPrefab: {fileID: 7964746791692325721, guid: 2709e7bbef4fbe94db7343de7fd5a81f, type: 3}
   attackRange: 1
+  close: 0
