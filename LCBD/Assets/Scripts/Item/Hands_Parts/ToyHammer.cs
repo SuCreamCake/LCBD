@@ -22,6 +22,7 @@ public class ToyHammer : Hand_Parts_Item
        //item_sprite; //아이템 이미지 이미지가 없어요
     }
 
+
     public override void DestraoyAfterTime() //사용후 작업
     { }
 
