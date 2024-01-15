@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     public int attackPower;    //공격력
     //지구력
     public int maxEndurance;   
-    public float endurance;     
+    public float endurance;   //스테미나  
     public int enduranceOnOff; 
     public float stayTime;      
     public int enduranceRec;
@@ -66,7 +66,6 @@ public class Player : MonoBehaviour
     
     internal object text_hp;
     internal object img;
-
 
 
 
@@ -674,5 +673,8 @@ public class Player : MonoBehaviour
     {
         this.money -= money;
     }
-
+    public void addSpeed(float addSpeed) //이동속도 추가 로직
+    {
+        this.nomalSpeed += addSpeed;
+    }
 }

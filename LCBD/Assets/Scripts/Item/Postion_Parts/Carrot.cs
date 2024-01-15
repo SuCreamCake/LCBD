@@ -26,15 +26,15 @@ public class Carrot : Potion_Parts_Item
 
     public override void Use_Effect() //이론상 구현됨
     {
-        Debug.Log("체력 포션사용");
+        Debug.Log("당근");
         GameObject findPlayer = GameObject.Find("간단Player");
         if (findPlayer != null)
         {
-            SimplePlayerMove player = findPlayer.GetComponent<SimplePlayerMove>();
+            Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.HP += effect_figures; // 체력을 10(한칸)회복시킴
-                Debug.Log("체력 10회복! 한칸임.");
+                player.crossroads += effect_figures; // 공격사거리 증가
+                Debug.Log("공격사거리 증가");
             }
         }
     }
