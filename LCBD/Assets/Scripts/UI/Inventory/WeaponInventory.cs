@@ -15,7 +15,7 @@ public class WeaponInventory : MonoBehaviour
             instance = this;
     }
 
-    public bool AddItem(string itemName, Sprite itemSprite)
+    public bool AddItem(string itemName, Sprite itemSprite, Item itemObejct)
     {
         for (int i = 0; i < Weaponslots.Length; i++)
         {
@@ -24,9 +24,11 @@ public class WeaponInventory : MonoBehaviour
                 Weaponslots[i].itemName = itemName;
                 Weaponslots[i].itemSprite = itemSprite;
                 Weaponslots[i].isUse = true;
+                Weaponslots[i].item = itemObejct;
                 // 여기에 Image 컴포넌트를 업데이트하는 코드를 추가합니다.
                 Weaponslots[i].Weapon_image.sprite = itemSprite;
                 Weaponslots[i].Weapon_image.enabled = true; // 이미지를 활성화합니다.
+
                 return true; // 아이템을 성공적으로 추가했음
             }
         }

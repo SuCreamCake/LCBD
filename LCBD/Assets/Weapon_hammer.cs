@@ -7,7 +7,7 @@ public class Weapon_hammer : MonoBehaviour
     public string itemName; // 아이템의 이름
     public Sprite itemSprite; // 인벤토리에 표시할 아이템의 이미지
 
-    private void OnTriggerEnter2D(Collider2D collision)
+   /* private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -20,6 +20,6 @@ public class Weapon_hammer : MonoBehaviour
                 // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
             }
         }
-    }
+    }*/
 
 }

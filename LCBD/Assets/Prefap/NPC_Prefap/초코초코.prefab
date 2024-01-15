@@ -147,13 +147,12 @@ MonoBehaviour:
   health_Ms: 25
   attackPower_Ms: 54
   defense_Ms: 10
-  speed_Ms: 1.5
+  speed_Ms: 1
   maxtenacity_Ms: 15
   tenacity_Ms: 15
   attackSpeed_Ms: 1.5
   crossroads_Ms: 15
   elite: 1
-  method: 0
   smallViewRadius: 0.5
   viewRadius: 5
   viewAngle: 90

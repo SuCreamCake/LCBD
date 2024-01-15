@@ -1569,7 +1569,8 @@ MonoBehaviour:
   itemName: 
   itemSprite: {fileID: 0}
   isUse: 0
-  Jewelry_image: {fileID: 0}
+  BodyParts_image: {fileID: 0}
+  Item_image: {fileID: 0}
   item: {fileID: 0}
 --- !u!1 &693341568
 GameObject:
@@ -1933,7 +1934,7 @@ RectTransform:
   - {fileID: 1557963167}
   - {fileID: 1525371540}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2107,7 +2108,7 @@ Transform:
   - {fileID: 700742806}
   - {fileID: 1585880284}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &818667395
 PrefabInstance:
@@ -2520,7 +2521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4732288230637681540, guid: c9aea65a8c5ce9c49a3166232a6ecadd, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4732288230637681540, guid: c9aea65a8c5ce9c49a3166232a6ecadd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2710,7 +2711,8 @@ MonoBehaviour:
   itemName: 
   itemSprite: {fileID: 0}
   isUse: 0
-  Jewelry_image: {fileID: 0}
+  BodyParts_image: {fileID: 0}
+  Item_image: {fileID: 0}
   item: {fileID: 0}
 --- !u!1 &1019879773 stripped
 GameObject:
@@ -2737,7 +2739,8 @@ MonoBehaviour:
   itemName: 
   itemSprite: {fileID: 0}
   isUse: 0
-  Jewelry_image: {fileID: 0}
+  BodyParts_image: {fileID: 0}
+  Item_image: {fileID: 0}
   item: {fileID: 0}
 --- !u!1 &1042870969
 GameObject:
@@ -3241,7 +3244,8 @@ MonoBehaviour:
   itemName: 
   itemSprite: {fileID: 0}
   isUse: 0
-  Jewelry_image: {fileID: 0}
+  BodyParts_image: {fileID: 0}
+  Item_image: {fileID: 0}
   item: {fileID: 0}
 --- !u!1 &1114161973
 GameObject:
@@ -4296,7 +4300,7 @@ GameObject:
   - component: {fileID: 1525371543}
   - component: {fileID: 1525371544}
   m_Layer: 5
-  m_Name: JewelryInven
+  m_Name: BodyInven
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4400,7 +4404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aba6c36191a1c84da4ccb2673c9e2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Jewelrylots:
+  BodySlots:
   - {fileID: 656567043}
   - {fileID: 1019879775}
   - {fileID: 1108064277}
@@ -5568,7 +5572,7 @@ Transform:
   - {fileID: 2503349969348012638}
   - {fileID: 994410597996379039}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1798853408
 GameObject:
@@ -6160,7 +6164,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5063896215970638110, guid: 8656b4a75e6c6b04483d4b746eceffa5, type: 3}
   m_PrefabInstance: {fileID: 5063896216558696622}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2050244219
+--- !u!114 &2050244215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6169,13 +6173,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2050244214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d417ca230db0baf498f5be395c12305a, type: 3}
+  m_Script: {fileID: 11500000, guid: 13ca1952bd3b94c4caadd0f2127d151d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item_number: 0
   item_Name: 
   Rank: 0
-  item_type: 0
+  item_type: 1
   drop_age: 0
   effect_type: 0
   effect_info: 0
@@ -6183,7 +6187,7 @@ MonoBehaviour:
   effect_figures: 0
   effect_active_type: 0
   effect_maintain_time: 0
-  item_sprite: {fileID: 0}
+  item_sprite: {fileID: 1298911267, guid: 11c45fde9380f7e43ad4803940be88e4, type: 3}
   max_count: 0
   Price: 0
 --- !u!1 &2056931980
@@ -6232,7 +6236,7 @@ Transform:
   - {fileID: 1653968548}
   - {fileID: 897074210}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2093835637
 GameObject:
@@ -6838,7 +6842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3878098227644636493, guid: ca26b5f3ed06c7d44a1c44b0dca42ba1, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3878098227644636493, guid: ca26b5f3ed06c7d44a1c44b0dca42ba1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6895,7 +6899,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &990577760277884888
 GameObject:
@@ -9853,7 +9857,7 @@ Transform:
   - {fileID: 2182012640583121335}
   - {fileID: 1636664936}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2182012641671708103
 GameObject:
@@ -11219,7 +11223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3590900139395207994, guid: f5f1612c771df414d9f754f55aeb2ed4, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3590900139395207994, guid: f5f1612c771df414d9f754f55aeb2ed4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11400,7 +11404,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5063896215970638106, guid: 8656b4a75e6c6b04483d4b746eceffa5, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5063896215970638106, guid: 8656b4a75e6c6b04483d4b746eceffa5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11446,7 +11450,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Juwelry_diamond
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5063896215970638107, guid: 8656b4a75e6c6b04483d4b746eceffa5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8656b4a75e6c6b04483d4b746eceffa5, type: 3}
 --- !u!1001 &5102738662857776085
 PrefabInstance:
@@ -11745,7 +11750,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3580148164716198742, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3580148164716198742, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11990,6 +11995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7299174504051962387, guid: f5c40956d0a7ddb4e958adc97fbd458a, type: 3}
+    - {fileID: 7299174504051962377, guid: f5c40956d0a7ddb4e958adc97fbd458a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f5c40956d0a7ddb4e958adc97fbd458a, type: 3}
 --- !u!224 &7299174504094754685 stripped
 RectTransform:
@@ -12014,7 +12020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item_number: 0
-  item_Name: 
+  item_Name: hammer
   Rank: 0
   item_type: 0
   drop_age: 0
@@ -12024,7 +12030,7 @@ MonoBehaviour:
   effect_figures: 0
   effect_active_type: 0
   effect_maintain_time: 0
-  item_sprite: {fileID: 0}
+  item_sprite: {fileID: 21300000, guid: 432b8db304e1aa74cb2fbc40f8631056, type: 3}
   max_count: 0
   Weapon_Attack: 0
   Weapon_Range: 0

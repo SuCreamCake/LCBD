@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongDistance : MonoBehaviour
+public class LongDistance_Ms : MonoBehaviour
 {
     //원거리 공격 데미지
     public float damage;

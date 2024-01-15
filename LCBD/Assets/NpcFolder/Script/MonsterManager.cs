@@ -18,7 +18,7 @@ public class MonsterManager : MonoBehaviour
 
     public int MonsterID; // 몬스터 ID
     public bool pattern = false; // 몬스터 패턴 여부
-
+    public bool Relationship = false;
     public float maxHealth_Ms; // 최대 체력
     public float health_Ms; // 현재 체력
     public int attackPower_Ms; // 공격력
@@ -81,11 +81,23 @@ public class MonsterManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerTracking.enabled = false;
-        if(monsterAtk != null)
+        if (!Relationship)
         {
+            PlayerTracking.enabled = false;
+            if (monsterAtk != null)
+            {
+                monsterAtk.enabled = false;
+            }
+        } else
+        {
+            PlayerTracking.enabled = false;
             monsterAtk.enabled = false;
+            FieldOfView.CoroutineStop();
+            FieldOfView.enabled = false;
+            EnemyMove.enabled = true;
+            
         }
+
     }
 
     private void Update()
@@ -226,5 +238,11 @@ public class MonsterManager : MonoBehaviour
     {
         // "Find" 변수를 설정
         animator.SetBool("Find", isFind);
+    }
+
+    public void RelationshipFalse()
+    {
+        Relationship = false;
+        Start();
     }
 }

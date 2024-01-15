@@ -167,4 +167,10 @@ public class FieldOfView : MonoBehaviour
             }
         }
     }
+
+    public void CoroutineStop()
+    {
+        StopCoroutine("FindTargetsWithDelay");
+        StopCoroutine("SmallFindTargetsWithDelay");
+    }
 }
