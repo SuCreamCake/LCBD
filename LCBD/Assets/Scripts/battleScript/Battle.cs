@@ -54,7 +54,7 @@ public class Battle : MonoBehaviour
     public int monsterTenacity;
     //monsterManager
     MonsterManager monsterManager;
-
+    BattleManager battleManager;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +67,7 @@ public class Battle : MonoBehaviour
         attackTimeDelay = player.attackSpeed;
         gunBool = true;
         hammer1bool = true;
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
     }
 
     // Update is called once per frame
@@ -131,7 +132,7 @@ public class Battle : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, enemyLayers);
             if (raycastHit.collider != null)
             {
-                //GetCurrentInfo(raycastHit.collider);
+                battleManager.GetCurrentInfo(raycastHit.collider);
                 raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
                 raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
             }
@@ -213,7 +214,7 @@ public class Battle : MonoBehaviour
                 if (collider.tag == "monster")
                 {
                     //getInfoOfMonster
-                    //GetCurrentInfo(collider);
+                    battleManager.GetCurrentInfo(collider);
                     collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
                 }
             }
@@ -387,7 +388,7 @@ public class Battle : MonoBehaviour
             {
                 if (collider.tag == "monster")
                 {
-                    //GetCurrentInfo(collider);
+                    battleManager.GetCurrentInfo(collider);
                     collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
                 }
                 string txt = "";
