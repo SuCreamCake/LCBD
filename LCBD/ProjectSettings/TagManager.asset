@@ -26,6 +26,7 @@ TagManager:
   - portal
   - WeaponSlot
   - BattleManager
+  - ShopItemPoint
   layers:
   - Default
   - TransparentFX
