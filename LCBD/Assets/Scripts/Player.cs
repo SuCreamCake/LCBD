@@ -44,6 +44,10 @@ public class Player : MonoBehaviour
 
     public Animator ani;    //애니메이션
 
+    //포탈
+    private bool potalOn;
+    Collider2D potalCol;
+
     //인격 스택
     public int oralStack;
     private int analStack;
@@ -116,6 +120,8 @@ public class Player : MonoBehaviour
         maxState();
         minState();
 
+        potal();
+
     }
 
 
@@ -171,22 +177,16 @@ public class Player : MonoBehaviour
                     break;
             }
         }
+        if (collision.CompareTag("FieldPortal"))
+        {
+            potalOn = true;
+            potalCol = collision;
+        }
         personality(collision);
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        /*필드 포탈 텔레포트 코드*/
-        if (collision.CompareTag("FieldPortal"))    //FieldPortal과 충돌했고,
-        {
-            if (Input.GetKeyDown(KeyCode.G) && PortalManager.IsTeleporting == false)    //상호작용(G)키를 눌렀고, 텔레포트가 아닌 중에
-            {
-                collision.GetComponent<FieldPortal>().Teleport(this.gameObject);        //필드 포탈을 태우고 플레이어를 텔레포트 시킴
-                SFXPlayer.InteractionSound(0);  // Portal Sound
-            }
-        }
-    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
@@ -201,9 +201,25 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
         }
+        if (collision.CompareTag("FieldPortal"))
+        {
+            potalOn = false;
+            potalCol = null;
+        }
     }
 
-
+    private void potal()
+    {
+        /*필드 포탈 텔레포트 코드*/
+        if (potalOn)    //FieldPortal과 충돌했고,
+        {
+            if (Input.GetKeyDown(KeyCode.G) && PortalManager.IsTeleporting == false)    //상호작용(G)키를 눌렀고, 텔레포트가 아닌 중에
+            {
+                potalCol.GetComponent<FieldPortal>().Teleport(this.gameObject);        //필드 포탈을 태우고 플레이어를 텔레포트 시킴
+                SFXPlayer.InteractionSound(0);  // Portal Sound
+            }
+        }
+    }
     private void jump()
     {
         if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && Mathf.Abs(rigid.velocity.y) <= 0.001)
