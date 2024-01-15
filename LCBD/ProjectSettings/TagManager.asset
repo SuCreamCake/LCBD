@@ -34,11 +34,11 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
+  - Background
+  - Platform
   - Player
   - Obstacle
-  - background
+  - 
   - monster
   - 
   - Friendship

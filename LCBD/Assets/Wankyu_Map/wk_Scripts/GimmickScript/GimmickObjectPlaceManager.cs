@@ -15,7 +15,7 @@ public static class GimmickObjectLocation  // 기믹 오브젝트 위치 좌표 
     }
 
     public static Point CommonField_1_BabyBottle_GimmickObject = new Point(20, 16);
-    public static Point CommonField_1_Mom_GimmickObject = new Point(25, 25);
+    public static Point CommonField_1_Mom_GimmickObject = new Point(12, 32);
 }
 
 public class GimmickObjectPlaceManager : MonoBehaviour
@@ -90,19 +90,38 @@ public class GimmickObjectPlaceManager : MonoBehaviour
         int width = mapGenerator[i, j].Fields.Map.GetLength(0);
         int height = mapGenerator[i, j].Fields.Map.GetLength(1);
 
+        int x;
+        int y;
+
+        Vector3Int pos;
+        GameObject gimmickObjectPrefab;
+
         switch ((CommonFieldSerial_1)mapGenerator[i, j].Fields.Serial)
         {
             case CommonFieldSerial_1.BabyBottle_g:
 
-                int x = GimmickObjectLocation.CommonField_1_BabyBottle_GimmickObject.x;
-                int y = GimmickObjectLocation.CommonField_1_BabyBottle_GimmickObject.y;
+                x = GimmickObjectLocation.CommonField_1_BabyBottle_GimmickObject.x;
+                y = GimmickObjectLocation.CommonField_1_BabyBottle_GimmickObject.y;
 
-                Vector3Int pos = new(i * (width + 1) + x, j * (height + 1) + y, 0);
+                pos = new(i * (width + 1) + x, j * (height + 1) + y, 0);
 
-                GameObject gimmickObjectPrefab = Instantiate(BabyBottle_GimmickObject, pos, new(0, 0, 0, 0), parentMap);
+                gimmickObjectPrefab = Instantiate(BabyBottle_GimmickObject, pos, new(0, 0, 0, 0), parentMap);
                 gimmickObjectPrefab.transform.Translate(0.5f, 0.5f, 0);
 
                 break;
+
+            case CommonFieldSerial_1.Mom_g:
+
+                x = GimmickObjectLocation.CommonField_1_Mom_GimmickObject.x;
+                y = GimmickObjectLocation.CommonField_1_Mom_GimmickObject.y;
+
+                pos = new(i * (width + 1) + x, j * (height + 1) + y, 0);
+
+                gimmickObjectPrefab = Instantiate(Mom_GimmickObject, pos, new(0, 0, 0, 0), parentMap);
+                gimmickObjectPrefab.transform.Translate(0.5f, 0.5f, 0);
+
+                break;
+
         }
     }
 
