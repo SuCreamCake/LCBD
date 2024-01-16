@@ -19,7 +19,7 @@ public class Anchovy : Potion_Parts_Item
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
@@ -27,7 +27,7 @@ public class Anchovy : Potion_Parts_Item
     public override void Use_Effect() //ÀÌ·Ð»ó ±¸ÇöµÊ
     {
         Debug.Log("¸êÄ¡");
-        GameObject findPlayer = GameObject.Find("°£´ÜPlayer");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();

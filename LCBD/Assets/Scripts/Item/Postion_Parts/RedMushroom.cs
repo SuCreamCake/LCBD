@@ -13,13 +13,13 @@ public class RedMushroom : Potion_Parts_Item
         item_type = Item_Type.Potion_Parts; //아이템 타입
         effect_info = Effect_Info.Endurance; //아이템 정보
         effect_active_type = Effect_Active_Type.Once; //효과 유형
-        effect_figures = 2.0f; //얼마나 버프먹는지 정도
+        effect_figures = 1; //얼마나 버프먹는지 정도
         effect_maintain_time = 15; //효과발동 후 효과적용되는 시간
         max_count = 99; //최대 소지갯수
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
@@ -27,14 +27,14 @@ public class RedMushroom : Potion_Parts_Item
     public override void Use_Effect() //이론상 구현됨
     {
         Debug.Log("빨간버섯");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.Find("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.tenacity += (int)effect_figures; // 체력을 10(한칸)회복시킴
-                Debug.Log("체력 10회복! 한칸임.");
+                player.tenacity += (int)effect_figures; // 플레이어 강직도일거임
+                
             }
         }
     }

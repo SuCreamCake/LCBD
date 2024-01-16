@@ -25,7 +25,7 @@ public class WeaponSlot : MonoBehaviour
         {
             item.Use_Effect(); // 아이템의 사용 효과를 발동
             // 아이템 사용 후 추가적인 로직, 예를 들어 아이템 제거나 아이템 슬롯 업데이트
-            ClearSlot(); // 슬롯을 초기화
+            //ClearSlot(); // 슬롯을 초기화
         }
     }
     public WeaponSlot()

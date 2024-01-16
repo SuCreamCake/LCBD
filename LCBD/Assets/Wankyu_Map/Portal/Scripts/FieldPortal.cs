@@ -8,6 +8,18 @@ public class FieldPortal : MonoBehaviour
     //[SerializeField] private GameObject player;
     [SerializeField] private GameObject targetPos;
 
+    private StageGenerator stageGenerator;
+    private MapGenerator[,] mapGenerator;
+    Transform parent;
+
+    private void Awake()
+    {
+        stageGenerator = FindObjectOfType<StageGenerator>();
+        mapGenerator = stageGenerator.GetMapGenerator();
+
+        parent = FindObjectOfType<GimmickObjectPlaceManager>().GimmickObjectsParent;
+    }
+
     public void SetPortalPos(ObjectPoint portalPoint, int mapWidth, int mapHeight)
     {
         Vector3Int pos = new(portalPoint.FieldX * (mapWidth + 1) + portalPoint.MapX,
@@ -40,15 +52,8 @@ public class FieldPortal : MonoBehaviour
     {
         PortalManager.SetIsTeleporting(true);
 
-        StageGenerator stageGenerator;
-        stageGenerator = FindObjectOfType<StageGenerator>();
-
-        MapGenerator[,] mapGenerator = stageGenerator.GetMapGenerator();
-
         int x = (int)(targetPos.transform.position.x / (50 + 1));
         int y = (int)(targetPos.transform.position.y / (50 + 1));
-
-        Transform parent = FindObjectOfType<GimmickObjectPlaceManager>().GimmickObjectsParent;
 
         if (mapGenerator[x, y].Fields.IsClear)
         {

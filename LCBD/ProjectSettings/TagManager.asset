@@ -35,7 +35,7 @@ TagManager:
   - Water
   - UI
   - 
-  - Background
+  - Block
   - Platform
   - Player
   - Obstacle
@@ -46,7 +46,7 @@ TagManager:
   - Neutrality
   - Hostility
   - SkillEffect
-  - background
+  - 
   - bg
   - 
   - 

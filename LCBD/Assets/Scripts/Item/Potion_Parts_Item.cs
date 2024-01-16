@@ -5,7 +5,7 @@ using UnityEngine;
 public class Potion_Parts_Item : Item
 {
     public int Price; //АЁАн
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     { }
 
     public override void Use_Effect() { }

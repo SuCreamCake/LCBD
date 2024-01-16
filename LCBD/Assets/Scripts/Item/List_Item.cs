@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class List_Item : Item
 {
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     { }
 
     public override void Use_Effect() { }

@@ -5,10 +5,6 @@ using UnityEngine;
 public class Body_Parts_Item : Item
 {
     public int Price; //가격
-    public override void DestraoyAfterTime()
-    { }
-
-    public override void Use_Effect() { }
 
     private void Awake()
     {
@@ -16,4 +12,8 @@ public class Body_Parts_Item : Item
         max_count = 1; //방어구 최대 소지갯수는 1고정
         effect_target = Effect_Target.Self; //방어구는 무조건 자기자신적용
     }
+    public override void DestroyAfterTime()
+    { }
+
+    public override void Use_Effect() { }
 }
