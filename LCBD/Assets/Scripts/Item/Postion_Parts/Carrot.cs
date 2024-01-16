@@ -13,13 +13,13 @@ public class Carrot : Potion_Parts_Item
         item_type = Item_Type.Potion_Parts; //아이템 타입
         effect_info = Effect_Info.Range; //아이템 정보
         effect_active_type = Effect_Active_Type.Once; //효과 유형
-        effect_figures = 0.4f; //얼마나 버프먹는지 정도
+        effect_figures = 0.3f; //얼마나 버프먹는지 정도
         effect_maintain_time = 15; //효과발동 후 효과적용되는 시간
         max_count = 99; //최대 소지갯수
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
@@ -27,7 +27,7 @@ public class Carrot : Potion_Parts_Item
     public override void Use_Effect() //이론상 구현됨
     {
         Debug.Log("당근");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();

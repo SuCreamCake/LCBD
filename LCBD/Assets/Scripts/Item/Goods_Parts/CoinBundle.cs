@@ -17,13 +17,13 @@ public class CoinBundle : Goods_Item
         //item_sprite; //아이템 이미지 이미지가 없어요
     }
 
-    public override void DestraoyAfterTime() //사용후 작업
+    public override void DestroyAfterTime() //사용후 작업
     { }
 
     public override void Use_Effect() //사용효과
     {
         Debug.Log("동전뭉치");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();

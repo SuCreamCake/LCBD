@@ -23,7 +23,7 @@ public class ToyHammer : Hand_Parts_Item
     }
 
 
-    public override void DestraoyAfterTime() //사용후 작업
+    public override void DestroyAfterTime() //사용후 작업
     { }
 
     public override void Use_Effect() //사용효과

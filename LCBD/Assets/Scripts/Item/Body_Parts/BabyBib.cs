@@ -20,7 +20,7 @@ public class BabyBib : Body_Parts_Item
         //item_sprite; //아이템 이미지 이미지가 없어요
     }
 
-    public override void DestraoyAfterTime() //사용후 작업
+    public override void DestroyAfterTime() //사용후 작업
     { }
 
     public override void Use_Effect() //사용효과

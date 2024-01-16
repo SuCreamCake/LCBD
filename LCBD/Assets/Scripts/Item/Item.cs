@@ -20,7 +20,7 @@ public abstract class Item : MonoBehaviour
 
 
     public abstract void Use_Effect(); //사용효과 추상메소드
-    public abstract void DestraoyAfterTime(); //사용 후 파괴 추상메소드
+    public abstract void DestroyAfterTime(); //사용 후 파괴 추상메소드
 
     public enum Item_Type //아이템 타입
     {

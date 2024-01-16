@@ -13,13 +13,13 @@ public class YellowMushroom : Potion_Parts_Item
         item_type = Item_Type.Potion_Parts; //아이템 타입
         effect_info = Effect_Info.Attack_Speed; //아이템 정보
         effect_active_type = Effect_Active_Type.Once; //효과 유형
-        effect_figures = 0.4f; //얼마나 버프먹는지 정도
+        effect_figures = 0.3f; //얼마나 버프먹는지 정도
         effect_maintain_time = 15; //효과발동 후 효과적용되는 시간
         max_count = 99; //최대 소지갯수
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
@@ -33,8 +33,8 @@ public class YellowMushroom : Potion_Parts_Item
             Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.attackSpeed += effect_figures; // 공속 0.4 증가
-                Debug.Log("공격속도 0.4 증가.");
+                player.attackSpeed += effect_figures; // 공속 0.3 증가
+                Debug.Log("공격속도 0.3 증가.");
             }
         }
     }

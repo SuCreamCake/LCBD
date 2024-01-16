@@ -22,7 +22,7 @@ public class HP_Potion : Item
 }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
         
     }

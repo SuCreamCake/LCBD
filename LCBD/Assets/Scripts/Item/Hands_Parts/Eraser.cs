@@ -22,21 +22,20 @@ public class Eraser : Hand_Parts_Item
                                   //item_sprite; //아이템 이미지 이미지가 없어요
     }
     private void Update()
+    {}
+    public override void DestroyAfterTime() //사용후 작업
+    { }
+
+    public override void Use_Effect() //사용효과
     {
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.attackSpeed += effect_figures; // 공격속도 3 향상
-                //Debug.Log("공격속도 3 향상.");
+                player.attackSpeed += (int)effect_figures; // 공격속도 3 향상
             }
         }
     }
-    public override void DestraoyAfterTime() //사용후 작업
-    { }
-
-    public override void Use_Effect() //사용효과
-    { }
 }

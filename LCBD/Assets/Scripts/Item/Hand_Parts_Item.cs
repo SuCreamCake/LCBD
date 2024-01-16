@@ -7,7 +7,7 @@ public class Hand_Parts_Item : Item
     public int Weapon_Attack; //무기공격력
     public int Weapon_Range; //공격가능한 사거리
     public int Price; //가격
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     { }
     
     public override void Use_Effect() { }

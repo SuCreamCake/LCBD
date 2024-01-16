@@ -20,7 +20,7 @@ public class Grow_Personality_Control : Item
                                   //item_sprite; //아이템 이미지
         max_count = 1; //최대 소지갯수
     }
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
         throw new System.NotImplementedException();
     }

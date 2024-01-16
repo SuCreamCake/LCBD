@@ -23,20 +23,10 @@ public class GoldRing : Body_Parts_Item
     {
         Use_Effect();
     }
-    public override void DestraoyAfterTime() //사용후 작업
+    public override void DestroyAfterTime() //사용후 작업
     { }
 
     public override void Use_Effect() //사용효과
     {
-        GameObject findPlayer = GameObject.Find("간단Player");
-        if (findPlayer != null)
-        {
-            SimplePlayerMove player = findPlayer.GetComponent<SimplePlayerMove>();
-            if (player != null)
-            {
-                player.Attack += (int)effect_figures; // 이동속도 2 향상
-                //Debug.Log("이동속도 2 향상.");
-            }
-        }
     }
 }

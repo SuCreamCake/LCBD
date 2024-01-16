@@ -19,7 +19,7 @@ public class HerbalMedicine : Potion_Parts_Item //한약
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
@@ -27,7 +27,7 @@ public class HerbalMedicine : Potion_Parts_Item //한약
     public override void Use_Effect() //이론상 구현됨
     {
         Debug.Log("한약");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();

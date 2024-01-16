@@ -21,7 +21,7 @@ public class Body_Inventory: MonoBehaviour
         {
             if (BodySlots[i].isUse)
             {
-                BodySlots[i].UseItem();
+                BodySlots[i].UseItem(); //아이템을 사용
                 BodySlots[i].isUse = false;
             }
         }

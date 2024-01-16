@@ -20,22 +20,22 @@ public class SanSam : Potion_Parts_Item
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
 
     public override void Use_Effect() //이론상 구현됨
     {
-        Debug.Log("체력 포션사용");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        Debug.Log("산삼 사용");
+        GameObject findPlayer = GameObject.Find("Player");
         if (findPlayer != null)
         {
-            SimplePlayerMove player = findPlayer.GetComponent<SimplePlayerMove>();
+            Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.HP += effect_figures; // 체력을 10(한칸)회복시킴
-                Debug.Log("체력 10회복! 한칸임.");
+                //player.HP += effect_figures; // 해줄게 없어
+                Debug.Log("산삼사용함.");
             }
         }
     }

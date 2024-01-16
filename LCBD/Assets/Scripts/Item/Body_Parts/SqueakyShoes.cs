@@ -21,7 +21,7 @@ public class SqueakyShoes : Body_Parts_Item
     }
     private void Update()
     {
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
@@ -32,9 +32,20 @@ public class SqueakyShoes : Body_Parts_Item
             }
         }
     }
-    public override void DestraoyAfterTime() //사용후 작업
+    public override void DestroyAfterTime() //사용후 작업
     { }
 
     public override void Use_Effect() //사용효과
-    { }
+    {
+        GameObject findPlayer = GameObject.Find("간단Player");
+        if (findPlayer != null)
+        {
+            Player player = findPlayer.GetComponent<Player>();
+            if (player != null)
+            {
+                player.addSpeed((int)effect_figures); // 이동속도 2 향상
+                //Debug.Log("이동속도 2 향상.");
+            }
+        }
+    }
 }

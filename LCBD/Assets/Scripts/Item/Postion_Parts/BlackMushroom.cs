@@ -19,7 +19,7 @@ public class BlackMushroom : Potion_Parts_Item
     }
 
 
-    public override void DestraoyAfterTime()
+    public override void DestroyAfterTime()
     {
 
     }
@@ -27,7 +27,7 @@ public class BlackMushroom : Potion_Parts_Item
     public override void Use_Effect() //이론상 구현됨
     {
         Debug.Log("검은버섯");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
