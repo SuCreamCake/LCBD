@@ -22,9 +22,6 @@ public class Battle : MonoBehaviour
     //플레이어 음파 공격
     public float soundWaveAttackTime = 0;
 
-    //총 공격량
-    public float totalAttackPower;
-
     private GameObject soundwaveAttackOBJ;
     public int weaponIndex = -1;
 
@@ -45,15 +42,7 @@ public class Battle : MonoBehaviour
     public int weaponPower;
     public float addAttackSpeed = 0;
     SoundsPlayer SFXPlayer;
-    public int playerAttackPower;
 
-    //monster defensed
-    public int monsterDefense;
-
-    //monster tenacity
-    public int monsterTenacity;
-    //monsterManager
-    MonsterManager monsterManager;
     BattleManager battleManager;
 
     // Start is called before the first frame update
@@ -132,9 +121,8 @@ public class Battle : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.CircleCast(startAttackPoint, rangeRadius, Vector2.right, 0f, enemyLayers);
             if (raycastHit.collider != null)
             {
-                battleManager.GetCurrentInfo(raycastHit.collider);
-                raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
-                raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(totalAttackPower);
+                float damage = battleManager.GetCurrentInfo(raycastHit.collider);
+                raycastHit.collider.GetComponent<MonsterManager>().TakeDamage(damage);
             }
 
            
@@ -151,12 +139,12 @@ public class Battle : MonoBehaviour
             Debug.DrawRay(startAttackPoint, Vector2.right * rangeRadius, Color.red, 0.3f);                
             Debug.DrawRay(startAttackPoint, Vector2.left * rangeRadius, Color.red, 0.3f);                  
             Debug.DrawRay(startAttackPoint, Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        
-            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  //���� �� ������ �밢�� ����
-            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  //���� �� �»��� �밢�� ����
-            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        //���� �� ������ �밢�� ����
+            Debug.DrawRay(startAttackPoint, new Vector2(1, -1).normalized * rangeRadius, Color.red, 0.3f);  
+            Debug.DrawRay(startAttackPoint, new Vector2(-1, 1).normalized * rangeRadius, Color.red, 0.3f);  
+            Debug.DrawRay(startAttackPoint, -Vector2.one.normalized * rangeRadius, Color.red, 0.3f);        
         }
     }
-    //���� ����
+    
     private void meleeAttack()
     {
 
@@ -200,7 +188,7 @@ public class Battle : MonoBehaviour
             float angle = 0;
             Vector3 attackPositionForMel = attackPosition;
             Debug.Log("키값" + key);
-            //���� �ݶ��̴� ����
+            
             if (key < 0)
             {
                 attackPositionForMel = attackPositionForMel - 2 * (attackPosition - playerObject.transform.position);
@@ -214,8 +202,8 @@ public class Battle : MonoBehaviour
                 if (collider.tag == "monster")
                 {
                     //getInfoOfMonster
-                    battleManager.GetCurrentInfo(collider);
-                    collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
+                    float damage = battleManager.GetCurrentInfo(collider);
+                    collider.GetComponent<MonsterManager>().TakeDamage(damage);
                 }
             }
         }
