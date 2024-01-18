@@ -204,7 +204,6 @@ public class Battle : MonoBehaviour
                     //getInfoOfMonster
                     float damage = battleManager.GetCurrentInfo(collider);
                     collider.GetComponent<MonsterManager>().TakeDamage(damage);
-                    collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
                 }
             }
         }

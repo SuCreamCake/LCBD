@@ -25,16 +25,16 @@ public class Bullet : MonoBehaviour
 
     public void AAttkk(Collider2D col)
     {
-        battleManager.GetCurrentInfo(col);
+        float damage = battleManager.GetCurrentInfo(col);
         Debug.Log("몬스터와 충돌!");
-        col.GetComponent<MonsterManager>().TakeDamage(battleManager.CalDamage(battleManager.playerAttackPower, battleManager.monsterDefense, battleManager.monsterTenacity));
+        col.GetComponent<MonsterManager>().TakeDamage(damage);
     }
     private void Start()
     {
         battleManager = GameObject.FindWithTag("BattleManager").GetComponent<BattleManager>();
         bulletRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         bulletRigidbody2D.velocity = bulletSpeed * transform.right;
-        SetDamage();
+    
         //자기 자신을 삭제한 메서드
         if (gameObject != null)
         {
@@ -51,10 +51,4 @@ public class Bullet : MonoBehaviour
         }
         
     }
-    public void SetDamage()
-    {
-        this.damage = GameObject.Find("Player").GetComponent<Player>().attackPower;
-      
-    }
-
 }
