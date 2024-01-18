@@ -204,6 +204,7 @@ public class Battle : MonoBehaviour
                     //getInfoOfMonster
                     float damage = battleManager.GetCurrentInfo(collider);
                     collider.GetComponent<MonsterManager>().TakeDamage(damage);
+                    collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
                 }
             }
         }
@@ -376,8 +377,8 @@ public class Battle : MonoBehaviour
             {
                 if (collider.tag == "monster")
                 {
-                    battleManager.GetCurrentInfo(collider);
-                    collider.GetComponent<MonsterManager>().TakeDamage(2f/*CalDamage(playerAttackPower, monsterDefense, monsterTenacity)*/);
+                    float damage = battleManager.GetCurrentInfo(collider);
+                    collider.GetComponent<MonsterManager>().TakeDamage(damage);
                 }
                 string txt = "";
                 if (player.health <= 0)
