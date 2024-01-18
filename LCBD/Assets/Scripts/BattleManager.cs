@@ -47,12 +47,13 @@ public class BattleManager : MonoBehaviour
         //스테이지 1일 경우
         float sum;
         if(player.stage==1){
-            sum = atk;
+            sum = atk - defense;
         }
         else if(player.stage==2){
         sum = atk - defense;
         }
-        else {
+        else 
+        {
             sum = atk;
         }
         if(tenacity < 0)
