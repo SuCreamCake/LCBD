@@ -64,7 +64,6 @@ public class Player : MonoBehaviour
     //머니
     private int money;
 
-
     SoundsPlayer SFXPlayer;
     Battle battleManager;
     

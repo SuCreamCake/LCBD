@@ -13,6 +13,14 @@ public class Body_Inventory: MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
+        //임시로 초기화한 슬롯
+        BodySlots = new BodySlot[9];
+
+        for(int i = 0; i < BodySlots.Length; ++i)
+        {
+            BodySlots[i] = new BodySlot();
+        }
     }
 
     private void Update()
