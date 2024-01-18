@@ -27,7 +27,7 @@ public class LongDistance_Ms : MonoBehaviour
         {
             Debug.Log("플레이어 공격 성공");
             BattleManager battleManager = GameObject.FindWithTag("BattleManager").GetComponent<BattleManager>();
-            battleManager.GetPlayerInfo(AtkDamege);
+            battleManager.GetPlayerInfo(monsterManager.attackPower_Ms);
             Destroy(gameObject);
         }
     }
