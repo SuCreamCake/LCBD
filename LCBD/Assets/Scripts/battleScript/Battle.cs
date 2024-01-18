@@ -357,7 +357,7 @@ public class Battle : MonoBehaviour
     }
     private void soundWaveAttack()
     {
-        if (soundWaveAttackTime >= 3.0f)
+        if (soundWaveAttackTime >= 1.5f)
         {
             player.ani.SetTrigger("isSkill");
             soundWaveAttackTime = 0;
@@ -377,6 +377,7 @@ public class Battle : MonoBehaviour
                 if (collider.tag == "monster")
                 {
                     float damage = battleManager.GetCurrentInfo(collider);
+                    Debug.Log(damage);
                     collider.GetComponent<MonsterManager>().TakeDamage(damage);
                 }
                 string txt = "";

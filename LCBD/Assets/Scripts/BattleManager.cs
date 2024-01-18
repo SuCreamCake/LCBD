@@ -44,8 +44,17 @@ public class BattleManager : MonoBehaviour
 
     public float CalDamage(int atk, int defense, int tenacity)
     {
-        float sum = 0;
+        //스테이지 1일 경우
+        float sum;
+        if(player.stage==1){
+            sum = atk;
+        }
+        else if(player.stage==2){
         sum = atk - defense;
+        }
+        else {
+            sum = atk;
+        }
         if(tenacity < 0)
         {
             sum  = sum * 1.3f;
