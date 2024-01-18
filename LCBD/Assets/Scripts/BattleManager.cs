@@ -70,6 +70,10 @@ public class BattleManager : MonoBehaviour
         monsterTenacity = monsterManager.tenacity_Ms;
         playerAttackPower = player.attackPower;
         float damage = CalDamage(playerAttackPower, monsterDefense, monsterTenacity);
+        if (damage < playerAttackPower * 0.05f)
+        {
+            damage = playerAttackPower * 0.05f;
+        }
         return damage;
         
     }
@@ -79,6 +83,10 @@ public class BattleManager : MonoBehaviour
         int playerDefence = player.defense;
         int playerTenacity = player.tenacity;
         float damage = CalDamage(attackPower_Ms, playerDefence, playerTenacity);
+        if (damage < attackPower_Ms * 0.05f)
+        {
+            damage = attackPower_Ms * 0.05f;
+        }
         player.TakeDamageForPlayer(damage);
     }
 

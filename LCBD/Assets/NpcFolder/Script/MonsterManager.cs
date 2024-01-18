@@ -109,6 +109,7 @@ public class MonsterManager : MonoBehaviour
         if (health_Ms <= 0)
         {
             StartCoroutine(DeadMotion());
+            monsterAtk.enabled = false;
         }
     }
 
@@ -197,7 +198,7 @@ public class MonsterManager : MonoBehaviour
         SpriteRenderer.material.color = Color.red;
         Debug.Log("EnemyHit��ũ��Ʈ 28��° �� Damage��" + damage);
         health_Ms -= damage;
-        tenacity_Ms -= (int) damage * 2;
+        tenacity_Ms -= (int) damage;
         yield return new WaitForSeconds(0.03f);
         SpriteRenderer.material.color = Color.white;
     }
