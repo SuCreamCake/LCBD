@@ -94,10 +94,13 @@ public class Player : MonoBehaviour
         if (!drained)
         {
             if (health > 0)
+            {
                 jump();
-            run();
-            if(!isLadder)
-                battleManager.battleLogic();
+                run();
+                if (!isLadder)
+                    battleManager.battleLogic();
+            }
+
         }
         
         stopSpeed();
