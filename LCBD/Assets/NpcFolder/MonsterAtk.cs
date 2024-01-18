@@ -35,6 +35,7 @@ public class MonsterAtk : MonoBehaviour
         MonsterManager = GetComponent<MonsterManager>();
         PlayerTracking = GetComponent<PlayerTracking>();
 
+
         // SpriteRenderer가 없을 경우 에러 처리
         if (spriteRenderer == null)
         {
@@ -122,6 +123,25 @@ public class MonsterAtk : MonoBehaviour
         }
     }
 
+    public void OutAtkAni()
+    {
+        MonsterManager.SetFind(false);
+    }
+
+    public void LastAtk()
+    {
+        AtkCall = false;
+        PlayerTracking.AtkFalse();
+    }
+
+    public void FindPlayer()
+    {
+        See = true;
+    }
+    public void NotFindPlayer()
+    {
+        See = false;
+    }
 
     // 콜라이더를 생성하는 함수
     private void SpawnAttackCollider(Vector3 position)
@@ -142,31 +162,33 @@ public class MonsterAtk : MonoBehaviour
             // 콜라이더 크기 조절
             boxCollider.size = new Vector2(colliderWidth, colliderHeight);
         }
-        string tag = attackCollider.tag;
-        if (tag != "Ball")
+        //string tag = attackCollider.tag;
+        if (close)
         {
             // 일정 시간이 지난 후에 콜라이더를 파괴
-            Destroy(attackCollider, 0.5f);
+            Destroy(attackCollider, 0.5f/attackSpeed);
+            attackCollider.AddComponent<CollisionHandler>().Initialize(MonsterManager.attackPower_Ms); // attackCollider에 OnCollisionEnter2D 이벤트 추가
         }
     }
+}
 
-    public void OutAtkAni()
+// OnCollisionEnter2D 이벤트를 처리하는 스크립트
+public class CollisionHandler : MonoBehaviour
+{
+    private int AtkDamege;
+    public void Initialize(int AtkDamege)
     {
-        MonsterManager.SetFind(false);
+        this.AtkDamege = AtkDamege;
     }
-
-    public void LastAtk()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        AtkCall = false;
-        PlayerTracking.AtkFalse();
-    }
-
-    public void FindPlayer()
-    {
-        See = true;
-    }
-    public void NotFindPlayer()
-    {
-        See = false;
+        // 충돌한 대상이 Player 태그인 경우 디버그 작성
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("attackCollider가 Player 태그와 충돌했습니다.");
+            BattleManager battleManager = GameObject.FindWithTag("BattleManager").GetComponent<BattleManager>();
+            battleManager.GetPlayerInfo(AtkDamege);
+            Destroy(gameObject);
+        }
     }
 }

@@ -74,6 +74,14 @@ public class BattleManager : MonoBehaviour
         
     }
 
+    public void GetPlayerInfo(int attackPower_Ms)
+    {
+        int playerDefence = player.defense;
+        int playerTenacity = player.tenacity;
+        float damage = CalDamage(attackPower_Ms, playerDefence, playerTenacity);
+        player.TakeDamageForPlayer(damage);
+    }
+
     public void HandleAttack()
     {
 

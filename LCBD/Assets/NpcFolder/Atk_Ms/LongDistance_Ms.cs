@@ -13,20 +13,21 @@ public class LongDistance_Ms : MonoBehaviour
     private int crossroads_Ms;
     private int attackPower_Ms;
     MonsterManager monsterManager;
+    public LayerMask backMask; // 바닥 레이어
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //레이어마스크로 변경//
-        if (collision.gameObject.layer == LayerMask.NameToLayer("background"))
+        if (collision.gameObject.layer == backMask.value)
         {
             //여기 투사체 또는 적대 세력이 들어감)
             Destroy(gameObject);
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("플레이어 공격 성공");
-            //진짜 플레이어 필요
-            //collision.gameObject.GetComponent<MonsterManager>().TakeDamage((int)damage);
+            BattleManager battleManager = GameObject.FindWithTag("BattleManager").GetComponent<BattleManager>();
+            battleManager.GetPlayerInfo(AtkDamege);
             Destroy(gameObject);
         }
     }

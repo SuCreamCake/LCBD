@@ -693,4 +693,18 @@ public class Player : MonoBehaviour
     {
         this.nomalSpeed += addSpeed;
     }
+
+    public void TakeDamageForPlayer(float damage)
+    {
+        StartCoroutine(OnDamage(damage));
+    }
+    IEnumerator OnDamage(float damage)
+    {
+        spriteRenderer.material.color = Color.red;
+        Debug.Log("Player Take Damage" + damage);
+        health -= damage;
+        tenacity -= (int)damage * 2;
+        yield return new WaitForSeconds(0.03f);
+        spriteRenderer.material.color = Color.white;
+    }
 }

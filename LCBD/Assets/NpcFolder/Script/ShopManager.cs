@@ -21,8 +21,8 @@ public class ShopManager : MonoBehaviour
 
     private int Count = 1; // 선택한 물품 갯수
     private int CurrentMoney = 0; //현재 선택 중인 물건의 가격
+    private int MaxCount = 55; // 최대 갯수
     private GameObject[] shopItemPoints;
-
 
     private void Awake()
     {
@@ -34,7 +34,6 @@ public class ShopManager : MonoBehaviour
 
         string folderPath = "Assets/Scripts/Item/"; // 검색할 폴더 경로를 지정해주세요.
         string[] csFiles = Directory.GetFiles(folderPath, "*.cs", SearchOption.AllDirectories);
-        Debug.Log(csFiles.Length);
         foreach (string csFile in csFiles)
         {
             string[] fileLines = File.ReadAllLines(csFile);
@@ -161,15 +160,16 @@ public class ShopManager : MonoBehaviour
         // 버튼 이벤트 등록
         increaseButton.onClick.AddListener(IncreaseNumber);
         decreaseButton.onClick.AddListener(DecreaseNumber);
-
-       
     }
 
     public void IncreaseNumber()
     {
-        // 수량 증가 버튼을 누를 때마다 1씩 증가
-        Count++;
-        UpdateNumberText();
+        if (Count < MaxCount)
+        {
+            // 수량 증가 버튼을 누를 때마다 1씩 증가
+            Count++;
+            UpdateNumberText();
+        }
     }
 
     public void DecreaseNumber()
@@ -228,9 +228,9 @@ public class ShopManager : MonoBehaviour
         //    }
         //}
         //
-        //실험을 위한 장비템으로 고정, stageNum 또한 스테이지가 아닐때는 0으로 고정됨
+        //실험을 위한 장비템으로 고정, 현재 stageNum 또한 스테이지가 아니여서 0으로 고정됨
         index = 0;
-        Debug.Log(Equipment[stageNum].Count);
+
         if (index == 0)
         {
             for (int i = 0; i < Equipment[stageNum].Count; i++)
@@ -245,13 +245,6 @@ public class ShopManager : MonoBehaviour
                 AddScriptToItemPoint(Consumable[stageNum][i], i);
             }
         }
-
-        //stageNum = 2;
-        //Debug.Log(ItemList[stageNum-1].Count);
-        //for (int i = 0; i < ItemList[stageNum-1].Count; i++)
-        //{
-        //    AddScriptToItemPoint(ItemList[stageNum-1][i], i + 1);
-        //}
     }
 
     private void AddScriptToItemPoint(string scriptName, int itemPointCount)
@@ -334,11 +327,6 @@ public class ShopManager : MonoBehaviour
                     // TextMeshPro에 값 할당
                     itemNameText.text = itemName;
                     priceText.text = price.ToString() + " G";
-                    //Debug.Log("Price: " + price);
-                    //Debug.Log("Item Number: " + itemNumber);
-                    //Debug.Log("Item Name: " + itemName);
-                    //Debug.Log("Item Rank: " + rank);
-                    //Debug.Log("Item max_count: " + max_count);
                 }
             } else
             {
@@ -358,22 +346,17 @@ public class ShopManager : MonoBehaviour
                 // TextMeshPro에 값 할당
                 itemNameText.text = itemName;
                 priceText.text = price.ToString() + " G";
-                //Debug.Log("Price: " + price);
-                //Debug.Log("Item Number: " + itemNumber);
-                //Debug.Log("Item Name: " + itemName);
-                //Debug.Log("Item Rank: " + rank);
-                //Debug.Log("Item max_count: " + max_count);
             }
-            // 숍 관련 정보만 따로 분리하여 저장
-            ShopObjectInfo shopObjectInfo = itemInfoObject.GetComponent<ShopObjectInfo>();
-            if (shopObjectInfo != null)
-            {
-                shopObjectInfo.Price = price;
-                shopObjectInfo.ItemNumber = itemNumber;
-                shopObjectInfo.ItemName = itemName;
-                shopObjectInfo.Rank = rank;
-                shopObjectInfo.MaxCount = max_count;
-            }
+            //// 숍 관련 정보만 따로 분리하여 저장
+            //ShopObjectInfo shopObjectInfo = itemInfoObject.GetComponent<ShopObjectInfo>();
+            //if (shopObjectInfo != null)
+            //{
+            //    shopObjectInfo.Price = price;
+            //    shopObjectInfo.ItemNumber = itemNumber;
+            //    shopObjectInfo.ItemName = itemName;
+            //    shopObjectInfo.Rank = rank;
+            //    shopObjectInfo.MaxCount = max_count;
+            //}
 
             Image clickedImage = itemInfoObject.GetComponent<Image>();
             Button button = itemInfoObject.GetComponent<Button>();
@@ -389,16 +372,16 @@ public class ShopManager : MonoBehaviour
                             image.sprite = clickedImage.sprite;
                         }
                     }
+                    //Image image = ItemImage.GetComponent<Image>();
+                    //image.sprite = sprite 가져오기;
                     //아이템 세부사항 글 추가
                     //TextMeshProUGUI ItemDetailText = ItemDetail.GetComponent<TextMeshProUGUI>();
-                    //ItemDetailText.text = ;
+                    //ItemDetailText.text = string;
                     // 클릭 이벤트 처리 로직을 여기에 작성합니다.
+                    MaxCount = max_count;
                     Debug.Log("ItemInfoObject가 클릭되었습니다.");
-                    TextMeshProUGUI priceText = itemInfoObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                    string currentText = priceText.text;
-                    currentText = currentText.Replace(" G", "");
-                    int ItemMoney = (int.Parse(currentText));
-                    CurrentItem(ItemMoney);
+                    int Money = price;
+                    CurrentItem(Money);
                 });
             }
 
@@ -415,9 +398,3 @@ public class ShopManager : MonoBehaviour
         UpdateNumberText();
     }
 }
-
-
-// 이름과 가격 정보를 추가합니다.
-/*                ItemInfoComponent itemInfoComponent = itemInfoObject.GetComponent<ItemInfoComponent>();
-                itemInfoComponent.SetName(scriptName);
-                itemInfoComponent.SetPrice(100); // 가격을 설정하는 예시입니다.*/
