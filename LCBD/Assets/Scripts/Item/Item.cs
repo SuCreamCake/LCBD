@@ -17,7 +17,7 @@ public abstract class Item : MonoBehaviour
     public float effect_maintain_time; //효과발동 후 효과적용되는 시간
     public Sprite item_sprite; //아이템 이미지
     public int max_count; //최대 소지갯수
-
+    public int now_Count; //현재 소지갯수
 
     public abstract void Use_Effect(); //사용효과 추상메소드
     public abstract void DestroyAfterTime(); //사용 후 파괴 추상메소드

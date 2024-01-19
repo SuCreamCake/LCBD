@@ -16,6 +16,7 @@ public class BlackMushroom : Potion_Parts_Item
         effect_figures = 0; //얼마나 버프먹는지 정도
         effect_maintain_time = 15; //효과발동 후 효과적용되는 시간
         max_count = 99; //최대 소지갯수
+        now_Count = 0; //현재 소지 갯수
     }
 
 

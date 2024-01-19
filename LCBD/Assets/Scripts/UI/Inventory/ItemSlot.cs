@@ -29,8 +29,17 @@ public class ItemSlot : MonoBehaviour
         if (item != null)
         {
             item.Use_Effect(); // 아이템의 사용 효과를 발동
+            if(item.item_type == Item.Item_Type.Potion_Parts) //포션류 아이템이면 하나 제거
+            {
+                item.now_Count -= 1;
+            }
+     
             // 아이템 사용 후 추가적인 로직, 예를 들어 아이템 제거나 아이템 슬롯 업데이트
-            ClearSlot(); // 슬롯을 초기화
+            if(item.now_Count < 1) //아이템 갯수가 1보다 작아지면
+            {
+                ClearSlot(); // 슬롯을 초기화
+
+            }
         }
     }
 

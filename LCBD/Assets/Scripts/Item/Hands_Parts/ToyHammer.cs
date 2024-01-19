@@ -19,7 +19,9 @@ public class ToyHammer : Hand_Parts_Item
         effect_figures = 0; //얼마나 버프먹는지 정도
         effect_active_type = Effect_Active_Type.Null; //효과 유형
         effect_maintain_time = 0; //효과발동 후 효과적용되는 시간
-       //item_sprite; //아이템 이미지 이미지가 없어요
+                                  //item_sprite; //아이템 이미지 이미지가 없어요
+
+        now_Count = 0; //현재 소지 갯수
     }
 
 

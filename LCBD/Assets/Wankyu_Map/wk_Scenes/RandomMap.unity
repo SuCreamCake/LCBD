@@ -1222,28 +1222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3794f11ab868bfa42817bb722783d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunBool: 0
-  hammer1bool: 0
-  hammer2bool: 0
-  bulletObject: {fileID: 7964746791692325721, guid: 60255a9713612d94f9e063c3a0db3fca, type: 3}
-  attackPosition: {x: 0, y: 0, z: 0}
-  shieldObject: {fileID: 0}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 4096
-  soundWaveAttackTime: 0
-  totalAttackPower: 0
   totalShield: 0
-  weaponIndex: -1
-  animationEffectMeeleAttack: {fileID: 1825904848170092301, guid: 8d437d37f07d6784894e4ae20373bc9e, type: 3}
-  soundWakeAttack: {fileID: 8333193453524061194, guid: fa2f55c98f228f94d93f98f90c14cb20, type: 3}
-  attackTimeDelay: 0
-  attackTime: 0
-  iSmeleeAttackEnd: 0
-  iSmeleeAttack: 0
-  setKey: 0
-  weaponPower: 0
-  addAttackSpeed: 0
   playerAttackPower: 0
   monsterDefense: 0
   monsterTenacity: 0
@@ -1293,7 +1272,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   soundWaveAttackTime: 0
-  totalAttackPower: 0
   weaponIndex: -1
   animationEffectMeeleAttack: {fileID: 1825904848170092301, guid: 8d437d37f07d6784894e4ae20373bc9e, type: 3}
   soundWakeAttack: {fileID: 8333193453524061194, guid: fa2f55c98f228f94d93f98f90c14cb20, type: 3}
@@ -1305,9 +1283,6 @@ MonoBehaviour:
   shieldObject: {fileID: 0}
   weaponPower: 0
   addAttackSpeed: 0
-  playerAttackPower: 0
-  monsterDefense: 0
-  monsterTenacity: 0
 --- !u!1 &530078533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,6 +2781,7 @@ MonoBehaviour:
   effect_maintain_time: 0
   item_sprite: {fileID: 0}
   max_count: 0
+  now_Count: 0
   Price: 0
 --- !u!1 &910430603
 GameObject:
@@ -3357,6 +3333,7 @@ MonoBehaviour:
   effect_maintain_time: 0
   item_sprite: {fileID: 0}
   max_count: 0
+  now_Count: 0
   Price: 0
 --- !u!1 &1130837893
 GameObject:
@@ -5684,6 +5661,7 @@ MonoBehaviour:
   effect_maintain_time: 0
   item_sprite: {fileID: 0}
   max_count: 0
+  now_Count: 0
   Weapon_Attack: 0
   Weapon_Range: 0
   Price: 0

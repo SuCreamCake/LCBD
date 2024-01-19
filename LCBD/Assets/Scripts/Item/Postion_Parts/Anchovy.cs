@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Anchovy : Potion_Parts_Item
 {
+    
     private void Awake()
     {
         Price = 30; //아이템 가격
@@ -16,6 +17,7 @@ public class Anchovy : Potion_Parts_Item
         effect_figures = 2.0f; //얼마나 버프먹는지 정도
         effect_maintain_time = 15; //효과발동 후 효과적용되는 시간
         max_count = 99; //최대 소지갯수
+        now_Count = 0; //현재갯수
     }
 
 
@@ -37,6 +39,7 @@ public class Anchovy : Potion_Parts_Item
                 //Debug.Log("스테미나 3.0회복.");
             }
         }
+
     }
 
     /*public override void Use_Effect()
