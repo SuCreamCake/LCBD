@@ -691,7 +691,7 @@ public class Player : MonoBehaviour
     {
         this.money -= money;
     }
-    public int SetMoney()
+    public int GetMoney()
     {
         return money;
     }
