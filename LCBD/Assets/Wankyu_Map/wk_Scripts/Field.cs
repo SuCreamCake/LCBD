@@ -28,7 +28,7 @@ public enum CommonFieldSerial_2     /*2스테이지*/
     Birth,                  /*출생*/
     BabyBottle_g,           /*젖병(기믹)*/
     Mom_g,                  /*엄마(기믹)*/
-    //Standing_g,             /*두발서기(기믹)*/
+    Standing_g,             /*두발서기(기믹)*/
     //Rattle_g,             /*딸랑이(기믹)*/
     //RobotToy_g.           /*로봇장난감(기믹)*/
 }
