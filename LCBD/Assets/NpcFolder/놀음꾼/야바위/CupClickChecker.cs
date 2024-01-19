@@ -23,7 +23,7 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
             if (ballObject != null)
             {
                 Debug.Log("공이 발견되었습니다. 게임 성공");
-                CupManager.PlusMoney(3000);
+                CupManager.PlusMoney(15);
             }
             else
             {

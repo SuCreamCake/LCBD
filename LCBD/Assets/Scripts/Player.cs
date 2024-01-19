@@ -691,6 +691,10 @@ public class Player : MonoBehaviour
     {
         this.money -= money;
     }
+    public int SetMoney()
+    {
+        return money;
+    }
     public void addSpeed(float addSpeed) //이동속도 추가 로직
     {
         this.nomalSpeed += addSpeed;
@@ -705,7 +709,7 @@ public class Player : MonoBehaviour
         spriteRenderer.material.color = Color.red;
         Debug.Log("Player Take Damage" + damage);
         health -= damage;
-        tenacity -= (int)damage * 2;
+        tenacity -= (int)damage;
         yield return new WaitForSeconds(0.03f);
         spriteRenderer.material.color = Color.white;
     }

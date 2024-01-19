@@ -17,8 +17,7 @@ public class LongDistance_Ms : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //레이어마스크로 변경//
-        if (collision.gameObject.layer == backMask.value)
+        if ((backMask.value & (1 << collision.gameObject.layer)) != 0)
         {
             //여기 투사체 또는 적대 세력이 들어감)
             Destroy(gameObject);

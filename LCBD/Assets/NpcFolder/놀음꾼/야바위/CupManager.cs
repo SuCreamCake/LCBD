@@ -91,7 +91,7 @@ public class CupManager : MonoBehaviour
     // UI 버튼을 처리하는 메소드를 정의합니다.
     public void OnStartButtonClicked()
     {
-        MinusMoney(3000);
+        MinusMoney(10);
 
         if (!isGameRunning)
         {
@@ -341,19 +341,22 @@ public class CupManager : MonoBehaviour
 
     public void PlusMoney(int money)
     {
-        Debug.Log("성공 Money : " + money);
         if (PlayerScript != null)
         {
             PlayerScript.plusMoney(money);
+            Debug.Log("성공 Money : " + money);
         }
     }
 
     public void MinusMoney(int money)
     {
-        Debug.Log("차감 Money : " + money);
         if (PlayerScript != null)
         {
-            PlayerScript.minusMoney(money);
+            if (PlayerScript.GetMoney >= money)
+            {
+                PlayerScript.minusMoney(money);
+                Debug.Log("차감 Money : " + money);
+            }
         }
     }
 }

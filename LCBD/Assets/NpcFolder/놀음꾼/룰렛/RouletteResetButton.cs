@@ -15,7 +15,7 @@ public class RouletteResetButton : MonoBehaviour
         ResetButton.interactable = false;
         if(RouletteManager != null)
         {
-            RouletteManager.MinusMoney(1000);
+            RouletteManager.MinusMoney(10);
         }
     }
 

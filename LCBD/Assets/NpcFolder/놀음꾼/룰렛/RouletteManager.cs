@@ -74,8 +74,8 @@ public class RouletteManager : MonoBehaviour
             ResetArray();
             //���� ��ư Ȱ��ȭ
             ResetButton.interactable = true;
-            //1000원 성공 머니
-            PlusMoney(1000);
+            //15원 성공 머니
+            PlusMoney(15);
         }
 
         index = (index + 1) % dataArray.Length; // index�� �迭 ���̸� �ʰ��� ��� �������� ���ư����� ó��
@@ -108,19 +108,22 @@ public class RouletteManager : MonoBehaviour
 
     public void PlusMoney(int money)
     {
-        Debug.Log("성공 Money : " + money);
         if (PlayerScript != null)
         {
             PlayerScript.plusMoney(money);
+            Debug.Log("성공 Money : " + money);
         }
     }
 
     public void MinusMoney(int money)
     {
-        Debug.Log("차감 Money : " + money);
         if (PlayerScript != null)
         {
-            PlayerScript.minusMoney(money);
+            if (PlayerScript.GetMoney >= money)
+            {
+                PlayerScript.minusMoney(money);
+                Debug.Log("차감 Money : " + money);
+            }
         }
     }
 }
