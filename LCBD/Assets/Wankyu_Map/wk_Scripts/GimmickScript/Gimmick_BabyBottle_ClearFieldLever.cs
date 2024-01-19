@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearFieldLever_BabyBoottle : MonoBehaviour, IControlGimmickObject
+public class Gimmick_BabyBottle_ClearFieldLever : MonoBehaviour, IControlGimmickObject
 {
     private bool isClear;
 
