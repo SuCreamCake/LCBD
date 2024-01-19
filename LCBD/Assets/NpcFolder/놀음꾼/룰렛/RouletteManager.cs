@@ -119,7 +119,7 @@ public class RouletteManager : MonoBehaviour
     {
         if (PlayerScript != null)
         {
-            if (PlayerScript.GetMoney >= money)
+            if (PlayerScript.GetMoney() >= money)
             {
                 PlayerScript.minusMoney(money);
                 Debug.Log("차감 Money : " + money);

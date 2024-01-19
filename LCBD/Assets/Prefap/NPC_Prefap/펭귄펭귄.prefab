@@ -154,8 +154,8 @@ MonoBehaviour:
   attackSpeed_Ms: 1
   crossroads_Ms: 10
   elite: 1
-  smallViewRadius: 0.5
-  viewRadius: 5
+  smallViewRadius: 0.2
+  viewRadius: 7
   viewAngle: 90
   waiteTime: 3
 --- !u!114 &1876006292905475162
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86a1552add217e409a4afa2a20ee3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 5
+  viewRadius: 7
   viewAngle: 90
   startingAngle: 180
   targetMask:
@@ -178,8 +178,8 @@ MonoBehaviour:
     m_Bits: 576
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
-  smallViewRadius: 0.5
+    m_Bits: 384
+  smallViewRadius: 0.2
 --- !u!114 &1876006292905475163
 MonoBehaviour:
   m_ObjectHideFlags: 0
