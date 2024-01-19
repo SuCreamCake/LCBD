@@ -23,6 +23,8 @@ public static class PortalLocation  // 포탈 위치 좌표 static 클래스
     public static Point[] CommonFieldPortal_1_Birth = { new Point(47, 14), new Point(1, 32), new Point(29, 28), new Point(39, 12) };
     public static Point[] CommonFieldPortal_1_BabyBottle_g = { new Point(40, 26), new Point(10, 26), new Point(27, 47), new Point(25, 1) };
     public static Point[] CommonFieldPortal_1_Mom_g = { new Point(32, 18), new Point(16, 18), new Point(25, 22), new Point(25, 15) };
+    public static Point[] CommonFieldPortal_1_Standing_g = { new Point(41, 7), new Point(9, 7), new Point(25, 34), new Point(25, 14) };
+
     public static Point[] BossFieldPortal_1_ghosthouse = { new Point(31, 20), new Point(15, 22), new Point(23, 31), new Point(22, 17) };
 }
 
@@ -134,6 +136,10 @@ public class PortalManager : MonoBehaviour
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[0].y;
                                         break;
 
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[0].y;
+                                        break;
                                 }
                                 break;
                             case 2:
@@ -165,6 +171,10 @@ public class PortalManager : MonoBehaviour
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[0].y;
                                         break;
 
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[0].y;
+                                        break;
                                 }
                                 break;
                             case 3:
@@ -243,6 +253,10 @@ public class PortalManager : MonoBehaviour
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[1].y;
                                         break;
 
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[1].y;
+                                        break;
                                 }
                                 break;
                             case 2:
@@ -274,6 +288,10 @@ public class PortalManager : MonoBehaviour
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[1].y;
                                         break;
 
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[1].y;
+                                        break;
                                 }
                                 break;
                             case 3:
@@ -361,6 +379,11 @@ public class PortalManager : MonoBehaviour
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[2].y;
                                         break;
 
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[2].y;
+                                        break;
+
                                 }
                                 break;
                             case 2:
@@ -390,6 +413,11 @@ public class PortalManager : MonoBehaviour
                                     case CommonFieldSerial_1.Mom_g:
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[2].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[2].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[2].y;
                                         break;
 
                                 }
@@ -478,6 +506,11 @@ public class PortalManager : MonoBehaviour
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[3].y;
                                         break;
 
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[3].y;
+                                        break;
+
                                 }
                                 break;
                             case 2:
@@ -507,6 +540,11 @@ public class PortalManager : MonoBehaviour
                                     case CommonFieldSerial_1.Mom_g:
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[3].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[3].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[3].y;
                                         break;
 
                                 }
