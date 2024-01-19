@@ -70,6 +70,9 @@ public class Player : MonoBehaviour
     internal object text_hp;
     internal object img;
 
+    //미니맵
+    Minimap minimap;
+
 
 
 
@@ -84,7 +87,9 @@ public class Player : MonoBehaviour
         infancy();
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();
-       
+        minimap = GameObject.Find("MinimapCamera").GetComponent<Minimap>();
+
+
     }
 
     private void Update()
