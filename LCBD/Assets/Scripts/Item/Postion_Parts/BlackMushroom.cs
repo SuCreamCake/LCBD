@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class BlackMushroom : Potion_Parts_Item
@@ -31,27 +32,70 @@ public class BlackMushroom : Potion_Parts_Item
         GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
-            Player player = findPlayer.GetComponent<Player>();
+            SimplePlayerMove player = findPlayer.GetComponent<SimplePlayerMove>();
             if (player != null)
             {
-                player.tenacity += (int)effect_figures; // 체력을 10(한칸)회복시킴
+                ApplyRandomEffect(player);
                 Debug.Log("랜덤할래.");
             }
         }
     }
-
-    /*public override void Use_Effect()
+    private void ApplyRandomEffect(SimplePlayerMove player)
     {
-        Debug.Log("체력 포션사용");
-        GameObject findPlayer = GameObject.Find("간단Player");
-        if (findPlayer != null)
+        // 무작위로 선택될 속성 리스트
+        Effect_Info[] effects = new Effect_Info[] {
+            Effect_Info.Attack_Speed,
+            Effect_Info.Offense_Power,
+            Effect_Info.Health,
+            Effect_Info.Speed,
+            Effect_Info.Stamina,
+            Effect_Info.Defense,
+            Effect_Info.Range,
+            Effect_Info.Endurance
+        };
+
+        System.Random random = new System.Random();
+        int effectIndex = random.Next(effects.Length); // 무작위 인덱스 선택
+        Effect_Info randomEffect = effects[effectIndex];
+
+        // 선택된 랜덤 효과 적용
+        switch (randomEffect)
         {
-            Player player = findPlayer.GetComponent<Player>();
-            if (player != null)
-            {
-                player.health += effect_figures; // 체력을 10(한칸)회복시킴
-                Debug.Log("체력 10회복! 한칸임.");
-            }
+            case Effect_Info.Attack_Speed:
+                player.attackSpeed += 1; // 공격속도 증가
+                Debug.Log("공격속도 1증가");
+                break;
+            case Effect_Info.Offense_Power:
+                player.attackPower += 1; // 공격력 증가
+                Debug.Log("공격력 1증가");
+                break;
+            case Effect_Info.Health:
+                player.health += 1; // 체력 증가
+                Debug.Log("체력 1증가");
+                break;
+            case Effect_Info.Speed:
+                player.addSpeed(1); // 이동속도 증가
+                Debug.Log("이동속도 1증가");
+                break;
+            case Effect_Info.Stamina:
+                player.endurance += 1; // 스태미나 증가
+                Debug.Log("스테미나 1증가");
+                break;
+            case Effect_Info.Defense:
+                player.defense += 1; // 방어력 증가
+                Debug.Log("방어력 1증가");
+                break;
+            case Effect_Info.Range:
+                player.crossroads += 1; // 사거리 증가
+                Debug.Log("사거리 1증가");
+                break;
+            case Effect_Info.Endurance:
+                player.tenacity += 1; // 강인도 증가
+                Debug.Log("강인도 1증가");
+                break;
         }
-    }*/
+
+        Debug.Log("적용된 효과: " + randomEffect.ToString());
+    }
+
 }

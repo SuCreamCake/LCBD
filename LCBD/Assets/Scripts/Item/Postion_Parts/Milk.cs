@@ -35,6 +35,10 @@ public class Milk : Potion_Parts_Item
             if (player != null)
             {
                 player.health += effect_figures; // 체력을 10(한칸)회복시킴
+                if(player.health >= player.maxHealth) //if NowHP is bigger than MaxHP
+                {
+                    player.health = player.maxHealth; //NowHP is MaxHP
+                }
                 Debug.Log("체력 10회복! 한칸임.");
             }
         }

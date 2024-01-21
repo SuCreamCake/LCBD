@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5063896215970638106}
   - component: {fileID: 5063896215970638109}
   - component: {fileID: 5063896215970638111}
-  - component: {fileID: 5063896215970638107}
+  - component: {fileID: 3247757154905377095}
   m_Layer: 0
   m_Name: Juwelry_diamond
   m_TagString: Untagged
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.11}
   m_EdgeRadius: 0
---- !u!114 &5063896215970638107
+--- !u!114 &3247757154905377095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,8 +121,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5063896215970638110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cafa3a4c84f3c648a2750671a0cc6c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 663aa3b457718cb4aae066c7f324f160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Diamond
-  itemSprite: {fileID: 1298911267, guid: 11c45fde9380f7e43ad4803940be88e4, type: 3}
+  item_number: 0
+  item_Name: 
+  Rank: 0
+  item_type: 0
+  drop_age: 0
+  effect_type: 0
+  effect_info: 0
+  effect_target: 0
+  effect_figures: 0
+  effect_active_type: 0
+  effect_maintain_time: 0
+  item_sprite: {fileID: 0}
+  max_count: 0
+  now_Count: 0
+  Price: 0

@@ -10,6 +10,8 @@ public class ItemSlot : MonoBehaviour
     public bool isUse; //사용중인지 여부
     public Image Item_image;
     public Item item; // 슬롯에 있는 아이템
+    public Text itemCountText; // 아이템 수량 텍스트
+    
 
     private void Awake()
     {
@@ -32,10 +34,11 @@ public class ItemSlot : MonoBehaviour
             if(item.item_type == Item.Item_Type.Potion_Parts) //포션류 아이템이면 하나 제거
             {
                 item.now_Count -= 1;
+                UpdateItemCountText(); // 아이템 수량 텍스트 업데이트
             }
      
             // 아이템 사용 후 추가적인 로직, 예를 들어 아이템 제거나 아이템 슬롯 업데이트
-            if(item.now_Count < 1) //아이템 갯수가 1보다 작아지면
+            if(item.now_Count <= 0) //아이템 갯수가 1보다 작아지면
             {
                 ClearSlot(); // 슬롯을 초기화
 
@@ -51,5 +54,13 @@ public class ItemSlot : MonoBehaviour
         Item_image.enabled = false;
         isUse = false;
         item = null;
+    }
+
+    public void UpdateItemCountText() //Text Update
+    {
+        if (item != null)
+        {
+            itemCountText.text = item.now_Count.ToString();
+        }
     }
 }
