@@ -704,6 +704,10 @@ public class Player : MonoBehaviour
     {
         this.nomalSpeed += addSpeed;
     }
+    public void subSpeed(float subSpeed)
+    {
+        this.nomalSpeed -= subSpeed;
+    }
 
     public void TakeDamageForPlayer(float damage)
     {

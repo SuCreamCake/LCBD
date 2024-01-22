@@ -20,6 +20,18 @@ public class BlackMushroom : Potion_Parts_Item
         now_Count = 0; //현재 소지 갯수
     }
 
+    // 무작위로 선택될 속성 리스트
+    Effect_Info[] effects = new Effect_Info[] {
+            Effect_Info.Attack_Speed,
+            Effect_Info.Offense_Power,
+            Effect_Info.Health,
+            Effect_Info.Speed,
+            Effect_Info.Stamina,
+            Effect_Info.Defense,
+            Effect_Info.Range,
+            Effect_Info.Endurance
+        };
+
 
     public override void DestroyAfterTime()
     {
@@ -32,7 +44,7 @@ public class BlackMushroom : Potion_Parts_Item
         GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
-            SimplePlayerMove player = findPlayer.GetComponent<SimplePlayerMove>();
+            Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
                 ApplyRandomEffect(player);
@@ -40,23 +52,24 @@ public class BlackMushroom : Potion_Parts_Item
             }
         }
     }
-    private void ApplyRandomEffect(SimplePlayerMove player)
+    private void ApplyRandomEffect(Player player)
     {
-        // 무작위로 선택될 속성 리스트
-        Effect_Info[] effects = new Effect_Info[] {
-            Effect_Info.Attack_Speed,
-            Effect_Info.Offense_Power,
-            Effect_Info.Health,
-            Effect_Info.Speed,
-            Effect_Info.Stamina,
-            Effect_Info.Defense,
-            Effect_Info.Range,
-            Effect_Info.Endurance
-        };
+       // SimplePlayerMove Splayer = player.GetComponent<SimplePlayerMove>();
+        if (gameObject.activeInHierarchy) // GameObject가 활성화 상태인지 확인
+        {
+            Debug.Log("검은버섯");
+            StartCoroutine(TemporaryEffect(player));
+        }
 
+    }
+
+
+    private IEnumerator TemporaryEffect(Player player)
+    {
         System.Random random = new System.Random();
         int effectIndex = random.Next(effects.Length); // 무작위 인덱스 선택
         Effect_Info randomEffect = effects[effectIndex];
+
 
         // 선택된 랜덤 효과 적용
         switch (randomEffect)
@@ -96,6 +109,42 @@ public class BlackMushroom : Potion_Parts_Item
         }
 
         Debug.Log("적용된 효과: " + randomEffect.ToString());
-    }
+        yield return new WaitForSeconds(effect_maintain_time); // 지정된 시간 동안 대기
 
+        switch (randomEffect)
+        {
+            case Effect_Info.Attack_Speed:
+                player.attackSpeed += 1; // 공격속도 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Offense_Power:
+                player.attackPower += 1; // 공격력 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Health:
+                player.health += 1; // 체력 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Speed:
+                player.addSpeed(1); // 이동속도 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Stamina:
+                player.endurance += 1; // 스태미나 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Defense:
+                player.defense += 1; // 방어력 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Range:
+                player.crossroads += 1; // 사거리 증가
+                Debug.Log("효과제거");
+                break;
+            case Effect_Info.Endurance:
+                player.tenacity += 1; // 강인도 증가
+                Debug.Log("효과제거");
+                break;
+        }
+    }
 }

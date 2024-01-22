@@ -40,7 +40,7 @@ public class Candy : Hand_Parts_Item
             if (player != null)
             {
                 player.attackSpeed += (int)effect_figures; // 공격속도 2 향상
-                //Debug.Log("공격속도 2 향상.");
+                Debug.Log("공격속도 2 향상.");
             }
         }
     }

@@ -19,6 +19,8 @@ public abstract class Item : MonoBehaviour
     public int max_count; //최대 소지갯수
     public int now_Count; //현재 소지갯수
 
+
+    public bool isGet = false; //얻었는지 확인하는 변수
     public abstract void Use_Effect(); //사용효과 추상메소드
     public abstract void DestroyAfterTime(); //사용 후 파괴 추상메소드
 
@@ -90,17 +92,37 @@ public abstract class Item : MonoBehaviour
         Null //사용안함
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) //아이템과 충돌시 발동
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !isGet)
         {
-            if(this.item_type == Item_Type.Body_Parts) //바디파츠면
+            isGet = true; // 아이템이 습득되었다고 표시
+            GetItem(collision); //아이템 습득 함수
+            // gameObject.SetActive(false); // 오브젝트를 비활성화하지 않음
+            HideItem(); // 시각적으로 아이템 숨기기
+        }
+    }
+
+    private void HideItem() //아이템 씬에서 숨기기
+    {
+        // 예: 렌더러를 비활성화하거나, 아이템을 카메라에서 멀리 이동시키는 등
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.enabled = false;
+        }
+    }
+
+    private void GetItem(Collider2D player)
+    {
+       
+            if (this.item_type == Item_Type.Body_Parts) //바디파츠면
             {
                 Debug.Log("바디파츠 습득");
                 if (Body_Inventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
                 {
                     //Destroy(gameObject); // 아이템을 씬에서 제거
-                    gameObject.SetActive(false);
+                    //gameObject.SetActive(false);
                 }
                 else
                 {
@@ -113,8 +135,8 @@ public abstract class Item : MonoBehaviour
                 Debug.Log("핸드파츠 습득");
                 if (WeaponInventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
                 {
-                    //Destroy(gameObject); // 아이템을 씬에서 제거
-                    gameObject.SetActive(false);
+                    this.Use_Effect();
+                    //gameObject.SetActive(false);
                 }
                 else
                 {
@@ -128,13 +150,14 @@ public abstract class Item : MonoBehaviour
                 if (ItemInventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
                 {
                     //Destroy(gameObject); // 아이템을 씬에서 제거
-                    gameObject.SetActive(false);
+                    //gameObject.SetActive(false);
                 }
                 else
                 {
                     // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
                 }
-            }
         }
+        // 아이템 습득 로직
+        // 예: 인벤토리에 아이템 추가, 플레이어에게 효과 적용 등
     }
 }

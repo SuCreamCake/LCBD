@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8859906345718346902}
+  - component: {fileID: 4517972302762554708}
   - component: {fileID: 8859906345718346897}
-  - component: {fileID: 8781763882195077748}
   - component: {fileID: 8859906345718346896}
   m_Layer: 0
   m_Name: HP_Postion
@@ -34,6 +34,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4517972302762554708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8859906345718346898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f4c170fdf7f0dd418270e58c2456dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item_number: 0
+  item_Name: 
+  Rank: 0
+  item_type: 0
+  drop_age: 0
+  effect_type: 0
+  effect_info: 0
+  effect_target: 0
+  effect_figures: 0
+  effect_active_type: 0
+  effect_maintain_time: 0
+  item_sprite: {fileID: 0}
+  max_count: 0
+  now_Count: 0
+  Price: 0
 --- !u!212 &8859906345718346897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,33 +113,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8781763882195077748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8859906345718346898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 024cc646e8284414c9d3f615cc8f9157, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item_number: 0
-  item_Name: 
-  Rank: 0
-  item_type: 0
-  drop_age: 0
-  effect_type: 0
-  effect_info: 0
-  effect_target: 0
-  effect_figures: 0
-  effect_active_type: 0
-  effect_maintain_time: 0
-  item_sprite: {fileID: 0}
-  max_count: 0
-  now_Count: 0
-  Price: 0
 --- !u!61 &8859906345718346896
 BoxCollider2D:
   m_ObjectHideFlags: 0

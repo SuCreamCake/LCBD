@@ -86,23 +86,23 @@ public class KeyManager : MonoBehaviour
         //
         if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //UP
         {
-            Debug.Log("Up");
+            //Debug.Log("Up");
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.DOWN])) //Down
         {
-            Debug.Log("DOWN");
+           // Debug.Log("DOWN");
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //Left
         {
-            Debug.Log("LEFT");
+           // Debug.Log("LEFT");
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //Right
         {
-            Debug.Log("RIGHT");
+           // Debug.Log("RIGHT");
         }
         if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //Jump
         {
-            Debug.Log("JUMP");
+           // Debug.Log("JUMP");
         }
         if (Input.GetKeyDown(KeySetting.keys[KeyInput.Item1])) //item1
         {

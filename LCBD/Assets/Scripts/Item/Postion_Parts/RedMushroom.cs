@@ -27,32 +27,30 @@ public class RedMushroom : Potion_Parts_Item
 
     public override void Use_Effect() //이론상 구현됨
     {
-        Debug.Log("빨간버섯");
-        GameObject findPlayer = GameObject.Find("Player");
-        if (findPlayer != null)
+        if (gameObject.activeInHierarchy) // GameObject가 활성화 상태인지 확인
         {
-            Player player = findPlayer.GetComponent<Player>();
-            if (player != null)
-            {
-                player.tenacity += (int)effect_figures; // 플레이어 강직도일거임
-                
-            }
+            Debug.Log("빨간버섯");
+            StartCoroutine(TemporaryEffect());
         }
     }
 
-    /*public override void Use_Effect()
+    private IEnumerator TemporaryEffect()
     {
-        Debug.Log("체력 포션사용");
-        GameObject findPlayer = GameObject.Find("간단Player");
+        GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.health += effect_figures; // 체력을 10(한칸)회복시킴
-                Debug.Log("체력 10회복! 한칸임.");
+                player.tenacity += (int)effect_figures; // 공속 0.3 증가
+                Debug.Log("강인도 1 증가");
+
+                yield return new WaitForSeconds(effect_maintain_time); // 15초 대기
+
+                player.tenacity -= (int)effect_figures; // 스테미나 증가분 되돌리기
+                Debug.Log("강인도 증가 효과 종료.");
             }
         }
-    }*/
+    }
 }
 
