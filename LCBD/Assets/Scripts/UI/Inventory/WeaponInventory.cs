@@ -25,13 +25,25 @@ public class WeaponInventory : MonoBehaviour
                 Weaponslots[i].itemSprite = itemSprite;
                 Weaponslots[i].isUse = true;
                 Weaponslots[i].item = itemObejct;
-                // ¿©±â¿¡ Image ÄÄÆ÷³ÍÆ®¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+                // ï¿½ï¿½ï¿½â¿¡ Image ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ï´ï¿½ ï¿½Úµå¸¦ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.
                 Weaponslots[i].Weapon_image.sprite = itemSprite;
-                Weaponslots[i].Weapon_image.enabled = true; // ÀÌ¹ÌÁö¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.
+                Weaponslots[i].Weapon_image.enabled = true; // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Õ´Ï´ï¿½.
 
-                return true; // ¾ÆÀÌÅÛÀ» ¼º°øÀûÀ¸·Î Ãß°¡ÇßÀ½
+                return true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
-        return false; // ÀÎº¥Åä¸®°¡ °¡µæ Âü
+        return false; // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    }
+
+    public string[] GetAllName()
+    {
+        string[] names = new string[Weaponslots.Length];
+
+        for (int i = 0; i < Weaponslots.Length; i++)
+        {
+            names[i] = Weaponslots[i].itemName;
+        }
+
+        return names;
     }
 }

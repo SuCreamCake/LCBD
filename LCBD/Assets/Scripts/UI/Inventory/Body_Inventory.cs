@@ -14,7 +14,7 @@ public class Body_Inventory: MonoBehaviour
         else
             instance = this;
 
-        //ÀÓ½Ã·Î ÃÊ±âÈ­ÇÑ ½½·Ô
+        //ï¿½Ó½Ã·ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         BodySlots = new BodySlot[9];
 
         for(int i = 0; i < BodySlots.Length; ++i)
@@ -29,7 +29,7 @@ public class Body_Inventory: MonoBehaviour
         {
             if (BodySlots[i].isUse)
             {
-                BodySlots[i].UseItem(); //¾ÆÀÌÅÛÀ» »ç¿ë
+                BodySlots[i].UseItem(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 BodySlots[i].isUse = false;
             }
         }
@@ -45,13 +45,30 @@ public class Body_Inventory: MonoBehaviour
                 BodySlots[i].itemSprite = itemSprite;
                 BodySlots[i].isUse = true;
                 BodySlots[i].item = itemObejct;
-                // ¿©±â¿¡ Image ÄÄÆ÷³ÍÆ®¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+                // ï¿½ï¿½ï¿½â¿¡ Image ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ï´ï¿½ ï¿½Úµå¸¦ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.
                 BodySlots[i].BodyParts_image.sprite = itemSprite;
-                BodySlots[i].BodyParts_image.enabled = true; // ÀÌ¹ÌÁö¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.
+                BodySlots[i].BodyParts_image.enabled = true; // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Õ´Ï´ï¿½.
 
-                return true; // ¾ÆÀÌÅÛÀ» ¼º°øÀûÀ¸·Î Ãß°¡ÇßÀ½
+                return true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
-        return false; // ÀÎº¥Åä¸®°¡ °¡µæ Âü
+        return false; // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    }
+
+    public string[] GetAllName()
+    {
+        string[] names = new string[BodySlots.Length];
+
+        for (int i = 0; i < BodySlots.Length; i++)
+        {
+            names[i] = BodySlots[i].itemName;
+        }
+        Debug.Log("ë°”ë””ì¸ë²¤í† ë¦¬ ì ‘ê·¼"); // ë””ë²„ê·¸ ë¡œê·¸ë¡œ names ë°°ì—´ ì¶œë ¥
+        return names;
+    }
+
+    public void GetDebug()
+    {
+        Debug.Log("ë°”ë””ì¸ë²¤í† dë¦¬ ì ‘ê·¼");
     }
 }

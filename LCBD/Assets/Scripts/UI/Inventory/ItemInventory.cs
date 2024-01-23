@@ -6,7 +6,7 @@ public class ItemInventory : MonoBehaviour
 {
     public static ItemInventory instance;
     public ItemSlot[] Itemslots;
-    public int selectedItemIndex = -1; // ¼±ÅÃµÈ ¾ÆÀÌÅÛÀÇ ÀÎµ¦½º
+    public int selectedItemIndex = -1; // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class ItemInventory : MonoBehaviour
         for (int i = 0; i < Itemslots.Length; i++) {
             if (Itemslots[i].isUse && Itemslots[i].item.item_number == itemObject.item_number) //If you have an item that's the same as one in the slots, add 1 to nowCount
             {
-                Debug.Log("°°Àº ¾ÆÀÌÅÛ(Æ÷¼Ç·ù)ÀÌ µé¾î¿Í¼­ 1 Áõ°¡");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ç·ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½Í¼ï¿½ 1 ï¿½ï¿½ï¿½ï¿½");
                 Itemslots[i].item.now_Count = Mathf.Min(Itemslots[i].item.now_Count + 1, Itemslots[i].item.max_count); // nowCount 1 add.
                 Itemslots[i].UpdateItemCountText(); // Text Update
                 return true;
@@ -35,24 +35,68 @@ public class ItemInventory : MonoBehaviour
                 Itemslots[i].itemSprite = itemSprite;
                 Itemslots[i].isUse = true;
                 Itemslots[i].item = itemObject;
-                // ¿©±â¿¡ Image ÄÄÆ÷³ÍÆ®¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+                // ï¿½ï¿½ï¿½â¿¡ Image ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ï´ï¿½ ï¿½Úµå¸¦ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.
                 Itemslots[i].Item_image.sprite = itemSprite;
-                Itemslots[i].Item_image.enabled = true; // ÀÌ¹ÌÁö¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.
+                Itemslots[i].Item_image.enabled = true; // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Õ´Ï´ï¿½.
                 Itemslots[i].item.now_Count += 1; //That's now_Count 1 Add
                 Itemslots[i].UpdateItemCountText(); // Text Update
-                return true; // ¾ÆÀÌÅÛÀ» ¼º°øÀûÀ¸·Î Ãß°¡ÇßÀ½
+                return true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
-        return false; // ÀÎº¥Åä¸®°¡ °¡µæ Âü
+        return false; // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     }
 
 
-    public void UseSelectedItem() //¾ÆÀÌÅÛ »ç¿ë
+    public void UseSelectedItem() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
         if (selectedItemIndex >= 0 && selectedItemIndex < Itemslots.Length && Itemslots[selectedItemIndex].isUse)
         {
-            Itemslots[selectedItemIndex].UseItem(); // ¼±ÅÃµÈ ¾ÆÀÌÅÛ »ç¿ë
-            // Ãß°¡ÀûÀÎ ·ÎÁ÷, ¿¹¸¦ µé¾î ¾ÆÀÌÅÛ ½½·Ô ÃÊ±âÈ­
+            Itemslots[selectedItemIndex].UseItem(); // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+        }
+    }
+
+    public int[] GetAllItemCount()
+    {
+        int[] counts = new int[Itemslots.Length];
+
+        for (int i = 0; i < Itemslots.Length; i++)
+        {
+            if (Itemslots[i].item != null)
+            {
+                counts[i] = Itemslots[i].item.now_Count;
+            }
+            else
+            {
+                counts[i] = 0;
+            }
+        }
+
+        return counts;
+    }
+
+    public string[] GetAllName()
+    {
+        string[] names = new string[Itemslots.Length];
+
+        for (int i = 0; i < Itemslots.Length; i++)
+        {
+            names[i] = Itemslots[i].itemName;
+        }
+
+        return names;
+    }
+
+    public void DecreaseItemCount(int itemIndex, int count)
+    {
+        if (itemIndex >= 0 && itemIndex < Itemslots.Length)
+        {
+            Itemslots[itemIndex].item.now_Count -= count;
+
+            if (Itemslots[itemIndex].item.now_Count <= 0)
+            {
+                Itemslots[itemIndex].ClearSlot();
+            }
         }
     }
 }

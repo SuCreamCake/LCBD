@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    public string itemName; //╬фюлешюг юл╦╖
-    public Sprite itemSprite; //╫╫╥т©║ г╔╫ц╣и ╬фюлешюг юл╧лаЖ
-    public bool isUse; //╩Г©КаъюнаЖ ©╘╨н
+    public string itemName; //О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫л╦О©╫
+    public Sprite itemSprite; //О©╫О©╫О©╫т©О©╫ г╔О©╫ц╣О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫л╧О©╫О©╫О©╫
+    public bool isUse; //О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
     public Image Item_image;
-    public Item item; // ╫╫╥т©║ юж╢б ╬фюлеш
-    public Text itemCountText; // ╬фюлеш ╪Ж╥╝ еь╫╨ф╝
+    public Item item; // О©╫О©╫О©╫т©О©╫ О©╫ж╢О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
+    public Text itemCountText; // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫ь╫О©╫ф╝
     
 
     private void Awake()
     {
-        Transform child = transform.Find("Image"); // юз╫д ©ю╨Йа╖ф╝юг юл╦╖ю╦╥н цё╠Б
+        Transform child = transform.Find("Image"); // О©╫з╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ф╝О©╫О©╫ О©╫л╦О©╫О©╫О©╫О©╫О©╫ цёО©╫О©╫
         if (child != null)
             Item_image = child.GetComponent<Image>();
     }
@@ -26,27 +26,27 @@ public class ItemSlot : MonoBehaviour
         isUse = false;
     }
 
-    public void UseItem() //╬фюлеш ╩Г©К
+    public void UseItem() //О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫
     {
         if (item != null)
         {
-            item.Use_Effect(); // ╬фюлешюг ╩Г©К х©╟З╦╕ ╧ъ╣©
-            if(item.item_type == Item.Item_Type.Potion_Parts) //фВ╪г╥Ы ╬фюлешюл╦И гоЁ╙ а╕╟е
+            item.Use_Effect(); // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ х©О©╫О©╫О©╫О©╫ О©╫ъ╣О©╫
+            if(item.item_type == Item.Item_Type.Potion_Parts) //О©╫О©╫О©╫г╥О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫л╦О©╫ О©╫оЁО©╫ О©╫О©╫О©╫О©╫
             {
                 item.now_Count -= 1;
-                UpdateItemCountText(); // ╬фюлеш ╪Ж╥╝ еь╫╨ф╝ ╬В╣╔юлф╝
+                UpdateItemCountText(); // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫ь╫О©╫ф╝ О©╫О©╫О©╫О©╫О©╫О©╫ф╝
             }
      
-            // ╬фюлеш ╩Г©К хд цъ╟║юШюн ╥наВ, ©╧╦╕ ╣И╬Н ╬фюлеш а╕╟еЁ╙ ╬фюлеш ╫╫╥т ╬В╣╔юлф╝
-            if(item.now_Count <= 0) //╬фюлеш ╟╧╪Ж╟║ 1╨╦╢ы юш╬фаЖ╦И
+            // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ О©╫О©╫ О©╫ъ╟О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫, О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫еЁО©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ф╝
+            if(item.now_Count <= 0) //О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ 1О©╫О©╫О©╫О©╫ О©╫ш╬О©╫О©╫О©╫О©╫О©╫
             {
-                ClearSlot(); // ╫╫╥тю╩ цй╠Бх╜
+                ClearSlot(); // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫й╠О©╫х╜
 
             }
         }
     }
 
-    private void ClearSlot() //╬фюлеш ╩Г©Кхд цй╠Бх╜Ё╙ ╟╧╪ЖбВ╟╗ ╥наВ╠╦гЖ©╧а╓
+    public void ClearSlot() //О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫й╠О©╫х╜О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
     {
         itemName = "";
         itemSprite = null;

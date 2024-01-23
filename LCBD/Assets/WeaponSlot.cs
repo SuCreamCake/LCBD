@@ -6,26 +6,26 @@ using UnityEngine.UI;
 [SerializeField]
 public class WeaponSlot : MonoBehaviour
 {
-    public string itemName; //╬фюлешюг юл╦╖
-    public Sprite itemSprite; //╫╫╥т©║ г╔╫ц╣и ╬фюлешюг юл╧лаЖ
-    public bool isUse; //╩Г©КаъюнаЖ ©╘╨н
+    public string itemName; //О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫л╦О©╫
+    public Sprite itemSprite; //О©╫О©╫О©╫т©О©╫ г╔О©╫ц╣О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫л╧О©╫О©╫О©╫
+    public bool isUse; //О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
     public Image Weapon_image;
-    public Item item; // ╫╫╥т©║ юж╢б ╬фюлеш
+    public Item item; // О©╫О©╫О©╫т©О©╫ О©╫ж╢О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
 
     private void Awake()
     {
-        Transform child = transform.Find("Image"); // юз╫д ©ю╨Йа╖ф╝юг юл╦╖ю╦╥н цё╠Б
+        Transform child = transform.Find("Image"); // О©╫з╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ф╝О©╫О©╫ О©╫л╦О©╫О©╫О©╫О©╫О©╫ цёО©╫О©╫
         if(child!=null)
             Weapon_image = child.GetComponent<Image>();
     }
 
-    public void UseItem() //╬фюлеш ╩Г©К
+    public void UseItem() //О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫
     {
         if (item != null)
         {
-            item.Use_Effect(); // ╬фюлешюг ╩Г©К х©╟З╦╕ ╧ъ╣©
-            // ╬фюлеш ╩Г©К хд цъ╟║юШюн ╥наВ, ©╧╦╕ ╣И╬Н ╬фюлеш а╕╟еЁ╙ ╬фюлеш ╫╫╥т ╬В╣╔юлф╝
-            //ClearSlot(); // ╫╫╥тю╩ цй╠Бх╜
+            item.Use_Effect(); // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ х©О©╫О©╫О©╫О©╫ О©╫ъ╣О©╫
+            // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ О©╫О©╫ О©╫ъ╟О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫, О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫еЁО©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ф╝
+            //ClearSlot(); // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫й╠О©╫х╜
         }
     }
     public WeaponSlot()
@@ -35,7 +35,7 @@ public class WeaponSlot : MonoBehaviour
         isUse = false;
     }
 
-    private void ClearSlot() //╬фюлеш ╩Г©Кхд цй╠Бх╜Ё╙ ╟╧╪ЖбВ╟╗ ╥наВ╠╦гЖ©╧а╓
+    public void ClearSlot() //О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫й╠О©╫х╜О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
     {
         itemName = "";
         itemSprite = null;

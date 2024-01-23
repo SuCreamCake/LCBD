@@ -6,25 +6,25 @@ using UnityEngine.UI;
 [SerializeField]
 public class BodySlot : MonoBehaviour
 {
-    public string itemName; //¾ÆÀÌÅÛÀÇ ÀÌ¸§
-    public Sprite itemSprite; //½½·Ô¿¡ Ç¥½ÃµÉ ¾ÆÀÌÅÛÀÇ ÀÌ¹ÌÁö
-    public bool isUse; //»ç¿ëÁßÀÎÁö ¿©ºÎ
+    public string itemName; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+    public Sprite itemSprite; //ï¿½ï¿½ï¿½Ô¿ï¿½ Ç¥ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    public bool isUse; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Image BodyParts_image;
     public Image Item_image;
-    public Item item; // ½½·Ô¿¡ ÀÖ´Â ¾ÆÀÌÅÛ
+    public Item item; // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    public void UseItem() //¾ÆÀÌÅÛ »ç¿ë
+    public void UseItem() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
         if (item != null)
         {
-            item.Use_Effect(); // ¾ÆÀÌÅÛÀÇ »ç¿ë È¿°ú¸¦ ¹ßµ¿
-            // ¾ÆÀÌÅÛ »ç¿ë ÈÄ Ãß°¡ÀûÀÎ ·ÎÁ÷, ¿¹¸¦ µé¾î ¾ÆÀÌÅÛ Á¦°Å³ª ¾ÆÀÌÅÛ ½½·Ô ¾÷µ¥ÀÌÆ®
-            //ClearSlot(); // ½½·ÔÀ» ÃÊ±âÈ­
+            item.Use_Effect(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+            //ClearSlot(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         }
     }
     private void Awake()
     {
-        Transform child = transform.Find("Image"); // ÀÚ½Ä ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§À¸·Î Ã£±â
+        Transform child = transform.Find("Image"); // ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
         if (child != null)
             BodyParts_image = child.GetComponent<Image>();
     }
@@ -34,7 +34,7 @@ public class BodySlot : MonoBehaviour
         itemSprite = null;
         isUse = false;
     }
-    private void ClearSlot() //¾ÆÀÌÅÛ »ç¿ëÈÄ ÃÊ±âÈ­³ª °¹¼öÂ÷°¨ ·ÎÁ÷±¸Çö¿¹Á¤
+    public void ClearSlot() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         itemName = "";
         itemSprite = null;

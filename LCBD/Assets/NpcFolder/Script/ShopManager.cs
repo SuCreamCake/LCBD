@@ -10,6 +10,7 @@ public class ShopManager : MonoBehaviour
 {
     List<string>[] Equipment = new List<string>[5]; // 장비 템 저장
     List<string>[] Consumable = new List<string>[5]; // 소비템 저장
+    List<string> SellList = new List<string>();
 
     public TMP_Text CountNumText; // 수량 텍스트
     public Button increaseButton; // 수량 증가 버튼
@@ -23,6 +24,18 @@ public class ShopManager : MonoBehaviour
     private int CurrentMoney = 0; //현재 선택 중인 물건의 가격
     private int MaxCount = 55; // 최대 갯수
     private GameObject[] shopItemPoints;
+    private GameObject inventoryObject;
+
+    private WeaponInventory weaponInventory;
+    private ItemInventory itemInventory;
+    private Body_Inventory bodyInventory;
+
+    private string[] BodyName;
+    private string[] WeaponName;
+    private string[] UseName;
+    private int[] UseCount;
+    private int UseItemCount;
+    private int CurrentItemPoint;
 
     private void Awake()
     {
@@ -199,6 +212,55 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    public void TotalButton()
+    {
+        int money = CurrentMoney * Count;
+        bool BuyOrSell = false;
+        if (BuyOrSell)
+        {
+            //가격 만큼 플레이어의 스크립트에서 돈 빼기
+            // 플레이어의 주위에 물건 소환
+            // 새로운 오브젝트를 만들어서 SpriteRenderer 스크립트 넣고
+            // 해당 물건의 이름으로 스크립트를 찾아서 새로운 오브젝트에게 넣기
+            // 그래서 Sprite를 변경
+            // 프리팹 만들어주면 에셋 폴더에서 프리팹 위치 지정해서 그 이름 가지면 생성
+        }
+        else
+        {
+            //가격 만큼 플레이어의 스크립트에서 돈 빼기
+            //인벤토리 스크립트에 접근하여 ClearSlot
+            int totalItemCount = BodyName.Length + WeaponName.Length + UseName.Length;
+            int arrayIndex = CurrentItemPoint % totalItemCount;
+            int wordIndex;
+
+            if (arrayIndex < BodyName.Length)
+            {
+                wordIndex = arrayIndex;
+                Debug.Log($"itemPoint는 BodyName 배열의 {wordIndex}번째 단어입니다.");
+                // BodySlots[wordIndex] 위치의 스크립트의 ClearSlot 메소드 실행
+                bodyInventory.BodySlots[wordIndex].ClearSlot();
+            }
+            else if (arrayIndex < BodyName.Length + WeaponName.Length)
+            {
+                wordIndex = arrayIndex - BodyName.Length;
+                Debug.Log($"itemPoint는 WeaponName 배열의 {wordIndex}번째 단어입니다.");
+                // BodySlots[wordIndex] 위치의 스크립트의 ClearSlot 메소드 실행
+                weaponInventory.Weaponslots[wordIndex].ClearSlot();
+            }
+            else
+            {
+                wordIndex = arrayIndex - BodyName.Length - WeaponName.Length;
+                Debug.Log($"itemPoint는 UseName 배열의 {wordIndex}번째 단어입니다.");
+                // UseSlots[wordIndex] 위치의 스크립트의 ClearSlot 메소드 실행
+                itemInventory.Itemslots[wordIndex].ClearSlot();
+                itemInventory.DecreaseItemCount(wordIndex, Count); // 아이템 개수 감소
+            }
+            SellItem();
+            Count = 1;
+            UpdateNumberText();
+        }
+    }
+
     public void FindShopList(string name, int stageNum)
     {
         int index = 0;
@@ -212,6 +274,9 @@ public class ShopManager : MonoBehaviour
                 index = 1;
                 break;
 
+            case "판매메뉴":
+                index = 2;
+                break;
             default:
                 Debug.Log("잘못된 메뉴 이름입니다.");
                 break;
@@ -229,25 +294,95 @@ public class ShopManager : MonoBehaviour
         //}
         //
         //실험을 위한 장비템으로 고정, 현재 stageNum 또한 스테이지가 아니여서 0으로 고정됨
-        index = 0;
-
+        index = 2;
         if (index == 0)
         {
             for (int i = 0; i < Equipment[stageNum].Count; i++)
             {
-                AddScriptToItemPoint(Equipment[stageNum][i], i);
+                AddScriptToItemPoint(Equipment[stageNum][i], i, true);
             }
         }
-        else
+        else if(index == 1)
         {
             for (int i = 0; i < Consumable[stageNum].Count; i++)
             {
-                AddScriptToItemPoint(Consumable[stageNum][i], i);
+                AddScriptToItemPoint(Consumable[stageNum][i], i, true);
             }
+        } else
+        {
+            //판매용으로
+            SellItem();
         }
     }
 
-    private void AddScriptToItemPoint(string scriptName, int itemPointCount)
+    private void SellItem()
+    {
+        //판매 관련
+        inventoryObject = GameObject.FindGameObjectWithTag("Inventory");
+        if (inventoryObject != null)
+        {
+            // 스크립트에 접근 성공한 경우
+            weaponInventory = inventoryObject.GetComponentInChildren<WeaponInventory>();
+            itemInventory = inventoryObject.GetComponentInChildren<ItemInventory>();
+            bodyInventory = inventoryObject.GetComponentInChildren<Body_Inventory>();
+        }
+        else
+        {
+            // 스크립트에 접근 실패한 경우
+            Debug.Log("inventoryObject에 접근할 수 없습니다.");
+        }
+
+        bodyInventory.GetDebug();
+        BodyName = bodyInventory != null ? bodyInventory.GetAllName() : new string[0];
+        WeaponName = weaponInventory != null ? weaponInventory.GetAllName() : new string[0];
+        UseName = itemInventory != null ? itemInventory.GetAllName() : new string[0];
+        UseCount = itemInventory != null ? itemInventory.GetAllItemCount() : new int[0];
+        Debug.Log("BodyName 배열 크기: " + BodyName.Length);
+        Debug.Log("WeaponName 배열 크기: " + WeaponName.Length);
+        Debug.Log("UseName 배열 크기: " + UseName.Length);
+        Debug.Log("UseCount 배열 크기: " + UseCount.Length);
+
+        int itemPointCount = 0;
+        UseItemCount = 0;
+
+        for (int i = 0; i < BodyName.Length; i++)
+        {
+            if (string.IsNullOrEmpty(BodyName[i]))
+            {
+                continue;
+            }
+
+            AddScriptToItemPoint(BodyName[i] + ".cs", itemPointCount, false);
+            itemPointCount++;
+        }
+
+        for (int i = 0; i < WeaponName.Length; i++)
+        {
+            if (string.IsNullOrEmpty(WeaponName[i]))
+            {
+                continue;
+            }
+
+            AddScriptToItemPoint(WeaponName[i] + ".cs", itemPointCount, false);
+            itemPointCount++;
+        }
+
+        for (int i = 0; i < UseName.Length; i++)
+        {
+            if (string.IsNullOrEmpty(UseName[i]))
+            {
+                continue;
+            }
+
+            AddScriptToItemPoint(UseName[i] + ".cs", itemPointCount, false);
+            itemPointCount++;
+            UseItemCount++;
+        }
+
+    }
+
+
+    private void AddScriptToItemPoint(string scriptName, int itemPointCount, bool Buy)
     {
         string[] filePaths = Directory.GetFiles("Assets/Scripts/Item", "*" + scriptName, SearchOption.AllDirectories);
         MonoScript script = null;
@@ -292,7 +427,10 @@ public class ShopManager : MonoBehaviour
                     itemNumber = Potion_Parts_Item.item_number;
                     itemName = Potion_Parts_Item.item_Name;
                     rank = (Potion_Parts_Item.Rank).ToString();
-                    max_count = Potion_Parts_Item.max_count;
+                    if(!Buy)
+                        max_count = UseCount[UseItemCount];
+                    else
+                        max_count = Potion_Parts_Item.max_count;
                     //sprite도 추가 필요
                     //
                     //
@@ -378,6 +516,7 @@ public class ShopManager : MonoBehaviour
                     //TextMeshProUGUI ItemDetailText = ItemDetail.GetComponent<TextMeshProUGUI>();
                     //ItemDetailText.text = string;
                     // 클릭 이벤트 처리 로직을 여기에 작성합니다.
+                    CurrentItemPoint = itemPointCount;
                     MaxCount = max_count;
                     Debug.Log("ItemInfoObject가 클릭되었습니다.");
                     int Money = price;
