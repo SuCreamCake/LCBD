@@ -6,7 +6,7 @@ public class ItemInventory : MonoBehaviour
 {
     public static ItemInventory instance;
     public ItemSlot[] Itemslots;
-    public int selectedItemIndex = -1; // ���õ� �������� �ε���
+    public int selectedItemIndex = -1; // Item Slot Index
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class ItemInventory : MonoBehaviour
         for (int i = 0; i < Itemslots.Length; i++) {
             if (Itemslots[i].isUse && Itemslots[i].item.item_number == itemObject.item_number) //If you have an item that's the same as one in the slots, add 1 to nowCount
             {
-                Debug.Log("���� ������(���Ƿ�)�� ���ͼ� 1 ����");
+                Debug.Log("Item Add");
                 Itemslots[i].item.now_Count = Mathf.Min(Itemslots[i].item.now_Count + 1, Itemslots[i].item.max_count); // nowCount 1 add.
                 Itemslots[i].UpdateItemCountText(); // Text Update
                 return true;

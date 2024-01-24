@@ -28,6 +28,7 @@ TagManager:
   - BattleManager
   - ShopItemPoint
   - Inventory
+  - Item
   layers:
   - Default
   - TransparentFX
