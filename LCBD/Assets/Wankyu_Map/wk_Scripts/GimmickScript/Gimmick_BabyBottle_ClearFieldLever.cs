@@ -24,7 +24,9 @@ public class Gimmick_BabyBottle_ClearFieldLever : MonoBehaviour, IControlGimmick
     {
         if (isClear == false)
         {
+            // 사운드 재생. 레버 조작 소리.
             ClearSignal();
+            // 사운드 재생. 클리어 소리.
         }
     }
 

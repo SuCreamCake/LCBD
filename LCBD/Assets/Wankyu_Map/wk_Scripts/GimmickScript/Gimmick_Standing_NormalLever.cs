@@ -27,6 +27,7 @@ public class Gimmick_Standing_NormalLever : MonoBehaviour, IControlGimmickObject
         {
             if (!isPulled)
             {
+                // 사운드 재생. 레버 조작 소리.
                 PullLever();
             }
         }

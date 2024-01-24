@@ -58,6 +58,7 @@ public class Gimmick_Mom_Left_Lever : MonoBehaviour, IControlGimmickObject
     {
         if (!isRunning)
         {
+            // 사운드 재생. 레버 조작 소리.
             PullLever();
         }
     }

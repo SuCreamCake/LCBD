@@ -48,6 +48,8 @@ public class Gimmick_Standing_Bomb : MonoBehaviour
     {
         isExploding = true;
 
+        // 사운드 재생. 폭탄 터지는 소리. (폭탄이 거의 동시에 여러 개가 터질 예정이니 작게 부탁드립니다.)
+
         spriteRenderer.sprite = null;
         rigid.bodyType = RigidbodyType2D.Dynamic;
 

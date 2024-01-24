@@ -18,6 +18,7 @@ public class Gimmick_Mom_Dial_Lever : MonoBehaviour, IControlGimmickObject
     {
         if (isMovingSlot == false)
         {
+            // 사운드 재생. 바위 같은거 움직이는 소리?
             StartCoroutine(MoveSlotCoroutine());
         }
     }
