@@ -76,7 +76,7 @@ public class StageTileController : MonoBehaviour
 
                                 StartPos = new GameObject("StartPos");
                                 StartPos.transform.position = pos;
-                                StartPos.transform.Translate(0.5f, 0.5f, 0);
+                                StartPos.transform.Translate(0.5f, 1.0f, 0);
                             }
                         }
                     }

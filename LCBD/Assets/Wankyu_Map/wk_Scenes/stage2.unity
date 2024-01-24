@@ -1038,6 +1038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BabyBottle_GimmickObject>k__BackingField: {fileID: 6823632416212186916, guid: 58bf0aee2b48af047b437e9a62bc7456, type: 3}
   <Mom_GimmickObject>k__BackingField: {fileID: 3567017583493161354, guid: 8818b33039bced749b47d0ae47a20c23, type: 3}
+  <Standing_GimmickObject>k__BackingField: {fileID: 3046460771563219026, guid: 549472cc32d1f724595ed22f635d6f80, type: 3}
   <GimmickObjectsParent>k__BackingField: {fileID: 17968719}
 --- !u!1 &885901900
 GameObject:

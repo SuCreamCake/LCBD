@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8321740529540355921}
   m_Layer: 0
-  m_Name: GimmickObjectOfBabyBottle
+  m_Name: GimmickObjectsOfBabyBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409212675325899590, guid: c22ae9e5c7ca91e49bac51ddf2cd10d3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10
+      value: -9.5
       objectReference: {fileID: 0}
     - target: {fileID: 3409212675325899590, guid: c22ae9e5c7ca91e49bac51ddf2cd10d3, type: 3}
       propertyPath: m_LocalPosition.z

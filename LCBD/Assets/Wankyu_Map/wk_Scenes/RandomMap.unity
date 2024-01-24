@@ -2668,6 +2668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BabyBottle_GimmickObject>k__BackingField: {fileID: 6823632416212186916, guid: 58bf0aee2b48af047b437e9a62bc7456, type: 3}
   <Mom_GimmickObject>k__BackingField: {fileID: 3567017583493161354, guid: 8818b33039bced749b47d0ae47a20c23, type: 3}
+  <Standing_GimmickObject>k__BackingField: {fileID: 3046460771563219026, guid: 549472cc32d1f724595ed22f635d6f80, type: 3}
   <GimmickObjectsParent>k__BackingField: {fileID: 1628113420}
 --- !u!1001 &653870721
 PrefabInstance:
@@ -3851,6 +3852,7 @@ MonoBehaviour:
   item_sprite: {fileID: 0}
   max_count: 0
   now_Count: 0
+  isGet: 0
   Price: 0
 --- !u!1 &908956474
 GameObject:
@@ -4482,6 +4484,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85e3b2060d5b0845b3e942a153dcef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1024726944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024726929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f5173e159dddc4fba6816e48fe9c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1028896552
 GameObject:
   m_ObjectHideFlags: 0
@@ -5087,6 +5101,7 @@ MonoBehaviour:
   item_sprite: {fileID: 0}
   max_count: 0
   now_Count: 0
+  isGet: 0
   Price: 0
 --- !u!1 &1130837893
 GameObject:
@@ -8625,6 +8640,7 @@ MonoBehaviour:
   item_sprite: {fileID: 0}
   max_count: 0
   now_Count: 0
+  isGet: 0
   Weapon_Attack: 0
   Weapon_Range: 0
   Price: 0

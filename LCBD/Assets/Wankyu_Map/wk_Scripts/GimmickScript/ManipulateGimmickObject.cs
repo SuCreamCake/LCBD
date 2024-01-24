@@ -26,7 +26,14 @@ public class ManipulateGimmickObject : MonoBehaviour
         {
             if (Input.GetKeyDown(KeySetting.keys[KeyInput.TouchNPC]))
             {
-                gimmickObjCol.GetComponent<IControlGimmickObject>().ControlGimmickObject();
+                IControlGimmickObject[] controlGimmickObjects = gimmickObjCol.GetComponents<IControlGimmickObject>();
+                if(controlGimmickObjects.Length > 0)
+                {
+                    for (int i = 0; i < controlGimmickObjects.Length; i++)
+                    {
+                        controlGimmickObjects[i].ControlGimmickObject();
+                    }
+                }
             }
         }
     }

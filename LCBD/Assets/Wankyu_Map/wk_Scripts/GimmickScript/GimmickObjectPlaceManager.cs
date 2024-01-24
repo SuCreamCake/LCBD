@@ -16,6 +16,7 @@ public static class GimmickObjectLocation  // 기믹 오브젝트 위치 좌표 
 
     public static Point CommonField_1_BabyBottle_GimmickObject = new Point(20, 16);
     public static Point CommonField_1_Mom_GimmickObject = new Point(12, 32);
+    public static Point CommonField_1_Standing_GimmickObject = new Point(25, 24);
 }
 
 public class GimmickObjectPlaceManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class GimmickObjectPlaceManager : MonoBehaviour
 
     [field: SerializeField] public GameObject BabyBottle_GimmickObject { get; private set; }
     [field: SerializeField] public GameObject Mom_GimmickObject { get; private set; }
+    [field: SerializeField] public GameObject Standing_GimmickObject { get; private set; }
 
     [field: SerializeField] public Transform GimmickObjectsParent { get; private set; } //부모 오브젝트 트랜스폼
 
@@ -122,6 +124,16 @@ public class GimmickObjectPlaceManager : MonoBehaviour
 
                 break;
 
+            case CommonFieldSerial_1.Standing_g:
+                x = GimmickObjectLocation.CommonField_1_Standing_GimmickObject.x;
+                y = GimmickObjectLocation.CommonField_1_Standing_GimmickObject.y;
+
+                pos = new(i * (width + 1) + x, j * (height + 1) + y, 0);
+
+                gimmickObjectPrefab = Instantiate(Standing_GimmickObject, pos, new(0, 0, 0, 0), parentMap);
+                gimmickObjectPrefab.transform.Translate(0.5f, 0.5f, 0);
+
+                break;
         }
     }
 

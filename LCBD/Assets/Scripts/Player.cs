@@ -238,7 +238,7 @@ public class Player : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
 
             ani.SetTrigger("isJumping");
-            endurance -= maxEndurance / 5;
+            endurance -= (maxEndurance / 5) + (Player_Buff_Debuff.WeightOfLife ? 0.3f * (maxEndurance / 5) : 0);    // '삶의 무게' 디버프 시 점프시 30% 추가 감소.
             enduranceOnOff = 0;
 
             
@@ -359,7 +359,7 @@ public class Player : MonoBehaviour
         if (fall) //내려갈떄만 스캔
         {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Block") | LayerMask.GetMask("Platform"));
             if (rayHit.collider != null && fall)
             {
                 end = transform.position;
