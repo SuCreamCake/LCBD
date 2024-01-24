@@ -205,6 +205,7 @@ public class Battle : MonoBehaviour
                     float damage = battleManager.GetCurrentInfo(collider);
                     collider.GetComponent<MonsterManager>().TakeDamage(damage);
                 }
+
             }
         }
     }
@@ -380,12 +381,17 @@ public class Battle : MonoBehaviour
                     Debug.Log(damage);
                     collider.GetComponent<MonsterManager>().TakeDamage(damage);
                 }
+                if (collider.tag == "Wall")
+                {
+                    Destroy(collider.gameObject);
+                }
                 string txt = "";
                 if (player.health <= 0)
                 {
                     player.health = 0;
                     txt = "Dead";
                 }
+
                 else
                 {
                     if (player.health > player.maxHealth)

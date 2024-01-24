@@ -29,6 +29,7 @@ TagManager:
   - ShopItemPoint
   - Inventory
   - Item
+  - Wall
   layers:
   - Default
   - TransparentFX
