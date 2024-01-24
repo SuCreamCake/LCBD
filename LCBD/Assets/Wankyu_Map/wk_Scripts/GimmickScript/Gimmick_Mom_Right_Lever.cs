@@ -71,6 +71,7 @@ public class Gimmick_Mom_Right_Lever : MonoBehaviour, IControlGimmickObject
     {
         if (!isRunning)
         {
+            // 사운드 재생. 레버 조작 소리.
             PullLever();
         }
     }
@@ -86,6 +87,8 @@ public class Gimmick_Mom_Right_Lever : MonoBehaviour, IControlGimmickObject
             wallsParent.gameObject.SetActive(false);
             // 클리어 신호 보내기.
             ClearSignal();
+
+            // 사운드 재생. 클리어 소리.
         }
         else
         {

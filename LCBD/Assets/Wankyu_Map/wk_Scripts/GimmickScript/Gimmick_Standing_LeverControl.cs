@@ -45,6 +45,8 @@ public class Gimmick_Standing_LeverControl : MonoBehaviour
             {
                 ClearSignal();
 
+                // 사운드 재생. 클리어 소리.
+
                 walls.SetActive(false);
 
                 for (int i = 0;i < bombs.Length;i++)

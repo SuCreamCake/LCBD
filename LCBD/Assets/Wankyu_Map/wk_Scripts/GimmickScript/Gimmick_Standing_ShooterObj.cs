@@ -32,6 +32,8 @@ public class Gimmick_Standing_ShooterObj : MonoBehaviour
     {
         isShooting = true;
 
+        // 사운드 재생. 오브젝트 발사하는 소리.
+
         float waitSec = UnityEngine.Random.Range(3f, 6f);
         yield return new WaitForSeconds(waitSec);
 

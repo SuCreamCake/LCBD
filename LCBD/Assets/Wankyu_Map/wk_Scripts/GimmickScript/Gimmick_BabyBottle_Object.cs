@@ -23,10 +23,15 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
 
     public void RisePlatform(int attackPower)
     {
-        float risingDistance = (float)attackPower / 3;
         if (!isRisingPlatform)
         {
+            // 사운드 재생. 오브젝트 조작 성공 소리. 엘리베이터 띵 소리 느낌.
+            float risingDistance = (float)attackPower / 3;
             StartCoroutine(RisePlatformCoroutine(risingDistance));
+        }
+        else
+        {
+            // 사운드 재생. 오브젝트 조작 실패 소리. 철컥거리는 소리 느낌.
         }
     }
 
