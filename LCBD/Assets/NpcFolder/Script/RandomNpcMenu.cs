@@ -21,6 +21,11 @@ public class RandomNpcMenu : MonoBehaviour
         Two.SetActive(false);
         Three.SetActive(false);
 
+        if (CountMenu == 2)
+        {
+            Three.SetActive(true);
+        }
+
         switch (num)
         {
             case 0:
