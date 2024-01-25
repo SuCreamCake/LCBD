@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -70,11 +71,6 @@ public class Player : MonoBehaviour
     internal object text_hp;
     internal object img;
 
-    //미니맵
-    Minimap minimap;
-
-
-
 
 
     private void Awake()
@@ -87,7 +83,7 @@ public class Player : MonoBehaviour
         infancy();
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
         battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();
-        minimap = GameObject.Find("MinimapCamera").GetComponent<Minimap>();
+
 
 
     }
