@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnifyingGlasses : Body_Parts_Item
+public class magnifyingGlasses : Body_Parts_Item
 {
     private void Awake() //해당아이템 초기값 설정
     {
