@@ -115,47 +115,46 @@ public abstract class Item : MonoBehaviour
 
     private void GetItem(Collider2D player)
     {
-       
-            if (this.item_type == Item_Type.Body_Parts) //바디파츠면
+
+        if (this.item_type == Item_Type.Body_Parts) //바디파츠면
+        {
+            Debug.Log("바디파츠 습득");
+            if (Body_Inventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
             {
-                Debug.Log("바디파츠 습득");
-                if (Body_Inventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
-                {
+                this.Use_Effect();
+            }
+            else
+            {
+                // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
+            }
+        }
+
+        if (this.item_type == Item_Type.Hand_Parts) //핸드(무기)파츠면
+        {
+           Debug.Log("핸드파츠 습득");
+            if (WeaponInventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
+            {
+                this.Use_Effect();
+                    //gameObject.SetActive(false);
+            }
+            else
+            {
+                    // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
+            }
+        }
+
+       if (this.item_type == Item_Type.Potion_Parts) //아이템파츠면
+       {
+           Debug.Log("포션 습득");
+           if (ItemInventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
+           {
                     //Destroy(gameObject); // 아이템을 씬에서 제거
                     //gameObject.SetActive(false);
-                }
-                else
-                {
+           }
+           else
+           {
                     // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
-                }
-            }
-
-            if (this.item_type == Item_Type.Hand_Parts) //핸드(무기)파츠면
-            {
-                Debug.Log("핸드파츠 습득");
-                if (WeaponInventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
-                {
-                    this.Use_Effect();
-                    //gameObject.SetActive(false);
-                }
-                else
-                {
-                    // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
-                }
-            }
-
-            if (this.item_type == Item_Type.Potion_Parts) //아이템파츠면
-            {
-                Debug.Log("포션 습득");
-                if (ItemInventory.instance.AddItem(item_Name, item_sprite, this)) //바디인벤토리에 추가
-                {
-                    //Destroy(gameObject); // 아이템을 씬에서 제거
-                    //gameObject.SetActive(false);
-                }
-                else
-                {
-                    // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
-                }
+           }
         }
         // 아이템 습득 로직
         // 예: 인벤토리에 아이템 추가, 플레이어에게 효과 적용 등
