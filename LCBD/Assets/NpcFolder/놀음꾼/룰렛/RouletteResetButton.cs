@@ -10,12 +10,15 @@ public class RouletteResetButton : MonoBehaviour
 
     public void OnButtonClicked()
     {
-        ResetGame();
-        //���� ��ư ��Ȱ��ȭ
-        ResetButton.interactable = false;
         if(RouletteManager != null)
         {
-            RouletteManager.MinusMoney(10);
+            bool isUseMoney = RouletteManager.MinusMoney(10);
+            if (isUseMoney)
+            {
+                ResetGame();
+                //���� ��ư ��Ȱ��ȭ
+                ResetButton.interactable = false;
+            }
         }
     }
 

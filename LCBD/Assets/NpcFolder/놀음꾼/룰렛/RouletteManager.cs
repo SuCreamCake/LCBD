@@ -115,7 +115,7 @@ public class RouletteManager : MonoBehaviour
         }
     }
 
-    public void MinusMoney(int money)
+    public bool MinusMoney(int money)
     {
         if (PlayerScript != null)
         {
@@ -123,7 +123,9 @@ public class RouletteManager : MonoBehaviour
             {
                 PlayerScript.minusMoney(money);
                 Debug.Log("차감 Money : " + money);
+                return true;
             }
         }
+        return false;
     }
 }

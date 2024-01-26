@@ -91,15 +91,17 @@ public class CupManager : MonoBehaviour
     // UI 버튼을 처리하는 메소드를 정의합니다.
     public void OnStartButtonClicked()
     {
-        MinusMoney(10);
-
-        if (!isGameRunning)
+        bool isUseMoney = MinusMoney(10);
+        if (isUseMoney)
         {
-            isGameRunning = true;
-            // 게임이 실행 중이 아니라면 실행합니다.
-            StartCoroutine(StartGame());
+            if (!isGameRunning)
+            {
+                isGameRunning = true;
+                // 게임이 실행 중이 아니라면 실행합니다.
+                StartCoroutine(StartGame());
+            }
+            StartButton.interactable = false;
         }
-        StartButton.interactable = false;
     }
 
     public IEnumerator StartGame()
@@ -348,7 +350,7 @@ public class CupManager : MonoBehaviour
         }
     }
 
-    public void MinusMoney(int money)
+    public bool MinusMoney(int money)
     {
         if (PlayerScript != null)
         {
@@ -356,8 +358,10 @@ public class CupManager : MonoBehaviour
             {
                 PlayerScript.minusMoney(money);
                 Debug.Log("차감 Money : " + money);
+                return true;
             }
         }
+        return false;
     }
 }
 

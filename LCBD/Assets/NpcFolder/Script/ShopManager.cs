@@ -36,10 +36,12 @@ public class ShopManager : MonoBehaviour
     private int[] UseCount;
     private int UseItemCount;
     private int CurrentItemPoint;
+    private string CurrentItemName;
 
     int BodyCounts = 0;
     int WeaponCounts = 0;
     int UseCounts = 0;
+    bool BuyOrSell = true;
 
     // 클래스 내부에 멤버 변수로 선언될 전역 변수들
     GameObject[] prefabs1;
@@ -65,27 +67,27 @@ public class ShopManager : MonoBehaviour
                 if (script.item_type.ToString().Contains("Hand_Parts") || script.item_type.ToString().Contains("Body_Parts"))
                 {
                     isEquipment = true;
-                    if (script.item_type.ToString().Contains("Baby"))
+                    if (script.drop_age.ToString().Contains("Baby"))
                     {
                         whatAge = 0;
                     }
-                    else if (script.item_type.ToString().Contains("Child"))
+                    else if (script.drop_age.ToString().Contains("Child"))
                     {
                         whatAge = 1;
                     }
-                    else if (script.item_type.ToString().Contains("Young"))
+                    else if (script.drop_age.ToString().Contains("Young"))
                     {
                         whatAge = 2;
                     }
-                    else if (script.item_type.ToString().Contains("Adult"))
+                    else if (script.drop_age.ToString().Contains("Adult"))
                     {
                         whatAge = 3;
                     }
-                    else if (script.item_type.ToString().Contains("Old"))
+                    else if (script.drop_age.ToString().Contains("Old"))
                     {
                         whatAge = 4;
                     }
-                    else if (script.item_type.ToString().Contains("All"))
+                    else if (script.drop_age.ToString().Contains("All"))
                     {
                         whatAge = 5;
                     }
@@ -94,27 +96,27 @@ public class ShopManager : MonoBehaviour
                 if (script.item_type.ToString().Contains("Potion_Parts"))
                 {
                     isEquipment = false;
-                    if (script.item_type.ToString().Contains("Baby"))
+                    if (script.drop_age.ToString().Contains("Baby"))
                     {
                         whatAge = 0;
                     }
-                    else if (script.item_type.ToString().Contains("Child"))
+                    else if (script.drop_age.ToString().Contains("Child"))
                     {
                         whatAge = 1;
                     }
-                    else if (script.item_type.ToString().Contains("Young"))
+                    else if (script.drop_age.ToString().Contains("Young"))
                     {
                         whatAge = 2;
                     }
-                    else if (script.item_type.ToString().Contains("Adult"))
+                    else if (script.drop_age.ToString().Contains("Adult"))
                     {
                         whatAge = 3;
                     }
-                    else if (script.item_type.ToString().Contains("Old"))
+                    else if (script.drop_age.ToString().Contains("Old"))
                     {
                         whatAge = 4;
                     }
-                    else if (script.item_type.ToString().Contains("All"))
+                    else if (script.drop_age.ToString().Contains("All"))
                     {
                         whatAge = 5;
                     }
@@ -126,11 +128,30 @@ public class ShopManager : MonoBehaviour
             string fileName = prefab.name; // 파일 이름 예시
             if (isEquipment)
             {
-                Equipment[whatAge].Add(fileName);
+                if (whatAge == 5)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Equipment[i].Add(fileName);
+                    }
+                }else
+                {
+                    Equipment[whatAge].Add(fileName);
+                }
             }
             else
             {
-                Consumable[whatAge].Add(fileName);
+                if (whatAge == 5)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Consumable[i].Add(fileName);
+                    }
+                }
+                else
+                {
+                    Consumable[whatAge].Add(fileName);
+                }
             }
         }
     }
@@ -232,7 +253,6 @@ public class ShopManager : MonoBehaviour
     public void TotalButton()
     {
         int money = CurrentMoney * Count;
-        bool BuyOrSell = false;
         if (BuyOrSell)
         {
             //가격 만큼 플레이어의 스크립트에서 돈 빼기
@@ -241,6 +261,54 @@ public class ShopManager : MonoBehaviour
             // 해당 물건의 이름으로 스크립트를 찾아서 새로운 오브젝트에게 넣기
             // 그래서 Sprite를 변경
             // 프리팹 만들어주면 에셋 폴더에서 프리팹 위치 지정해서 그 이름 가지면 생성
+            bool UseMoney = MinusMoney(money);
+            if (UseMoney)
+            {
+                GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+                if (playerObject != null || CurrentItemPoint != 999)
+                {
+                    bool isPotion = false;
+                    string randomName = CurrentItemName;
+                    Debug.Log(randomName);
+                    GameObject matchingPrefab = null;
+
+                    // prefab1 배열에서 이름이 같은 GameObject를 찾습니다
+                    matchingPrefab = System.Array.Find(prefabs1, obj => obj.name == randomName);
+
+                    if (matchingPrefab == null)
+                    {
+                        // prefab2 배열에서 이름이 같은 GameObject를 찾습니다
+                        matchingPrefab = System.Array.Find(prefabs2, obj => obj.name == randomName);
+                    }
+
+                    if (matchingPrefab == null)
+                    {
+                        // prefab3 배열에서 이름이 같은 GameObject를 찾습니다
+                        matchingPrefab = System.Array.Find(prefabs3, obj => obj.name == randomName);
+                        isPotion = true;
+                    }
+
+                    Vector3 playerPosition = playerObject.transform.position;
+                    Vector3 newPlayerPosition = playerPosition;
+                    newPlayerPosition.z -= 0.1f;
+                    if (isPotion)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            GameObject instantiatedObject = Instantiate(matchingPrefab);
+                            instantiatedObject.transform.position = newPlayerPosition;
+                        }
+                    }
+                    else
+                    {
+                        GameObject instantiatedObject = Instantiate(matchingPrefab); // 새로운 게임 오브젝트 생성
+                        instantiatedObject.transform.position = newPlayerPosition; // 위치 설정
+                    }
+                }
+            } else
+            {
+                Debug.Log("돈 부족으로 실패");
+            }
         }
         else
         {
@@ -249,7 +317,8 @@ public class ShopManager : MonoBehaviour
             if (CurrentItemPoint == 999)
             {
                 Debug.Log("상품이 선택되지 않았습니다.");
-            } else
+            }
+            else
             {
                 int totalItemCount = BodyCounts + WeaponCounts + UseCounts;
                 int arrayIndex = CurrentItemPoint;
@@ -277,6 +346,7 @@ public class ShopManager : MonoBehaviour
                     //itemInventory.Itemslots[wordIndex].ClearSlot();
                     itemInventory.DecreaseItemCount(wordIndex, Count); // 아이템 개수 감소
                 }
+                PlusMoney(money);
                 OnDisable();
                 SellItem();
                 Count = 1;
@@ -292,14 +362,17 @@ public class ShopManager : MonoBehaviour
         {
             case "장착메뉴":
                 index = 0;
+                BuyOrSell = true;
                 break;
 
             case "소비메뉴":
                 index = 1;
+                BuyOrSell = true;
                 break;
 
             case "판매메뉴":
                 index = 2;
+                BuyOrSell = false;
                 break;
             default:
                 Debug.Log("잘못된 메뉴 이름입니다.");
@@ -552,6 +625,7 @@ public class ShopManager : MonoBehaviour
                 Debug.Log("ItemInfoObject가 클릭되었습니다.");
                 int Money = price;
                 CurrentItem(Money);
+                CurrentItemName = itemName;
             });
         }
     }
@@ -561,5 +635,46 @@ public class ShopManager : MonoBehaviour
         Count = 1;
         CurrentMoney = ItemMoney;
         UpdateNumberText();
+    }
+
+    public void PlusMoney(int money)
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            Player PlayerScript = playerObject.GetComponent<Player>();
+            if (PlayerScript != null)
+            {
+                PlayerScript.plusMoney(money);
+                Debug.Log("판매완료 Money : " + money);
+            }
+        }
+        else
+        {
+            Debug.Log("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+        }
+    }
+
+    public bool MinusMoney(int money)
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            Player PlayerScript = playerObject.GetComponent<Player>();
+            if (PlayerScript != null)
+            {
+                if (PlayerScript.GetMoney() >= money)
+                {
+                    PlayerScript.minusMoney(money);
+                    Debug.Log("구매성공 Money : " + money);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+        }
+        return false;
     }
 }

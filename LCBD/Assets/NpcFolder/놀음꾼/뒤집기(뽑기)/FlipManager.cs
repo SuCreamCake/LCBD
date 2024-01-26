@@ -229,13 +229,16 @@ public class FlipManager : MonoBehaviour
 
     public void UseButtonClick()
     {
-        MinusMoney(10);
-        for (int i = 0; i < cardArray.Length; i++)
+        bool isUseMoney = MinusMoney(10);
+        if (isUseMoney)
         {
-            cardArray[i].canClickOn();
+            for (int i = 0; i < cardArray.Length; i++)
+            {
+                cardArray[i].canClickOn();
+            }
+            UseButton.interactable = false;
+            ExitButton.interactable = false;
         }
-        UseButton.interactable = false;
-        ExitButton.interactable = false;
     }
 
     public void Reward(GameObject RewardObject)
@@ -290,7 +293,7 @@ public class FlipManager : MonoBehaviour
         Debug.Log("성공 Money : " + money);
     }
 
-    public void MinusMoney(int money)
+    public bool MinusMoney(int money)
     {
         if (PlayerScript != null)
         {
@@ -298,7 +301,9 @@ public class FlipManager : MonoBehaviour
             {
                 PlayerScript.minusMoney(money);
                 Debug.Log("차감 Money : " + money);
+                return true;
             }
         }
+        return false;
     }
 }
