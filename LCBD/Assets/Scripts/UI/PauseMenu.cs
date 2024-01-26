@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject PausePanel;
     private bool GameIsPause = false;
+    private SoundsPlayer SFXPlayer;
 
     private SettingMenu SettingMenu; //설정창
 
@@ -15,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         SettingMenu = FindObjectOfType<SettingMenu>(); //설정창 오브젝트 가져오기
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
     void Start()
     {
@@ -41,6 +43,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("정지");
         Time.timeScale = 0.0f;
+        SFXPlayer.SFX_Mute(true);
         PausePanel.SetActive(true);
         GameIsPause = true;
     }
@@ -48,6 +51,7 @@ public class PauseMenu : MonoBehaviour
     { //퍼스판넬을 끈다 / 타이머ㅓ를 1.0으로 정상으로 돌려놓는다. GameIsPause를 false로
         Debug.Log("계속하기");
         PausePanel.SetActive(false);
+        SFXPlayer.SFX_Mute(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
     }

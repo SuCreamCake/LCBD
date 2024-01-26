@@ -21,6 +21,11 @@ public static class PortalLocation  // 포탈 위치 좌표 static 클래스
     public static Point[] CommonFieldPortal_1_Crying = { new Point(47, 21), new Point(1, 19), new Point(15, 42), new Point(13, 5) };
     public static Point[] CommonFieldPortal_1_Chromosome = { new Point(34, 29), new Point(17, 17), new Point(38, 47), new Point(31, 2) };
     public static Point[] CommonFieldPortal_1_Birth = { new Point(47, 14), new Point(1, 32), new Point(29, 28), new Point(39, 12) };
+    public static Point[] CommonFieldPortal_1_BabyBottle_g = { new Point(40, 26), new Point(10, 26), new Point(27, 47), new Point(25, 1) };
+    public static Point[] CommonFieldPortal_1_Mom_g = { new Point(32, 18), new Point(16, 18), new Point(25, 22), new Point(25, 15) };
+    public static Point[] CommonFieldPortal_1_Standing_g = { new Point(41, 7), new Point(9, 7), new Point(25, 34), new Point(25, 14) };
+
+    public static Point[] BossFieldPortal_1_ghosthouse = { new Point(31, 20), new Point(15, 22), new Point(23, 31), new Point(22, 17) };
 }
 
 public class PortalManager : MonoBehaviour
@@ -87,15 +92,13 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth / 4 * 3;
                         portalPointY = stageGenerator.MapHeight / 2;
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = stageGenerator.MapWidth - 5 - 1;
-                        portalPointY = 5;
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[0].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[0].y;
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
@@ -122,6 +125,21 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[0].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[0].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[0].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[0].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[0].y;
+                                        break;
                                 }
                                 break;
                             case 2:
@@ -142,6 +160,21 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[0].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[0].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[0].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[0].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[0].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[0].y;
+                                        break;
                                 }
                                 break;
                             case 3:
@@ -152,7 +185,6 @@ public class PortalManager : MonoBehaviour
                                 break;
                         }
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
@@ -160,7 +192,6 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth - 5 - 1;
                         portalPointY = 5;
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
@@ -178,15 +209,13 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth / 4;
                         portalPointY = stageGenerator.MapHeight / 2;
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = 5;
-                        portalPointY = 5;
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[1].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[1].y;
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
@@ -213,6 +242,21 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[1].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[1].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[1].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[1].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[1].y;
+                                        break;
                                 }
                                 break;
                             case 2:
@@ -233,6 +277,21 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[1].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[1].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[1].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[1].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[1].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[1].y;
+                                        break;
                                 }
                                 break;
                             case 3:
@@ -243,7 +302,6 @@ public class PortalManager : MonoBehaviour
                                 break;
                         }
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
@@ -251,7 +309,6 @@ public class PortalManager : MonoBehaviour
                         portalPointX = 5;
                         portalPointY = 5;
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
@@ -278,16 +335,13 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth / 2;
                         portalPointY = stageGenerator.MapHeight / 4 * 3 - 1;
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = 5 + 3;
-                        portalPointY = 9;
-                        while (portalPointY <= stageGenerator.MapHeight - 8 - 8) { portalPointY += 8; }
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[2].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[2].y;
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
@@ -314,6 +368,22 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[2].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[2].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[2].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[2].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[2].y;
+                                        break;
+
                                 }
                                 break;
                             case 2:
@@ -334,6 +404,22 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[2].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[2].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[2].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[2].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[2].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[2].y;
+                                        break;
+
                                 }
                                 break;
                             case 3:
@@ -344,7 +430,7 @@ public class PortalManager : MonoBehaviour
                                 break;
                         }
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
+
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
@@ -357,7 +443,7 @@ public class PortalManager : MonoBehaviour
                             portalPointY += 5;
                         }
 
-                        mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Map[portalPointX, portalPointY] = 80;
+
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
 
@@ -375,15 +461,14 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth / 2;
                         portalPointY = stageGenerator.MapHeight / 4;
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
+
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = stageGenerator.MapWidth / 2 + 2;
-                        portalPointY = 5;
+                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[3].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[3].y;
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
@@ -410,6 +495,22 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[3].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[3].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[3].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[3].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[3].y;
+                                        break;
+
                                 }
                                 break;
                             case 2:
@@ -430,6 +531,22 @@ public class PortalManager : MonoBehaviour
                                         portalPointX = PortalLocation.CommonFieldPortal_1_Birth[3].x;
                                         portalPointY = PortalLocation.CommonFieldPortal_1_Birth[3].y;
                                         break;
+
+                                    case CommonFieldSerial_1.BabyBottle_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_BabyBottle_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_BabyBottle_g[3].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Mom_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Mom_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Mom_g[3].y;
+                                        break;
+
+                                    case CommonFieldSerial_1.Standing_g:
+                                        portalPointX = PortalLocation.CommonFieldPortal_1_Standing_g[3].x;
+                                        portalPointY = PortalLocation.CommonFieldPortal_1_Standing_g[3].y;
+                                        break;
+
                                 }
                                 break;
                             case 3:
@@ -440,7 +557,6 @@ public class PortalManager : MonoBehaviour
                                 break;
                         }
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 
@@ -448,7 +564,6 @@ public class PortalManager : MonoBehaviour
                         portalPointX = stageGenerator.MapWidth / 2 - 2;
                         portalPointY = 5;
 
-                        mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Map[portalPointX, portalPointY] = 80;
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
 

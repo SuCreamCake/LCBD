@@ -9,7 +9,7 @@ public class EnemyMove : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
     MonsterManager MonsterManager;
-    public int moveSpeed; // 이동 속도
+    public float moveSpeed; // 이동 속도
 
     bool searching = false;
 
@@ -20,6 +20,8 @@ public class EnemyMove : MonoBehaviour
     float time = 3.0f; // 좌우 변경 랜덤으로 하자
 
     private Coroutine myCoroutine; // time 코루틴 돌리기
+
+    public LayerMask backMask; // 바닥 레이어
 
     // Start is called before the first frame update
     private void Awake()
@@ -44,6 +46,11 @@ public class EnemyMove : MonoBehaviour
     {
         if (!searching)
         {
+            if(nextMove == 0)
+                MonsterManager.ChangeState(0);
+            else
+                MonsterManager.ChangeState(1);
+
             // 이동
             rigid.velocity = new Vector2(nextMove * moveSpeed, rigid.velocity.y); // nextMove 값에 따라 좌우로 이동
 
@@ -54,7 +61,7 @@ public class EnemyMove : MonoBehaviour
             Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
 
             // 지면과의 충돌을 감지
-            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, backMask);
 
             // 지면과 충돌하지 않으면 방향을 바꿈
             if (raycast.collider == null)
@@ -64,6 +71,7 @@ public class EnemyMove : MonoBehaviour
         }
         else
         {
+            MonsterManager.ChangeState(0);
             // 적 탐색 중에는 움직이지 않음
             rigid.velocity = Vector2.zero;
         }

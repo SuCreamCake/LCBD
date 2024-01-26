@@ -12,22 +12,22 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
     bool starting = false;
     public CupManager CupManager;
 
-
-    // Å¬¸¯ÇÒ ¶§ È£ÃâµÇ´Â ÇÔ¼ö
+    // ë§ˆìš°ìŠ¤ í´ë¦­ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë©”ì†Œë“œ
     public void OnPointerClick(PointerEventData eventData)
     {
         if (starting)
         {
-            // ÀÚ½Ä ¿ÀºêÁ§Æ®µé Áß¿¡ "Ball" ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£´Â´Ù.
+            // ìì‹ ì˜¤ë¸Œì íŠ¸ ì¤‘ì—ì„œ "Ball" íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ìŠµë‹ˆë‹¤.
             Transform ballObject = FindBallInChildren();
 
             if (ballObject != null)
             {
-                Debug.Log("°øÀ» Ã£¾Ò½À´Ï´Ù. µµ¹Ú ¼º°ø");
+                Debug.Log("ê³µì´ ë°œê²¬ë˜ì—ˆìŠµë‹ˆë‹¤. ê²Œì„ ì„±ê³µ");
+                CupManager.PlusMoney(15);
             }
             else
             {
-                Debug.Log("°øÀÌ ¾ø½À´Ï´Ù. ¿ø±İ ¼Õ½Ç");
+                Debug.Log("ê³µì´ ë°œê²¬ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. ê²Œì„ ì‹¤íŒ¨");
             }
 
             Cup1.GetComponent<CupClickChecker>().End();
@@ -35,10 +35,9 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
             Cup3.GetComponent<CupClickChecker>().End();
             StartButton.GetComponent<CupManager>().GameRunningEnd();
         }
-
     }
 
-    // ÀÚ½Ä ¿ÀºêÁ§Æ®µé Áß¿¡ "Ball" ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£´Â ÇÔ¼ö
+    // ìì‹ ì˜¤ë¸Œì íŠ¸ ì¤‘ì—ì„œ "Ball" íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ëŠ” ë©”ì†Œë“œ
     private Transform FindBallInChildren()
     {
         foreach (Transform child in transform)
@@ -67,4 +66,3 @@ public class CupClickChecker : MonoBehaviour, IPointerClickHandler
         starting = false;
     }
 }
-

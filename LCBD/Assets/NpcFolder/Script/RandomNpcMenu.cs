@@ -5,11 +5,12 @@ using UnityEngine;
 public class RandomNpcMenu : MonoBehaviour
 {   // 세개의 메뉴 중 하나 랜덤으로 띄우기
     GameObject One, Two, Three;
+    public int CountMenu = 3;
     private int num; // 초기 값 0이면 랜덤 x
     // Start is called before the first frame update
     void Awake()
     {
-        num = Random.Range(0, 3);
+        num = Random.Range(0, CountMenu);
     }
     void Start()
     {
@@ -19,6 +20,11 @@ public class RandomNpcMenu : MonoBehaviour
         One.SetActive(false);
         Two.SetActive(false);
         Three.SetActive(false);
+
+        if (CountMenu == 2)
+        {
+            Three.SetActive(true);
+        }
 
         switch (num)
         {

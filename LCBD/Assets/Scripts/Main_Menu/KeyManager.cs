@@ -22,7 +22,7 @@ public enum KeyInput {
 public static class KeySetting { public static Dictionary<KeyInput, KeyCode> keys = new Dictionary<KeyInput, KeyCode>(); }
 public class KeyManager : MonoBehaviour
 {
-    //�ݵ�� enum�� ������� �������
+    //key Code EnumType
     KeyCode[] defaultKeys = new KeyCode[] {
         KeyCode.W, //UP
         KeyCode.S, //Down
@@ -41,8 +41,8 @@ public class KeyManager : MonoBehaviour
     };
     void Awake()
     {
-        KeySetting.keys.Clear(); //������ �ȵ� �ڵ尰���� UP���� ������ �߰�
-        for(int i=0; i < (int)KeyInput.KEYCOUNT; i++) //0���� 10���� Ű����Ű�� �߰�.
+        KeySetting.keys.Clear(); //Key SetClear
+        for(int i=0; i < (int)KeyInput.KEYCOUNT; i++) //Key Change
         {
             KeySetting.keys.Add((KeyInput)i,defaultKeys[i]);
         }
@@ -84,41 +84,44 @@ public class KeyManager : MonoBehaviour
         //sDown3
         //
         //
-        if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //W�Է�
+        if (Input.GetKey(KeySetting.keys[KeyInput.UP])) //UP
         {
-            Debug.Log("Up");
+            //Debug.Log("Up");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.DOWN])) //S�Է�
+        if (Input.GetKey(KeySetting.keys[KeyInput.DOWN])) //Down
         {
-            Debug.Log("DOWN");
+           // Debug.Log("DOWN");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //A�Է�
+        if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //Left
         {
-            Debug.Log("LEFT");
+           // Debug.Log("LEFT");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //D�Է�
+        if (Input.GetKey(KeySetting.keys[KeyInput.RIGHT])) //Right
         {
-            Debug.Log("RIGHT");
+           // Debug.Log("RIGHT");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //����
+        if (Input.GetKey(KeySetting.keys[KeyInput.JUMP])) //Jump
         {
-            Debug.Log("JUMP");
+           // Debug.Log("JUMP");
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item1])) //������1��Ű
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.Item1])) //item1
         {
-            Debug.Log("Item1");
+            ItemInventory.instance.selectedItemIndex = 0; // 첫 번째 아이템 슬롯 선택
+            ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //������1��Ű
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //Item2
         {
-            Debug.Log("Item2");
+            ItemInventory.instance.selectedItemIndex = 1; // 첫 번째 아이템 슬롯 선택
+            ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //������1��Ű
+        if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //Item3
         {
-            Debug.Log("Item3");
+            ItemInventory.instance.selectedItemIndex = 2; // 첫 번째 아이템 슬롯 선택
+            ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.TouchNPC])) //������1��Ű
+        if (Input.GetKey(KeySetting.keys[KeyInput.TouchNPC])) //TouchNPC
         {
-            Debug.Log("Item3");
+            Debug.Log("NPC G Input");
         }
     }
 }

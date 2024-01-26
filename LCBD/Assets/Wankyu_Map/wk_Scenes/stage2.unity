@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &17968718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17968719}
+  m_Layer: 0
+  m_Name: GimmickObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &17968719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17968718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 105.51112, y: 183.86716, z: -0.3112497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &81897224
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +386,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 3d79f41988f8cca4d90721e00cb208ef, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17f5ca6348a3ace4db9e0ebc872c7855, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -455,7 +486,7 @@ Transform:
   - {fileID: 2077727817}
   - {fileID: 200446971}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311326833
 GameObject:
@@ -810,7 +841,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &355284938
 Animator:
@@ -880,6 +911,7 @@ GameObject:
   - component: {fileID: 643425204}
   - component: {fileID: 643425205}
   - component: {fileID: 643425206}
+  - component: {fileID: 643425207}
   m_Layer: 0
   m_Name: randomMapGenerator
   m_TagString: Untagged
@@ -957,6 +989,7 @@ MonoBehaviour:
   stageTileController: {fileID: 643425202}
   portalManager: {fileID: 643425205}
   monsterSpawnerManager: {fileID: 643425206}
+  gimmickObjectManager: {fileID: 643425207}
 --- !u!114 &643425205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,9 +1019,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterList:
-  - {fileID: 3580148164716198746, guid: 70dd33a45e90297488079ddda534afd9, type: 3}
+  - {fileID: 3238601399923968408, guid: 7c5ef22168deb614cb9b07b08d1207fc, type: 3}
+  - {fileID: 6126296750359564356, guid: 9d530f0497fbf0b4fb248dbab62b65bb, type: 3}
+  - {fileID: 1876006292905475143, guid: 4bac203756a43164eb8259417269cca2, type: 3}
   <MonsterSpawnerObject>k__BackingField: {fileID: 6250138717398671519, guid: e5b67ba6a4033684aada2cf719120f9c, type: 3}
   monsterSpawnerParent: {fileID: 1863095936}
+--- !u!114 &643425207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643425200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fbb39ed2ba5c54a9cde051ff8de729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <BabyBottle_GimmickObject>k__BackingField: {fileID: 6823632416212186916, guid: 58bf0aee2b48af047b437e9a62bc7456, type: 3}
+  <Mom_GimmickObject>k__BackingField: {fileID: 3567017583493161354, guid: 8818b33039bced749b47d0ae47a20c23, type: 3}
+  <Standing_GimmickObject>k__BackingField: {fileID: 3046460771563219026, guid: 549472cc32d1f724595ed22f635d6f80, type: 3}
+  <GimmickObjectsParent>k__BackingField: {fileID: 17968719}
 --- !u!1 &885901900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1105,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &910430603
 GameObject:
@@ -1100,7 +1151,7 @@ GameObject:
   - component: {fileID: 1021830559}
   - component: {fileID: 1021830561}
   - component: {fileID: 1021830562}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: PlatformMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1430,7 +1481,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1210146049
 MonoBehaviour:
@@ -1456,7 +1507,7 @@ GameObject:
   - component: {fileID: 1503729002}
   - component: {fileID: 1503729008}
   - component: {fileID: 1503729007}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DecoMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1663,7 +1714,7 @@ Transform:
   - {fileID: 311326835}
   - {fileID: 148674695}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673463481
 GameObject:
@@ -1899,7 +1950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1832329112
 MonoBehaviour:
@@ -1938,7 +1989,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863095935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.70066, y: 36.355698, z: -0.333836}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1959,7 +2010,7 @@ GameObject:
   - component: {fileID: 1879313574}
   - component: {fileID: 1879313573}
   - component: {fileID: 1879313572}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: BrickMapTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2226,7 +2277,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2053926864
 GameObject:

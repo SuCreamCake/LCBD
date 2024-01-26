@@ -15,6 +15,8 @@ public class StageManager : MonoBehaviour
     private PortalManager portalManager;
     [SerializeField]
     private MonsterSpawnerManager monsterSpawnerManager;
+    [SerializeField]
+    private GimmickObjectPlaceManager gimmickObjectManager;
 
     private Player player;
     public Player GetPlayer() { return player; }
@@ -32,6 +34,9 @@ public class StageManager : MonoBehaviour
 
         monsterSpawnerManager = GetComponent<MonsterSpawnerManager>();  //몬스터 스포너를 만들어서 몬스터 스포너를 통해 몬스터를 만들어줌
         monsterSpawnerManager.SetSpawner();
+
+        gimmickObjectManager = GetComponent<GimmickObjectPlaceManager>(); //기믹 오브젝트 배치
+        gimmickObjectManager.SetGimmickObject();
 
         stageTileController = GetComponent<StageTileController>(); //타일 만들어줌
         stageTileController.FillPlaceTile();

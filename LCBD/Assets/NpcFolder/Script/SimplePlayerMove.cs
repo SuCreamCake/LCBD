@@ -5,12 +5,32 @@ using UnityEngine;
 public class SimplePlayerMove : MonoBehaviour
 {
     public float speed = 5f; // 이동 속도 설정
+    public float maxHealth =100;  //최대체력
+    public float health = 80;     //현재체력
+    public int attackPower = 10;    //공격력
+    //지구력
+    public int maxEndurance = 10;
+    public float endurance = 50;   //스테미나  
+    public int enduranceOnOff = 0;
+    public float stayTime = 0;
+    public int enduranceRec =0;
+    public bool drained = false;
+
+    public int defense = 0;    //방어력
+    public int tenacity = 0;    //강인도
+    public float attackSpeed = 5;    //공격속도
+    public float crossroads = 5;    //사거리
+    public float luck = 0;    //행운
+
+    float nomalSpeed = 5; //이동속도
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        maxHealth = 100;
+        health = 90;
     }
 
     void Update()
@@ -25,6 +45,11 @@ public class SimplePlayerMove : MonoBehaviour
         {
             Jump();
         }
+    }
+
+    public void addSpeed(float addSpeed) //이동속도 추가 로직
+    {
+        this.nomalSpeed += addSpeed;
     }
 
     void Jump()

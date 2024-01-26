@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,23 +10,27 @@ public class MonsterManager : MonoBehaviour
     FieldOfView FieldOfView;
     EnemyMove EnemyMove;
     SpriteRenderer SpriteRenderer;
+    Animator animator;
+    MonsterAtk monsterAtk;
 
     bool once = false; // 한 번만
     bool findPlayer = false; // 플레이어 발견 여부
 
     public int MonsterID; // 몬스터 ID
     public bool pattern = false; // 몬스터 패턴 여부
-
+    public bool Relationship = false;
     public float maxHealth_Ms; // 최대 체력
     public float health_Ms; // 현재 체력
     public int attackPower_Ms; // 공격력
     public int defense_Ms; // 방어력
-    public int speed_Ms; // 이동 속도
-    public int tenacity_Ms; // 인내력
+    public float speed_Ms; // 이동 속도
+    public int maxtenacity_Ms; // 총 강인도
+    public int tenacity_Ms; // 현재 강인도
     public float attackSpeed_Ms; // 공격 속도
-    public int crossroads_Ms; // 십자로 이동 여부
+    //public int range_Ms;
+    public int crossroads_Ms; // 사거리
     public int elite; // 엘리트 여부 (1: 일반, 2: 엘리트, 3: 보스)
-    public bool method; // 공격 방식 (true: 근접, false: 원거리)
+    //public bool method; // 공격 방식 (true: 근접, false: 원거리)
     public float smallViewRadius; // 작은 시야 반지름
     public float viewRadius; // 시야 반지름
     [Range(0, 360)]
@@ -41,6 +46,8 @@ public class MonsterManager : MonoBehaviour
         EnemyMove = GetComponent<EnemyMove>();
         FieldOfView = GetComponent <FieldOfView>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        monsterAtk = GetComponent<MonsterAtk>();
 
         if (elite == 2)
         {
@@ -74,12 +81,65 @@ public class MonsterManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerTracking.enabled = false;
+        if (!Relationship)
+        {
+            PlayerTracking.enabled = false;
+            if (monsterAtk != null)
+            {
+                monsterAtk.enabled = false;
+            }
+        } else
+        {
+            PlayerTracking.enabled = false;
+            monsterAtk.enabled = false;
+            FieldOfView.CoroutineStop();
+            FieldOfView.enabled = false;
+            EnemyMove.enabled = true;
+            
+        }
+
     }
 
-    void Update()
+    private void Update()
     {
-        // 업데이트 로직은 여기에 추가
+        if (tenacity_Ms <= 0)
+        {
+            StartCoroutine(ten());
+        }
+        if (health_Ms <= 0)
+        {
+            StartCoroutine(DeadMotion());
+            monsterAtk.enabled = false;
+            PlayerTracking.enabled = false;
+        }
+    }
+
+    IEnumerator DeadMotion()
+    {
+        EnemyMove.moveSpeed = 0;
+        PlayerTracking.moveSpeed = 0;
+        SetDead(true);
+        yield return new WaitForSeconds(2.0f);
+        Destroy(gameObject);
+    }
+    IEnumerator ten()
+    {
+        SetStun(true);
+        //속도 줄이고 = 0
+        // int a = ?
+        monsterAtk.enabled = false;
+        float walkspeed1 = speed_Ms;
+        PlayerTracking.Stun = true;
+        EnemyMove.moveSpeed = 0;
+        PlayerTracking.moveSpeed = 0;
+        yield return new WaitForSeconds(3.0f);
+        //속도 원상복귀 = 원래대로
+        tenacity_Ms = maxtenacity_Ms;
+        PlayerTracking.Stun = false;
+        EnemyMove.moveSpeed = walkspeed1;
+        PlayerTracking.moveSpeed = walkspeed1;
+        monsterAtk.enabled = true;
+        SetStun(false);
     }
 
     public void AppearPlayer()
@@ -87,8 +147,12 @@ public class MonsterManager : MonoBehaviour
         EnemyMove.StopThink();
         EnemyMove.enabled = false;
         PlayerTracking.enabled = true;
+        if(monsterAtk != null)
+        {
+            monsterAtk.enabled = true;
+        }
         once = false;
-
+        monsterAtk.FindPlayer();
         findPlayer = true;
     }
 
@@ -97,6 +161,7 @@ public class MonsterManager : MonoBehaviour
         if (!once && pattern)
         {
             PlayerTracking.noPlayer = false;
+            monsterAtk.NotFindPlayer();
         }
     }
 
@@ -104,6 +169,10 @@ public class MonsterManager : MonoBehaviour
     {
         EnemyMove.enabled = true;
         PlayerTracking.enabled = false;
+        if(monsterAtk != null)
+        {
+            monsterAtk.enabled = false;
+        }
         once = true;
         if (findPlayer)
         {
@@ -123,20 +192,61 @@ public class MonsterManager : MonoBehaviour
         pattern = true; // 행동 패턴 활성화
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         StartCoroutine(OnDamage(damage));
     }
-    IEnumerator OnDamage(int damage)
+    IEnumerator OnDamage(float damage)
     {
         SpriteRenderer.material.color = Color.red;
         Debug.Log("EnemyHit��ũ��Ʈ 28��° �� Damage��" + damage);
         health_Ms -= damage;
-        yield return new WaitForSeconds(0.01f);
+        tenacity_Ms -= (int) damage;
+        yield return new WaitForSeconds(0.03f);
         SpriteRenderer.material.color = Color.white;
-        if(health_Ms <= 0)
+    }
+
+    public void ChangeState(int newState)
+    {
+        switch (newState)
         {
-            Destroy(gameObject);
+            case 0:
+                //대기 모션
+                animator.SetInteger("State", 0);
+                break;
+
+            case 1:
+                //이동 모션
+                animator.SetInteger("State", 1);
+                break;
+            default:
+                // 지정된 상태가 없는 경우의 처리
+                Debug.LogWarning("Unknown state: " + newState);
+                break;
         }
+    }
+
+    public void SetStun(bool isStun)
+    {
+        // "Stun" 변수를 설정
+        animator.SetBool("Stun", isStun);
+    }
+
+    public void SetDead(bool isDead)
+    {
+        // "Dead" 변수를 설정
+        animator.SetBool("Dead", isDead);
+    }
+
+    public void SetFind(bool isFind)
+    {
+        // "Find" 변수를 설정
+        animator.SetBool("Find", isFind);
+    }
+
+    public void RelationshipFalse()
+    {
+        Relationship = false;
+        Start();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
     public int attackPower;    //공격력
     //지구력
     public int maxEndurance;   
-    public float endurance;     
+    public float endurance;   //스테미나  
     public int enduranceOnOff; 
     public float stayTime;      
     public int enduranceRec;
@@ -44,6 +45,10 @@ public class Player : MonoBehaviour
 
     public Animator ani;    //애니메이션
 
+    //포탈
+    private bool potalOn;
+    Collider2D potalCol;
+
     //인격 스택
     public int oralStack;
     private int analStack;
@@ -57,15 +62,14 @@ public class Player : MonoBehaviour
     private Vector2 start;
     private Vector2 end;
 
+    //머니
+    private int money;
 
     SoundsPlayer SFXPlayer;
-    BattleManager battleManager;
+    Battle battleManager;
     
     internal object text_hp;
     internal object img;
-
-
-
 
 
 
@@ -78,12 +82,10 @@ public class Player : MonoBehaviour
 
         infancy();
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
-        battleManager = GameObject.Find("battleManager").GetComponent<BattleManager>();
-       
-    }
-    void Start()
-    {
-        //attackPosition = transform.right + new Vector3(0.2f, 0.2f, 0);
+        battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();
+
+
+
     }
 
     private void Update()
@@ -91,10 +93,14 @@ public class Player : MonoBehaviour
        
         if (!drained)
         {
-            jump();
-            run();
-            if(!isLadder)
-                battleManager.battleLogic();
+            if (health > 0)
+            {
+                jump();
+                run();
+                if (!isLadder)
+                    battleManager.battleLogic();
+            }
+
         }
         
         stopSpeed();
@@ -116,6 +122,8 @@ public class Player : MonoBehaviour
         
         maxState();
         minState();
+
+        potal();
 
     }
 
@@ -172,22 +180,16 @@ public class Player : MonoBehaviour
                     break;
             }
         }
+        if (collision.CompareTag("FieldPortal"))
+        {
+            potalOn = true;
+            potalCol = collision;
+        }
         personality(collision);
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        /*필드 포탈 텔레포트 코드*/
-        if (collision.CompareTag("FieldPortal"))    //FieldPortal과 충돌했고,
-        {
-            if (Input.GetKeyDown(KeyCode.G) && PortalManager.IsTeleporting == false)    //상호작용(G)키를 눌렀고, 텔레포트가 아닌 중에
-            {
-                collision.GetComponent<FieldPortal>().Teleport(this.gameObject);        //필드 포탈을 태우고 플레이어를 텔레포트 시킴
-                SFXPlayer.InteractionSound(0);  // Portal Sound
-            }
-        }
-    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
@@ -202,12 +204,28 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
         }
+        if (collision.CompareTag("FieldPortal"))
+        {
+            potalOn = false;
+            potalCol = null;
+        }
     }
 
-
+    private void potal()
+    {
+        /*필드 포탈 텔레포트 코드*/
+        if (potalOn)    //FieldPortal과 충돌했고,
+        {
+            if (Input.GetKeyDown(KeyCode.G) && PortalManager.IsTeleporting == false)    //상호작용(G)키를 눌렀고, 텔레포트가 아닌 중에
+            {
+                potalCol.GetComponent<FieldPortal>().Teleport(this.gameObject);        //필드 포탈을 태우고 플레이어를 텔레포트 시킴
+                SFXPlayer.InteractionSound(0);  // Portal Sound
+            }
+        }
+    }
     private void jump()
     {
-        if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && Mathf.Abs(rigid.velocity.y) <= 0.1)
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && Mathf.Abs(rigid.velocity.y) <= 0.001)
         {
             transform.Translate(new Vector3(0, 0.2f, 0));
 
@@ -216,7 +234,7 @@ public class Player : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
 
             ani.SetTrigger("isJumping");
-            endurance -= maxEndurance / 5;
+            endurance -= (maxEndurance / 5) + (Player_Buff_Debuff.WeightOfLife ? 0.3f * (maxEndurance / 5) : 0);    // '삶의 무게' 디버프 시 점프시 30% 추가 감소.
             enduranceOnOff = 0;
 
             
@@ -337,7 +355,7 @@ public class Player : MonoBehaviour
         if (fall) //내려갈떄만 스캔
         {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Block") | LayerMask.GetMask("Platform"));
             if (rayHit.collider != null && fall)
             {
                 end = transform.position;
@@ -346,7 +364,7 @@ public class Player : MonoBehaviour
                 fall = false;
             }
         }
-        if (rigid.velocity.y >= 0)
+        if (rigid.velocity.y >= -3)
             fall = false;
     }
     private void run()
@@ -421,7 +439,9 @@ public class Player : MonoBehaviour
         //사거리
         crossroads = 3;
         //행운
-        luck = 15 + 20;   
+        luck = 15 + 20;
+        //돈
+        money = 0;
     }
 
     private void childhood()
@@ -531,6 +551,8 @@ public class Player : MonoBehaviour
             crossroads = 0;
         if (luck < 0)
             luck = 0;
+        if (money < 0)
+            money = 0;
 
     }
 
@@ -572,8 +594,6 @@ public class Player : MonoBehaviour
             InvokeRepeating("enduranceRecovery", 0, 1);
         }
     }
-
-
     private void invokeRun()
     {
         InvokeRepeating("enduranceRun", 0, 0.2f);  
@@ -663,6 +683,39 @@ public class Player : MonoBehaviour
         
     }
 
+    public void plusMoney(int money)
+    {
+        this.money += money;
+    }
 
+    public void minusMoney(int money)
+    {
+        this.money -= money;
+    }
+    public int GetMoney()
+    {
+        return money;
+    }
+    public void addSpeed(float addSpeed) //이동속도 추가 로직
+    {
+        this.nomalSpeed += addSpeed;
+    }
+    public void subSpeed(float subSpeed)
+    {
+        this.nomalSpeed -= subSpeed;
+    }
 
+    public void TakeDamageForPlayer(float damage)
+    {
+        StartCoroutine(OnDamage(damage));
+    }
+    IEnumerator OnDamage(float damage)
+    {
+        spriteRenderer.material.color = Color.red;
+        Debug.Log("Player Take Damage" + damage);
+        health -= damage;
+        tenacity -= (int)damage;
+        yield return new WaitForSeconds(0.03f);
+        spriteRenderer.material.color = Color.white;
+    }
 }

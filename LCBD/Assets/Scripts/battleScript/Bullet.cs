@@ -10,23 +10,31 @@ public class Bullet : MonoBehaviour
     private float bulletSpeed = 17f;
     private float distanceTime;
     private bool isDistanceOver = false;
+    BattleManager battleManager;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Obstacle") //여기 투사체 또는 적대 세력이 들어감)
             Destroy(gameObject);
         else if (collision.gameObject.tag == "monster")
         {
-            Debug.Log("몬스터와 충돌!");
-            collision.gameObject.GetComponent<MonsterManager>().TakeDamage((int)damage);
+           AAttkk(collision);
             Destroy(gameObject);
+            
         }
     }
- 
+
+    public void AAttkk(Collider2D col)
+    {
+        float damage = battleManager.GetCurrentInfo(col);
+        Debug.Log("몬스터와 충돌!");
+        col.GetComponent<MonsterManager>().TakeDamage(damage);
+    }
     private void Start()
     {
-        bulletRigidbody2D = GetComponent<Rigidbody2D>();
+        battleManager = GameObject.FindWithTag("BattleManager").GetComponent<BattleManager>();
+        bulletRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         bulletRigidbody2D.velocity = bulletSpeed * transform.right;
-        SetDamage();
+    
         //자기 자신을 삭제한 메서드
         if (gameObject != null)
         {
@@ -43,10 +51,4 @@ public class Bullet : MonoBehaviour
         }
         
     }
-    public void SetDamage()
-    {
-        this.damage = GameObject.Find("Player").GetComponent<Player>().attackPower;
-      
-    }
-
 }

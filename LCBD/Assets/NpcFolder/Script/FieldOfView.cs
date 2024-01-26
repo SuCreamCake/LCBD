@@ -17,6 +17,7 @@ public class FieldOfView : MonoBehaviour
     MonsterManager MonsterManager;
 
     bool touch = false;              // 터치 여부
+    bool playerDetected;
 
     private void Start()
     {
@@ -50,7 +51,7 @@ public class FieldOfView : MonoBehaviour
     {
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
 
-        bool playerDetected = false; // 플레이어를 감지했는지 여부를 나타내는 변수
+        playerDetected = false; // 플레이어를 감지했는지 여부를 나타내는 변수
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
@@ -165,5 +166,11 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CoroutineStop()
+    {
+        StopCoroutine("FindTargetsWithDelay");
+        StopCoroutine("SmallFindTargetsWithDelay");
     }
 }

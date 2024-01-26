@@ -17,7 +17,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        battleManager = GameObject.Find("battleManager");
+        battleManager = GameObject.Find("BattleManager");
       
     }
 
@@ -26,21 +26,21 @@ public class WeaponManager : MonoBehaviour
     {
         if(Weapon.hammer==weapon)
         {
-            battleManager.GetComponent<BattleManager>().weaponPower = 5;
+            battleManager.GetComponent<Battle>().weaponPower = 5;
         }
         else if(Weapon.pillow==weapon)
         {
-            battleManager.GetComponent<BattleManager>().weaponPower = 7;
+            battleManager.GetComponent<Battle>().weaponPower = 7;
         }
         else if(Weapon.candy == weapon)
         {
-            battleManager.GetComponent<BattleManager>().weaponPower = 4;
-            battleManager.GetComponent<BattleManager>().addAttackSpeed += 8f;
+            battleManager.GetComponent<Battle>().weaponPower = 4;
+            battleManager.GetComponent<Battle>().addAttackSpeed += 8f;
         }
         else if (Weapon.sand == weapon)
         {
-            battleManager.GetComponent<BattleManager>().weaponPower = 3;
-            battleManager.GetComponent<BattleManager>().addAttackSpeed += 6f;
+            battleManager.GetComponent<Battle>().weaponPower = 3;
+            battleManager.GetComponent<Battle>().addAttackSpeed += 6f;
         }
 
     }

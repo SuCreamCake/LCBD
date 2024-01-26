@@ -9,35 +9,67 @@ public class PlayerTracking : MonoBehaviour
     private float raycastDistance = 0.5f; // 레이캐스트 거리
     MonsterManager MonsterManager;
     SpriteRenderer spriteRenderer;
-
+    public LayerMask backMask; // 바닥 레이어
+    Animator animator;
     public bool noPlayer = true; // 플레이어가 없는지 여부를 나타내는 변수
-
+    public bool Stun = false;
     private Transform lastPlayer; // 마지막으로 본 플레이어의 Transform을 저장하는 변수
 
     private Rigidbody2D rb; // Rigidbody2D 컴포넌트
     float k;
+    private float attackRange = 1f;// 몬스터 사거리 계산
+
+    private bool CurrentAtk = false;
+
+    public void AtkTrue()
+    {
+        CurrentAtk = true;
+    }
+    public void AtkFalse()
+    {
+        CurrentAtk = false;
+    }
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent <SpriteRenderer>();
         MonsterManager = GetComponent<MonsterManager>();
         rb = GetComponent<Rigidbody2D>();
     }
-
+    private void OnEnable()
+    {
+        if (animator.GetBool("Atk"))
+        {
+            animator.SetBool("Atk", true);
+            StartCoroutine(ResetAtkParameterCoroutine());
+        }
+    }
     private void Start()
     {
         lastPlayer = player.transform;
         k = rb.velocity.y;
         noPlayer = true;
-
+        
         moveSpeed = MonsterManager.speed_Ms; // 이동 속도를 몬스터 매니저의 속도로 설정
+        attackRange = MonsterManager.crossroads_Ms;
+        MonsterManager.ChangeState(1);
     }
+    IEnumerator ResetAtkParameterCoroutine()
+    {
+        yield return new WaitForSeconds(0.3f);
 
+        // 애니메이션 컨트롤러의 파라미터 중 bool 값인 Atk를 false로 설정합니다.
+        animator.SetBool("Atk", false);
+    }
     private void Update()
     {
         if (noPlayer)
             lastPlayer = player.transform;
+        moveSpeed = MonsterManager.speed_Ms; // 이동 속도를 몬스터 매니저의 속도로 설정
 
+        if (CurrentAtk || Stun)
+            moveSpeed = 0;
         // 앞쪽 레이캐스트를 생성
         Vector2 frontVec = new Vector2(rb.position.x + 0.4f, rb.position.y);
         // 뒷쪽 레이캐스트를 생성
@@ -92,7 +124,7 @@ public class PlayerTracking : MonoBehaviour
         if (spriteRenderer.flipX)
         {
             // 앞쪽으로 레이를 쏴서 땅을 감지
-            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, backMask);
             // 감지된 땅이 없으면 멈춤
             if (raycast.collider == null)
             {
@@ -107,7 +139,7 @@ public class PlayerTracking : MonoBehaviour
         else
         {
             // 뒷쪽으로 레이를 쏴서 땅을 감지
-            RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 1, LayerMask.GetMask("background"));
+            RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 1, backMask);
             // 감지된 땅이 없으면 멈춤
             if (raycast2.collider == null)
             {
@@ -119,5 +151,6 @@ public class PlayerTracking : MonoBehaviour
                 }
             }
         }
+        MonsterManager.ChangeState(1);
     }
 }

@@ -25,6 +25,11 @@ TagManager:
   - npc
   - portal
   - WeaponSlot
+  - BattleManager
+  - ShopItemPoint
+  - Inventory
+  - Item
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -33,18 +38,18 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
+  - Block
+  - Platform
   - Player
   - Obstacle
-  - background
+  - 
   - monster
   - 
   - Friendship
   - Neutrality
   - Hostility
   - SkillEffect
-  - background
+  - 
   - bg
   - 
   - 

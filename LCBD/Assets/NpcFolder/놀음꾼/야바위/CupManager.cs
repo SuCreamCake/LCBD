@@ -10,11 +10,11 @@ public class CupManager : MonoBehaviour
     public GameObject Cup3;
     public GameObject Ball;
 
-    // �� ���ٿ�
     private Vector3 originalPos1;
     private Vector3 originalPos2;
     private Vector3 originalPos3;
-    private float duration = 1.0f; // �̵��� �ɸ��� �ð� (1��)
+    private float duration = 1.0f; // 이동하는데 걸리는 시간 (1초)
+    public float rotationSpeed = 3.75f;
 
     private Vector3 originalBallPos;
     private Vector2 firstPos1;
@@ -31,7 +31,11 @@ public class CupManager : MonoBehaviour
     public Button StartButton;
     public Button ResetButton;
     public Button ExitButton;
-    
+
+    public GameObject Window;
+
+    private Player PlayerScript;
+
     void Awake()
     {
         firstPos1 = Cup1.GetComponent<RectTransform>().anchoredPosition;
@@ -42,12 +46,12 @@ public class CupManager : MonoBehaviour
 
     void OnDisable()
     {
-        // Cup ������Ʈ���� ��ġ�� �ʱ� ��ġ�� �����մϴ�.
+        // Cup 오브젝트의 위치를 초기 위치로 되돌립니다.
         Cup1.GetComponent<RectTransform>().anchoredPosition = firstPos1;
         Cup2.GetComponent<RectTransform>().anchoredPosition = firstPos2;
         Cup3.GetComponent<RectTransform>().anchoredPosition = firstPos3;
 
-        // ���� ��ġ�� �ʱ� ��ġ�� �����մϴ�.
+        // 공의 위치를 초기 위치로 되돌립니다.
         Ball.GetComponent<RectTransform>().anchoredPosition = firstBallPos;
         StartButton.interactable = true;
         ResetButton.interactable = false;
@@ -55,28 +59,44 @@ public class CupManager : MonoBehaviour
 
     void Start()
     {
+        if (Window != null)
+        {
+            Window.SetActive(false);
+        }
+
         if (first)
         {
             first = false;
         }
-        //�� ���ٿ��� ���� ������Ʈ ��ġ ���
+        //컵 오브젝트의 초기 위치 저장
         originalPos1 = Cup1.transform.position;
         originalPos2 = Cup2.transform.position;
         originalPos3 = Cup3.transform.position;
         originalBallPos = Ball.transform.position;
 
-        ResetGame(); // Start���� ResetGame �޼��带 ȣ���մϴ�.
+        ResetGame(); // Start에서 ResetGame 함수를 호출합니다.
+
+        // "Player" 태그를 가진 첫 번째 오브젝트를 찾아 스크립트 가져오기
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            PlayerScript = playerObject.GetComponent<Player>();
+        }
+        else
+        {
+            Debug.Log("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+        }
     }
 
-    // UI ��ư�� ������ �޼��带 ����ϴ�.
+    // UI 버튼을 처리하는 메소드를 정의합니다.
     public void OnStartButtonClicked()
     {
-        //여기에 돈 관련 메소드 작성해야겠지?
+        MinusMoney(10);
 
         if (!isGameRunning)
         {
             isGameRunning = true;
-            // ������ ���� ���� �ƴ� ��쿡�� �����մϴ�.
+            // 게임이 실행 중이 아니라면 실행합니다.
             StartCoroutine(StartGame());
         }
         StartButton.interactable = false;
@@ -84,41 +104,45 @@ public class CupManager : MonoBehaviour
 
     public IEnumerator StartGame()
     {
+        Cup1.GetComponent<Character>().ChangerotationSpeed(rotationSpeed);
+        Cup2.GetComponent<Character>().ChangerotationSpeed(rotationSpeed);
+        Cup3.GetComponent<Character>().ChangerotationSpeed(rotationSpeed);
+        float RotationWait = 180f / (rotationSpeed * 60.0f);
         ExitButton.interactable = false;
         ResetButton.interactable = false;
         StartCoroutine(DownMove());
-        // Wait for 1.5 seconds before proceeding to the next iteration.
+        // 1.5초 동안 대기합니다.
         yield return new WaitForSeconds(duration);
 
         for (int i = 0; i < 5; i++)
         {
-            // 2���� ���� �������� �����Ͽ� �迭�� �����մϴ�.
+            // 2개의 랜덤한 컵을 선택합니다.
             chosenCups = GetRandomCups(2);
 
-            //chosenCups �迭�� Character ��ũ��Ʈ���� �����մϴ�.
+            //chosenCups 배열을 Character 컴포넌트로 전달합니다.
             PassChosenCupsToCharacters();
 
-            // ���õ� ���� Log�� ����մϴ�.
+            // 선택한 컵을 로그로 출력합니다.
             LogChosenCups(chosenCups);
 
-            // 2���� ���õ� ���� �̸��� �����Ͽ� �����մϴ�.
+            // 2개의 컵 이름을 교환합니다.
             SwapCupNames(chosenCups[0], chosenCups[1]);
 
-            // ����� �� �̸��� Log�� ����մϴ�.
+            // 교환된 컵 이름을 로그로 출력합니다.
             LogSwappedCupNames(chosenCups);
 
-            // 2���� ���� ��ġ�� �����Ͽ� �����մϴ�.
+            // 2개의 컵 위치를 교환합니다.
             SwapCupPositions(chosenCups[0], chosenCups[1]);
 
-            // Ball�� �ִ� ���� ã�� Log�� ����մϴ�.
+            // 공이 있는 컵을 찾아 로그로 출력합니다.
             FindCupWithBall(chosenCups);
 
-            // Wait for 1.5 seconds before proceeding to the next iteration.
-            yield return new WaitForSeconds(1.0f);
+            // 1.0초 동안 대기합니다.
+            yield return new WaitForSeconds(RotationWait + 0.3f);
         }
 
         ExitButton.interactable = true;
-        // After the loop is finished, enable the CupClickChecker script on the Cup objects.
+        // 루프가 끝난 후, CupClickChecker 스크립트를 활성화합니다.
         EnableCupClickChecker();
     }
     public void GameRunningEnd()
@@ -130,10 +154,10 @@ public class CupManager : MonoBehaviour
 
     private GameObject[] GetRandomCups(int count)
     {
-        // 3���� ���� �迭�� �����մϴ�.
+        // 3개의 컵을 담은 배열을 생성합니다.
         GameObject[] cups = new GameObject[] { Cup1, Cup2, Cup3 };
 
-        // �������� ���� �����ϱ� ���� �迭�� �����ϴ�.
+        // 랜덤하게 컵을 섞습니다.
         for (int i = 0; i < cups.Length; i++)
         {
             int randomIndex = Random.Range(i, cups.Length);
@@ -142,7 +166,7 @@ public class CupManager : MonoBehaviour
             cups[randomIndex] = temp;
         }
 
-        // count ������ŭ �տ������� �����մϴ�.
+        // count 개수만큼의 컵을 선택하여 새로운 배열을 생성합니다.
         GameObject[] chosenCups = new GameObject[count];
         for (int i = 0; i < count; i++)
         {
@@ -166,7 +190,7 @@ public class CupManager : MonoBehaviour
     {
         foreach (GameObject cup in cups)
         {
-            // ���� ���� ������Ʈ�� �˻��Ͽ� Ball�� �ִ��� Ȯ���մϴ�.
+            // 선택한 컵에서 공을 찾아봅니다.
             bool hasBall = false;
             foreach (Transform child in cup.transform)
             {
@@ -177,10 +201,10 @@ public class CupManager : MonoBehaviour
                 }
             }
 
-            // Ball�� �ִ� ���� ��� Log�� ����մϴ�.
+            // 공을 찾은 컵을 로그로 출력합니다.
             if (hasBall)
             {
-                Debug.Log(cup.name + "�� ���� ������ �ִ�.");
+                Debug.Log(cup.name + "에 공이 있습니다.");
             }
         }
     }
@@ -211,17 +235,17 @@ public class CupManager : MonoBehaviour
 
     private void EnableCupClickChecker()
     {
-        // Call the Reset method on each cup click checker script.
+        // 각 컵의 CupClickChecker 스크립트의 Reset 메소드를 호출합니다.
         Cup1.GetComponent<CupClickChecker>().Reset();
         Cup2.GetComponent<CupClickChecker>().Reset();
         Cup3.GetComponent<CupClickChecker>().Reset();
-        // Call the Ing() method on each cup object.
+        // 각 컵 객체의 Ing() 메소드를 호출합니다.
         Cup1.GetComponent<CupClickChecker>().Ing();
         Cup2.GetComponent<CupClickChecker>().Ing();
         Cup3.GetComponent<CupClickChecker>().Ing();
     }
 
-    // �� �޼��带 ���� chosenCups �迭�� Character ��ũ��Ʈ���� �����մϴ�.
+    // 선택한 컵 배열을 Character 컴포넌트로 전달하는 메소드입니다.
     public void PassChosenCupsToCharacters()
     {
         Character[] characters = FindObjectsOfType<Character>();
@@ -232,69 +256,67 @@ public class CupManager : MonoBehaviour
         }
     }
 
-    // �� �ٿ�
+    // 아래로 이동하는 애니메이션
     private IEnumerator DownMove()
     {
-        yield return null; // 1 ������ ���
+        yield return null;  // 1 프레임 대기
 
         Start();
-        // ���ϴ� �ð��� ���� ���� �Լ��� ����Ͽ� ������Ʈ�� �̵���ŵ�ϴ�.
+        // 지정한 시간 동안 애니메이션을 실행합니다.
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsedTime / duration); // 0�� 1 ������ ���� ��
+            float t = Mathf.Clamp01(elapsedTime / duration);
 
             Cup1.transform.position = Vector3.Lerp(originalPos1, new Vector3(originalPos1.x, originalPos1.y - 50f, originalPos1.z), t);
             Cup2.transform.position = Vector3.Lerp(originalPos2, new Vector3(originalPos2.x, originalPos2.y - 50f, originalPos2.z), t);
             Cup3.transform.position = Vector3.Lerp(originalPos3, new Vector3(originalPos3.x, originalPos3.y - 50f, originalPos3.z), t);
 
-            // ���� õõ�� �̵���ŵ�ϴ�.
+            // 공의 이동도 실행합니다.
             Ball.transform.position = Vector3.Lerp(originalBallPos, new Vector3(originalBallPos.x, originalBallPos.y + 50f, originalBallPos.z), t);
 
-            yield return null; // 1 ������ ���
+            yield return null; // 1 프레임 대기
         }
 
     }
 
-    // �� ��
+    // 위로 이동하는 애니메이션
     private IEnumerator UpMove()
     {
-        yield return null; // 1 ������ ���
+        yield return null;
 
-        originalBallPos = new Vector3(Ball.transform.position.x, Ball.transform.position.y - 50f, Ball.transform.position.z); // ���� ���� ��ġ ����
+        originalBallPos = new Vector3(Ball.transform.position.x, Ball.transform.position.y - 50f, Ball.transform.position.z);
         Vector3 targetBallPos = new Vector3(originalBallPos.x, originalBallPos.y - 50f, originalBallPos.z);
 
-
-        // ���ϴ� �ð��� ���� ���� �Լ��� ����Ͽ� ������Ʈ�� �̵���ŵ�ϴ�.
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsedTime / duration); // 0�� 1 ������ ���� ��
+            float t = Mathf.Clamp01(elapsedTime / duration);
 
             Cup1.transform.position = Vector3.Lerp(Cup1.transform.position, new Vector3(Cup1.transform.position.x, originalPos1.y, originalPos1.z), t);
             Cup2.transform.position = Vector3.Lerp(Cup2.transform.position, new Vector3(Cup2.transform.position.x, originalPos1.y, originalPos2.z), t);
             Cup3.transform.position = Vector3.Lerp(Cup3.transform.position, new Vector3(Cup3.transform.position.x, originalPos1.y, originalPos3.z), t);
 
-            // ���� õõ�� �̵���ŵ�ϴ�. y���� ����˴ϴ�.
+            // 공의 이동도 실행합니다.
             Ball.transform.position = Vector3.Lerp(Ball.transform.position, originalBallPos, t);
 
-            yield return null; // 1 ������ ���
+            yield return null;
         }
     }
 
-    // ���� ���¸� �ʱ�ȭ�ϴ� �޼��带 �߰��մϴ�.
+    // 게임 초기화 메소드
     public void ResetGame()
     {
-        // �� ��ġ�� �ʱ�ȭ�մϴ�.
+        // Cup 오브젝트의 위치를 초기 위치로 되돌립니다.
         Cup1.transform.position = originalPos1;
         Cup2.transform.position = originalPos2;
         Cup3.transform.position = originalPos3;
 
-        // �� ��ġ�� �ʱ�ȭ�մϴ�.
+        // 공의 위치를 초기 위치로 되돌립니다.
         Ball.transform.position = originalBallPos;
 
         //// �� �̸��� �ʱ�ȭ�մϴ�.
@@ -315,6 +337,27 @@ public class CupManager : MonoBehaviour
         Start();
         ResetButton.interactable = false;
         StartButton.interactable = true;
+    }
+
+    public void PlusMoney(int money)
+    {
+        if (PlayerScript != null)
+        {
+            PlayerScript.plusMoney(money);
+            Debug.Log("성공 Money : " + money);
+        }
+    }
+
+    public void MinusMoney(int money)
+    {
+        if (PlayerScript != null)
+        {
+            if (PlayerScript.GetMoney() >= money)
+            {
+                PlayerScript.minusMoney(money);
+                Debug.Log("차감 Money : " + money);
+            }
+        }
     }
 }
 
