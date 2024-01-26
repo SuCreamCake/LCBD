@@ -35,24 +35,24 @@ public class ItemInventory : MonoBehaviour
                 Itemslots[i].itemSprite = itemSprite;
                 Itemslots[i].isUse = true;
                 Itemslots[i].item = itemObject;
-                // ���⿡ Image ������Ʈ�� ������Ʈ�ϴ� �ڵ带 �߰��մϴ�.
+                // 여기에 Image 컴포넌트를 업데이트하는 코드를 추가합니다.
                 Itemslots[i].Item_image.sprite = itemSprite;
-                Itemslots[i].Item_image.enabled = true; // �̹����� Ȱ��ȭ�մϴ�.
+                Itemslots[i].Item_image.enabled = true; // 이미지를 활성화합니다.
                 Itemslots[i].item.now_Count += 1; //That's now_Count 1 Add
                 Itemslots[i].UpdateItemCountText(); // Text Update
-                return true; // �������� ���������� �߰�����
+                return true; // 아이템을 성공적으로 추가했음
             }
         }
-        return false; // �κ��丮�� ���� ��
+        return false; // 인벤토리가 가득 참
     }
 
 
-    public void UseSelectedItem() //������ ���
+    public void UseSelectedItem() //아이템 사용
     {
         if (selectedItemIndex >= 0 && selectedItemIndex < Itemslots.Length && Itemslots[selectedItemIndex].isUse)
         {
-            Itemslots[selectedItemIndex].UseItem(); // ���õ� ������ ���
-            // �߰����� ����, ���� ��� ������ ���� �ʱ�ȭ
+            Itemslots[selectedItemIndex].UseItem(); // 선택된 아이템 사용
+            // 추가적인 로직, 예를 들어 아이템 슬롯 초기화
         }
     }
 
@@ -92,11 +92,12 @@ public class ItemInventory : MonoBehaviour
         if (itemIndex >= 0 && itemIndex < Itemslots.Length)
         {
             Itemslots[itemIndex].item.now_Count -= count;
-
+            Itemslots[itemIndex].UpdateItemCountText();
             if (Itemslots[itemIndex].item.now_Count <= 0)
             {
                 Itemslots[itemIndex].ClearSlot();
             }
+
         }
     }
 }

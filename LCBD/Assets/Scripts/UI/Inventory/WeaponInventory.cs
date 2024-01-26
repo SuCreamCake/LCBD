@@ -25,14 +25,14 @@ public class WeaponInventory : MonoBehaviour
                 Weaponslots[i].itemSprite = itemSprite;
                 Weaponslots[i].isUse = true;
                 Weaponslots[i].item = itemObejct;
-                // ���⿡ Image ������Ʈ�� ������Ʈ�ϴ� �ڵ带 �߰��մϴ�.
+                // 여기에 Image 컴포넌트를 업데이트하는 코드를 추가합니다.
                 Weaponslots[i].Weapon_image.sprite = itemSprite;
-                Weaponslots[i].Weapon_image.enabled = true; // �̹����� Ȱ��ȭ�մϴ�.
+                Weaponslots[i].Weapon_image.enabled = true; // 이미지를 활성화합니다.
 
-                return true; // �������� ���������� �߰�����
+                return true; // 아이템을 성공적으로 추가했음
             }
         }
-        return false; // �κ��丮�� ���� ��
+        return false; // 인벤토리가 가득 참
     }
 
     public string[] GetAllName()

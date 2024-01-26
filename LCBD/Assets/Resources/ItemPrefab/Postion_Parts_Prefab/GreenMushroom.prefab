@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808892528113767454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.245279, y: 3.0752945, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -127,8 +127,8 @@ MonoBehaviour:
   item_number: 0
   item_Name: GreenMushroom
   Rank: 0
-  item_type: 0
-  drop_age: 0
+  item_type: 2
+  drop_age: 5
   effect_type: 0
   effect_info: 0
   effect_target: 0
