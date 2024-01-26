@@ -13,6 +13,8 @@ public class Gimmick_Standing_Bomb : MonoBehaviour
 
     bool isExploding = false;
 
+    SoundsPlayer SFXPlayer;
+
     private void Start()
     {
         // 스프라이트 비활성화 이미지로.
@@ -28,6 +30,11 @@ public class Gimmick_Standing_Bomb : MonoBehaviour
         explosionArea.SetActive(false);
 
         isExploding = false;
+    }
+
+    private void Awake()
+    {
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
 
     // 점화 -> 3초후 폭발.
@@ -49,7 +56,7 @@ public class Gimmick_Standing_Bomb : MonoBehaviour
         isExploding = true;
 
         // 사운드 재생. 폭탄 터지는 소리. (폭탄이 거의 동시에 여러 개가 터질 예정이니 작게 부탁드립니다.)
-
+        SFXPlayer.Gimmick01Sound(0);
         spriteRenderer.sprite = null;
         rigid.bodyType = RigidbodyType2D.Dynamic;
 

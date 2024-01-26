@@ -9,9 +9,12 @@ public class Gimmick_Mom_Dial_Lever : MonoBehaviour, IControlGimmickObject
 
     private bool isMovingSlot;  // 슬롯이 이동 중인 지
 
+    SoundsPlayer SFXPlayer;
+
     private void Awake()
     {
         isMovingSlot = false;
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
 
     public void ControlGimmickObject()
@@ -19,6 +22,7 @@ public class Gimmick_Mom_Dial_Lever : MonoBehaviour, IControlGimmickObject
         if (isMovingSlot == false)
         {
             // 사운드 재생. 바위 같은거 움직이는 소리?
+            SFXPlayer.Gimmick01Sound(4);
             StartCoroutine(MoveSlotCoroutine());
         }
     }

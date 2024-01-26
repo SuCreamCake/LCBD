@@ -13,12 +13,18 @@ public class Gimmick_Standing_NormalLever : MonoBehaviour, IControlGimmickObject
     private bool isPulling = false;
     private Gimmick_Standing_LeverControl control;
 
+    SoundsPlayer SFXPlayer;
+
+
     private void Awake()
     {
         control = transform.parent.GetComponent<Gimmick_Standing_LeverControl>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = off_state;
+
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
+
     }
 
     public void ControlGimmickObject()
@@ -28,6 +34,7 @@ public class Gimmick_Standing_NormalLever : MonoBehaviour, IControlGimmickObject
             if (!isPulled)
             {
                 // 사운드 재생. 레버 조작 소리.
+                SFXPlayer.Gimmick01Sound(3);
                 PullLever();
             }
         }

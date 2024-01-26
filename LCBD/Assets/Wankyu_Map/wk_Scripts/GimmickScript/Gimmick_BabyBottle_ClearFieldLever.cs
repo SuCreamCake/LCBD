@@ -10,7 +10,9 @@ public class Gimmick_BabyBottle_ClearFieldLever : MonoBehaviour, IControlGimmick
     public Sprite right_state;    // 오른쪽 이미지 (on).
 
     [SerializeField] private GameObject walls;     // 벽 오브젝트들.
-    
+
+    SoundsPlayer SFXPlayer; //
+
     private void Awake()
     {
         isClear = false;
@@ -18,6 +20,7 @@ public class Gimmick_BabyBottle_ClearFieldLever : MonoBehaviour, IControlGimmick
         walls.SetActive(true);
 
         GetComponent<SpriteRenderer>().sprite = left_state;
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
 
     public void ControlGimmickObject()
@@ -25,8 +28,10 @@ public class Gimmick_BabyBottle_ClearFieldLever : MonoBehaviour, IControlGimmick
         if (isClear == false)
         {
             // 사운드 재생. 레버 조작 소리.
+            SFXPlayer.Gimmick01Sound(3);
             ClearSignal();
             // 사운드 재생. 클리어 소리.
+            SFXPlayer.Gimmick01Sound(1);
         }
     }
 

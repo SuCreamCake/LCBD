@@ -21,10 +21,14 @@ public class Gimmick_Mom_Right_Lever : MonoBehaviour, IControlGimmickObject
     private TextMeshPro needCountText;      // (왼쪽) 필요 횟수 디스플레이 오브젝트의 텍스트.
     private TextMeshPro currentCountText;   // (오른쪽) 현재 횟수 디스플레이 오브젝트의 텍스트.
 
+    SoundsPlayer SFXPlayer;
+
     private void Awake()
     {
         // 스프라이트 모양을 왼쪽 그림으로.
         GetComponent<SpriteRenderer>().sprite = left_state;
+
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
 
         // 각 다이얼의 selectedObj의 Transform 가져옴.
         Dials = transform.parent.GetChild(0);
@@ -72,6 +76,7 @@ public class Gimmick_Mom_Right_Lever : MonoBehaviour, IControlGimmickObject
         if (!isRunning)
         {
             // 사운드 재생. 레버 조작 소리.
+            SFXPlayer.Gimmick01Sound(3);
             PullLever();
         }
     }
@@ -89,6 +94,7 @@ public class Gimmick_Mom_Right_Lever : MonoBehaviour, IControlGimmickObject
             ClearSignal();
 
             // 사운드 재생. 클리어 소리.
+            SFXPlayer.Gimmick01Sound(1);
         }
         else
         {
