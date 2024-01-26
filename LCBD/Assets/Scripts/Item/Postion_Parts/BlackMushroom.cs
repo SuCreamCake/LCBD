@@ -7,7 +7,7 @@ public class BlackMushroom : Potion_Parts_Item
 {
     private void Awake()
     {
-        Price = 0; //아이템 가격
+        Price = 55; //아이템 가격
         item_number = 35; //아이템 번호
         item_Name = "BlackMushroom"; ; //아이템이름
         Rank = Item_Rank.Rare; //아이템 희귀도
