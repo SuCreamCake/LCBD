@@ -21,6 +21,7 @@ public class Gimmick_Mom_Left_Lever : MonoBehaviour, IControlGimmickObject
     private bool isActive = false;  // 레버가 (기믹오브젝트가) 켜진 상태인지.
 
     private int needCount = 0;      // 필요 횟수 카운트
+    SoundsPlayer SFXPlayer;
 
     private void Awake()
     {
@@ -52,6 +53,8 @@ public class Gimmick_Mom_Left_Lever : MonoBehaviour, IControlGimmickObject
 
         // 기믹 오브젝트 꺼둠. (왼쪽 다이얼 작동 시 켜져야 함).
         gimmickObject.gameObject.SetActive(false);
+
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
 
     public void ControlGimmickObject()
@@ -59,6 +62,7 @@ public class Gimmick_Mom_Left_Lever : MonoBehaviour, IControlGimmickObject
         if (!isRunning)
         {
             // 사운드 재생. 레버 조작 소리.
+            SFXPlayer.Gimmick01Sound(3);
             PullLever();
         }
     }

@@ -45,6 +45,18 @@ public class UISoundFile            // ¹öÆ° & @
     public string SoundName;
     public AudioClip SoundClip;
 }
+[System.Serializable]
+public class GimmickSoundFile01            // ±â¹Í01
+{
+    public string SoundName;
+    public AudioClip SoundClip;
+}
+[System.Serializable]
+public class GimmickSoundFile02            // ±â¹Í02
+{
+    public string SoundName;
+    public AudioClip SoundClip;
+}
 
 public class SoundsPlayer : MonoBehaviour
 {
@@ -77,6 +89,14 @@ public class SoundsPlayer : MonoBehaviour
     [SerializeField] AudioSource UISoundPlayer;
     [SerializeField] UISoundFile[] UISounds;
 
+    [Header("< Gimmick01 >")]
+    [SerializeField] AudioSource Gimmick01SoundPlayer;
+    [SerializeField] UISoundFile[] Gimmick01Sounds;
+
+    [Header("< Gimmick02 >")]
+    [SerializeField] AudioSource Gimmick02SoundPlayer;
+    [SerializeField] UISoundFile[] Gimmick02Sounds;
+
     public AudioMixer Mixer; //ÇØ´ç ¿Àµð¿ÀÀÇ ¹Í¼­
     private float saveValue;
 
@@ -99,6 +119,9 @@ public class SoundsPlayer : MonoBehaviour
         AttackSoundPlayer.mute = isMute;
         LadderSoundPlayer.mute = isMute;
         InteractionSoundPlayer.mute = isMute;
+        UISoundPlayer.mute = isMute;
+        Gimmick01SoundPlayer.mute = isMute;
+        Gimmick02SoundPlayer.mute = isMute;
     }
     public void SFX_Volume(float value)
     {
@@ -107,7 +130,6 @@ public class SoundsPlayer : MonoBehaviour
     }
 
  
-
     public void WalkSound(int soundNum)                                                 // USE
     {
             
@@ -182,5 +204,15 @@ public class SoundsPlayer : MonoBehaviour
     {
         UISoundPlayer.clip = UISounds[soundNum].SoundClip;
         UISoundPlayer.Play();
+    }
+    public void Gimmick01Sound(int soundNum)
+    {
+        Gimmick01SoundPlayer.clip = Gimmick01Sounds[soundNum].SoundClip;
+        Gimmick01SoundPlayer.Play();
+    }
+    public void Gimmick02Sound(int soundNum)
+    {
+        Gimmick02SoundPlayer.clip = Gimmick02Sounds[soundNum].SoundClip;
+        Gimmick02SoundPlayer.Play();
     }
 }

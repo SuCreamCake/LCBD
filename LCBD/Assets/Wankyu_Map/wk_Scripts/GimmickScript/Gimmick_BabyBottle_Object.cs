@@ -8,12 +8,14 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
     private bool isRisingPlatform;
 
     Player player;
+    SoundsPlayer SFXPlayer;
 
     private void Awake()
     {
         fallingPlatform = transform.parent.parent.GetChild(2).gameObject;
         isRisingPlatform = false;
         player = FindObjectOfType<StageManager>().GetPlayer();
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
 
     public void ControlGimmickObject()
@@ -26,12 +28,14 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
         if (!isRisingPlatform)
         {
             // 사운드 재생. 오브젝트 조작 성공 소리. 엘리베이터 띵 소리 느낌.
+            SFXPlayer.Gimmick01Sound(2);
             float risingDistance = (float)attackPower / 3;
             StartCoroutine(RisePlatformCoroutine(risingDistance));
         }
         else
         {
             // 사운드 재생. 오브젝트 조작 실패 소리. 철컥거리는 소리 느낌.
+            SFXPlayer.Gimmick01Sound(5);
         }
     }
 
