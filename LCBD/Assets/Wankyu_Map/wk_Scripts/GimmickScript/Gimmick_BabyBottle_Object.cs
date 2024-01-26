@@ -5,7 +5,7 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
 {
     private GameObject fallingPlatform;
 
-    private bool isRisingPlatform;
+    private static bool isRisingPlatform;
 
     Player player;
     SoundsPlayer SFXPlayer;

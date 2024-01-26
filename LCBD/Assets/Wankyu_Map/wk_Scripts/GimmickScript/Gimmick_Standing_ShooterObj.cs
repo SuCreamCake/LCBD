@@ -42,7 +42,7 @@ public class Gimmick_Standing_ShooterObj : MonoBehaviour
         float waitSec = UnityEngine.Random.Range(3f, 6f);
         yield return new WaitForSeconds(waitSec);
 
-        GameObject shootedBullet = Instantiate(bullet, transform.position, transform.rotation);
+        GameObject shootedBullet = Instantiate(bullet, transform.position, transform.rotation, transform);
         shootedBullet.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90));
 
         isShooting = false;

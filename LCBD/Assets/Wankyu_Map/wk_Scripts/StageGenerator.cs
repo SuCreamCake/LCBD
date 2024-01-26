@@ -70,7 +70,52 @@ public class StageGenerator : MonoBehaviour
     {
         SpecialFieldWeights[specialFieldSerial] = weight;
     }
-    
+    public static void InitSpecialFieldWeightsAndGeneratedCount(int StageLevel)     // 특수 필드의 유형들의 생성 개수 및 필드 가중치를 (스테이지 레벨과 레벨의 유형에 맞게) 초기화하는 메소드 (static)
+    {
+        SpecialFieldGeneratedCount = new Dictionary<int, int>(); // 특수 필드 생성 개수 dict 초기화
+        SpecialFieldWeights = new Dictionary<int, float>();      // 특수 필드 가중치 dict 초기화
+
+        switch (StageLevel)
+        {
+            case 1:
+                foreach (SpecialFieldSerial_1 specialItem in Enum.GetValues(typeof(SpecialFieldSerial_1)))
+                {
+                    SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);   //가중치 초기화
+                    SpecialFieldGeneratedCount.Add((int)specialItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 2:
+                foreach (SpecialFieldSerial_2 specialItem in Enum.GetValues(typeof(SpecialFieldSerial_2)))
+                {
+                    SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);   //가중치 초기화
+                    SpecialFieldGeneratedCount.Add((int)specialItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 3:
+                foreach (SpecialFieldSerial_3 specialItem in Enum.GetValues(typeof(SpecialFieldSerial_3)))
+                {
+                    SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);   //가중치 초기화
+                    SpecialFieldGeneratedCount.Add((int)specialItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 4:
+                foreach (SpecialFieldSerial_4 specialItem in Enum.GetValues(typeof(SpecialFieldSerial_4)))
+                {
+                    SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);   //가중치 초기화
+                    SpecialFieldGeneratedCount.Add((int)specialItem, 0);            //생성개수 초기화
+                }
+                break;
+            case 5:
+                foreach (SpecialFieldSerial_5 specialItem in Enum.GetValues(typeof(SpecialFieldSerial_5)))
+                {
+                    SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);   //가중치 초기화
+                    SpecialFieldGeneratedCount.Add((int)specialItem, 0);            //생성개수 초기화
+                }
+                break;
+        }
+        return;
+    }
+
 
     public int FieldSquareMatrixRow { get; private set; } //필드의 NxN 배열의 N(행 수)
     private int _mapWidth, _mapHeight;  //한 맵(필드)의 너비, 높이
@@ -145,13 +190,14 @@ public class StageGenerator : MonoBehaviour
     MapGenerator[,] mapGenerator;   //각 맵(필드)의 생성기
     public MapGenerator[,] GetMapGenerator() { return mapGenerator; }
 
+    // 스테이지 생성.
     public void GenerateStage()
     {
         MapWidth = 50;
         MapHeight = 50;
 
-        FieldCount = 5 * StageLevel + UnityEngine.Random.Range(3, 6);
-        FieldSquareMatrixRow = Mathf.FloorToInt(Mathf.Sqrt(FieldCount + 20)) + 1;
+        FieldCount = 5 * StageLevel + UnityEngine.Random.Range(3, 7);               // 필드 개수. 스테이지 레벨 * 5 + (3~6난수)
+        FieldSquareMatrixRow = Mathf.FloorToInt(Mathf.Sqrt(FieldCount + 20)) + 1;   // 필드 배치가 n*n의 2차원이라서, n 계산.
 
         Debug.Log("roomCount, stageLevel : " + FieldCount + ", " + StageLevel);
         Debug.Log("FieldSquareMatrixRow : " + FieldSquareMatrixRow);
@@ -162,16 +208,8 @@ public class StageGenerator : MonoBehaviour
         Debug.Log("CommonFieldCount : " + CommonFieldCount);    //일반 필드로 지정된 필드 개수
 
         InitCommonFieldWeightsAndGeneratedCount(StageLevel);    // 일반 필드의 유형들의 생성 개수 및 필드 가중치 초기화 (스테이지 레벨과 레벨의 유형에 맞게)
+        InitSpecialFieldWeightsAndGeneratedCount(StageLevel);   // 특수 필드의 유형들의 생성 개수 및 필드 가중치 초기화 (스테이지 레벨과 레벨의 유형에 맞게)
 
-        // 특수 필드의 유형들의 생성 개수 및 필드 가중치 초기화 // TODO 아직 안 쓰임
-        SpecialFieldGeneratedCount = new Dictionary<int, int>();    //특수 필드 생성 개수 dict 초기화
-        SpecialFieldWeights = new Dictionary<int, float>();         //특수 필드 가중치 dict 초기화
-        // 이 코드도 스테이지별 유형이 달라진다면, 일반 필드처럼 분리하여 작성할 예정 (일단은 아니니 이렇게만 작성함)    // TODO
-        foreach (SpecialFieldSerial specialItem in Enum.GetValues(typeof(SpecialFieldSerial)))      // 특수 필드 유형들의 생성 개수 및 필드 가중치 초기화
-        {
-            SpecialFieldWeights.Add((int)specialItem, SpecialFieldCount);    //가중치 초기화
-            SpecialFieldGeneratedCount.Add((int)specialItem, 0);             //생성개수 초기화
-        }
 
         DrawFields();
     }

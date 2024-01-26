@@ -25,6 +25,9 @@ public static class PortalLocation  // 포탈 위치 좌표 static 클래스
     public static Point[] CommonFieldPortal_1_Mom_g = { new Point(32, 18), new Point(16, 18), new Point(25, 22), new Point(25, 15) };
     public static Point[] CommonFieldPortal_1_Standing_g = { new Point(41, 7), new Point(9, 7), new Point(25, 34), new Point(25, 14) };
 
+    public static Point[] SpecialFieldPortal_1_Cradle = { new Point(41, 24), new Point(7, 24), new Point(24, 35), new Point(24, 12) };
+    public static Point[] SpecialFieldPortal_1_Stroller = { new Point(40, 8), new Point(8, 8), new Point(38, 39), new Point(25, 12) };
+
     public static Point[] BossFieldPortal_1_ghosthouse = { new Point(31, 20), new Point(15, 22), new Point(23, 31), new Point(22, 17) };
 }
 
@@ -189,8 +192,47 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Special:
-                        portalPointX = stageGenerator.MapWidth - 5 - 1;
-                        portalPointY = 5;
+                        portalPointX = 0;
+                        portalPointY = 0;
+
+                        switch (stageGenerator.StageLevel)
+                        {
+                            case 1:
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[0].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[0].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[0].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[0].y;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                // TODO (현재 1스테 포탈 위치)
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[0].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[0].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[0].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[0].y;
+                                        break;
+                                }
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
 
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
@@ -306,8 +348,47 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Special:
-                        portalPointX = 5;
-                        portalPointY = 5;
+                        portalPointX = 0;
+                        portalPointY = 0;
+
+                        switch (stageGenerator.StageLevel)
+                        {
+                            case 1:
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[1].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[1].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[1].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[1].y;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                // TODO (현재 1스테 포탈 위치)
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[1].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[1].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[1].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[1].y;
+                                        break;
+                                }
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
 
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
@@ -435,12 +516,46 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Special:
-                        portalPointX = stageGenerator.MapWidth / 2 + 2;
-                        portalPointY = 11;
+                        portalPointX = 0;
+                        portalPointY = 0;
 
-                        while (portalPointY < stageGenerator.MapHeight - 5 - 5)
+                        switch (stageGenerator.StageLevel)
                         {
-                            portalPointY += 5;
+                            case 1:
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[2].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[2].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[2].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[2].y;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                // TODO (현재 1스테 포탈 위치)
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item1.X, edge.Item1.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[2].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[2].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[2].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[2].y;
+                                        break;
+                                }
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
                         }
 
 
@@ -561,8 +676,47 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Special:
-                        portalPointX = stageGenerator.MapWidth / 2 - 2;
-                        portalPointY = 5;
+                        portalPointX = 0;
+                        portalPointY = 0;
+
+                        switch (stageGenerator.StageLevel)
+                        {
+                            case 1:
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[3].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[3].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[3].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[3].y;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                // TODO (현재 1스테 포탈 위치)
+                                switch ((SpecialFieldSerial_1)mapGenerator[edge.Item2.X, edge.Item2.Y].Fields.Serial)
+                                {
+                                    case SpecialFieldSerial_1.Cradle:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Cradle[3].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Cradle[3].y;
+                                        break;
+
+                                    case SpecialFieldSerial_1.Stroller:
+                                        portalPointX = PortalLocation.SpecialFieldPortal_1_Stroller[3].x;
+                                        portalPointY = PortalLocation.SpecialFieldPortal_1_Stroller[3].y;
+                                        break;
+                                }
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
 
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;

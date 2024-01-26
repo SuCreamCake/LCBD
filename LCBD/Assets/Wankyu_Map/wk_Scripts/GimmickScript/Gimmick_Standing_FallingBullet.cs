@@ -11,7 +11,7 @@ public class Gimmick_Standing_FallingBullet : MonoBehaviour
 
     private void Start()
     {
-        speed = UnityEngine.Random.Range(1f, 3f);   // 떨어지는 총알 속도 1.0f~2.99f
+        speed = 2f;   // 떨어지는 총알 속도
         bulletRigid = GetComponent<Rigidbody2D>();
         bulletRigid.velocity = transform.right * speed;
 
