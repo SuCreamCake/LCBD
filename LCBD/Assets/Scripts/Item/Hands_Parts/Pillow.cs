@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class Pillow : Hand_Parts_Item
 {
-    private void Awake() //ÇØ´ç¾ÆÀÌÅÛ ÃÊ±â°ª ¼³Á¤
+    private void Awake() //í•´ë‹¹ì•„ì´í…œ ì´ˆê¸°ê°’ ì„¤ì •
     {
+        Price = 45;
         item_number = 2;
-        item_Name = "Pillow"; //¾ÆÀÌÅÛÀÌ¸§
-        Rank = Item_Rank.Common; //¾ÆÀÌÅÛ Èñ±Íµµ
+        item_Name = "Pillow"; //ì•„ì´í…œì´ë¦„
+        Rank = Item_Rank.Common; //ì•„ì´í…œ í¬ê·€ë„
         Weapon_Attack = 7;
         Weapon_Range = 1;
-        drop_age = Drop_age.Baby; //Å‰µæ °¡´ÉÇÑ ³â±â
-        effect_type = Effect_Type.Null; //È¿°ú Å¸ÀÔ
-        effect_info = Effect_Info.Null; //È¿°ú Á¤º¸
-        effect_target = Effect_Target.Null; //È¿°ú Àû¿ë ´ë»ó
-        effect_figures = 0; //¾ó¸¶³ª ¹öÇÁ¸Ô´ÂÁö Á¤µµ
-        effect_active_type = Effect_Active_Type.Null; //È¿°ú À¯Çü
-        effect_maintain_time = 0; //È¿°ú¹ßµ¿ ÈÄ È¿°úÀû¿ëµÇ´Â ½Ã°£
-                                  //item_sprite; //¾ÆÀÌÅÛ ÀÌ¹ÌÁö ÀÌ¹ÌÁö°¡ ¾ø¾î¿ä
+        drop_age = Drop_age.Baby; //Â‰ë“ ê°€ëŠ¥í•œ ë…„ê¸°
+        effect_type = Effect_Type.Null; //íš¨ê³¼ íƒ€ì…
+        effect_info = Effect_Info.Null; //íš¨ê³¼ ì •ë³´
+        effect_target = Effect_Target.Null; //íš¨ê³¼ ì ìš© ëŒ€ìƒ
+        effect_figures = 0; //ì–¼ë§ˆë‚˜ ë²„í”„ë¨¹ëŠ”ì§€ ì •ë„
+        effect_active_type = Effect_Active_Type.Null; //íš¨ê³¼ ìœ í˜•
+        effect_maintain_time = 0; //íš¨ê³¼ë°œë™ í›„ íš¨ê³¼ì ìš©ë˜ëŠ” ì‹œê°„
+                                  //item_sprite; //ì•„ì´í…œ ì´ë¯¸ì§€ ì´ë¯¸ì§€ê°€ ì—†ì–´ìš”
 
-        now_Count = 0; //ÇöÀç ¼ÒÁö °¹¼ö
+        now_Count = 0; //í˜„ì¬ ì†Œì§€ ê°¯ìˆ˜
     }
 
-    public override void DestroyAfterTime() //»ç¿ëÈÄ ÀÛ¾÷
+    public override void DestroyAfterTime() //ì‚¬ìš©í›„ ì‘ì—…
     { }
 
-    public override void Use_Effect() //»ç¿ëÈ¿°ú
+    public override void Use_Effect() //ì‚¬ìš©íš¨ê³¼
     { }
 }

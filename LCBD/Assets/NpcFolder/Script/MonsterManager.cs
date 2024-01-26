@@ -110,6 +110,7 @@ public class MonsterManager : MonoBehaviour
         {
             StartCoroutine(DeadMotion());
             monsterAtk.enabled = false;
+            PlayerTracking.enabled = false;
         }
     }
 
@@ -128,11 +129,13 @@ public class MonsterManager : MonoBehaviour
         // int a = ?
         monsterAtk.enabled = false;
         float walkspeed1 = speed_Ms;
+        PlayerTracking.Stun = true;
         EnemyMove.moveSpeed = 0;
         PlayerTracking.moveSpeed = 0;
         yield return new WaitForSeconds(3.0f);
         //속도 원상복귀 = 원래대로
         tenacity_Ms = maxtenacity_Ms;
+        PlayerTracking.Stun = false;
         EnemyMove.moveSpeed = walkspeed1;
         PlayerTracking.moveSpeed = walkspeed1;
         monsterAtk.enabled = true;

@@ -6,17 +6,17 @@ public class Milk : Potion_Parts_Item
 {
     private void Awake()
     {
-        Price = 25; //¾ÆÀÌÅÛ °¡°İ
-        item_number = 27; //¾ÆÀÌÅÛ ¹øÈ£
-        item_Name = "HP_Potion"; ; //¾ÆÀÌÅÛÀÌ¸§
-        Rank = Item_Rank.Common; //¾ÆÀÌÅÛ Èñ±Íµµ
-        item_type = Item_Type.Potion_Parts; //¾ÆÀÌÅÛ Å¸ÀÔ
-        effect_info = Effect_Info.Health; //¾ÆÀÌÅÛ Á¤º¸
-        effect_active_type = Effect_Active_Type.Once; //È¿°ú À¯Çü
-        effect_figures = 10; //¾ó¸¶³ª ¹öÇÁ¸Ô´ÂÁö Á¤µµ
-        effect_maintain_time = 0; //È¿°ú¹ßµ¿ ÈÄ È¿°úÀû¿ëµÇ´Â ½Ã°£
-        max_count = 99; //ÃÖ´ë ¼ÒÁö°¹¼ö
-        now_Count = 0; //ÇöÀç ¼ÒÁö °¹¼ö
+        Price = 25; //ì•„ì´í…œ ê°€ê²©
+        item_number = 27; //ì•„ì´í…œ ë²ˆí˜¸
+        item_Name = "Milk"; ; //ì•„ì´í…œì´ë¦„
+        Rank = Item_Rank.Common; //ì•„ì´í…œ í¬ê·€ë„
+        item_type = Item_Type.Potion_Parts; //ì•„ì´í…œ íƒ€ì…
+        effect_info = Effect_Info.Health; //ì•„ì´í…œ ì •ë³´
+        effect_active_type = Effect_Active_Type.Once; //íš¨ê³¼ ìœ í˜•
+        effect_figures = 10; //ì–¼ë§ˆë‚˜ ë²„í”„ë¨¹ëŠ”ì§€ ì •ë„
+        effect_maintain_time = 0; //íš¨ê³¼ë°œë™ í›„ íš¨ê³¼ì ìš©ë˜ëŠ” ì‹œê°„
+        max_count = 99; //ìµœëŒ€ ì†Œì§€ê°¯ìˆ˜
+        now_Count = 0; //í˜„ì¬ ì†Œì§€ ê°¯ìˆ˜
     }
 
 
@@ -25,36 +25,36 @@ public class Milk : Potion_Parts_Item
 
     }
 
-    public override void Use_Effect() //ÀÌ·Ğ»ó ±¸ÇöµÊ
+    public override void Use_Effect() //ì´ë¡ ìƒ êµ¬í˜„ë¨
     {
-        Debug.Log("¿ìÀ¯ »ç¿ë");
+        Debug.Log("ìš°ìœ  ì‚¬ìš©");
         GameObject findPlayer = GameObject.FindWithTag("Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.health += effect_figures; // Ã¼·ÂÀ» 10(ÇÑÄ­)È¸º¹½ÃÅ´
-                if(player.health >= player.maxHealth) //if NowHP is bigger than MaxHP
+                player.health += effect_figures; // ì²´ë ¥ì„ 10(í•œì¹¸)íšŒë³µì‹œí‚´
+                if (player.health >= player.maxHealth) //if NowHP is bigger than MaxHP
                 {
                     player.health = player.maxHealth; //NowHP is MaxHP
                 }
-                Debug.Log("Ã¼·Â 10È¸º¹! ÇÑÄ­ÀÓ.");
+                Debug.Log("ì²´ë ¥ 10íšŒë³µ! í•œì¹¸ì„.");
             }
         }
     }
 
     /*public override void Use_Effect()
     {
-        Debug.Log("Ã¼·Â Æ÷¼Ç»ç¿ë");
-        GameObject findPlayer = GameObject.Find("°£´ÜPlayer");
+        Debug.Log("ì²´ë ¥ í¬ì…˜ì‚¬ìš©");
+        GameObject findPlayer = GameObject.Find("ê°„ë‹¨Player");
         if (findPlayer != null)
         {
             Player player = findPlayer.GetComponent<Player>();
             if (player != null)
             {
-                player.health += effect_figures; // Ã¼·ÂÀ» 10(ÇÑÄ­)È¸º¹½ÃÅ´
-                Debug.Log("Ã¼·Â 10È¸º¹! ÇÑÄ­ÀÓ.");
+                player.health += effect_figures; // ì²´ë ¥ì„ 10(í•œì¹¸)íšŒë³µì‹œí‚´
+                Debug.Log("ì²´ë ¥ 10íšŒë³µ! í•œì¹¸ì„.");
             }
         }
     }*/

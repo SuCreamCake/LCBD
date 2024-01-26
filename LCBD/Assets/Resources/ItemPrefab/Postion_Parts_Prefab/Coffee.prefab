@@ -125,10 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item_number: 0
-  item_Name: 
+  item_Name: Coffe
   Rank: 0
-  item_type: 0
-  drop_age: 0
+  item_type: 2
+  drop_age: 3
   effect_type: 0
   effect_info: 0
   effect_target: 0
@@ -139,4 +139,4 @@ MonoBehaviour:
   max_count: 0
   now_Count: 0
   isGet: 0
-  Price: 0
+  Price: 77
