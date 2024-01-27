@@ -109,12 +109,12 @@ public class KeyManager : MonoBehaviour
             ItemInventory.instance.selectedItemIndex = 0; // 첫 번째 아이템 슬롯 선택
             ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item2])) //Item2
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.Item2])) //Item2
         {
             ItemInventory.instance.selectedItemIndex = 1; // 첫 번째 아이템 슬롯 선택
             ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용
         }
-        if (Input.GetKey(KeySetting.keys[KeyInput.Item3])) //Item3
+        if (Input.GetKeyDown(KeySetting.keys[KeyInput.Item3])) //Item3
         {
             ItemInventory.instance.selectedItemIndex = 2; // 첫 번째 아이템 슬롯 선택
             ItemInventory.instance.UseSelectedItem(); // 선택된 아이템 사용

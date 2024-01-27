@@ -47,6 +47,18 @@ public class Body_Inventory: MonoBehaviour
         return false; // 인벤토리가 가득 참
     }
 
+    public bool IsInventoryFull()
+    {
+        foreach (var slot in BodySlots) // 'slots'는 해당 인벤토리의 슬롯 리스트
+        {
+            if (!slot.isUse) // 슬롯이 비어있으면
+            {
+                return false; // 인벤토리가 가득 차지 않았음
+            }
+        }
+        return true; // 모든 슬롯이 사용 중이면, 인벤토리가 가득 참
+    }
+
     public string[] GetAllName()
     {
         string[] names = new string[BodySlots.Length];

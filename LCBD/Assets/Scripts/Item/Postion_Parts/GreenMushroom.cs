@@ -7,7 +7,7 @@ public class GreenMushroom : Potion_Parts_Item
     private void Awake()
     {
         Price = 35; //아이템 가격
-        item_number = 32; //아이템 번호
+        item_number = 33; //아이템 번호
         item_Name = "GreenMushroom"; ; //아이템이름
         Rank = Item_Rank.Common; //아이템 희귀도
         item_type = Item_Type.Potion_Parts; //아이템 타입

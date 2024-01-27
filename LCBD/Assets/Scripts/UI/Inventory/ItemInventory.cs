@@ -56,6 +56,31 @@ public class ItemInventory : MonoBehaviour
         }
     }
 
+    public bool IsInventoryFull()
+    {
+        foreach (var slot in Itemslots) // 'slots'는 해당 인벤토리의 슬롯 리스트
+        {
+            if (!slot.isUse) // 슬롯이 비어있으면
+            {
+                return false; // 인벤토리가 가득 차지 않았음
+            }
+        }
+        return true; // 모든 슬롯이 사용 중이면, 인벤토리가 가득 참
+    }
+
+    // 동일한 아이템이 인벤토리에 있는지 확인하는 메서드
+    public bool HasItem(int itemNumber)
+    {
+        foreach (var slot in Itemslots)
+        {
+            if (slot.isUse && slot.item.item_number == itemNumber)
+            {
+                return true; // 같은 아이템이 이미 있음
+            }
+        }
+        return false; // 같은 아이템이 없음
+    }
+
     public int[] GetAllItemCount()
     {
         int[] counts = new int[Itemslots.Length];

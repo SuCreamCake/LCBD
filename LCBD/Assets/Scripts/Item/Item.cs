@@ -97,9 +97,18 @@ public abstract class Item : MonoBehaviour
         if (collision.CompareTag("Player") && !isGet)
         {
             isGet = true; // 아이템이 습득되었다고 표시
-            GetItem(collision); //아이템 습득 함수
-            // gameObject.SetActive(false); // 오브젝트를 비활성화하지 않음
-            HideItem(); // 시각적으로 아이템 숨기기
+            bool wasAdded = GetItem(collision); //아이템 습득 함수
+
+            // 아이템을 성공적으로 추가했다면, 시각적으로 아이템을 숨깁니다.
+            if (wasAdded)
+            {
+                HideItem(); // 시각적으로 아이템 숨기기
+            }
+            else
+            {
+                // 아이템을 추가하지 못했다면, isGet을 다시 false로 설정합니다.
+                isGet = false;
+            }
         }
     }
 
@@ -113,9 +122,8 @@ public abstract class Item : MonoBehaviour
         }
     }
 
-    private void GetItem(Collider2D player)
+    private bool GetItem(Collider2D player)
     {
-
         if (this.item_type == Item_Type.Body_Parts) //바디파츠면
         {
             Debug.Log("바디파츠 습득");
@@ -125,7 +133,9 @@ public abstract class Item : MonoBehaviour
             }
             else
             {
+                Debug.Log("바디아이템 가득참");
                 // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
+                return false;
             }
         }
 
@@ -139,7 +149,9 @@ public abstract class Item : MonoBehaviour
             }
             else
             {
-                    // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
+                Debug.Log("핸드아이템 가득참");
+                return false;
+                // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
             }
         }
 
@@ -153,10 +165,29 @@ public abstract class Item : MonoBehaviour
            }
            else
            {
-                    // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
+                Debug.Log("포션아이템 가득참");
+                return false;
+                // 인벤토리가 가득 차 있다면, 메시지를 표시하거나 다른 로직을 수행
            }
         }
+        return true;
         // 아이템 습득 로직
         // 예: 인벤토리에 아이템 추가, 플레이어에게 효과 적용 등
     }
+
+    private bool IsInventoryFullForItemType() //인벤토리가 꽉찼는지 확인하는 메소드
+    {
+        switch (item_type)
+        {
+            case Item_Type.Body_Parts:
+                return Body_Inventory.instance.IsInventoryFull();
+            case Item_Type.Hand_Parts:
+                return WeaponInventory.instance.IsInventoryFull();
+            case Item_Type.Potion_Parts:
+                return ItemInventory.instance.IsInventoryFull();
+            default:
+                return false;
+        }
+    }
+
 }

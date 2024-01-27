@@ -8,6 +8,7 @@ public class TimeCapsule : List_Item
     {
         item_number = 39;
         item_Name = "TimeCapsule"; //아이템이름
+        item_type = Item_Type.List;
         Rank = Item_Rank.Unique; //아이템 희귀도
         drop_age = Drop_age.Child; //흭득 가능한 년기
         effect_type = Effect_Type.Null; //효과 타입

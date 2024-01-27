@@ -26,7 +26,7 @@ public class ItemSlot : MonoBehaviour
         isUse = false;
     }
 
-    public void UseItem() //������ ���
+    public void UseItem() //Item Use it
     {
         if (item != null)
         {
