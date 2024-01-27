@@ -337,19 +337,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3794f11ab868bfa42817bb722783d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTime: 0
-  bulletObject: {fileID: 0}
-  weapons: []
-  weaponeIndex: -1
-  attackPosition: {x: 0, y: 0, z: 0}
-  shieldObject: {fileID: 0}
-  soundWaveAttackObject: {fileID: 0}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  soundWaveAttackTime: 0
-  totalAttackPower: 0
   totalShield: 0
+  playerAttackPower: 0
+  monsterDefense: 0
+  monsterTenacity: 0
 --- !u!4 &241894473
 Transform:
   m_ObjectHideFlags: 0
@@ -651,7 +642,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7a8c79398447055499306b3c9ee20900, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -986,7 +977,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7a8c79398447055499306b3c9ee20900, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -1307,7 +1298,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7a8c79398447055499306b3c9ee20900, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1752,6 +1743,10 @@ MonoBehaviour:
     SoundClip: {fileID: 8300000, guid: f50ff27e21fa515418eef93962ef5db9, type: 3}
   UISoundPlayer: {fileID: 0}
   UISounds: []
+  Gimmick01SoundPlayer: {fileID: 0}
+  Gimmick01Sounds: []
+  Gimmick02SoundPlayer: {fileID: 0}
+  Gimmick02Sounds: []
   Mixer: {fileID: 0}
 --- !u!4 &1269180607
 Transform:
@@ -2433,7 +2428,6 @@ MonoBehaviour:
   SettingPanel: {fileID: 0}
   BGMPanel: {fileID: 0}
   SFXPanel: {fileID: 0}
-  LananguagePanel: {fileID: 0}
 --- !u!114 &1501379139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2710,7 +2704,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7a8c79398447055499306b3c9ee20900, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -3227,7 +3221,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7a8c79398447055499306b3c9ee20900, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -3624,6 +3618,7 @@ MonoBehaviour:
   luck: 0
   soundWave: {fileID: 5453876524352100480, guid: 18f9a84fed4e9ba4f9714f56dd50d983, type: 3}
   stage: 1
+  ani: {fileID: 0}
   oralStack: 0
 --- !u!50 &2075860121
 Rigidbody2D:
