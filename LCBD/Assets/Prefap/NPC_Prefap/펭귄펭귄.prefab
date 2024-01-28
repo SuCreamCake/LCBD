@@ -151,7 +151,7 @@ MonoBehaviour:
   speed_Ms: 0.5
   maxtenacity_Ms: 5
   tenacity_Ms: 5
-  attackSpeed_Ms: 1
+  attackSpeed_Ms: 0.5
   crossroads_Ms: 10
   elite: 1
   smallViewRadius: 0.2
@@ -198,6 +198,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2432
   noPlayer: 0
+  Stun: 0
 --- !u!114 &1876006292905475160
 MonoBehaviour:
   m_ObjectHideFlags: 0
