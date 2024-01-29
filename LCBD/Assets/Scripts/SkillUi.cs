@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class SkillUi : MonoBehaviour
 {
-    GameObject playerObject;
+    GameObject playerObject, battleObject;
     Player player;
+    Battle battle;
 
     /*지학 추가*/
     //쿨타임 텍스트
@@ -35,7 +36,8 @@ public class SkillUi : MonoBehaviour
     {
         playerObject = GameObject.Find("Player");
         player = playerObject.GetComponent<Player>();
-
+        battleObject = GameObject.Find("Battle");
+        battle = playerObject.GetComponent<Battle>();
         Init_UI();
         Init_HP_endurance();
         SetFunction_UI();
@@ -48,6 +50,7 @@ public class SkillUi : MonoBehaviour
         SetFunction_UI();
         Set_HP(player.health);
         Set_Endurance(player.endurance);
+        Reset_CoolTime();
     }
 
     /*지학*/
@@ -63,9 +66,9 @@ public class SkillUi : MonoBehaviour
     private void Check_CoolTime()
     {
         time_current = Time.time - time_start;
-        if (time_current < player.attackSpeed)
+        if (time_current < 1.5f)
         {
-            Set_FillAmount(player.attackSpeed - time_current);
+            Set_FillAmount(1.5f - time_current);
         }
         else if (!isEnded)
         {
@@ -82,16 +85,20 @@ public class SkillUi : MonoBehaviour
     //쿨타임 타이머 시작
     private void Reset_CoolTime()
     {
-        text_CoolTime.gameObject.SetActive(true);
-        time_current = player.attackSpeed;
-        time_start = Time.time;
-        Set_FillAmount(player.attackSpeed);
-        isEnded = false;
+        if (Input.GetKeyDown(KeyCode.F) && player.stage == 1 && isEnded ==true)
+        {
+            text_CoolTime.gameObject.SetActive(true);
+            time_current = 1.5f;
+            time_start = Time.time;
+            Set_FillAmount(1.5f);
+            isEnded = false;
+        }
     }
+
     //스킬 재사용 시간 시각화
     private void Set_FillAmount(float _value)
     {
-        image_fill.fillAmount = _value / player.attackSpeed;
+        image_fill.fillAmount = _value / 1.5f;
         string txt = _value.ToString("0.0");
         text_CoolTime.text = txt;
     }
