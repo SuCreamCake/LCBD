@@ -110,6 +110,7 @@ public class CardFlip : MonoBehaviour, IPointerClickHandler
 
     public void ResetCard(GameObject matchingPrefab)
     {
+        imageComponent = GetComponent<Image>();
         // 클릭 가능상태로 초기화
         canClickOff();
         Clicker = false;
