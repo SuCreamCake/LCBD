@@ -94,6 +94,6 @@ public class TalkManage : MonoBehaviour
 
     private void skipBtn()
     {
-        SceneManager.LoadScene("RandomMap");
+        SceneManager.LoadScene("StartMenu");
     }
 }
