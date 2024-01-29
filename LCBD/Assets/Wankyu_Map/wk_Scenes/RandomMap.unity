@@ -2979,6 +2979,10 @@ PrefabInstance:
       propertyPath: text_CoolTime
       value: 
       objectReference: {fileID: 1155074275}
+    - target: {fileID: 2869620272705725008, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+      propertyPath: playerCollider
+      value: 
+      objectReference: {fileID: 664146492}
     - target: {fileID: 2869620272705725011, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
       propertyPath: m_UsedByEffector
       value: 1
@@ -3061,6 +3065,11 @@ PrefabInstance:
       objectReference: {fileID: 1310507062}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+--- !u!70 &664146492 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2869620272705725011, guid: 40e35f9f296b94640a87ae82e8fe19d9, type: 3}
+  m_PrefabInstance: {fileID: 664146491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682646952
 GameObject:
   m_ObjectHideFlags: 0
