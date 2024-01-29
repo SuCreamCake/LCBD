@@ -3,6 +3,9 @@
 
 public class Player_Buff_Debuff
 {
+    public static bool HealthRegeneration { get; private set; } = false;  // 버프: '체력 재생' (체력 회복.)
+    public static void SetHealthRegeneration(bool value) { HealthRegeneration = value; }
+
     public static bool WeightOfLife { get; private set; } = false;  // 디버프: '삶의 무게' (설명: 점프 시 지구력 소모량 30% 증가(합연산))
     public static void SetWeightOfLife(bool value) { WeightOfLife = value; }
 

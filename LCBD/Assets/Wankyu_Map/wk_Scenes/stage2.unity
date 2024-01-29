@@ -1039,6 +1039,8 @@ MonoBehaviour:
   <BabyBottle_GimmickObject>k__BackingField: {fileID: 6823632416212186916, guid: 58bf0aee2b48af047b437e9a62bc7456, type: 3}
   <Mom_GimmickObject>k__BackingField: {fileID: 3567017583493161354, guid: 8818b33039bced749b47d0ae47a20c23, type: 3}
   <Standing_GimmickObject>k__BackingField: {fileID: 3046460771563219026, guid: 549472cc32d1f724595ed22f635d6f80, type: 3}
+  <Cradle_Object>k__BackingField: {fileID: 3209248496648066094, guid: b97d0f475d07c9640a5d57aa5a1d0817, type: 3}
+  <Stroller_Object>k__BackingField: {fileID: 3209248496648066094, guid: 22a320a50677ff542bb6418ba871545b, type: 3}
   <GimmickObjectsParent>k__BackingField: {fileID: 17968719}
 --- !u!1 &885901900
 GameObject:
@@ -1695,6 +1697,10 @@ MonoBehaviour:
     SoundClip: {fileID: 8300000, guid: f50ff27e21fa515418eef93962ef5db9, type: 3}
   UISoundPlayer: {fileID: 0}
   UISounds: []
+  Gimmick01SoundPlayer: {fileID: 0}
+  Gimmick01Sounds: []
+  Gimmick02SoundPlayer: {fileID: 0}
+  Gimmick02Sounds: []
   Mixer: {fileID: 0}
 --- !u!4 &1505460902
 Transform:

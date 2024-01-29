@@ -2786,6 +2786,8 @@ MonoBehaviour:
   <BabyBottle_GimmickObject>k__BackingField: {fileID: 6823632416212186916, guid: 58bf0aee2b48af047b437e9a62bc7456, type: 3}
   <Mom_GimmickObject>k__BackingField: {fileID: 3567017583493161354, guid: 8818b33039bced749b47d0ae47a20c23, type: 3}
   <Standing_GimmickObject>k__BackingField: {fileID: 3046460771563219026, guid: 549472cc32d1f724595ed22f635d6f80, type: 3}
+  <Cradle_Object>k__BackingField: {fileID: 3209248496648066094, guid: b97d0f475d07c9640a5d57aa5a1d0817, type: 3}
+  <Stroller_Object>k__BackingField: {fileID: 3209248496648066094, guid: 22a320a50677ff542bb6418ba871545b, type: 3}
   <GimmickObjectsParent>k__BackingField: {fileID: 1628113420}
 --- !u!1001 &653870721
 PrefabInstance:
@@ -6579,7 +6581,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: 0edd4cf7981c72949bcf4917a0b48f29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

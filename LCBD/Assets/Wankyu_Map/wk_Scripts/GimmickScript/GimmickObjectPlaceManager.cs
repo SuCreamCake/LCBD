@@ -17,6 +17,9 @@ public static class GimmickObjectLocation  // 기믹 오브젝트 위치 좌표 
     public static Point CommonField_1_BabyBottle_GimmickObject = new Point(20, 16);
     public static Point CommonField_1_Mom_GimmickObject = new Point(12, 32);
     public static Point CommonField_1_Standing_GimmickObject = new Point(25, 24);
+
+    public static Point SpecialField_1_Cradle_Object = new Point(20, 19);
+    public static Point SpecialField_1_Stroller_Object = new Point(0, 0);
 }
 
 public class GimmickObjectPlaceManager : MonoBehaviour
@@ -27,6 +30,9 @@ public class GimmickObjectPlaceManager : MonoBehaviour
     [field: SerializeField] public GameObject BabyBottle_GimmickObject { get; private set; }
     [field: SerializeField] public GameObject Mom_GimmickObject { get; private set; }
     [field: SerializeField] public GameObject Standing_GimmickObject { get; private set; }
+
+    [field: SerializeField] public GameObject Cradle_Object { get; private set; }
+    [field: SerializeField] public GameObject Stroller_Object { get; private set; }
 
     [field: SerializeField] public Transform GimmickObjectsParent { get; private set; } //부모 오브젝트 트랜스폼
 
@@ -66,7 +72,7 @@ public class GimmickObjectPlaceManager : MonoBehaviour
                         parentObjects.Add(parentObject);    // 만들었으니까 리스트에 추가해줌
                     }
 
-                    if (fieldTypes[i, j] == FieldType.Common)
+                    if (fieldTypes[i, j] == FieldType.Common)   // 일반 필드 기믹 오브젝트 배치.
                     {
                         switch (stageGenerator.StageLevel)
                         {
@@ -79,6 +85,19 @@ public class GimmickObjectPlaceManager : MonoBehaviour
                                 break;
                         }
                     }
+                    if (fieldTypes[i, j] == FieldType.Special)  // 특수 필드 오브젝트 배치.
+                    {
+                        switch (stageGenerator.StageLevel)
+                        {
+                            case 1:
+                                SetSpecialFieldObject_Stage1(i, j, parentObject.transform);
+                                break;
+
+                            case 2:
+                                SetSpecialFieldObject_Stage1(i, j, parentObject.transform); // 임시로 1스테이지.
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -86,7 +105,7 @@ public class GimmickObjectPlaceManager : MonoBehaviour
     }
 
 
-
+    // 1스테이지 일반 필드 기믹 오브젝트 배치.
     private void SetGimmickObject_Stage1(int i, int j, Transform parentMap)
     {
         int width = mapGenerator[i, j].Fields.Map.GetLength(0);
@@ -137,4 +156,44 @@ public class GimmickObjectPlaceManager : MonoBehaviour
         }
     }
 
+    // 1스테이지 특수 필드 오브젝트 배치.
+    private void SetSpecialFieldObject_Stage1(int i, int j, Transform parentMap)
+    {
+        int width = mapGenerator[i, j].Fields.Map.GetLength(0);
+        int height = mapGenerator[i, j].Fields.Map.GetLength(1);
+
+        int x;
+        int y;
+
+        Vector3Int pos;
+        GameObject gimmickObjectPrefab;
+
+        switch ((SpecialFieldSerial_1)mapGenerator[i, j].Fields.Serial)
+        {
+            case SpecialFieldSerial_1.Cradle:
+
+                x = GimmickObjectLocation.SpecialField_1_Cradle_Object.x;
+                y = GimmickObjectLocation.SpecialField_1_Cradle_Object.y;
+
+                pos = new(i * (width + 1) + x, j * (height + 1) + y, 0);
+
+                gimmickObjectPrefab = Instantiate(Cradle_Object, pos, new(0, 0, 0, 0), parentMap);
+                gimmickObjectPrefab.transform.Translate(0.5f, 0.5f, 0);
+
+                break;
+
+            case SpecialFieldSerial_1.Stroller:
+
+                x = GimmickObjectLocation.CommonField_1_Mom_GimmickObject.x;
+                y = GimmickObjectLocation.CommonField_1_Mom_GimmickObject.y;
+
+                pos = new(i * (width + 1) + x, j * (height + 1) + y, 0);
+
+                gimmickObjectPrefab = Instantiate(Mom_GimmickObject, pos, new(0, 0, 0, 0), parentMap);
+                gimmickObjectPrefab.transform.Translate(0.5f, 0.5f, 0);
+
+                break;
+
+        }
+    }
 }
