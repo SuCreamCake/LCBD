@@ -4626,6 +4626,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f5173e159dddc4fba6816e48fe9c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &1024726945
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024726929}
+  m_Enabled: 1
 --- !u!1 &1028896552
 GameObject:
   m_ObjectHideFlags: 0
@@ -9438,7 +9446,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2077727817}
   - component: {fileID: 2077727819}
-  - component: {fileID: 2077727818}
   - component: {fileID: 2077727820}
   m_Layer: 0
   m_Name: MinimapCamera
@@ -9463,14 +9470,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &2077727818
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077727816}
-  m_Enabled: 1
 --- !u!20 &2077727819
 Camera:
   m_ObjectHideFlags: 0
