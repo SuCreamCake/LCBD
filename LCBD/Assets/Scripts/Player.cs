@@ -71,6 +71,10 @@ public class Player : MonoBehaviour
     internal object text_hp;
     internal object img;
 
+    //바닥 뚫기
+    private GameObject currentOneWayPlatform;
+
+    [SerializeField] private CapsuleCollider2D playerCollider;
 
 
     private void Awake()
@@ -95,6 +99,7 @@ public class Player : MonoBehaviour
         {
             if (health > 0)
             {
+                downJump();
                 jump();
                 run();
                 if (!isLadder)
@@ -186,6 +191,10 @@ public class Player : MonoBehaviour
             potalCol = collision;
         }
         personality(collision);
+        if(collision.gameObject.CompareTag("Platform"))
+        {
+            currentOneWayPlatform = collision.gameObject;
+        }
 
     }
 
@@ -208,6 +217,10 @@ public class Player : MonoBehaviour
         {
             potalOn = false;
             potalCol = null;
+        }
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            currentOneWayPlatform = null;
         }
     }
 
@@ -240,6 +253,17 @@ public class Player : MonoBehaviour
             
 
             SFXPlayer.JumpSound(0);     // Jump Sound 
+        }
+
+    }
+
+    private void downJump()
+    {
+        if(Input.GetKey(KeySetting.keys[KeyInput.DOWN]) && Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP])){
+            if(currentOneWayPlatform != null)
+            {
+                StartCoroutine(DisableCollision());
+            }
         }
 
     }
@@ -718,4 +742,14 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.03f);
         spriteRenderer.material.color = Color.white;
     }
+
+    private IEnumerator DisableCollision()
+    {
+        BoxCollider2D platformCollider = currentOneWayPlatform.GetComponent<BoxCollider2D>();
+
+        Physics2D.IgnoreCollision(playerCollider, platformCollider);
+        yield return new WaitForSeconds(0.25f);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
+
+    } 
 }

@@ -244,7 +244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409212675325899586, guid: c22ae9e5c7ca91e49bac51ddf2cd10d3, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 3409212675325899590, guid: c22ae9e5c7ca91e49bac51ddf2cd10d3, type: 3}
       propertyPath: m_RootOrder
