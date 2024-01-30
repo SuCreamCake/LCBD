@@ -8,6 +8,7 @@ public class Gimmick_Standing_LeverControl : MonoBehaviour
     public void LeverControlCountUp() { LeverControlCount++; Debug.Log("LeverControlCount :" + LeverControlCount); }
 
 
+    [SerializeField] private GameObject brokenWalls;
     [SerializeField] private GameObject walls;
 
     [SerializeField] private Transform bombsParent;
@@ -24,6 +25,9 @@ public class Gimmick_Standing_LeverControl : MonoBehaviour
         isClear = false;
 
         LeverControlCount = 0;
+
+        brokenWalls = transform.parent.GetChild(2).gameObject;
+        brokenWalls.SetActive(true);
 
         walls = transform.parent.GetChild(3).gameObject;
         walls.SetActive(true);
@@ -52,6 +56,7 @@ public class Gimmick_Standing_LeverControl : MonoBehaviour
                 // 사운드 재생. 클리어 소리.
                 SFXPlayer.Gimmick01Sound(1);
                 walls.SetActive(false);
+                brokenWalls.SetActive(false);
 
                 for (int i = 0;i < bombs.Length;i++)
                 {

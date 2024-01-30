@@ -92,7 +92,7 @@ public class Gimmick_BabyBottle_Object : MonoBehaviour, IControlGimmickObject
         // 플랫폼 하강 (상승 중이 아닐 때 && "background" layer 감지 중이 아닐 때).
         if (isRisingPlatform == false && !isHit)
         {
-            fallingPlatform.transform.Translate(0, -0.1f * Time.deltaTime, 0);
+            fallingPlatform.transform.Translate(0, -0.02f * Time.deltaTime, 0);
         }
     }
 

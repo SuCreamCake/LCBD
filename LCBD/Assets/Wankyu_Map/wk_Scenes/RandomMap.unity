@@ -918,7 +918,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 3.55
   m_Depth: -1
   m_CullingMask:
@@ -960,10 +960,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 301246583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a7118e48eca6f42a2adb9cdd25048d, type: 3}
+  m_Script: {fileID: 11500000, guid: 002215aee46198246bc210adaf578156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1024726929}
+  player: {fileID: 0}
 --- !u!1 &306349397
 GameObject:
   m_ObjectHideFlags: 0
@@ -2251,6 +2251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ade07f356cdc5c4b8ca8d5ef1956a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Boss: {fileID: 0}
 --- !u!1 &571939523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2672,6 +2673,7 @@ GameObject:
   - component: {fileID: 643425205}
   - component: {fileID: 643425206}
   - component: {fileID: 643425207}
+  - component: {fileID: 643425208}
   m_Layer: 0
   m_Name: RandomMapGenerator
   m_TagString: Untagged
@@ -2750,6 +2752,7 @@ MonoBehaviour:
   portalManager: {fileID: 643425205}
   monsterSpawnerManager: {fileID: 643425206}
   gimmickObjectManager: {fileID: 643425207}
+  bossSpawnManager: {fileID: 643425208}
 --- !u!114 &643425205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2802,6 +2805,20 @@ MonoBehaviour:
   <Cradle_Object>k__BackingField: {fileID: 3209248496648066094, guid: b97d0f475d07c9640a5d57aa5a1d0817, type: 3}
   <Stroller_Object>k__BackingField: {fileID: 3209248496648066094, guid: 22a320a50677ff542bb6418ba871545b, type: 3}
   <GimmickObjectsParent>k__BackingField: {fileID: 1628113420}
+--- !u!114 &643425208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643425200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51990ce0b26a6045832b015f732db1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalOnOff_Transform: {fileID: 530078533}
+  <BossObject>k__BackingField: {fileID: 1064320277176174280, guid: b2f6ee0b2e4c7814ea4e1f1724b0d304, type: 3}
 --- !u!1001 &653870721
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -29,6 +29,9 @@ public static class PortalLocation  // 포탈 위치 좌표 static 클래스
     public static Point[] SpecialFieldPortal_1_Stroller = { new Point(40, 8), new Point(8, 8), new Point(38, 39), new Point(25, 12) };
 
     public static Point[] BossFieldPortal_1_ghosthouse = { new Point(31, 20), new Point(15, 22), new Point(23, 31), new Point(22, 17) };
+    
+    //임시 보스 포탈 위치.
+    public static Point[] BossFieldPortal_1_tmpLocation = { new Point(35, 17), new Point(14, 17), new Point(25, 32), new Point(22, 17) };
 }
 
 public class PortalManager : MonoBehaviour
@@ -99,8 +102,12 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[0].x;
-                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[0].y;
+                        // portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[0].x;
+                        // portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[0].y;
+
+                        // TODO. 임시 보스 포탈 위치.
+                        portalPointX = PortalLocation.BossFieldPortal_1_tmpLocation[0].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_tmpLocation[0].y;
 
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
@@ -255,8 +262,12 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[1].x;
-                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[1].y;
+                        // portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[1].x;
+                        // portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[1].y;
+
+                        // TODO. 임시 보스 포탈 위치.
+                        portalPointX = PortalLocation.BossFieldPortal_1_tmpLocation[1].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_tmpLocation[1].y;
 
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;
@@ -420,8 +431,12 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[2].x;
-                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[2].y;
+                        // portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[2].x;
+                        // portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[2].y;
+
+                        // TODO. 임시 보스 포탈 위치.
+                        portalPointX = PortalLocation.BossFieldPortal_1_tmpLocation[2].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_tmpLocation[2].y;
 
                         keyPortalPoint = new ObjectPoint(edge.Item1.X, edge.Item1.Y, portalPointX, portalPointY);
                         break;
@@ -581,8 +596,12 @@ public class PortalManager : MonoBehaviour
                         break;
 
                     case FieldType.Boss:
-                        portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[3].x;
-                        portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[3].y;
+                        // portalPointX = PortalLocation.BossFieldPortal_1_ghosthouse[3].x;
+                        // portalPointY = PortalLocation.BossFieldPortal_1_ghosthouse[3].y;
+
+                        // TODO. 임시 보스 포탈 위치.
+                        portalPointX = PortalLocation.BossFieldPortal_1_tmpLocation[3].x;
+                        portalPointY = PortalLocation.BossFieldPortal_1_tmpLocation[3].y;
 
                         valuePortalPoint = new ObjectPoint(edge.Item2.X, edge.Item2.Y, portalPointX, portalPointY);
                         break;

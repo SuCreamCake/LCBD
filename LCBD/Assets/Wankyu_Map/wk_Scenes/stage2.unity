@@ -711,7 +711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301246586}
   - component: {fileID: 301246585}
-  - component: {fileID: 301246584}
+  - component: {fileID: 301246587}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -719,19 +719,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &301246584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301246583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a7118e48eca6f42a2adb9cdd25048d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!20 &301246585
 Camera:
   m_ObjectHideFlags: 0
@@ -758,7 +745,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 3.55
   m_Depth: -1
   m_CullingMask:
@@ -791,6 +778,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &301246587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301246583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002215aee46198246bc210adaf578156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &311326833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,6 +1747,7 @@ GameObject:
   - component: {fileID: 643425205}
   - component: {fileID: 643425206}
   - component: {fileID: 643425207}
+  - component: {fileID: 643425208}
   m_Layer: 0
   m_Name: randomMapGenerator
   m_TagString: Untagged
@@ -1825,6 +1826,7 @@ MonoBehaviour:
   portalManager: {fileID: 643425205}
   monsterSpawnerManager: {fileID: 643425206}
   gimmickObjectManager: {fileID: 643425207}
+  bossSpawnManager: {fileID: 643425208}
 --- !u!114 &643425205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1877,6 +1879,20 @@ MonoBehaviour:
   <Cradle_Object>k__BackingField: {fileID: 3209248496648066094, guid: b97d0f475d07c9640a5d57aa5a1d0817, type: 3}
   <Stroller_Object>k__BackingField: {fileID: 3209248496648066094, guid: 22a320a50677ff542bb6418ba871545b, type: 3}
   <GimmickObjectsParent>k__BackingField: {fileID: 17968719}
+--- !u!114 &643425208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643425200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51990ce0b26a6045832b015f732db1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalOnOff_Transform: {fileID: 530078533}
+  <BossObject>k__BackingField: {fileID: 1064320277176174280, guid: b2f6ee0b2e4c7814ea4e1f1724b0d304, type: 3}
 --- !u!1 &647031207
 GameObject:
   m_ObjectHideFlags: 0

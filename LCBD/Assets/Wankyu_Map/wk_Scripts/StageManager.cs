@@ -17,6 +17,8 @@ public class StageManager : MonoBehaviour
     private MonsterSpawnerManager monsterSpawnerManager;
     [SerializeField]
     private GimmickObjectPlaceManager gimmickObjectManager;
+    [SerializeField]
+    private BossSpawnerManeger bossSpawnManager;
 
     private Player player;
     public Player GetPlayer() { return player; }
@@ -40,6 +42,9 @@ public class StageManager : MonoBehaviour
 
         stageTileController = GetComponent<StageTileController>(); //타일 만들어줌
         stageTileController.FillPlaceTile();
+
+        bossSpawnManager = GetComponent<BossSpawnerManeger>();  // 보스 만들어줌. 
+        bossSpawnManager.SpawnBoss();
 
         GameObject startPos = stageTileController.StartPos; //시작 위치설정
 
