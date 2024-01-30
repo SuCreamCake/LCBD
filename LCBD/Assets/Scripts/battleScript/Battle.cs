@@ -385,6 +385,12 @@ public class Battle : MonoBehaviour
                 {
                     Destroy(collider.gameObject);
                 }
+                if(collider.tag == "Boss")
+                {
+                    float damage = battleManager.GetCurrentInfo(collider);
+                    Debug.Log(damage);
+                    collider.GetComponent<BossManager>().TakeDamage(damage);
+                }
                 string txt = "";
                 if (player.health <= 0)
                 {

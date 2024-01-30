@@ -10,12 +10,12 @@ public class PauseMenu : MonoBehaviour
     private bool GameIsPause = false;
     private SoundsPlayer SFXPlayer;
 
-    private SettingMenu SettingMenu; //¼³Á¤Ã¢
+    private SettingMenu SettingMenu; //ì„¤ì •ì°½
 
 
     private void Awake()
     {
-        SettingMenu = FindObjectOfType<SettingMenu>(); //¼³Á¤Ã¢ ¿ÀºêÁ§Æ® °¡Á®¿À±â
+        SettingMenu = FindObjectOfType<SettingMenu>(); //ì„¤ì •ì°½ ì˜¤ë¸Œì íŠ¸ ê°€ì ¸ì˜¤ê¸°
         SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
     }
     void Start()
@@ -34,24 +34,26 @@ public class PauseMenu : MonoBehaviour
             else if (!GameIsPause)
                 Pause();
         }
-            
+
 
 
     }
 
     private void Pause()
     {
-        Debug.Log("Á¤Áö");
+        Debug.Log("ì •ì§€");
         Time.timeScale = 0.0f;
-        SFXPlayer.SFX_Mute(true);
+        if(SFXPlayer != null)
+            SFXPlayer.SFX_Mute(true);
         PausePanel.SetActive(true);
         GameIsPause = true;
     }
     private void Resume()
-    { //ÆÛ½ºÆÇ³ÚÀ» ²ö´Ù / Å¸ÀÌ¸Ó¤Ã¸¦ 1.0À¸·Î Á¤»óÀ¸·Î µ¹·Á³õ´Â´Ù. GameIsPause¸¦ false·Î
-        Debug.Log("°è¼ÓÇÏ±â");
+    { //í¼ìŠ¤íŒë„¬ì„ ëˆë‹¤ / íƒ€ì´ë¨¸ã…“ë¥¼ 1.0ìœ¼ë¡œ ì •ìƒìœ¼ë¡œ ëŒë ¤ë†“ëŠ”ë‹¤. GameIsPauseë¥¼ falseë¡œ
+        Debug.Log("ê³„ì†í•˜ê¸°");
         PausePanel.SetActive(false);
-        SFXPlayer.SFX_Mute(false);
+        if (SFXPlayer != null)
+            SFXPlayer.SFX_Mute(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
     }
@@ -70,6 +72,6 @@ public class PauseMenu : MonoBehaviour
 
     public void go_Quit()
     {
-        Debug.Log("°ÔÀÓ ³ª°¡±â Ãâ·Â¸¸µÊ");
+        Debug.Log("ê²Œì„ ë‚˜ê°€ê¸° ì¶œë ¥ë§Œë¨");
     }
 }

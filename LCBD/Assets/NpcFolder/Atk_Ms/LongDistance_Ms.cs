@@ -7,7 +7,7 @@ public class LongDistance_Ms : MonoBehaviour
     //원거리 공격 데미지
     public float damage;
     private Rigidbody2D bulletRigidbody2D;
-    private float bulletSpeed = 10f;
+    public float bulletSpeed = 10f;
     private float distanceTime = 0f;
     private bool isDistanceOver = false;
     private int crossroads_Ms;

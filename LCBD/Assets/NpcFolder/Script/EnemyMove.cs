@@ -58,10 +58,10 @@ public class EnemyMove : MonoBehaviour
             Vector2 frontVec = new Vector2(rigid.position.x + nextMove * 0.4f, rigid.position.y);
 
             // 지면과의 충돌을 검출하는 Ray를 그림
-            Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
+            Debug.DrawRay(frontVec, Vector3.down, new Color(0, 2, 0));
 
             // 지면과의 충돌을 감지
-            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, backMask);
+            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 2, backMask);
 
             // 지면과 충돌하지 않으면 방향을 바꿈
             if (raycast.collider == null)

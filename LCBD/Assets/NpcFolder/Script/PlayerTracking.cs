@@ -124,7 +124,7 @@ public class PlayerTracking : MonoBehaviour
         if (spriteRenderer.flipX)
         {
             // 앞쪽으로 레이를 쏴서 땅을 감지
-            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 1, backMask);
+            RaycastHit2D raycast = Physics2D.Raycast(frontVec, Vector3.down, 2, backMask);
             // 감지된 땅이 없으면 멈춤
             if (raycast.collider == null)
             {
@@ -139,7 +139,7 @@ public class PlayerTracking : MonoBehaviour
         else
         {
             // 뒷쪽으로 레이를 쏴서 땅을 감지
-            RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 1, backMask);
+            RaycastHit2D raycast2 = Physics2D.Raycast(frontVec2, Vector3.down, 2, backMask);
             // 감지된 땅이 없으면 멈춤
             if (raycast2.collider == null)
             {
