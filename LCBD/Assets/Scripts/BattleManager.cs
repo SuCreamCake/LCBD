@@ -82,8 +82,8 @@ public class BattleManager : MonoBehaviour
     public float GetCurrentInfoBoss(Collider2D monster)
     {
         BossManager BossManager = monster.GetComponent<BossManager>();
-        monsterDefense = monsterManager.defense_Ms;
-        monsterTenacity = monsterManager.tenacity_Ms;
+        monsterDefense = BossManager.defense_Ms;
+        monsterTenacity = BossManager.tenacity_Ms;
         playerAttackPower = player.attackPower;
         float damage = CalDamage(playerAttackPower, monsterDefense, monsterTenacity);
         if (damage < playerAttackPower * 0.05f)
