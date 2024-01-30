@@ -387,7 +387,7 @@ public class Battle : MonoBehaviour
                 }
                 if(collider.tag == "Boss")
                 {
-                    float damage = battleManager.GetCurrentInfo(collider);
+                    float damage = battleManager.GetCurrentInfoBoss(collider);
                     Debug.Log(damage);
                     collider.GetComponent<BossManager>().TakeDamage(damage);
                 }
