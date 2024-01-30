@@ -37,6 +37,9 @@ public class BossManager : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    //생존 여부
+    bool alive;
+
     void Awake()
     {
         PlayerTracking = GetComponent<PlayerTracking>();
@@ -53,6 +56,7 @@ public class BossManager : MonoBehaviour
     {
         // "Player" 태그를 가진 오브젝트를 찾아서 playerTransform에 할당
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        alive = true;
     }
 
     private void Update()
@@ -110,6 +114,7 @@ public class BossManager : MonoBehaviour
             isPaused = true;
             monsterAtk.enabled = false;
             //PlayerTracking.enabled = false;
+            alive = false;
         }
     }
 
@@ -135,8 +140,8 @@ public class BossManager : MonoBehaviour
         SpriteRenderer.material.color = Color.white;
     }
 
-    //public getAlive()
-    //{
-    //    return true;
-    //}
+    public bool getAlive()
+    {
+        return alive;
+    }
 }
