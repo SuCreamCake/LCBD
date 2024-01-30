@@ -11,15 +11,25 @@ public class PortalOnOff : MonoBehaviour
     void Start()
     {
         Stage = GameObject.Find("Stage");
-        boseMng = Boss.GetComponent<BossManager>();
     }
 
 
     void Update()
     {
-        if (boseMng.getAlive())
-            Stage.SetActive(false);
+        if(boseMng == null)
+        {
+            boseMng = Boss.GetComponent<BossManager>();
+        }
         else
-            Stage.SetActive(true);
+        {
+            if (boseMng.getAlive())
+                Stage.SetActive(false);
+            else
+                Stage.SetActive(true);
+        }
+            
+
+
+
     }
 }
