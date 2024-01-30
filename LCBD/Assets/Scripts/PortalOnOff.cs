@@ -5,13 +5,13 @@ using UnityEngine;
 public class PortalOnOff : MonoBehaviour
 {
     GameObject Stage;
-    public GameObject Bose;
+    public GameObject Boss;
     BossManager boseMng;
 
     void Start()
     {
         Stage = GameObject.Find("Stage");
-        boseMng = Bose.GetComponent<BossManager>();
+        boseMng = Boss.GetComponent<BossManager>();
     }
 
 
