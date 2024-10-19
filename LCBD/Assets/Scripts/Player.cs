@@ -80,56 +80,54 @@ public class Player : MonoBehaviour
 
     private void Awake()
     { 
-        ani = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        collider2D = GetComponent<CapsuleCollider2D>();
+        ani = GetComponent<Animator>(); //애니메이션
+        rigid = GetComponent<Rigidbody2D>();    //캐릭터 이동 구현을 위한 리지드 바디
+        spriteRenderer = GetComponent<SpriteRenderer>();    //캐릭터의 성장 표현을 위한 스프라이트
+        collider2D = GetComponent<CapsuleCollider2D>(); //캐릭터의 충돌을 구현하기 위한 콜라이더
 
-        infancy();
-        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();
-        battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();
-
-
+        infancy();  //초기 스탯 설정
+        SFXPlayer = GameObject.Find("SFXPlayer").GetComponent<SoundsPlayer>();  //사운드 효과
+        battleManager = GameObject.Find("BattleManager").GetComponent<Battle>();    //전투 시스템
 
     }
 
     private void Update()
     {
        
-        if (!drained)
+        if (!drained)   //탈진이 아니라면
         {
-            if (health > 0)
+            if (health > 0) //생명력이 0이 아니라면
             {
-                downJump();
-                jump();
-                run();
-                if (!isLadder)
-                    battleManager.battleLogic();
+                downJump(); //바닥 아래로 이동하는 기능
+                jump(); //캐릭터 점프 기능
+                run();  //캐릭터 달리기 기능
+                if (!isLadder)  //사다리가 아니라면
+                    battleManager.battleLogic();    //전투 기능 활성
             }
 
         }
         
-        stopSpeed();
+        stopSpeed();    //캐릭터 조작이 멈추면 캐릭터가 느려지는 기능
 
-        switch (stage)
+        switch (stage)  //스테이지에 따른 특수 능력 구현 기능
         {
             case 1:
                 //attack();
                 break;
             case 3:
-                ladderJump();
+                ladderJump();   //사다리 점프
                 break;
             case 4:
-                ladderJump();
+                ladderJump();   //사다리 점프
                 break;
             default:
                 break;
         }
         
-        maxState();
-        minState();
+        maxState(); //최고 스탯 기능
+        minState(); //최저 스탯 기능
 
-        potal();
+        potal();    //맵 이동 기능
 
     }
 
@@ -137,29 +135,29 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (health > 0)
+        if (health > 0) //생명력이 0이 아니라면
         {
-            walk();
-            upDown();
-            enduranceSystem();
-            falling();
+            walk(); //걷기 가능
+            upDown();   //사다리 타기 기능
+            enduranceSystem();  //체력,스테미나 시스템
+            falling();  //낙하 대미지 시스템
         }
         else
         {
-            ani.SetTrigger("die");
+            ani.SetTrigger("die");  // 캐릭터가 죽었을 때 모습
         }
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ladder"))
+        if (collision.CompareTag("Ladder")) //사다리 타기 기능
         {
             isLadder = true;
             rigid.gravityScale = 0;
             rigid.drag = 3;
         }
-        if (collision.CompareTag("StagePortal"))
+        if (collision.CompareTag("StagePortal"))    //스테이지 포탈 기능
         {
             SFXPlayer.InteractionSound(0);  // Portal Sound
             switch (stage)
@@ -186,12 +184,12 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-        if (collision.CompareTag("FieldPortal"))
+        if (collision.CompareTag("FieldPortal"))    //맵 이동 포탈 기능
         {
             potalOn = true;
             potalCol = collision;
         }
-        personality(collision);
+        personality(collision); //캐릭터의 성장 기능
 
 
 
@@ -200,7 +198,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ladder"))
+        if (collision.CompareTag("Ladder")) //사다리 타기 기능
         {
             isLadder = false;
             rigid.gravityScale = 2;
@@ -208,11 +206,11 @@ public class Player : MonoBehaviour
             if(battleManager.weaponIndex==1)
                 ani.SetTrigger("isGun");
         }
-        if (collision.CompareTag("TestTag"))
+        if (collision.CompareTag("TestTag"))    
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
         }
-        if (collision.CompareTag("FieldPortal"))
+        if (collision.CompareTag("FieldPortal"))    //맵 이동 포탈 기능
         {
             potalOn = false;
             potalCol = null;
@@ -222,14 +220,14 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Platform"))
+        if (collision.gameObject.CompareTag("Platform"))    //바닥 통과 기능
         {
             currentOneWayPlatform = collision.gameObject;
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Platform"))
+        if (collision.gameObject.CompareTag("Platform"))    //바닥 통과 기능
         {
             currentOneWayPlatform = null;
         }
@@ -247,7 +245,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private void jump()
+    private void jump() //점프 기능 함수
     {
         if (Input.GetKeyDown(KeySetting.keys[KeyInput.JUMP]) && Mathf.Abs(rigid.velocity.y) <= 0.001)
         {
@@ -268,7 +266,7 @@ public class Player : MonoBehaviour
 
     }
 
-    private void downJump()
+    private void downJump()     //바닥 통과 기능 함수
     {
         if(Input.GetKeyDown(KeySetting.keys[KeyInput.DOWN]) ){
             if(currentOneWayPlatform != null)
@@ -278,19 +276,19 @@ public class Player : MonoBehaviour
         }
 
     }
-    IEnumerator jumpUp()
+    IEnumerator jumpUp()    //사다리 맨 위에서는 점프 가능하게 하기 위한 함수
     {
         yield return new WaitForSeconds(0.02f);
         rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
     }
-    private void stopSpeed()
+    private void stopSpeed()    //캐릭터 조작 중이 아닐 시 캐릭터가 느려지는 함수
     {
         //stop speed
         if (Input.GetButtonUp("Horizontal"))
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 2f, rigid.velocity.y);
     }
 
-    private void walk()
+    private void walk() //캐릭터가 걷기 기능 함수
     {
         int key = 0;
         if (Input.GetKey(KeySetting.keys[KeyInput.LEFT])) //KeyManager스크립트를 활용한 코드
@@ -312,7 +310,7 @@ public class Player : MonoBehaviour
 
         float speedx = Mathf.Abs(this.rigid.velocity.x);
 
-        if ((downTime > 0.5 && key == 0) || drained)
+        if ((downTime > 0.5 && key == 0) || drained)    //달리기 구현을 위한 키 더블 입력 구현
         {
             
             downA = false;
@@ -322,21 +320,21 @@ public class Player : MonoBehaviour
             downTime = 0;
             CancelInvoke("enduranceRun");
         }
-        if (downAA || downDD)
+        if (downAA || downDD)   //달리기 상태
         {
-            maxSpeed = nomalSpeed * 1.4f;
-            ani.SetBool("isRunning", true);
+            maxSpeed = nomalSpeed * 1.4f;   //달리기 속도
+            ani.SetBool("isRunning", true); //달리는 애니메이션
             enduranceOnOff = 0;
             SFXPlayer.WalkSound(1);         // Walk Sound(Run) 문제점: 걷기 소리가 제일 밖에 있어서 뭘 하든 걷기 소리가 남.
                                             // soundNum이 1(run)로 바꿔도 바로 0(walk)으로 바뀜
         }
-        else
+        else    //걷기 상태 구현
         {
             maxSpeed = nomalSpeed;
             ani.SetBool("isRunning", false);
         }
 
-        if (speedx < maxSpeed)
+        if (speedx < maxSpeed)  //최대 속도 구현
             this.rigid.AddForce(transform.right * key * maxSpeed * 10);
 
         //스프라이트 반전
@@ -346,6 +344,7 @@ public class Player : MonoBehaviour
             ani.GetCurrentAnimatorStateInfo(0).IsName("gunAttack"))) 
             transform.localScale = new Vector3(-key * 1.5f, 1.5f, 0);
 
+        //캐릭터 이동 애니메이션 구현(무기에 따라 달라짐)
         switch (battleManager.weaponIndex)
         {
             case 0:
@@ -379,7 +378,7 @@ public class Player : MonoBehaviour
             SFXPlayer.WalkSound(1);          // Walk Sound(Run)
         }
     }
-    private void falling()
+    private void falling()  //낙하 대미지 구현
     {
         if (rigid.velocity.y < 0 && rigid.velocity.y > -1)
             start = transform.position;
@@ -402,7 +401,7 @@ public class Player : MonoBehaviour
         if (rigid.velocity.y >= -3)
             fall = false;
     }
-    private void run()
+    private void run()  //달리기 기능 구현
     {
         if (stage != 1)
         {
@@ -425,7 +424,7 @@ public class Player : MonoBehaviour
 
         }
     }
-    private void upDown()
+    private void upDown()   //사다리 타기 구현
     {
         //Updown
         if (isLadder)
@@ -543,7 +542,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void maxState()
+    private void maxState() //최대 스탯
     {
         if (maxHealth > 1000000)
             maxHealth = 1000000;
@@ -568,7 +567,7 @@ public class Player : MonoBehaviour
         }
 
     }
-    private void minState()
+    private void minState() //최저 스탯
     {
         if (attackPower < 0)
             attackPower = 0;
@@ -591,7 +590,7 @@ public class Player : MonoBehaviour
 
     }
 
-    private void enduranceRecovery()
+    private void enduranceRecovery()    //스테미나 회복 시스템 구현
     {
 
         if (endurance < maxEndurance)
@@ -600,7 +599,7 @@ public class Player : MonoBehaviour
             endurance = maxEndurance;
     }
 
-    private void enduranceSystem()
+    private void enduranceSystem()  //스테미나 시스템 구현
     {
         if(enduranceOnOff == 0)
         {
@@ -613,6 +612,8 @@ public class Player : MonoBehaviour
             stayTime += Time.deltaTime;
             CancelInvoke("enduranceRecovery");
         }
+        //탈진이 되면 스테미나가 다 회복될 때 까지 스테미나를 사용하는
+        //행동은 사용 불가 상태가 되지만 스테미나 회복 속도가 빨라짐
         if (endurance == 0 && enduranceRec < 15)    //탈진 시스템
         {
             enduranceOnOff = 1;
@@ -629,7 +630,8 @@ public class Player : MonoBehaviour
             InvokeRepeating("enduranceRecovery", 0, 1);
         }
     }
-    private void invokeRun()
+    //달리기 스테미나 소모 구현
+    private void invokeRun()    
     {
         InvokeRepeating("enduranceRun", 0, 0.2f);  
     }
@@ -640,7 +642,7 @@ public class Player : MonoBehaviour
         else
             endurance -= 1;
     }
-
+    // 게임의 특장점인 인격 시스템
     private void personality(Collider2D collision)
     {
         

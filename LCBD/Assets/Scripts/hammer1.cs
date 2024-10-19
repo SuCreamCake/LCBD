@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class hammer1 : MonoBehaviour
 {
+    //캐릭터가 망치를 들고 다니는 애니메이션을 위한 코드
     public GameObject player;
     Transform playerPosition;
     int key;
@@ -30,7 +31,7 @@ public class hammer1 : MonoBehaviour
 
 
         playerPosition = player.transform;
-        //카메라가 플레이어 따라가기
+
 
 
         if (key < 0)

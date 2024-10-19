@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class gunArm : MonoBehaviour
 {
+    //캐릭터의 총 쏘는 애니메이션 작업을 위한 코드
     public GameObject player;
     Transform playerPosition;
     float angle;
@@ -28,7 +29,6 @@ public class gunArm : MonoBehaviour
     {
 
         playerPosition = player.transform;
-        //ī�޶� �÷��̾� ���󰡱�
         transform.position = new Vector3(playerPosition.position.x, playerPosition.position.y, transform.position.z);
         target = transform.position;
         mouse = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
